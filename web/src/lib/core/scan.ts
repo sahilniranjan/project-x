@@ -1,4 +1,4 @@
-import { spawn } from "node:child_process";
+import { spawn, type ChildProcess } from "node:child_process";
 import fs from "node:fs";
 import { careerOpsRoot, rootScript } from "@/lib/career-ops";
 import { writeTempPortals, cleanupTempPortals } from "./portals";
@@ -28,7 +28,9 @@ export { ATS_SOURCES } from "@/lib/explore";
 const OFFER_RE = /^\s*\+\s+\[([^\]]+)\]\s+(\S+)\s+\|\s+(.+)$/;
 const ATS_START_RE = /⚙\s+(\S+)\s+—\s+(\d+)\s+companies/;
 const PROGRESS_RE = /(\d+)\/(\d+)\s+scanned,\s+(\d+)\s+total matches/;
-const ATS_DONE_RE = /done \((\d+) unreachable boards skipped\)/;
+const ATS_DONE_RE = /done \((\d+) unreachable boards(?:,\s*\d+ retired boards)? skipped\)/;
+const SALVAGE_RE = /^\u27e6offer\u27e7(.+)$/;
+const COMPANY_RE = /^\s*\u00b7\s+(\S+?)\/(.+?)\s+\u00b7\s+(\d+)\s+postings?$/;
 const COMPANIES_RE = /Companies scanned:\s+(\d+)/;
 const UNREACHABLE_RE = /Unreachable boards:\s+(\d+)/;
 const SUMMARY_RE = /New matches:\s+(\d+)/;
@@ -80,7 +82,16 @@ type ScanJson = {
   offers?: JsonOffer[];
 };
 
-export function runDiscovery(filters: ExploreFilters, onEvent: (e: ScanEvent) => void): Promise<DiscoveredOffer[]> {
+export type DiscoveryOptions = {
+  /** company-index.mjs selection: scan exactly these boards (replaces --limit). */
+  companiesFile?: string;
+  /** Hard backstop for a hung child. Background jobs pass a size-scaled one. */
+  timeoutMs?: number;
+  /** Handed the spawned scanner so a caller can cancel it. */
+  onChild?: (child: ChildProcess) => void;
+};
+
+export function runDiscovery(filters: ExploreFilters, onEvent: (e: ScanEvent) => void, opts: DiscoveryOptions = {}): Promise<DiscoveredOffer[]> {
   return new Promise((resolve) => {
     const tempPortals = writeTempPortals(filters);
     const ats = (filters.ats.length ? filters.ats : [...ATS_SOURCES]).filter((a) => (ATS_SOURCES as readonly string[]).includes(a));
@@ -92,17 +103,25 @@ export function runDiscovery(filters: ExploreFilters, onEvent: (e: ScanEvent) =>
       String(Math.max(1, filters.sinceDays || 7)),
       "--ats",
       ats.join(","),
-      "--limit",
-      String(Math.max(1, filters.limitPerAts || 150)),
+      ...(opts.companiesFile
+        ? ["--companies-file", opts.companiesFile]
+        : ["--limit", String(Math.max(1, filters.limitPerAts || 150))]),
     ];
-    if (useJson) args.push("--json");
+    // --trace names each board as it is walked. It is only emitted under --json,
+    // which is also the only mode whose stderr this parses.
+    if (useJson) args.push("--json", "--trace");
 
     const child = spawn(process.execPath, args, {
       cwd: careerOpsRoot(),
       env: { ...process.env, CAREER_OPS_PORTALS: tempPortals },
     });
+    opts.onChild?.(child);
 
     const offers: DiscoveredOffer[] = [];
+    // Matches mirrored on stderr as they were found. Only used if the run dies
+    // before writing its stdout blob -- otherwise that blob is authoritative,
+    // since late filtering (blacklist, content rules) happens after these emit.
+    const salvaged: DiscoveredOffer[] = [];
     const seen = new Set<string>();
     let currentAts: string = ats[0] || "";
     let pending: Omit<DiscoveredOffer, "url"> | null = null;
@@ -112,13 +131,24 @@ export function runDiscovery(filters: ExploreFilters, onEvent: (e: ScanEvent) =>
     let errBuf = "";
     let jsonOut = ""; // --json mode: the single stdout object accumulates here
 
+    // A full sweep is 4 sources x limitPerAts boards; Workday alone can run
+    // several minutes. The old ceiling (230s, then 280s) cut real scans off just
+    // before they wrote their result. Keep it under the route's maxDuration.
+    // Measured: a 4-source sweep at limit 150 runs past 14 minutes, because a
+    // few enterprise Workday tenants (Accenture, Abbott, ABB) blow past the
+    // 2000-record offset cap and get refetched in ~100 sequential facet slices.
+    // This is a backstop against a genuinely hung child, not a scan budget --
+    // killing real work mid-sweep loses every match it already found.
+    const SCAN_TIMEOUT_MS = opts.timeoutMs && opts.timeoutMs > 0 ? opts.timeoutMs : 1_800_000;
+    let timedOut = false;
     const killer = setTimeout(() => {
+      timedOut = true;
       try {
         child.kill("SIGTERM");
       } catch {
         /* ignore */
       }
-    }, 230_000);
+    }, SCAN_TIMEOUT_MS);
 
     // Live progress (atsStart / progress / atsDone) — in --json mode these human
     // lines arrive on STDERR; in legacy mode on STDOUT (handled inside handleLine).
@@ -127,6 +157,34 @@ export function runDiscovery(filters: ExploreFilters, onEvent: (e: ScanEvent) =>
       if (atsM) {
         currentAts = atsM[1];
         onEvent({ kind: "atsStart", ats: atsM[1], companies: Number(atsM[2]) });
+        return;
+      }
+      const salvM = line.match(SALVAGE_RE);
+      if (salvM) {
+        try {
+          const o = JSON.parse(salvM[1]) as Partial<JsonOffer>;
+          const url = (o.url || "").trim();
+          if (url && o.company && o.title && !salvaged.some((x) => x.url === url)) {
+            const source = o.source || `${currentAts}-full`;
+            salvaged.push({
+              company: o.company,
+              title: o.title,
+              location: o.location || "",
+              postedAt: o.postedAt || "",
+              ats: source.replace(/-full$/, ""),
+              source,
+              url,
+              matchedKeyword: firstMatch(o.title, filters.positive),
+            });
+          }
+        } catch {
+          /* one malformed mirror line must not derail the stream */
+        }
+        return;
+      }
+      const compM = line.match(COMPANY_RE);
+      if (compM) {
+        onEvent({ kind: "company", ats: compM[1], company: compM[2], postings: Number(compM[3]) });
         return;
       }
       const progM = line.match(PROGRESS_RE);
@@ -260,9 +318,30 @@ export function runDiscovery(filters: ExploreFilters, onEvent: (e: ScanEvent) =>
             postingsDroppedNoDate: j.postingsDroppedNoDate,
           });
         } else {
-          // --json requested but stdout didn't parse — surface honestly rather than
-          // silently returning 0 (defensive; shouldn't happen once the probe passed).
-          onEvent({ kind: "error", message: "The scanner returned no readable output." });
+          // A timeout kill also lands here with empty stdout. Hand back whatever
+          // was mirrored on stderr before the kill: a sweep that completed three
+          // of four sources should not report zero.
+          for (const offer of salvaged) {
+            if (seen.has(offer.url)) continue;
+            seen.add(offer.url);
+            offers.push(offer);
+            onEvent({ kind: "offer", offer });
+          }
+          if (salvaged.length) {
+            onEvent({ kind: "summary", companiesScanned, unreachable, matches: salvaged.length });
+          }
+          const m = Math.round(SCAN_TIMEOUT_MS / 60000);
+          const mins = `${m} minute${m === 1 ? "" : "s"}`;
+          onEvent({
+            kind: "error",
+            message: timedOut
+              ? salvaged.length
+                ? `The scan ran past ${mins} and was stopped, so this list is partial — ${salvaged.length} role${salvaged.length === 1 ? "" : "s"} found before it was cut off. Narrow it (fewer sources, shorter window) for a complete run.`
+                : `The scan ran past ${mins} and was stopped before finding anything. Narrow it — fewer sources, a shorter window, or a smaller per-source limit.`
+              : salvaged.length
+                ? `The scanner stopped early, so this list is partial — ${salvaged.length} role${salvaged.length === 1 ? "" : "s"} were recovered.`
+                : "The scanner returned no readable output.",
+          });
         }
         resolve(offers);
         return;

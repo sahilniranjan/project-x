@@ -4,6 +4,7 @@ import { useState } from "react";
 import { X, Ban, Clock, MapPin, ChevronDown, SlidersHorizontal } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { ATS_LABEL, ATS_SOURCES, cleanChips, type AtsSource, type ExploreFilters } from "@/lib/explore";
+import { CompanyFilterPanel } from "./company-filter";
 
 const RECENCY = [
   { label: "24h", days: 1 },
@@ -25,7 +26,7 @@ html.dark .co-fb__chip.inc{color:hsl(26 86% 70%);background:hsl(26 80% 55% / .14
 @media (max-width:639px){.co-fb__chip button{min-width:44px;min-height:44px;justify-content:center}.co-fb__chip{min-height:44px}.co-fb__field{min-height:44px}.co-fb__field input{min-height:32px}}
 `;
 
-function KeywordField({
+export function KeywordField({
   values,
   tone,
   placeholder,
@@ -89,7 +90,7 @@ function KeywordField({
   );
 }
 
-function Label({ children, hint }: { children: React.ReactNode; hint?: string }) {
+export function Label({ children, hint }: { children: React.ReactNode; hint?: string }) {
   return (
     <div className="mb-1.5 flex items-baseline justify-between">
       <span className="text-[13px] font-medium text-foreground">{children}</span>
@@ -179,13 +180,15 @@ export function FilterBuilder({
         </div>
       </div>
 
+      <CompanyFilterPanel filters={filters} onChange={onChange} />
+
       <button
         type="button"
         onClick={() => setAdvanced((v) => !v)}
         className="inline-flex items-center gap-1.5 text-[12px] text-muted hover:text-foreground transition-colors max-sm:min-h-[44px]"
       >
         <SlidersHorizontal className="size-3.5" />
-        Location &amp; scope
+        Location
         <ChevronDown className={cn("size-3.5 transition-transform", advanced && "rotate-180")} />
       </button>
 
@@ -211,18 +214,6 @@ export function FilterBuilder({
           <div>
             <Label hint="hard reject — overrides Always include">Never in (hard)</Label>
             <KeywordField values={filters.blockHard} tone="exc" placeholder="USA, Brazil…" onChange={(v) => set({ blockHard: v })} />
-          </div>
-          <div>
-            <Label hint={`${filters.limitPerAts} companies / source`}>Scan depth</Label>
-            <input
-              type="range"
-              min={50}
-              max={500}
-              step={50}
-              value={filters.limitPerAts}
-              onChange={(e) => set({ limitPerAts: Number(e.target.value) })}
-              className="w-full accent-brand"
-            />
           </div>
         </div>
       )}

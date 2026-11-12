@@ -9,6 +9,7 @@ import {
   aiToParams,
   isBroadSearch,
   parseExplorePatch,
+  companyFilterCount,
   type AtsSource,
   type DiscoveredOffer,
   type ExploreFilters,
@@ -32,6 +33,11 @@ export type Phase =
   | "hunting" // AI search streaming
   | "blocked"; // AI search needs a CLI
 export type AiCost = { searches: number; candidates: number; fetches: number };
+// One board the scanner has actually walked. Fed by the --trace lines the core
+// emits per company, so the scanning screen can name what it is touching right
+// now instead of showing an opaque spinner for four minutes.
+export type ScanTraceEntry = { id: number; ats: string; company: string; postings: number };
+
 export type SourceState = {
   state: "queued" | "active" | "swept" | "noisy";
   companies?: number;
@@ -65,6 +71,10 @@ type ExploreCtx = {
   added: Set<string>;
   adding: Set<string>;
   discover: () => Promise<void>;
+  /** Stop the running background scan (results so far are kept). */
+  cancelScan: () => Promise<void>;
+  /** The company selection the running/last scan walked. */
+  selection: { selected: number; matching: number; estMinutes: number } | null;
   /** Load the SUPPLY-loop offers Today's "Fresh matches this week" already
    *  fetched from /api/whats-new, straight into the results phase — no scan. */
   loadFresh: () => Promise<void>;
@@ -79,7 +89,14 @@ type ExploreCtx = {
   discoverAI: () => Promise<void>;
   aiTrace: AiTraceChunk[];
   aiCost: AiCost;
+  scanTrace: ScanTraceEntry[];
 };
+
+// Deep enough to scroll back through a stall, shallow enough to stay cheap.
+const SCAN_TRACE_MAX = 120;
+// Running background scan, so a reload re-attaches instead of starting over.
+const JOB_KEY = "career-ops:explore-job";
+const POLL_MS = 1200;
 
 const Ctx = createContext<ExploreCtx | null>(null);
 export function useExplore(): ExploreCtx {
@@ -136,8 +153,16 @@ export function ExploreProvider({ children }: { children: React.ReactNode }) {
   const [mode, setModeState] = useState<ExploreMode>("scan");
   const [aiIntent, setAiIntent] = useState("");
   const [aiTrace, setAiTrace] = useState<AiTraceChunk[]>([]);
+  // Bounded: a wide sweep walks thousands of boards and we only ever render
+  // the tail, so the array is capped rather than grown for the whole run.
+  const [scanTrace, setScanTrace] = useState<ScanTraceEntry[]>([]);
+  // Monotonic. Deriving the key from array length breaks as soon as the list is
+  // capped: length freezes at SCAN_TRACE_MAX and every later row reuses that key.
+  const scanSeqRef = useRef(0);
   const [aiCost, setAiCost] = useState<AiCost>({ searches: 0, candidates: 0, fetches: 0 });
   const runningRef = useRef(false);
+  const jobIdRef = useRef<string | null>(null);
+  const [selection, setSelection] = useState<{ selected: number; matching: number; estMinutes: number } | null>(null);
   const aiIntentRef = useRef(aiIntent);
   aiIntentRef.current = aiIntent;
   const filtersRef = useRef(filters);
@@ -154,119 +179,117 @@ export function ExploreProvider({ children }: { children: React.ReactNode }) {
     setFiltersState(f);
   }, []);
 
-  const discover = useCallback(async () => {
-    if (runningRef.current) return;
-    const f = filtersRef.current;
-    runningRef.current = true;
-    setPhase("casting");
-    setOffers([]);
-    setMatchCount(0);
-    setCompaniesScanned(0);
-    setCompaniesAvailable(0);
-    setCapHit(false);
-    setDroppedNoDate(0);
-    setPartial(false);
-    setError("");
-    setScannerMissing(false);
-    setStatus("Casting the net across the ATS network…");
-    const init: Partial<Record<AtsSource, SourceState>> = {};
-    for (const a of f.ats) init[a] = { state: "queued" };
-    setSources(init);
-    if (typeof window !== "undefined") {
-      const qs = filtersToParams(f);
-      window.history.replaceState(null, "", `/explore${qs ? `?${qs}` : ""}`);
-    }
-
+  // Background scan job (LOCAL): start it server-side, then follow its events by
+  // cursor. The scan no longer lives inside one HTTP response, so a multi-hour
+  // sweep survives navigation, a reload, or a sleeping tab.
+  const follow = useCallback(async (jobId: string, f: ExploreFilters) => {
     const acc: DiscoveredOffer[] = [];
     let sawError = "";
-    let sawScannerMissing = false; // the structured 400 (data-only checkout), not a runtime scan error
     let companiesScannedAcc = 0; // 0 at the end = the directories never downloaded → degraded, not empty
     let capHitAcc = false; // scan was capped (only a slice of the universe searched)
     let datasetIssueAcc = false; // some ATS dataset was stale/empty/unreachable
     let droppedNoDateAcc = 0; // postings dropped for lacking a publish date
-    try {
-      const r = await fetch("/api/explore", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(f),
-      });
-      // Every non-OK response is decided from the parsed body, not the status.
-      // A failed response never carries a scan stream, so reading one would
-      // parse a JSON error object as scan events and report "no readable
-      // output" instead of the server's actual message.
-      if (!r.ok) {
-        const d = await r.json().catch(() => ({}));
-        sawScannerMissing = isScannerMissing(d);
-        sawError = d.error || (sawScannerMissing ? "The scanner isn't available." : `Discovery failed (${r.status}).`);
-      } else if (!r.body) {
-        sawError = "No response stream.";
-      } else {
-        const reader = r.body.getReader();
-        const dec = new TextDecoder();
-        let buf = "";
-        for (;;) {
-          const { value, done } = await reader.read();
-          if (done) break;
-          buf += dec.decode(value, { stream: true });
-          let nl: number;
-          while ((nl = buf.indexOf("\n")) >= 0) {
-            const line = buf.slice(0, nl).trim();
-            buf = buf.slice(nl + 1);
-            if (!line) continue;
-            let ev: ScanEvent;
-            try {
-              ev = JSON.parse(line) as ScanEvent;
-            } catch {
-              continue;
-            }
-            switch (ev.kind) {
-              case "atsStart":
-                setPhase("scanning");
-                setStatus(`Walking ${ATS_LABEL[ev.ats as AtsSource] ?? ev.ats} — ${ev.companies.toLocaleString()} companies`);
-                setSources((s) => ({ ...s, [ev.ats]: { ...s[ev.ats as AtsSource], state: "active", companies: ev.companies } }));
-                break;
-              case "progress":
-                // `matches` is the GLOBAL running total (the engine batches the
-                // offer list to the very end), so it drives the live hero counter.
-                setMatchCount((m) => Math.max(m, ev.matches));
-                setSources((s) => ({ ...s, [ev.ats]: { ...s[ev.ats as AtsSource], state: "active", done: ev.scanned, total: ev.total } }));
-                break;
-              case "atsDone":
-                setSources((s) => ({ ...s, [ev.ats]: { ...s[ev.ats as AtsSource], state: ev.unreachable > 0 ? "noisy" : "swept", unreachable: ev.unreachable } }));
-                break;
-              case "offer":
-                acc.push(ev.offer);
-                setOffers((o) => [...o, ev.offer]);
-                break;
-              case "summary": {
-                companiesScannedAcc = ev.companiesScanned;
-                setCompaniesScanned(ev.companiesScanned);
-                if (typeof ev.companiesAvailable === "number") setCompaniesAvailable(ev.companiesAvailable);
-                if (ev.capHit) {
-                  capHitAcc = true;
-                  setCapHit(true);
-                }
-                const datasetIssue = ev.datasetStatus ? Object.values(ev.datasetStatus).some((s) => s !== "ok") : false;
-                if (datasetIssue) datasetIssueAcc = true;
-                if (typeof ev.postingsDroppedNoDate === "number" && ev.postingsDroppedNoDate > 0) {
-                  droppedNoDateAcc = ev.postingsDroppedNoDate;
-                  setDroppedNoDate(ev.postingsDroppedNoDate);
-                }
-                if (ev.unreachable > 0 || datasetIssue) setPartial(true);
-                break;
-              }
-              case "error":
-                sawError = ev.message;
-                break;
-              default:
-                break;
-            }
+    let finalOffers: DiscoveredOffer[] | null = null;
+    jobIdRef.current = jobId;
+
+    const handle = (ev: ScanEvent) => {
+      switch (ev.kind) {
+        case "selection":
+          setSelection({ selected: ev.selected, matching: ev.matching, estMinutes: ev.estMinutes });
+          setStatus(`Scanning the top ${ev.selected.toLocaleString()} of ${ev.matching.toLocaleString()} matching companies…`);
+          break;
+        case "atsStart":
+          setPhase("scanning");
+          setStatus(`Walking ${ATS_LABEL[ev.ats as AtsSource] ?? ev.ats} — ${ev.companies.toLocaleString()} companies`);
+          setSources((s) => ({ ...s, [ev.ats]: { ...s[ev.ats as AtsSource], state: "active", companies: ev.companies } }));
+          break;
+        case "progress":
+          // `matches` is the GLOBAL running total (the engine batches the
+          // offer list to the very end), so it drives the live hero counter.
+          setMatchCount((m) => Math.max(m, ev.matches));
+          setSources((s) => ({ ...s, [ev.ats]: { ...s[ev.ats as AtsSource], state: "active", done: ev.scanned, total: ev.total } }));
+          break;
+        case "atsDone":
+          setSources((s) => ({ ...s, [ev.ats]: { ...s[ev.ats as AtsSource], state: ev.unreachable > 0 ? "noisy" : "swept", unreachable: ev.unreachable } }));
+          break;
+        case "company": {
+          // Read outside the updater: React may invoke it twice in dev.
+          const id = ++scanSeqRef.current;
+          setScanTrace((t) => {
+            const next = [...t, { id, ats: ev.ats, company: ev.company, postings: ev.postings }];
+            return next.length > SCAN_TRACE_MAX ? next.slice(-SCAN_TRACE_MAX) : next;
+          });
+          break;
+        }
+        case "offer":
+          acc.push(ev.offer);
+          setOffers((o) => [...o, ev.offer]);
+          break;
+        case "summary": {
+          companiesScannedAcc = ev.companiesScanned;
+          setCompaniesScanned(ev.companiesScanned);
+          if (typeof ev.companiesAvailable === "number") setCompaniesAvailable(ev.companiesAvailable);
+          if (ev.capHit) {
+            capHitAcc = true;
+            setCapHit(true);
           }
+          const datasetIssue = ev.datasetStatus ? Object.values(ev.datasetStatus).some((s) => s !== "ok") : false;
+          if (datasetIssue) datasetIssueAcc = true;
+          if (typeof ev.postingsDroppedNoDate === "number" && ev.postingsDroppedNoDate > 0) {
+            droppedNoDateAcc = ev.postingsDroppedNoDate;
+            setDroppedNoDate(ev.postingsDroppedNoDate);
+          }
+          if (ev.unreachable > 0 || datasetIssue) setPartial(true);
+          break;
+        }
+        case "error":
+          sawError = ev.message;
+          break;
+        case "done":
+          finalOffers = ev.offers;
+          break;
+        default:
+          break;
+      }
+    };
+
+    let cursor = 0;
+    let misses = 0;
+    for (;;) {
+      if (jobIdRef.current !== jobId) return; // superseded by reset()/a new run
+      try {
+        const r = await fetch(`/api/explore/jobs?id=${encodeURIComponent(jobId)}&cursor=${cursor}`, { cache: "no-store" });
+        if (r.status === 404) {
+          sawError = "This scan is no longer running — the panel restarted while it was in progress. Start it again to pick up from the top.";
+          break;
+        }
+        if (!r.ok) throw new Error(`poll ${r.status}`);
+        const d = (await r.json()) as { events: ScanEvent[]; next: number; done: boolean };
+        misses = 0;
+        for (const ev of d.events) handle(ev);
+        cursor = d.next;
+        if (d.done) break;
+      } catch (e) {
+        // The server is local; a few missed polls (sleep, restart) are normal.
+        if (++misses > 30) {
+          sawError = e instanceof Error ? e.message : "lost contact with the scan";
+          break;
         }
       }
-    } catch (e) {
-      sawError = e instanceof Error ? e.message : "stream error";
+      await new Promise((res) => setTimeout(res, POLL_MS));
     }
+    if (jobIdRef.current !== jobId) return;
+    jobIdRef.current = null;
+    try {
+      sessionStorage.removeItem(JOB_KEY);
+    } catch {
+      /* ignore */
+    }
+
+    // The done event's list is authoritative (late filtering — blacklist,
+    // content rules — happens after the per-offer events).
+    const list: DiscoveredOffer[] = finalOffers ?? acc;
+    if (finalOffers) setOffers(finalOffers);
 
     // Mark any still-active sources as swept (stream ended).
     setSources((s) => {
@@ -276,14 +299,14 @@ export function ExploreProvider({ children }: { children: React.ReactNode }) {
     });
 
     runningRef.current = false;
-    if (acc.length > 0) {
-      setMatchCount(acc.length);
+    if (list.length > 0) {
+      setMatchCount(list.length);
+      if (sawError) setError(sawError);
       setPhase("revealing");
-      setStatus(`${acc.length} fresh role${acc.length === 1 ? "" : "s"} found — free.`);
+      setStatus(`${list.length} fresh role${list.length === 1 ? "" : "s"} found — free.`);
       window.setTimeout(() => setPhase("results"), 850);
     } else if (sawError) {
       setError(sawError);
-      setScannerMissing(sawScannerMissing);
       setPhase("failed");
     } else if (capHitAcc || datasetIssueAcc || droppedNoDateAcc > 0 || companiesScannedAcc === 0) {
       // Maintainer's RULE (#1199): it is NOT "all caught up" if the scan was capped,
@@ -292,9 +315,130 @@ export function ExploreProvider({ children }: { children: React.ReactNode }) {
       // Truly-empty is only when live datasets were fully searched and found nothing.
       setPhase("degraded");
     } else {
-      setPhase(isBroadSearch(f) ? "empty-current" : "empty-loose");
+      setPhase(isBroadSearch(f) && companyFilterCount(f.company) === 0 ? "empty-current" : "empty-loose");
     }
   }, []);
+
+  const beginRun = useCallback((f: ExploreFilters) => {
+    runningRef.current = true;
+    setPhase("casting");
+    setOffers([]);
+    setMatchCount(0);
+    setScanTrace([]);
+    setCompaniesScanned(0);
+    setCompaniesAvailable(0);
+    setCapHit(false);
+    setDroppedNoDate(0);
+    setPartial(false);
+    setError("");
+    setScannerMissing(false);
+    setSelection(null);
+    setStatus("Picking companies that match your filters…");
+    const init: Partial<Record<AtsSource, SourceState>> = {};
+    for (const a of f.ats) init[a] = { state: "queued" };
+    setSources(init);
+  }, []);
+
+  const discover = useCallback(async () => {
+    if (runningRef.current) return;
+    const f = filtersRef.current;
+    beginRun(f);
+    if (typeof window !== "undefined") {
+      const qs = filtersToParams(f);
+      window.history.replaceState(null, "", `/explore${qs ? `?${qs}` : ""}`);
+    }
+    let id = "";
+    try {
+      const r = await fetch("/api/explore/jobs", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(f),
+      });
+      // Every non-OK response is decided from the parsed body, not the status.
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.id) {
+        const missing = isScannerMissing(d);
+        runningRef.current = false;
+        setError(d.error || (missing ? "The scanner isn't available." : `Discovery failed (${r.status}).`));
+        setScannerMissing(missing);
+        setPhase("failed");
+        return;
+      }
+      id = d.id;
+    } catch (e) {
+      runningRef.current = false;
+      setError(e instanceof Error ? e.message : "Couldn't start the scan.");
+      setPhase("failed");
+      return;
+    }
+    try {
+      sessionStorage.setItem(JOB_KEY, JSON.stringify({ id, filters: f }));
+    } catch {
+      /* ignore */
+    }
+    await follow(id, f);
+  }, [beginRun, follow]);
+
+  /** Stop the running scan; what it found so far still comes back as results. */
+  const cancelScan = useCallback(async () => {
+    const id = jobIdRef.current;
+    if (!id) return;
+    setStatus("Stopping — keeping what was found so far…");
+    try {
+      await fetch(`/api/explore/jobs?id=${encodeURIComponent(id)}`, { method: "DELETE" });
+    } catch {
+      /* the poll loop still settles */
+    }
+  }, []);
+
+  // Re-attach to a scan that is still running server-side (reload, new tab,
+  // came back later). The job replays its events from cursor 0, so the
+  // progress screen rebuilds exactly.
+  useEffect(() => {
+    if (runningRef.current) return;
+    let cancelled = false;
+    (async () => {
+      let saved: { id?: string; filters?: ExploreFilters } | null = null;
+      try {
+        saved = JSON.parse(sessionStorage.getItem(JOB_KEY) || "null");
+      } catch {
+        saved = null;
+      }
+      let id = saved?.id || "";
+      if (!id) {
+        try {
+          const d = await fetch("/api/explore/jobs", { cache: "no-store" }).then((r) => r.json());
+          id = d?.id || "";
+        } catch {
+          id = "";
+        }
+      }
+      if (!id || cancelled || runningRef.current) return;
+      const probe = await fetch(`/api/explore/jobs?id=${encodeURIComponent(id)}&cursor=0`, { cache: "no-store" }).catch(() => null);
+      if (!probe || !probe.ok || cancelled || runningRef.current) return;
+      const d = (await probe.json()) as { done: boolean; filters?: ExploreFilters };
+      // A finished job's results are already in the settled-results snapshot.
+      if (d.done) {
+        try {
+          sessionStorage.removeItem(JOB_KEY);
+        } catch {
+          /* ignore */
+        }
+        return;
+      }
+      const f = parseExplorePatch((d.filters ?? saved?.filters ?? {}) as Record<string, unknown>, DEFAULT_FILTERS);
+      setModeState("scan");
+      filtersRef.current = f;
+      setFiltersState(f);
+      touched.current = true;
+      beginRun(f);
+      setPhase("scanning");
+      await follow(id, f);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [beginRun, follow]);
 
   // Today's "See all N" link (#84) routes here with ?view=fresh instead of leaving
   // the user on a bare config form. Re-fetch the same free, zero-token /api/whats-new
@@ -307,6 +451,7 @@ export function ExploreProvider({ children }: { children: React.ReactNode }) {
     setStatus("Loading fresh matches…");
     setOffers([]);
     setMatchCount(0);
+    setScanTrace([]);
     setCompaniesScanned(0);
     setCompaniesAvailable(0);
     setCapHit(false);
@@ -386,10 +531,12 @@ export function ExploreProvider({ children }: { children: React.ReactNode }) {
 
   const reset = useCallback(() => {
     runningRef.current = false;
+    jobIdRef.current = null;
     setPhase("idle");
     setOffers([]);
     setSources({});
     setMatchCount(0);
+    setScanTrace([]);
     setCompaniesScanned(0);
     setStatus("");
     setPartial(false);
@@ -423,6 +570,7 @@ export function ExploreProvider({ children }: { children: React.ReactNode }) {
     setPhase("casting");
     setOffers([]);
     setMatchCount(0);
+    setScanTrace([]);
     setAiTrace([]);
     setAiCost({ searches: 0, candidates: 0, fetches: 0 });
     setError("");
@@ -574,10 +722,10 @@ export function ExploreProvider({ children }: { children: React.ReactNode }) {
       filters, setFilters, initFilters, phase,
       running: phase === "casting" || phase === "scanning" || phase === "revealing" || phase === "hunting",
       offers, sources, matchCount, companiesScanned, companiesAvailable, capHit, droppedNoDate, status, partial, error, scannerMissing, added, adding,
-      discover, loadFresh, addToPipeline, applyPatch, reset,
-      mode, setMode, aiIntent, setAiIntent, discoverAI, aiTrace, aiCost,
+      discover, cancelScan, selection, loadFresh, addToPipeline, applyPatch, reset,
+      mode, setMode, aiIntent, setAiIntent, discoverAI, aiTrace, aiCost, scanTrace,
     }),
-    [filters, setFilters, initFilters, phase, offers, sources, matchCount, companiesScanned, companiesAvailable, capHit, droppedNoDate, status, partial, error, scannerMissing, added, adding, discover, loadFresh, addToPipeline, applyPatch, reset, mode, setMode, aiIntent, discoverAI, aiTrace, aiCost],
+    [filters, setFilters, initFilters, phase, offers, sources, matchCount, companiesScanned, companiesAvailable, capHit, droppedNoDate, status, partial, error, scannerMissing, added, adding, discover, cancelScan, selection, loadFresh, addToPipeline, applyPatch, reset, mode, setMode, aiIntent, discoverAI, aiTrace, aiCost, scanTrace],
   );
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

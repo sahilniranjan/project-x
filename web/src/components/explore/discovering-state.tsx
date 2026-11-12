@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Check, Loader2 } from "lucide-react";
+import { Check, Loader2, Square } from "lucide-react";
 import { ApplyBackdrop } from "@/components/apply/apply-backdrop";
 import { instrumentSerif } from "@/lib/fonts";
 import { ATS_LABEL, ATS_SOURCES, type AtsSource } from "@/lib/explore";
+import { ScanTrace } from "./scan-trace";
 import { useExplore, type SourceState } from "./explore-provider";
 
 const STYLE = `
@@ -69,7 +70,8 @@ function SourceChip({ ats, s }: { ats: AtsSource; s?: SourceState }) {
 }
 
 export function DiscoveringState() {
-  const { sources, matchCount, companiesScanned, status, phase } = useExplore();
+  const { sources, matchCount, companiesScanned, status, phase, scanTrace, selection, cancelScan } = useExplore();
+  const [stopping, setStopping] = useState(false);
   const shown = useCountUp(matchCount);
   const companies = useCountUp(companiesScanned);
 
@@ -102,13 +104,37 @@ export function DiscoveringState() {
           {status || "Casting the net across the ATS network…"}
         </p>
 
-        {phase !== "revealing" && (
-          <div className="co-disc__skel" aria-hidden>
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="co-disc__skelcard" />
-            ))}
+        {selection && phase !== "revealing" && (
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[12.5px] text-muted">
+            <span>
+              {selection.selected.toLocaleString()} of {selection.matching.toLocaleString()} matching companies · est. {selection.estMinutes < 60 ? `${selection.estMinutes} min` : `${(selection.estMinutes / 60).toFixed(1)} h`} · runs in the background, you can leave this page
+            </span>
+            <button
+              type="button"
+              disabled={stopping}
+              onClick={() => {
+                setStopping(true);
+                void cancelScan();
+              }}
+              className="inline-flex items-center gap-1.5 rounded-md border border-border px-2.5 py-1 text-[12px] text-muted transition-colors hover:text-foreground disabled:opacity-50 max-sm:min-h-[44px]"
+            >
+              <Square className="size-3" /> {stopping ? "Stopping…" : "Stop & show results"}
+            </button>
           </div>
         )}
+
+        {phase !== "revealing" &&
+          (scanTrace.length > 0 ? (
+            <ScanTrace trace={scanTrace} />
+          ) : (
+            // Only until the first board lands — after that the feed is the
+            // honest thing to show, since offers do not stream in mid-scan.
+            <div className="co-disc__skel" aria-hidden>
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="co-disc__skelcard" />
+              ))}
+            </div>
+          ))}
       </div>
     </>
   );

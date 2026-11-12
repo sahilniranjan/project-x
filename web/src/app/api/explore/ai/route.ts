@@ -5,6 +5,7 @@ import path from "node:path";
 import { resolveCli } from "@/lib/clis";
 import { careerOpsRoot, readMemory } from "@/lib/career-ops";
 import { assembleDedupContext } from "@/lib/core/discover";
+import { locationConstraintLine } from "@/lib/core/portals";
 
 // AI search orchestrates modes/discover.md by running the USER'S configured CLI
 // headless (CLI-agnostic, like the assistant). Web hunting is slow → generous
@@ -158,7 +159,13 @@ export async function POST(req: Request) {
   const memory = readMemory();
   const memoryLine = memory.trim() ? `\n\nWHAT YOU KNOW ABOUT THE USER (persistent memory):\n${memory.trim()}` : "";
   const knownBlock = lines.length ? `\n\n--- ALREADY KNOWN (dedup — do NOT propose these) ---\n${lines.join("\n")}` : "";
-  const prompt = `${mode}${OUTPUT_CONTRACT}${memoryLine}${knownBlock}\n\n--- USER INTENT ---\n${query}\n`;
+  // The free scan enforces portals.yml's location_filter deterministically, in
+  // scan.mjs. AI search cannot: offers are parsed client-side from a text stream,
+  // so there is no server seam to filter them at. The constraint is stated in the
+  // prompt instead — weaker than a filter, and honest about it. It is worded as a
+  // hard constraint so it does not read as one more thing the "GENEROUS FINDER"
+  // rule above tells the model to include-when-unsure.
+  const prompt = `${mode}${OUTPUT_CONTRACT}${locationConstraintLine()}${memoryLine}${knownBlock}\n\n--- USER INTENT ---\n${query}\n`;
 
   const isClaude = cliId === "claude";
   const isCodex = cliId === "codex";

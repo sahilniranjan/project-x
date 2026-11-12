@@ -649,6 +649,9 @@ export default {
     // A split that could not reach the whole board is the same kind of partial
     // result, and scan-ats-full.mjs already knows how to report that tag.
     if (splitIncomplete || budgetExhausted) jobs.workdayTruncated = true;
+    // The API's own count. A one-page read (ctx.maxPages, company-index.mjs)
+    // returns 20 postings but still knows the board's size.
+    if (typeof total === 'number') jobs.workdayTotal = total;
 
     return jobs;
   },

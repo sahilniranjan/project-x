@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Bookmark, BookmarkCheck, Loader2, X } from "lucide-react";
+import { Bookmark, BookmarkCheck, ExternalLink, Loader2, X } from "lucide-react";
 import type { InboxJob } from "@/lib/career-ops";
 import type { AtsSource } from "@/lib/explore";
 import { ATS_LABEL } from "@/lib/explore";
@@ -67,10 +67,28 @@ export function TriageRow({
       <CompanyLogo name={job.company} size={20} />
 
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm">
-          <span className="font-medium text-foreground">{job.company}</span>
-          <span className="text-muted"> · {job.role}</span>
-        </p>
+        {/* Link straight to the posting. Without this an unscored row is a dead
+            end: InboxJob carries the url, but the only way to reach it was to
+            spend tokens evaluating first, then follow the report. Same
+            affordance explore/discovery-card.tsx already gives a scan result. */}
+        {job.url ? (
+          <a
+            href={job.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Open the posting"
+            className="group/link block truncate text-sm underline-offset-2 hover:underline"
+          >
+            <span className="font-medium text-foreground">{job.company}</span>
+            <span className="text-muted"> · {job.role}</span>
+            <ExternalLink className="ml-1 inline size-3 align-[-1px] text-faint opacity-0 transition-opacity group-hover/link:opacity-100" />
+          </a>
+        ) : (
+          <p className="truncate text-sm">
+            <span className="font-medium text-foreground">{job.company}</span>
+            <span className="text-muted"> · {job.role}</span>
+          </p>
+        )}
         <p className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] text-faint">
           {job.location && <span className="truncate">{job.location}</span>}
           {source && <span className="rounded bg-surface-hover px-1 py-px font-medium text-muted">{ATS_LABEL[source]}</span>}

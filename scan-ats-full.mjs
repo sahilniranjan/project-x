@@ -136,6 +136,7 @@ function validCheckpointCurrent(cur) {
 export function checkpointCompatible(cp, opts) {
   return Boolean(cp)
     && !opts.shuffle
+    && !opts.companiesFile
     && JSON.stringify(cp.ats) === JSON.stringify(opts.ats)
     && (cp.limit ?? null) === (opts.limit === Infinity ? null : opts.limit)
     && cp.includeUndated === opts.includeUndated;
@@ -255,12 +256,12 @@ export const SOURCES = {
 const KNOWN_FLAGS = [
   '--since', '--limit', '--ats', '--seeds', '--dry-run', '--liveness',
   '--verbose', '--md-out', '--json', '--include-undated', '--include-blacklisted',
-  '--shuffle', '--resume', '--help', '-h',
+  '--shuffle', '--resume', '--trace', '--companies-file', '--help', '-h',
 ];
 
 // Flags that consume the next argv token as a value (space-separated form —
 // the `--flag=value` form is self-contained and never needs this).
-const VALUE_FLAGS = ['--since', '--limit', '--ats', '--seeds', '--md-out'];
+const VALUE_FLAGS = ['--since', '--limit', '--ats', '--seeds', '--md-out', '--companies-file'];
 
 const USAGE = `Usage:
   node scan-ats-full.mjs                      # scan all ATS directories, last 3 days
@@ -273,6 +274,7 @@ const USAGE = `Usage:
   node scan-ats-full.mjs --verbose            # log per-board fetch failures
   node scan-ats-full.mjs --md-out <dir>       # also write a dated markdown digest to <dir>
   node scan-ats-full.mjs --resume             # continue an interrupted sweep from its checkpoint
+  node scan-ats-full.mjs --companies-file f   # scan exactly the boards listed in f (company-index.mjs select)
   node scan-ats-full.mjs --help               # print this usage block and exit`;
 
 function parseArgs(argv) {
@@ -338,12 +340,20 @@ function parseArgs(argv) {
     dryRun: args.includes('--dry-run'),
     liveness: args.includes('--liveness'),
     verbose: args.includes('--verbose'),
+    // --trace: emit one newline-terminated line per company probed, so a caller
+    // (the web Explore panel) can show which board is being walked right now.
+    // Off by default: on a 10k-company sweep this is 10k lines of noise.
+    trace: args.includes('--trace'),
     mdOut: valueOf('--md-out'),
     json: args.includes('--json'),
     includeUndated: args.includes('--include-undated'),
     includeBlacklisted: args.includes('--include-blacklisted'),
     shuffle: args.includes('--shuffle'),
     resume: args.includes('--resume'),
+    // --companies-file (local, company-index.mjs): a JSON {sources:{ats:[key…]}}
+    // naming exactly which boards to walk, already filtered and in priority
+    // order. Replaces the alphabetical --limit prefix for the listed sources.
+    companiesFile: valueOf('--companies-file'),
   };
 }
 
@@ -354,7 +364,7 @@ function parseArgs(argv) {
 //   'stale' — network fetch failed; falling back to an expired cache
 //   'empty' — no data at all (no cache, fetch failed/non-array)
 // The status lets callers (and --json) distinguish a degraded scan from an empty one.
-async function loadCompanyList(name, url) {
+export async function loadCompanyList(name, url) {
   mkdirSync(CACHE_DIR, { recursive: true });
   const cacheFile = path.join(CACHE_DIR, `${name}.json`);
   if (existsSync(cacheFile)) {
@@ -483,6 +493,31 @@ export function dedupTokenFor(job, provider) {
 // from before #3439.
 export function providerForSource(source) {
   return SOURCES[String(source || '').replace(/-full$/, '')]?.provider;
+}
+
+// --companies-file: the selection company-index.mjs wrote. Exits on a bad
+// file rather than silently falling back to a full sweep the user didn't ask for.
+export function loadCompanySelection(file) {
+  try {
+    const j = JSON.parse(readFileSync(file, 'utf-8'));
+    if (j && typeof j.sources === 'object' && j.sources) return j.sources;
+  } catch (err) {
+    console.error(`Error: could not read --companies-file ${file}: ${err.message}`);
+    process.exit(1);
+  }
+  console.error(`Error: --companies-file ${file} has no "sources" object.`);
+  process.exit(1);
+}
+
+// Dataset items named in the selection, in the SELECTION's (priority) order.
+// Keys that are no longer in the dataset are dropped — the list is only ever
+// a subset of what the directory currently holds.
+export function selectListedCompanies(list, keys) {
+  if (!Array.isArray(keys) || keys.length === 0) return [];
+  const byKey = new Map(list.map(item => [typeof item === 'string' ? item : JSON.stringify(item), item]));
+  const out = [];
+  for (const k of keys) if (byKey.has(k)) out.push(byKey.get(k));
+  return out;
 }
 
 // Cap-aware company sampling. Default: the dataset's natural (alphabetical)
@@ -694,7 +729,9 @@ async function main() {
   // either stream, and `--dry-run --json` has no checkpoint to fall back on
   // (dry runs write no state), so a long run was indistinguishable from a hung
   // one.
-  const progress = (s) => { if (opts.json) process.stderr.write(s); else process.stdout.write(s); };
+  // Humans get \r (one redrawn line). Machine consumers split stderr on /\r?\n/,
+  // so under --json the counter must end in a real newline or it is never seen.
+  const progress = (s) => { if (opts.json) process.stderr.write(s.replace(/\r$/, '\n')); else process.stdout.write(s); };
 
   if (!existsSync(PORTALS_PATH)) {
     console.error('Error: portals.yml not found. Run onboarding first — the reverse scan reuses its title_filter/location_filter.');
@@ -794,6 +831,7 @@ async function main() {
   // instead of passing for a fully-walked board.
   let cappedBoards = cc.cappedBoards || 0;
   const datasetStatus = {};
+  const companySelection = opts.companiesFile ? loadCompanySelection(opts.companiesFile) : null;
 
   const snapshotCounters = () => ({
     totalCompaniesScanned, totalErrors, totalRetiredBoardsSkipped,
@@ -851,6 +889,22 @@ async function main() {
       if (seenUrls.has(dedupToken)) continue;
       seenUrls.add(dedupToken); // intra-scan dedup
       newOffers.push({ ...job, source: `${sourceName}-full`, dateStatus: job.postedAt ? 'dated' : 'unknown' });
+      // Under --trace, mirror each accepted match to stderr as it is found. The
+      // authoritative list is still the single --json blob on stdout at the end;
+      // this exists so a caller whose run is cut short (timeout, SIGTERM) can
+      // salvage what was already found instead of losing the whole sweep.
+      if (opts.trace) {
+        try {
+          console.error('\u27e6offer\u27e7' + JSON.stringify({
+            company: job.company,
+            title: job.title,
+            url: job.url,
+            location: job.location || null,
+            postedAt: job.postedAt ? new Date(job.postedAt).toISOString().slice(0, 10) : null,
+            source: `${sourceName}-full`,
+          }));
+        } catch { /* a single unserialisable posting must not stop the sweep */ }
+      }
     }
   };
 
@@ -867,13 +921,16 @@ async function main() {
     const { list, status } = await loadCompanyList(name, source.dataset);
     datasetStatus[name] = status;
     totalCompaniesAvailable += list.length;
-    if (opts.limit < list.length) capHit = true;
+    if (!companySelection && opts.limit < list.length) capHit = true;
     if (completedSources.has(name)) {
       log(`\n⚙  ${name} — already complete in resumed checkpoint, skipping`);
       continue;
     }
     const datasetHash = datasetFingerprint(list);
-    const entriesAll = sampleCompanies(list, opts.limit, opts.shuffle).map(source.toEntry).filter(Boolean);
+    const entriesAll = (companySelection
+      ? selectListedCompanies(list, companySelection[name])
+      : sampleCompanies(list, opts.limit, opts.shuffle)).map(source.toEntry).filter(Boolean);
+    if (companySelection && entriesAll.length < list.length) capHit = true;
 
     let startAt = 0;
     if (checkpoint && checkpoint.current?.name === name) {
@@ -926,6 +983,10 @@ async function main() {
             if (opts.verbose) console.error(`  ⚠ ${name}/${entry.name}: hit the page cap — later postings not scanned`);
           }
           if (jobs.workdayNoDateSkip) { noDateSkipCompanies++; noDateSkipJobs += jobs.length; }
+          // Postings fetched, not matches: at CONCURRENCY > 1 a match counted here
+          // could belong to another company's in-flight processJobs. The running
+          // match total stays the counter's job.
+          if (opts.trace) console.error(`  \u00b7 ${name}/${entry.name} \u00b7 ${jobs.length} postings`);
           await processJobs(jobs, name, source.provider);
         })(), COMPANY_TIMEOUT_MS, `${name}/${entry.name}`);
       } catch (err) {
@@ -952,7 +1013,10 @@ async function main() {
     }, ({ done, resumeAt }) => {
       lastDone = done;
       lastResumeAt = resumeAt;
-      if (done % 200 === 0 || done === entries.length) {
+      // Fixed 200 meant a 150-company source reported progress exactly once,
+      // at the end. Scale the step to the source so small sweeps stay live.
+      const progressEvery = Math.max(1, Math.min(200, Math.ceil(entries.length / 50)));
+      if (done % progressEvery === 0 || done === entries.length) {
         progress(`  ${done}/${entries.length} scanned, ${newOffers.length} total matches\r`);
       }
       if (done % CHECKPOINT_EVERY === 0 && !opts.dryRun) {

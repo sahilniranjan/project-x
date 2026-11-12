@@ -26,6 +26,118 @@ export type ExploreFilters = {
   sinceDays: number;
   ats: AtsSource[];
   limitPerAts: number;
+  /** Company-level targeting (LOCAL: company-index.mjs). Decides WHICH boards a
+   *  scan walks; the keyword/location lists above still decide which postings. */
+  company: CompanyFilter;
+  /** How many companies to scan, top-priority first. 0 = every match. */
+  maxCompanies: number;
+};
+
+/** Mirrors lib/company-profile.mjs normalizeCompanyFilter (the core is the
+ *  authority — it re-normalizes whatever the web sends). Within a group the
+ *  options OR; groups AND. Option ids come from the core's CATALOG. */
+export type CompanyFilter = {
+  sizes: string[];
+  industries: string[];
+  excludeIndustries: string[];
+  types: string[];
+  excludeTypes: string[];
+  funding: string[];
+  workModels: string[];
+  regions: string[];
+  /** 0–100: at least this share of the company's postings are in the US */
+  minUsShare: number;
+  h1b: string[];
+  entryLevel: boolean;
+  /** 0–100: at least this share of open roles are engineering/data/ML */
+  minEngShare: number;
+  nameInclude: string[];
+  nameExclude: string[];
+  /** skip boards that had no open roles when indexed */
+  skipEmpty: boolean;
+  /** skip companies already in your tracker */
+  skipApplied: boolean;
+  /** let not-yet-indexed / unclassified companies through a filter */
+  includeUnknown: boolean;
+};
+
+export const DEFAULT_COMPANY_FILTER: CompanyFilter = {
+  sizes: [],
+  industries: [],
+  excludeIndustries: [],
+  types: [],
+  excludeTypes: [],
+  funding: [],
+  workModels: [],
+  regions: [],
+  minUsShare: 0,
+  h1b: [],
+  entryLevel: false,
+  minEngShare: 0,
+  nameInclude: [],
+  nameExclude: [],
+  skipEmpty: true,
+  skipApplied: false,
+  includeUnknown: true,
+};
+
+export const COMPANY_LIST_KEYS = [
+  "sizes", "industries", "excludeIndustries", "types", "excludeTypes", "funding", "workModels", "regions", "h1b", "nameInclude", "nameExclude",
+] as const;
+
+/** Count of active company-filter controls (badge on the panel header). */
+export function companyFilterCount(c: CompanyFilter): number {
+  let n = 0;
+  for (const k of COMPANY_LIST_KEYS) n += c[k].length;
+  if (c.minUsShare > 0) n++;
+  if (c.minEngShare > 0) n++;
+  if (c.entryLevel) n++;
+  if (c.skipApplied) n++;
+  return n;
+}
+
+export function cleanCompanyFilter(v: unknown, base: CompanyFilter = DEFAULT_COMPANY_FILTER): CompanyFilter {
+  const raw = v && typeof v === "object" ? (v as Record<string, unknown>) : {};
+  const out: CompanyFilter = { ...base };
+  for (const k of COMPANY_LIST_KEYS) {
+    if (raw[k] !== undefined) out[k] = cleanChips(raw[k]).map((x) => x.toLowerCase());
+  }
+  if (raw.minUsShare !== undefined) out.minUsShare = clampNum(raw.minUsShare, 0, 100, 0);
+  if (raw.minEngShare !== undefined) out.minEngShare = clampNum(raw.minEngShare, 0, 100, 0);
+  for (const k of ["entryLevel", "skipEmpty", "skipApplied", "includeUnknown"] as const) {
+    if (typeof raw[k] === "boolean") out[k] = raw[k] as boolean;
+  }
+  return out;
+}
+
+/** Facet counts + coverage the core reports for a company filter (POST /api/explore/companies). */
+export type CompanyStats = {
+  catalog: Record<"sizes" | "industries" | "types" | "funding" | "workModels" | "regions" | "h1b", { id: string; label: string }[]>;
+  coverage: { total: number; indexed: number; ok: number; unreachable: number };
+  perAts: Record<string, { available: number; matching: number; dataset: string }>;
+  matching: number;
+  matchingIndexed: number;
+  filterActive: boolean;
+  selected: number;
+  estMinutes: number;
+  estMinutesAll: number;
+  facets: Record<string, Record<string, number>>;
+  index: { updatedAt: string | null; enrichedAt: string | null; buildStartedAt: string | null; buildFinishedAt: string | null };
+};
+
+/** State of the background company-index build (GET /api/explore/index). */
+export type IndexJobState = {
+  running: boolean;
+  startedAt?: string;
+  finishedAt?: string;
+  total?: number;
+  done?: number;
+  ok?: number;
+  failed?: number;
+  ats?: string;
+  etaMin?: number | null;
+  phase?: "plan" | "fetch" | "enrich" | "done" | "error" | "cancelled";
+  error?: string;
 };
 
 export const DEFAULT_FILTERS: ExploreFilters = {
@@ -38,7 +150,12 @@ export const DEFAULT_FILTERS: ExploreFilters = {
   sinceDays: 7,
   ats: [...ATS_SOURCES],
   limitPerAts: 150,
+  company: { ...DEFAULT_COMPANY_FILTER },
+  maxCompanies: 600,
 };
+
+/** Upper bound for "how many companies" — the whole public directory and then some. */
+export const MAX_COMPANIES_CAP = 100_000;
 
 export type DiscoveredOffer = {
   url: string;
@@ -76,6 +193,7 @@ export type ScanEvent =
   | { kind: "start"; ats: string[]; sinceDays: number; limit: number; free: true }
   | { kind: "atsStart"; ats: string; companies: number }
   | { kind: "progress"; ats: string; scanned: number; total: number; matches: number }
+  | { kind: "company"; ats: string; company: string; postings: number }
   | { kind: "atsDone"; ats: string; unreachable: number }
   | { kind: "offer"; offer: DiscoveredOffer }
   | {
@@ -92,6 +210,8 @@ export type ScanEvent =
     }
   | { kind: "log"; line: string }
   | { kind: "error"; message: string }
+  /** Background scan job (LOCAL): the selection that was made before the scanner started. */
+  | { kind: "selection"; selected: number; matching: number; estMinutes: number; perAts: Record<string, number> }
   | { kind: "done"; count: number; offers: DiscoveredOffer[]; cost?: { tokens: number; usd: number } };
 
 // cleanChips is defined in clean-chips.mjs (plain JS) so it can be shared
@@ -123,7 +243,7 @@ export function parseExplorePatch(
   base: ExploreFilters = DEFAULT_FILTERS,
   merge = false,
 ): ExploreFilters {
-  const next: ExploreFilters = { ...base, ats: [...base.ats] };
+  const next: ExploreFilters = { ...base, ats: [...base.ats], company: { ...(base.company ?? DEFAULT_COMPANY_FILTER) } };
   const lists: [keyof ExploreFilters, string][] = [
     ["positive", "positive"],
     ["negative", "negative"],
@@ -142,6 +262,11 @@ export function parseExplorePatch(
   if (raw.limit !== undefined) next.limitPerAts = clampNum(raw.limit, 50, 500, base.limitPerAts);
   if (raw.limitPerAts !== undefined) next.limitPerAts = clampNum(raw.limitPerAts, 50, 500, base.limitPerAts);
   if (raw.ats !== undefined) next.ats = cleanAts(raw.ats);
+  if (raw.company !== undefined) next.company = cleanCompanyFilter(raw.company, merge ? next.company : DEFAULT_COMPANY_FILTER);
+  if (raw.maxCompanies !== undefined) next.maxCompanies = clampNum(raw.maxCompanies, 0, MAX_COMPANIES_CAP, base.maxCompanies);
+  // A legacy per-source depth (the assistant still speaks `limit`) becomes a
+  // total across the chosen sources, unless a total was given explicitly.
+  else if (raw.limit !== undefined || raw.limitPerAts !== undefined) next.maxCompanies = next.limitPerAts * next.ats.length;
   return next;
 }
 
@@ -157,6 +282,9 @@ export function filtersToParams(f: ExploreFilters): string {
   if (f.sinceDays !== DEFAULT_FILTERS.sinceDays) sp.set("since", String(f.sinceDays));
   if (f.ats.length !== ATS_SOURCES.length) sp.set("ats", f.ats.join(","));
   if (f.limitPerAts !== DEFAULT_FILTERS.limitPerAts) sp.set("limit", String(f.limitPerAts));
+  if (f.maxCompanies !== DEFAULT_FILTERS.maxCompanies) sp.set("max", String(f.maxCompanies));
+  if (f.company && companyFilterCount(f.company) > 0) sp.set("co", JSON.stringify(f.company));
+  else if (f.company && (!f.company.skipEmpty || !f.company.includeUnknown)) sp.set("co", JSON.stringify(f.company));
   return sp.toString();
 }
 
@@ -173,9 +301,20 @@ export function paramsToFilters(sp: URLSearchParams, base: ExploreFilters = DEFA
       since: sp.get("since") ?? undefined,
       ats: split(sp.get("ats")),
       limit: sp.get("limit") ?? undefined,
+      maxCompanies: sp.get("max") ?? undefined,
+      company: parseJsonParam(sp.get("co")),
     },
     base,
   );
+}
+
+function parseJsonParam(s: string | null): unknown {
+  if (!s) return undefined;
+  try {
+    return JSON.parse(s);
+  } catch {
+    return undefined;
+  }
 }
 
 /** AI-search URL codec (so an AI hunt is shareable/restorable). */

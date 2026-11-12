@@ -36,8 +36,34 @@ import { serializePortals } from "./portals-serialize.mjs";
 /** Write the ephemeral filter file to a temp path; caller cleans it up. */
 export function writeTempPortals(f: FilterLists): string {
   const file = path.join(os.tmpdir(), `career-ops-explore-${randomUUID()}.yml`);
-  fs.writeFileSync(file, serializePortals(f), "utf8");
+  fs.writeFileSync(file, serializePortals(withLocationFloor(f)), "utf8");
   return file;
+}
+
+/**
+ * Fall back to portals.yml's location_filter when the request carries none.
+ *
+ * seedExploreFilters() already seeds these tiers, but the seed only applies to a
+ * FRESH session: a browser holding saved filters from before portals.yml had a
+ * location_filter sends four empty lists, and an empty list here means "no
+ * location filtering at all". The user's standing location policy then silently
+ * does not apply to Explore while it does apply to every CLI scan — the two
+ * halves disagreeing, which is exactly what web/AGENTS.md rule 1 warns about.
+ *
+ * Only fills tiers the request left empty, so an explicit UI choice still wins.
+ */
+function withLocationFloor(f: FilterLists): FilterLists {
+  const hasLocation = f.allow.length || f.block.length || f.alwaysAllow.length || f.blockHard.length;
+  if (hasLocation) return f;
+  const lf = (loadYaml("portals.yml")?.location_filter ?? null) as Record<string, unknown> | null;
+  if (!lf) return f;
+  return {
+    ...f,
+    allow: listFrom(lf.allow),
+    block: listFrom(lf.block),
+    alwaysAllow: listFrom(lf.always_allow),
+    blockHard: listFrom(lf.block_hard),
+  };
 }
 
 export function cleanupTempPortals(file: string): void {
@@ -97,3 +123,24 @@ export function seedExploreFilters(): { filters: ExploreFilters; seededFrom: str
 }
 
 export { listFrom as normalizeKeywords };
+
+/**
+ * A prompt-facing statement of the user's location policy, read from
+ * portals.yml. Returns "" when no location_filter is configured.
+ *
+ * This is a SOFT guard: AI-search offers are parsed in the browser from a text
+ * stream, so unlike the free scan there is no server-side seam where they can be
+ * filtered deterministically. Saying it in the prompt is the available lever.
+ */
+export function locationConstraintLine(): string {
+  const lf = (loadYaml("portals.yml")?.location_filter ?? null) as Record<string, unknown> | null;
+  if (!lf) return "";
+  const allow = [...listFrom(lf.always_allow), ...listFrom(lf.allow)];
+  const block = [...listFrom(lf.block_hard), ...listFrom(lf.block)];
+  if (!allow.length && !block.length) return "";
+  const parts = ["\n--- LOCATION CONSTRAINT (hard) ---"];
+  if (allow.length) parts.push(`ONLY propose roles located in: ${allow.slice(0, 24).join(", ")}. Remote counts only if it is open to those locations.`);
+  if (block.length) parts.push(`NEVER propose roles located in: ${block.slice(0, 60).join(", ")}.`);
+  parts.push("This is a hard filter, not a preference: the GENEROUS FINDER rule above does NOT apply to geography. Discard an out-of-scope role rather than flagging it.");
+  return parts.join("\n") + "\n";
+}
