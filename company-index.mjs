@@ -203,7 +203,7 @@ async function build(opts) {
   for (const ats of opts.ats) {
     const source = SOURCES[ats];
     if (!source) continue;
-    const { list } = await loadCompanyList(ats, source.dataset);
+    const { list } = await loadCompanyList(ats, source.dataset, source.parseDataset);
     totalAvailable += list.length;
     const todo = [];
     for (const item of list) {
@@ -363,7 +363,7 @@ export async function evaluate({ filter, ats = DEFAULT_ATS, withFacets = true })
   for (const a of ats) {
     const source = SOURCES[a];
     if (!source) continue;
-    const { list, status } = await loadCompanyList(a, source.dataset);
+    const { list, status } = await loadCompanyList(a, source.dataset, source.parseDataset);
     perAts[a] = { available: list.length, matching: 0, dataset: status };
     for (const item of list) {
       coverage.total++;

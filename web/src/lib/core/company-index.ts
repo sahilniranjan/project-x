@@ -48,7 +48,7 @@ function runJson<T>(args: string[], timeoutMs = 60_000): Promise<T> {
       try {
         resolve(JSON.parse(out) as T);
       } catch {
-        reject(new Error(err.trim().split("\n").pop() || `company-index exited ${code}`));
+        reject(new Error(crashMessage(err.split("\n")) || `company-index exited ${code}`));
       }
     });
   });
@@ -98,6 +98,14 @@ function reg(): IndexRegistry {
 }
 
 const IDX_RE = /^⟦idx⟧(.+)$/;
+
+/** The useful line of a crashed child's stderr. Node ends an uncaught throw with
+ *  a stack and then `Node.js vX.Y.Z`, so the last line names the runtime, not the
+ *  failure; prefer the last `SomethingError: …` line. */
+function crashMessage(lines: string[]): string | undefined {
+  const real = lines.map((l) => l.trim()).filter((l) => l && !/^Node\.js v\d/.test(l) && !/^at\s/.test(l));
+  return [...real].reverse().find((l) => /\b[A-Z]\w*Error\b|^Error\b/.test(l)) ?? real[real.length - 1];
+}
 
 export function indexJobState(): IndexJobState & { log: string[] } {
   const r = reg();
@@ -152,7 +160,7 @@ export function startIndexBuild(opts: { ats: string[]; staleDays?: number }): In
       running: false,
       finishedAt: new Date().toISOString(),
       phase: cancelled ? "cancelled" : code === 0 ? "done" : "error",
-      error: cancelled || code === 0 ? undefined : r.log[r.log.length - 1] || `index build exited ${code}`,
+      error: cancelled || code === 0 ? undefined : crashMessage(r.log) || `index build exited ${code}`,
     };
     r.child = null;
   });

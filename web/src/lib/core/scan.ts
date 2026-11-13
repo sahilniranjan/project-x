@@ -29,7 +29,9 @@ const OFFER_RE = /^\s*\+\s+\[([^\]]+)\]\s+(\S+)\s+\|\s+(.+)$/;
 const ATS_START_RE = /⚙\s+(\S+)\s+—\s+(\d+)\s+companies/;
 const PROGRESS_RE = /(\d+)\/(\d+)\s+scanned,\s+(\d+)\s+total matches/;
 const ATS_DONE_RE = /done \((\d+) unreachable boards(?:,\s*\d+ retired boards)? skipped\)/;
-const SALVAGE_RE = /^\u27e6offer\u27e7(.+)$/;
+// Live match lines on stderr: core v1.40+ emits `{"kind":"offer",...}`
+// (formatLiveOfferLine); the older local --trace build used a \u27e6offer\u27e7 prefix.
+const SALVAGE_RE = /^(?:\u27e6offer\u27e7(\{.+)|(\{"kind":"offer".+))$/;
 const COMPANY_RE = /^\s*\u00b7\s+(\S+?)\/(.+?)\s+\u00b7\s+(\d+)\s+postings?$/;
 const COMPANIES_RE = /Companies scanned:\s+(\d+)/;
 const UNREACHABLE_RE = /Unreachable boards:\s+(\d+)/;
@@ -162,7 +164,7 @@ export function runDiscovery(filters: ExploreFilters, onEvent: (e: ScanEvent) =>
       const salvM = line.match(SALVAGE_RE);
       if (salvM) {
         try {
-          const o = JSON.parse(salvM[1]) as Partial<JsonOffer>;
+          const o = JSON.parse(salvM[1] ?? salvM[2]) as Partial<JsonOffer>;
           const url = (o.url || "").trim();
           if (url && o.company && o.title && !salvaged.some((x) => x.url === url)) {
             const source = o.source || `${currentAts}-full`;
