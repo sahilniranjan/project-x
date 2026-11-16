@@ -3,7 +3,7 @@ package data
 import (
 	"testing"
 
-	"github.com/santifer/career-ops/dashboard/internal/model"
+	"github.com/santifer/project-x/dashboard/internal/model"
 )
 
 func TestCanonicalizeArchetype(t *testing.T) {

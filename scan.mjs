@@ -84,13 +84,13 @@ import { closesAtIso } from './lib/posting-close.mjs';
 import { escapeFormulaCell } from './lib/tsv-formula-escape.mjs';
 import { sectionKind } from './lib/pipeline-sections.mjs';
 import { canonicalJobKey, normalizeUrl, LANGUAGE_PARAMS, languageSubtag, promoteKnownFragmentIdentity } from './url-key.mjs';
-import { getCareerOpsRoot, getProfilePath, hasProfileOverride } from './path-resolver.mjs';
+import { getProjectXRoot, getProfilePath, hasProfileOverride } from './path-resolver.mjs';
 import { checkLivenessViaApi } from './liveness-api.mjs';
 import { robotsAllows } from './robots-check.mjs';
 import { resolveExperienceFilter, applyExperienceFilter } from './jd-years.mjs';
 
 const CODE_ROOT = path.dirname(fileURLToPath(import.meta.url));
-export const DATA_ROOT = getCareerOpsRoot();
+export const DATA_ROOT = getProjectXRoot();
 // Preserve the actual shell environment before dotenv adds data-root values to
 // process.env. The browser resolver uses this snapshot to distinguish an
 // explicit shell path (which keeps cwd-relative behavior) from a path read from
@@ -120,9 +120,9 @@ import { applyEntryTimeout } from './lib/entry-timeout.mjs';
 export { applyEntryResponseCap };
 import { boardTruncation, describeTruncation } from './lib/board-truncation.mjs';
 
-export const PORTALS_PATH = process.env.CAREER_OPS_PORTALS || path.join(DATA_ROOT, 'portals.yml');
+export const PORTALS_PATH = process.env.PROJECT_X_PORTALS || path.join(DATA_ROOT, 'portals.yml');
 // An explicit override wins; otherwise the root fixed above, since the .env just
-// loaded may name another CAREER_OPS_ROOT that getProfilePath() would follow.
+// loaded may name another PROJECT_X_ROOT that getProfilePath() would follow.
 const PROFILE_PATH = hasProfileOverride() ? getProfilePath() : getProfilePath(DATA_ROOT);
 // Overridable for the same reason the two inputs above are (#2271). A second
 // search lane - a bridge/income track, a career-change track, a partner sharing
@@ -135,18 +135,18 @@ const PROFILE_PATH = hasProfileOverride() ? getProfilePath() : getProfilePath(DA
 // to carry their own bare-relative copy, so a sibling could check existence and
 // create data/pipeline.md in the cwd, then append the actual results to the
 // anchored one (#3510). One resolution, imported, cannot drift.
-export const SCAN_HISTORY_PATH = process.env.CAREER_OPS_SCAN_HISTORY || path.join(DATA_ROOT, 'data/scan-history.tsv');
-export const PIPELINE_PATH = process.env.CAREER_OPS_PIPELINE || path.join(DATA_ROOT, 'data/pipeline.md');
+export const SCAN_HISTORY_PATH = process.env.PROJECT_X_SCAN_HISTORY || path.join(DATA_ROOT, 'data/scan-history.tsv');
+export const PIPELINE_PATH = process.env.PROJECT_X_PIPELINE || path.join(DATA_ROOT, 'data/pipeline.md');
 
-// The closing hint names the lane's inbox when CAREER_OPS_PIPELINE is set.
-// `/career-ops pipeline` alone reads data/pipeline.md unless the agent's own
+// The closing hint names the lane's inbox when PROJECT_X_PIPELINE is set.
+// `/project-x pipeline` alone reads data/pipeline.md unless the agent's own
 // environment carries the same variable, so a lane run that only says "run
 // pipeline" sends the user to the other lane's inbox (#6379).
-export function pipelineRunHint(lane = process.env.CAREER_OPS_PIPELINE) {
+export function pipelineRunHint(lane = process.env.PROJECT_X_PIPELINE) {
   const file = lane?.trim();
   return file
-    ? `→ Run /career-ops pipeline ${file} to evaluate new offers (this lane's inbox, not data/pipeline.md).`
-    : '→ Run /career-ops pipeline to evaluate new offers.';
+    ? `→ Run /project-x pipeline ${file} to evaluate new offers (this lane's inbox, not data/pipeline.md).`
+    : '→ Run /project-x pipeline to evaluate new offers.';
 }
 
 export const APPLICATIONS_PATH = resolveTrackerPath(DATA_ROOT);
@@ -162,8 +162,8 @@ const PROVIDERS_DIR = path.resolve(CODE_ROOT, 'providers');
 
 // A board response can be tens of megabytes, and a request's timer also covers
 // reading the body. More requests in flight can therefore make a healthy board
-// miss its timeout on a slower connection. CAREER_OPS_SCAN_CONCURRENCY caps the
-// whole company scan, and CAREER_OPS_SCAN_HOST_CONCURRENCY caps one hostname
+// miss its timeout on a slower connection. PROJECT_X_SCAN_CONCURRENCY caps the
+// whole company scan, and PROJECT_X_SCAN_HOST_CONCURRENCY caps one hostname
 // inside it. Verify has its own fixed limit. It hammers one URL at a time and is
 // not the morning-scan wait.
 export const DEFAULT_CONCURRENCY = 10;
@@ -183,8 +183,8 @@ export function resolveConcurrency(raw, fallback = DEFAULT_CONCURRENCY) {
   return Number.isSafeInteger(parsed) && parsed > 0 ? parsed : fallback;
 }
 
-export const SCAN_CONCURRENCY = resolveConcurrency(process.env.CAREER_OPS_SCAN_CONCURRENCY);
-export const HOST_CONCURRENCY = resolveConcurrency(process.env.CAREER_OPS_SCAN_HOST_CONCURRENCY);
+export const SCAN_CONCURRENCY = resolveConcurrency(process.env.PROJECT_X_SCAN_CONCURRENCY);
+export const HOST_CONCURRENCY = resolveConcurrency(process.env.PROJECT_X_SCAN_HOST_CONCURRENCY);
 export const VERIFY_CONCURRENCY = 10;
 
 export function companyFetchHost(company) {
@@ -2543,8 +2543,8 @@ export function collectSeenUrls(sources = {}, policy = {}, { extraTokensFor } = 
 }
 
 // Path options mirror mergeIntoPipeline's seam below: the defaults are the
-// CAREER_OPS_ROOT-anchored module constants, and a caller with its own lane
-// (or a test with a fixture) passes explicit paths. Before CAREER_OPS_ROOT the
+// PROJECT_X_ROOT-anchored module constants, and a caller with its own lane
+// (or a test with a fixture) passes explicit paths. Before PROJECT_X_ROOT the
 // defaults were cwd-relative strings, so callers could retarget them by
 // chdir'ing; an anchored default needs a real parameter instead.
 export function loadSeenUrls(policy = {}, {
@@ -3739,10 +3739,10 @@ export function loadDedupSnapshot(policy = {}, canonicalize = defaultCompanyNorm
 }
 
 // Standard skeleton created on fresh install — matches the format documented
-// in modes/pipeline.md and expected by /career-ops pipeline.
+// in modes/pipeline.md and expected by /project-x pipeline.
 const PIPELINE_SKELETON = `# Pipeline — Pending URLs
 
-Paste job URLs below as \`- [ ] {url}\` then run \`/career-ops pipeline\`.
+Paste job URLs below as \`- [ ] {url}\` then run \`/project-x pipeline\`.
 
 ## Pending
 
@@ -3846,7 +3846,7 @@ function offersMissingFromHistory(offers, status, historyText, policy = {}) {
 // Locked (pipeline-lock.mjs) so scan.mjs, scan-ats-full.mjs, and plugins.mjs
 // (pipeline mode) — the three current callers — can never interleave their
 // read-modify-write and silently drop each other's offers.
-// Same seam as loadSeenUrls above: the default is the CAREER_OPS_ROOT-anchored
+// Same seam as loadSeenUrls above: the default is the PROJECT_X_ROOT-anchored
 // module constant; a caller with its own lane (or a fixture) passes the path.
 //
 // The read that decides "already here" happens inside the lock. Two scans can
@@ -4100,7 +4100,7 @@ export function parseAggregatorDomains(text) {
   return entries;
 }
 
-export const AGGREGATOR_DOMAINS_PATH = process.env.CAREER_OPS_AGGREGATOR_DOMAINS || path.join(CODE_ROOT, 'data-static/aggregator-domains.txt');
+export const AGGREGATOR_DOMAINS_PATH = process.env.PROJECT_X_AGGREGATOR_DOMAINS || path.join(CODE_ROOT, 'data-static/aggregator-domains.txt');
 
 /**
  * Load data-static/aggregator-domains.txt dataset.
@@ -4237,7 +4237,7 @@ export function appendScanRunSummary(c, filePath = SCAN_RUNS_PATH) {
 // sandboxed run was writing fixture rows into the live data/portal-health.tsv of
 // whatever checkout owned scan.mjs. That problem was real; the mechanism traded
 // one unanchored path for another, and left this file with two different rules
-// for where user data lives. Isolation now comes from CAREER_OPS_ROOT, which is
+// for where user data lives. Isolation now comes from PROJECT_X_ROOT, which is
 // how the rest of the suite already sandboxes writes — see
 // tests/portal-health-path.test.mjs, which still asserts the checkout's own data
 // directory is never touched.
@@ -5472,10 +5472,10 @@ async function main() {
     });
     await retryTransientFailures();
   };
-  if (process.env.CAREER_OPS_HTTP_CACHE === '0') {
+  if (process.env.PROJECT_X_HTTP_CACHE === '0') {
     await companyFetches();
   } else {
-    const ttlMs = resolveHttpCacheTtlMs(process.env.CAREER_OPS_HTTP_CACHE_TTL_MS);
+    const ttlMs = resolveHttpCacheTtlMs(process.env.PROJECT_X_HTTP_CACHE_TTL_MS);
     await withHttpCache({
       dir: path.join(DATA_ROOT, 'data', 'cache', 'http'),
       ttlMs,
@@ -5487,7 +5487,7 @@ async function main() {
       const parts = [];
       if (stats.hits > 0) parts.push(`reused ${stats.hits} board responses saved in the last ${formatHttpCacheWindow(ttlMs)}`);
       if (stats.revalidated > 0) parts.push(`rechecked ${stats.revalidated} older board responses`);
-      process.stderr.write(`scan: ${parts.join(', and ')}. Set CAREER_OPS_HTTP_CACHE=0 to always download.\n`);
+      process.stderr.write(`scan: ${parts.join(', and ')}. Set PROJECT_X_HTTP_CACHE=0 to always download.\n`);
     });
   }
   for (const processBoard of deferredBoards) await processBoard();
@@ -5986,7 +5986,7 @@ async function main() {
       + totalFilteredContent + totalFilteredCountryEligibility + totalFilteredBlacklist
       + totalFilteredVisa + totalFilteredCooldown;
     emitJsonReceipt({
-      version: 'careerops.scan.receipt@1',
+      version: 'projectx.scan.receipt@1',
       date,
       scanned: targets.length,
       skipped: skippedCount,

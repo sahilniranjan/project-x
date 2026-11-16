@@ -53,7 +53,7 @@ import {
   PORTALS_PATH,
 } from './scan.mjs';
 import { createAdmissionGate } from './lib/admission-gate.mjs';
-import { getCareerOpsRoot } from './path-resolver.mjs';
+import { getProjectXRoot } from './path-resolver.mjs';
 import { localToday } from './lib/local-today.mjs';
 import { printScanSummaryHeader } from './lib/scan-summary-marker.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
@@ -116,7 +116,7 @@ export const CHALLENGE_MARKERS = Object.freeze([
   'cf-challenge',
 ]);
 
-const DATA_ROOT = getCareerOpsRoot();
+const DATA_ROOT = getProjectXRoot();
 
 // ── Args ─────────────────────────────────────────────────────────────
 
@@ -655,7 +655,7 @@ export async function main({ argv = [] } = {}) {
     console.log(dryRun ? '\n(dry run — not saved)' : '\nSaved to data/pipeline.md');
   }
 
-  console.log('\n→ Run /career-ops pipeline to evaluate new offers.');
+  console.log('\n→ Run /project-x pipeline to evaluate new offers.');
   // Errors are reported in the summary above, not through the exit code —
   // same convention as scan-interamt.mjs and scan-dayforce.mjs, so a scheduled
   // caller does not treat one challenged keyword as a crashed scan.

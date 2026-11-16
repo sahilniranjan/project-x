@@ -40,14 +40,14 @@
  *      node role-clarity.mjs <jd-file> --summary   (human-readable)
  *      node role-clarity.mjs --self-test
  *
- * Issue #6091 — github.com/career-ops-hq/career-ops
+ * Issue #6091 — github.com/project-x-hq/project-x
  */
 
 import { readFileSync, existsSync, statSync } from 'fs';
 import { isAbsolute, resolve } from 'path';
 import { isMainModule } from './lib/is-main-module.mjs';
 import { validateFlags } from './lib/cli-flags.mjs';
-import { getCareerOpsRoot } from './path-resolver.mjs';
+import { getProjectXRoot } from './path-resolver.mjs';
 
 /** Three or more `missing` points trigger the "ask before you commit" list. */
 export const MISSING_THRESHOLD = 3;
@@ -423,12 +423,12 @@ if (isMainModule(import.meta.url)) {
   } else {
     const jdPath = args.find((a) => !a.startsWith('-'));
     // A relative path (jds/{slug}.md) is a user-layer file: resolve it under the
-    // data root (CAREER_OPS_ROOT), never the process working directory. An
+    // data root (PROJECT_X_ROOT), never the process working directory. An
     // absolute path is used as given. Nothing under data/ is required.
     let resolvedPath = null;
     if (jdPath) {
       try {
-        resolvedPath = isAbsolute(jdPath) ? jdPath : resolve(getCareerOpsRoot(), jdPath);
+        resolvedPath = isAbsolute(jdPath) ? jdPath : resolve(getProjectXRoot(), jdPath);
       } catch (err) {
         console.error(`Error: ${err.message}`);
         process.exit(1);

@@ -311,7 +311,7 @@ func pendingURLKey(raw string) string {
 	return u.String()
 }
 
-// LoadPendingRows reads the Pending rows of {careerOpsPath}/data/pipeline.md
+// LoadPendingRows reads the Pending rows of {projectXPath}/data/pipeline.md
 // and the batch status of each. It reads three files and writes none.
 //
 // A missing pipeline.md or batch file means no rows or no status. Any other
@@ -321,8 +321,8 @@ func pendingURLKey(raw string) string {
 // The batch files are found through batchFilePath, so they are the ones the
 // tracker's URL lookup reads: beside batch/batch-runner.sh in the checkout
 // when it has them, else in the data root.
-func LoadPendingRows(careerOpsPath string) ([]PendingRow, error) {
-	text, err := os.ReadFile(PendingPipelinePath(careerOpsPath))
+func LoadPendingRows(projectXPath string) ([]PendingRow, error) {
+	text, err := os.ReadFile(PendingPipelinePath(projectXPath))
 	if errors.Is(err, fs.ErrNotExist) {
 		return nil, nil
 	}
@@ -334,8 +334,8 @@ func LoadPendingRows(careerOpsPath string) ([]PendingRow, error) {
 		return rows, nil
 	}
 	statuses, err := loadBatchStatuses(
-		batchFilePath(careerOpsPath, "batch-input.tsv"),
-		batchFilePath(careerOpsPath, "batch-state.tsv"),
+		batchFilePath(projectXPath, "batch-input.tsv"),
+		batchFilePath(projectXPath, "batch-state.tsv"),
 	)
 	if err != nil {
 		return nil, err
@@ -347,8 +347,8 @@ func LoadPendingRows(careerOpsPath string) ([]PendingRow, error) {
 }
 
 // PendingPipelinePath is the file the Inbox tab reads.
-func PendingPipelinePath(careerOpsPath string) string {
-	return filepath.Join(careerOpsPath, "data", "pipeline.md")
+func PendingPipelinePath(projectXPath string) string {
+	return filepath.Join(projectXPath, "data", "pipeline.md")
 }
 
 // readOptional returns a file's text, or "" when it does not exist.

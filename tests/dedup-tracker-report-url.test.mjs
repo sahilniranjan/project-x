@@ -48,7 +48,7 @@ function survivors(rows, reports, outside, header = HEADER) {
     writeFileSync(tracker, ['# Applications Tracker', '', header, separator, ...rows, ''].join('\n'));
     execFileSync(process.execPath, [DEDUP], {
       encoding: 'utf-8',
-      env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_TRACKER: '', CAREER_OPS_DATA_DIR: '' },
+      env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_TRACKER: '', PROJECT_X_DATA_DIR: '' },
     });
     return readFileSync(tracker, 'utf-8').split('\n')
       .map((l) => l.match(/^\|\s*(\d+)\s*\|/)).filter(Boolean).map((m) => Number(m[1]));
@@ -112,7 +112,7 @@ ok('a Report cell that walks out of the data root is not read', () => {
 });
 
 ok('containedReportTarget refuses a path that escapes the root', () => {
-  const root = resolve(sep, 'srv', 'career-ops');
+  const root = resolve(sep, 'srv', 'project-x');
   assert.strictEqual(containedReportTarget('[1](../../../etc/passwd)', root), join(root, 'etc', 'passwd'),
     'leading ../ is stripped and the rest resolved INSIDE the root');
   assert.strictEqual(containedReportTarget('[1](reports/../../../etc/passwd)', root), null,

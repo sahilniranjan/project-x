@@ -1,4 +1,4 @@
-# career-ops -- India market mode (`modes/in/`)
+# project-x -- India market mode (`modes/in/`)
 
 English-language modes with Indian market rules for candidates applying to
 employers in India, freshers and experienced professionals alike.

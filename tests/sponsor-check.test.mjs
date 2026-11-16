@@ -386,7 +386,7 @@ test('cacheAgeDays: whole days, and null without a marker', () => {
 });
 
 test('readCacheMeta: a CSV without its marker reads as no cache (interrupted download)', () => {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-sponsor-cache-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-sponsor-cache-'));
   try {
     const csv = join(dir, 'register.csv');
     const meta = join(dir, 'register.meta.json');
@@ -500,7 +500,7 @@ test('fetchRegisterCsv: a redirect off GOV.UK is refused before it is requested'
 });
 
 test('refreshCache: after a redirect the cache names the file actually served', async (t) => {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-sponsor-redirect-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-sponsor-redirect-'));
   const rows = Array.from({ length: 1200 }, (_, i) => `Org ${i} Ltd,London,,Worker (A rating),Skilled Worker`);
   const csv = ['Organisation Name,Town/City,County,Type & Rating,Route', ...rows].join('\n');
   const routes = {
@@ -610,7 +610,7 @@ test('annotateCompanies: no employers yields zeros rather than dividing by zero'
 // --- 7. CLI -----------------------------------------------------------------
 
 function fixtureDir() {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-sponsor-cli-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-sponsor-cli-'));
   mkdirSync(join(dir, 'data'), { recursive: true });
   writeFileSync(join(dir, 'register.csv'), REGISTER_FIXTURE);
   writeFileSync(join(dir, 'data', 'applications.md'), TRACKER_FIXTURE);
@@ -619,9 +619,9 @@ function fixtureDir() {
 }
 
 function run(dir, args) {
-  const env = { ...process.env, CAREER_OPS_ROOT: dir };
-  delete env.CAREER_OPS_DATA_DIR;
-  delete env.CAREER_OPS_TRACKER;
+  const env = { ...process.env, PROJECT_X_ROOT: dir };
+  delete env.PROJECT_X_DATA_DIR;
+  delete env.PROJECT_X_TRACKER;
   const r = spawnSync(process.execPath, [SCRIPT, ...args], {
     cwd: CODE_ROOT, env, encoding: 'utf-8', timeout: 60_000,
   });

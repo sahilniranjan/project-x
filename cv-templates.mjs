@@ -10,7 +10,7 @@ import { fileURLToPath } from 'url';
 import { loadYaml } from './lib/yaml-document.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
 import { decodeEntities } from './providers/_html-entities.mjs';
-import { getProfilePath, getCareerOpsRoot } from './path-resolver.mjs';
+import { getProfilePath, getProjectXRoot } from './path-resolver.mjs';
 import {
   parseMeta, PARTIAL_SECTIONS, declaredSections, checkDeclaredSections,
 } from './lib/template-manifest.mjs';
@@ -23,7 +23,7 @@ export { parseMeta, PARTIAL_SECTIONS, declaredSections, checkDeclaredSections };
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 // templates/ is System Layer (code root); config/profile.yml is User Layer and
-// follows the data root. CAREER_OPS_PROFILE still wins over both.
+// follows the data root. PROJECT_X_PROFILE still wins over both.
 export const DEFAULT_TEMPLATES_DIR = resolve(__dirname, 'templates');
 const DEFAULT_PROFILE_PATH = getProfilePath();
 
@@ -31,7 +31,7 @@ const DEFAULT_PROFILE_PATH = getProfilePath();
 // where the updater never looks. Read per call, not at load, so the data root a
 // caller sets is the one searched.
 export function DEFAULT_USER_TEMPLATES_DIR() {
-  return resolve(getCareerOpsRoot(), 'data', 'templates');
+  return resolve(getProjectXRoot(), 'data', 'templates');
 }
 
 export const KINDS = {
@@ -129,7 +129,7 @@ function entryFor(parsed, path, pack, layer) {
 // recurses; a link pointing at its own ancestor is read once as a directory
 // and contributes whatever template files sit at its top level.
 //
-// The deciding cost is silent invisibility. career-ops sanctions a symlinked
+// The deciding cost is silent invisibility. project-x sanctions a symlinked
 // user layer (#524), so a pack maintained outside the repo is a supported
 // setup, and skipping it would drop the template from the registry with
 // nothing said — the same failure this file refuses to accept for name

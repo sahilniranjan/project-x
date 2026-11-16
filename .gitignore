@@ -117,7 +117,7 @@ reports/*-RESERVED.md
 # above match. SQLite's -wal/-shm sidecars travel with it.
 #
 # Deliberately not root-anchored. The index follows the tracker markdown, and
-# getCareerOpsRoot() resolves a relative CAREER_OPS_ROOT (or .career-ops-data
+# getProjectXRoot() resolves a relative PROJECT_X_ROOT (or .project-x-data
 # marker) against the codebase directory — so a data root configured as
 # `career-data` puts both inside the checkout, in neither of the two places an
 # anchored rule would cover. Nothing tracked in this repo ends in .db, and an
@@ -165,7 +165,7 @@ playwright-report/
 plan/
 
 # Web — runtime cache/history the dashboard writes locally; nothing here is tracked.
-.career-ops-web/
+.project-x-web/
 
 # Upgrade-test fixtures are fictional system-layer data, never user data
 # (see DATA_CONTRACT.md). Re-include them past the unanchored user-layer

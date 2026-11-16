@@ -1,10 +1,10 @@
 # Add LinkedIn jobs
 
-Paste a LinkedIn job alert into CareerOps. The jobs land in your pipeline. You do not create a Google Cloud project, and you do not connect Gmail.
+Paste a LinkedIn job alert into ProjectX. The jobs land in your pipeline. You do not create a Google Cloud project, and you do not connect Gmail.
 
 ## Paste on the dashboard
 
-1. Open CareerOps in the browser.
+1. Open ProjectX in the browser.
 2. Open a LinkedIn job alert email.
 3. Select all, then copy.
 4. On the home page or the pipeline, paste into **LinkedIn job alerts**.
@@ -38,6 +38,6 @@ With no file and no pipe, the command prints this help and waits for nothing.
 
 Each job is saved as `https://www.linkedin.com/jobs/view/{id}`. A tracking link from the email, including `/comm/jobs/view/`, becomes that address.
 
-CareerOps does not log in to LinkedIn, does not search LinkedIn, and does not message anyone.
+ProjectX does not log in to LinkedIn, does not search LinkedIn, and does not message anyone.
 
 The Gmail plugin remains available when you already have OAuth keys. You do not need it for LinkedIn alerts. See [Plugins](PLUGINS.md).

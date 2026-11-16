@@ -1,12 +1,12 @@
 # 模式: pipeline — 待处理 URL 收件箱 (第二大脑)
 
-批量处理收件箱里的职位 URL，默认收件箱是 `data/pipeline.md`。候选人可以随时往里面追加链接，然后运行 `/career-ops pipeline` 一次性处理全部待处理项。
+批量处理收件箱里的职位 URL，默认收件箱是 `data/pipeline.md`。候选人可以随时往里面追加链接，然后运行 `/project-x pipeline` 一次性处理全部待处理项。
 
 ## 使用哪个收件箱
 
 在存活检查之前先确定收件箱文件，本模式里所有搜索和编辑都只针对这个文件。下文中的 `{INBOX}` 均指它。
 
-1. 用户在请求中点名的文件就是收件箱（`/career-ops pipeline data/pipeline.bridge.md`，或"对 data/pipeline.bridge.md 运行 pipeline 模式"）。
+1. 用户在请求中点名的文件就是收件箱（`/project-x pipeline data/pipeline.bridge.md`，或"对 data/pipeline.bridge.md 运行 pipeline 模式"）。
 2. 否则，收件箱就是 `scan.mjs` 写入的那个文件。直接问它，让本模式和扫描器用同一种方式解析路径：
 
    ```bash
@@ -15,7 +15,7 @@
 
    和其他脚本一样在 `PROJECT_ROOT` 下运行：`./scan.mjs` 是相对当前工作目录解析的，而在仓库之外启动的会话（例如插件安装）工作目录不同。如果命令失败，如实说明并停止，不要猜测收件箱路径。
 
-   如果设置了 `CAREER_OPS_PIPELINE`（在 shell 中，或在数据根目录的 `.env` 中；即并行搜索通道，#2271），它会打印该值；否则打印数据根目录下的 `data/pipeline.md`。不要只从 shell 读取这个变量：`scan.mjs` 还会加载数据根目录的 `.env`，只在 `.env` 里设置的通道会被漏掉，该通道的岗位就会一直停在 `- [ ]`。
+   如果设置了 `PROJECT_X_PIPELINE`（在 shell 中，或在数据根目录的 `.env` 中；即并行搜索通道，#2271），它会打印该值；否则打印数据根目录下的 `data/pipeline.md`。不要只从 shell 读取这个变量：`scan.mjs` 还会加载数据根目录的 `.env`，只在 `.env` 里设置的通道会被漏掉，该通道的岗位就会一直停在 `- [ ]`。
 
 当收件箱不是 `data/pipeline.md` 时，在输出的第一行写明它（`Inbox: data/pipeline.bridge.md`），让用户知道正在处理哪个通道。如果该文件不存在，如实说明并停止。不要回退到 `data/pipeline.md`：那是另一个通道的收件箱。
 
@@ -56,9 +56,9 @@
 
    **选择简历输出格式：** 这一步就是 `modes/auto-pipeline.md` → Step 3，不是另一条规则。读取 `config/profile.yml` → `cv.output_format` 并据此分流：`"latex"` → `modes/latex.md`，`"text"` → `modes/text.md`，其他情况（默认）→ `modes/pdf.md`。`latex` 和 `text` 路径无论得分多少都不会生成 HTML 或 PDF，在 tracker 和汇总表中把 PDF 标为 ❌。下面的 PDF 关卡只收窄默认路径，不能用来覆盖候选人配置的格式。
 
-   **关于 PDF 关卡（可配置，仅限默认路径）：** 读取 `config/profile.yml` → `auto_pdf_score_threshold`。如果该配置项不存在，默认阈值为 `3.0`（本模式原有的关卡）。如果评估得分低于阈值，跳过 PDF 生成：照常写报告，在报告头部标明 `**PDF:** not generated — run /career-ops pdf {company-slug} to create on demand`，并在 tracker 中把 PDF 标为 ❌。如果得分达到或超过阈值，照常生成 PDF。
+   **关于 PDF 关卡（可配置，仅限默认路径）：** 读取 `config/profile.yml` → `auto_pdf_score_threshold`。如果该配置项不存在，默认阈值为 `3.0`（本模式原有的关卡）。如果评估得分低于阈值，跳过 PDF 生成：照常写报告，在报告头部标明 `**PDF:** not generated — run /project-x pdf {company-slug} to create on demand`，并在 tracker 中把 PDF 标为 ❌。如果得分达到或超过阈值，照常生成 PDF。
 
-   **如何调整：** 每生成一份定制 PDF 大约需要 30 到 60 秒（启动 Playwright 加渲染 HTML），而且生成的文件常常用不上：大多数岗位得分在 2.x/3.x，根本走不到投递那一步。调高 `auto_pdf_score_threshold`（例如 `4.0`），对边缘岗位只写报告，需要时再用 `/career-ops pdf {slug}` 单独生成 PDF；设为 `0` 则为每个岗位都生成。两种路径（路径 A `/career-ops pipeline` 和路径 B `batch/batch-runner.sh`）读取的是同一个配置项，所以无论哪条路径处理某个岗位，行为都完全相同。
+   **如何调整：** 每生成一份定制 PDF 大约需要 30 到 60 秒（启动 Playwright 加渲染 HTML），而且生成的文件常常用不上：大多数岗位得分在 2.x/3.x，根本走不到投递那一步。调高 `auto_pdf_score_threshold`（例如 `4.0`），对边缘岗位只写报告，需要时再用 `/project-x pdf {slug}` 单独生成 PDF；设为 `0` 则为每个岗位都生成。两种路径（路径 A `/project-x pipeline` 和路径 B `batch/batch-runner.sh`）读取的是同一个配置项，所以无论哪条路径处理某个岗位，行为都完全相同。
 3. **是否并发取决于提取工具。** 如果通过检查的 URL 要用基于浏览器的 Playwright/MCP（`browser_navigate` + `browser_snapshot`）提取，**逐个处理**：多个 worker 绝不能共用一个浏览器会话，否则导航和快照会互相串扰，评估到错误的岗位。只有当所有 worker 都使用隔离的 CLI 提取器或非浏览器回退方式，**并且**编排者能保证进程和会话状态相互独立时，3 个及以上的 URL 才可以用 `run_in_background` 并行处理，每个 worker 最多处理一个 URL。每个 worker 都是**单次 worker**：只评估自己的那一个 URL，**不得**再派生子 agent 或调用其他技能；它的公司和薪酬调研在内部完成，并且有明确范围（见 `modes/_shared.md` → Subagent delegation）。拿不准时，走逐个处理的路径。
 4. **处理完毕后**，输出汇总表：
 
@@ -72,7 +72,7 @@
 
 ## `pipeline.md` 格式
 
-所有收件箱文件，无论是 `data/pipeline.md` 还是某个通道的 `CAREER_OPS_PIPELINE` 文件，都使用这个格式。
+所有收件箱文件，无论是 `data/pipeline.md` 还是某个通道的 `PROJECT_X_PIPELINE` 文件，都使用这个格式。
 
 ```markdown
 ## Pending

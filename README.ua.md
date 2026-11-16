@@ -1,4 +1,4 @@
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/wordmark-dark.svg"><img src="docs/wordmark-light.svg" alt="career-ops" width="250" height="56"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/wordmark-dark.svg"><img src="docs/wordmark-light.svg" alt="project-x" width="250" height="56"></picture></p>
 
 <p align="center">AI-агент з відкритим кодом для пошуку роботи.</p>
 
@@ -26,7 +26,7 @@
 
 <!-- The non-breaking spaces (&nbsp;) and word joiners (&#8288;) below decide where each line wraps on a phone. Keep them when editing. -->
 
-<p align="center"><a href="https://github.com/santifer"><img src="docs/avatar-santifer.png" width="48" height="48" align="middle" alt="Santiago Fernández de Valderrama Aparicio"></a>&nbsp;&nbsp;Створено <a href="https://github.com/santifer"><strong>@santifer</strong></a> за участі&nbsp;&nbsp;<a href="https://github.com/career-ops-hq/career-ops/blob/main/README.ua.md#builders"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/builders-stack-dark.svg"><img src="docs/builders-stack-light.svg" alt="" height="32" align="middle"></picture></a>&nbsp;&nbsp;<a href="https://github.com/career-ops-hq/career-ops/blob/main/README.ua.md#builders">800+ контриб'юторів</a></p>
+<p align="center"><a href="https://github.com/santifer"><img src="docs/avatar-santifer.png" width="48" height="48" align="middle" alt="Santiago Fernández de Valderrama Aparicio"></a>&nbsp;&nbsp;Створено <a href="https://github.com/santifer"><strong>@santifer</strong></a> за участі&nbsp;&nbsp;<a href="https://github.com/project-x-hq/project-x/blob/main/README.ua.md#builders"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/builders-stack-dark.svg"><img src="docs/builders-stack-light.svg" alt="" height="32" align="middle"></picture></a>&nbsp;&nbsp;<a href="https://github.com/project-x-hq/project-x/blob/main/README.ua.md#builders">800+ контриб'юторів</a></p>
 
 <p align="center">
 <strong>Місяці надсилання резюме в&nbsp;тишу.</strong><br>
@@ -44,7 +44,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/demo.gif" alt="Власний пошук автора в дашборді career-ops: вакансії з оцінками, червоний лічильник тих, що позначені «не відгукуватися», а потім повний звіт оцінки" width="800">
+  <img src="docs/demo.gif" alt="Власний пошук автора в дашборді project-x: вакансії з оцінками, червоний лічильник тих, що позначені «не відгукуватися», а потім повний звіт оцінки" width="800">
 </p>
 
 <p align="center"><sub>Мій власний пошук, на&nbsp;півдорозі, з&nbsp;інтерфейсом&nbsp;іспанською.</sub></p>
@@ -56,15 +56,15 @@
 
 <p align="center">
   Через пів року <strong>я залишив цю&nbsp;роботу.</strong><br>
-  Тепер ми будуємо career-ops, щоб&nbsp;ви&nbsp;могли&nbsp;отримати&nbsp;свою.
+  Тепер ми будуємо project-x, щоб&nbsp;ви&nbsp;могли&nbsp;отримати&nbsp;свою.
 </p>
 
-<p align="center"><a href="#ваша-черга">Спробуйте на одній вакансії&nbsp;↓</a> · <a href="https://santifer.io/career-ops-system">Прочитайте всю&nbsp;історію&nbsp;→</a></p>
-<p align="center"><sub>Не хочете працювати в терміналі? <a href="https://career-ops.org/waitlist?ref=readme-ua">Запишіться до списку очікування вебверсії&nbsp;→</a></sub></p>
+<p align="center"><a href="#ваша-черга">Спробуйте на одній вакансії&nbsp;↓</a> · <a href="https://santifer.io/project-x-system">Прочитайте всю&nbsp;історію&nbsp;→</a></p>
+<p align="center"><sub>Не хочете працювати в терміналі? <a href="https://project-x.org/waitlist?ref=readme-ua">Запишіться до списку очікування вебверсії&nbsp;→</a></sub></p>
 
 <br>
 
-<p align="center"><a href="HIRED.md"><img src="docs/hired-badge.svg" alt="Hired with career-ops: public stories on the record"></a></p>
+<p align="center"><a href="HIRED.md"><img src="docs/hired-badge.svg" alt="Hired with project-x: public stories on the record"></a></p>
 
 <p align="center">Люди, які прийшли після мене, записали, як їх найняли.</p>
 
@@ -72,9 +72,9 @@
   <a href="HIRED.md"><img src="docs/hired-wall.svg" alt="Історії найму, які можна відкрити й прочитати" width="800"></a>
 </p>
 
-<p align="center"><sub>Кожна картка — публічний issue, який можна відкрити. Отримали свою роботу? <a href="https://github.com/career-ops-hq/career-ops/issues/new?template=i-got-hired.yml">Залиште свою картку →</a></sub></p>
+<p align="center"><sub>Кожна картка — публічний issue, який можна відкрити. Отримали свою роботу? <a href="https://github.com/project-x-hq/project-x/issues/new?template=i-got-hired.yml">Залиште свою картку →</a></sub></p>
 
-<p align="center">⭐ <strong>Якщо career-ops вам допоміг, зірка допоможе наступній людині його&nbsp;знайти.</strong></p>
+<p align="center">⭐ <strong>Якщо project-x вам допоміг, зірка допоможе наступній людині його&nbsp;знайти.</strong></p>
 
 <br>
 
@@ -99,7 +99,7 @@
 Вставте одну вакансію, на яку збиралися відгукнутися сьогодні ввечері. Якщо у відповідь прийде <em>не відгукуватися</em>, ви щойно повернули собі вечір. Якщо прийде план, ви знаєте, що робити далі.
 
 ```bash
-npx @santifer/career-ops init
+npx @santifer/project-x init
 ```
 
 <p align="center"><sub>Відкритий код. Локально. У тому ШІ-CLI, яким ви вже користуєтесь. <a href="docs/RUNNING_ON_A_BUDGET.md">Безкоштовні та локальні моделі включно.</a></sub></p>
@@ -111,15 +111,15 @@ npx @santifer/career-ops init
 
 > Відгукуватися краще, але на менше. Сигнал важливіший за обсяг. Докази важливіші за ключові слова. Вирішує людина. Спершу локально. Гідність по обидва боки столу.
 
-<p align="center"><a href="https://career-ops.org/manifesto?utm_source=readme"><img src="https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcareer-ops-hq%2Fcareer-ops%2Fmain%2FSIGNATURES.md&search=n%3A(%5Cd%2B)%5Cs*%24&replace=%241%20signatories&label=THE%20CAREEROPS%20MANIFESTO&color=DD7627&style=for-the-badge&labelColor=2b3137" alt="Маніфест CareerOps: кількість підписантів наживо"></a></p>
+<p align="center"><a href="https://project-x.org/manifesto?utm_source=readme"><img src="https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fproject-x-hq%2Fproject-x%2Fmain%2FSIGNATURES.md&search=n%3A(%5Cd%2B)%5Cs*%24&replace=%241%20signatories&label=THE%20PROJECTX%20MANIFESTO&color=DD7627&style=for-the-badge&labelColor=2b3137" alt="Маніфест ProjectX: кількість підписантів наживо"></a></p>
 
 <p align="center">Кілька з них, їхніми власними словами.</p>
 
 <p align="center">
-  <a href="https://career-ops.org/manifesto?utm_source=readme"><img src="docs/manifesto-wall.svg" alt="Три підписи під маніфестом CareerOps, їхніми власними словами" width="800"></a>
+  <a href="https://project-x.org/manifesto?utm_source=readme"><img src="docs/manifesto-wall.svg" alt="Три підписи під маніфестом ProjectX, їхніми власними словами" width="800"></a>
 </p>
 
-<p align="center"><sub>Кожен підпис — коміт, який можна перевірити. <a href="https://career-ops.org/manifesto?utm_source=readme">Прочитати всі або додати свій →</a></sub></p>
+<p align="center"><sub>Кожен підпис — коміт, який можна перевірити. <a href="https://project-x.org/manifesto?utm_source=readme">Прочитати всі або додати свій →</a></sub></p>
 
 <br>
 
@@ -131,21 +131,21 @@ npx @santifer/career-ops init
 
 [Саме тут пишеться виправлення](CONTRIBUTING.md). Кімната, а не клуб. **Будуймо разом.**
 
-<p align="center"><a href="https://discord.gg/8pRpHETxa4"><img src="docs/discord-badge.svg" alt="Discord: кількість учасників сервера career-ops наживо"></a></p>
+<p align="center"><a href="https://discord.gg/8pRpHETxa4"><img src="docs/discord-badge.svg" alt="Discord: кількість учасників сервера project-x наживо"></a></p>
 
 ## Спонсори
 
-career-ops безкоштовний для кандидатів, назавжди. Ці компанії спонсорують проєкт:
+project-x безкоштовний для кандидатів, назавжди. Ці компанії спонсорують проєкт:
 
 <p align="center">
-  <a href="https://serpapi.com/career-ops-org" title="SerpApi"><img src="docs/sponsors/serpapi.svg" alt="SerpApi" height="48"></a>
+  <a href="https://serpapi.com/project-x-org" title="SerpApi"><img src="docs/sponsors/serpapi.svg" alt="SerpApi" height="48"></a>
 </p>
 
 <p align="center"><strong>SerpApi</strong> · Build a portfolio project with live search data. SerpApi gives developers structured JSON/Markdown from Google Search, Maps, Shopping, and other engines through a simple API call.</p>
 
 > Спонсорство купує чітко позначену видимість, ніколи не вплив: жодна сума грошей не змінює дорожню карту і нічого не розміщує в продукті. Спонсори ніколи не з’являються в оцінках, рейтингах чи рекомендаціях.
 
-## Що career-ops робить для вас
+## Що project-x робить для вас
 
 Вставте вакансію. Він скаже, чи варта вона цього вечора.
 
@@ -160,7 +160,7 @@ career-ops безкоштовний для кандидатів, назавжд�
 
 Під час першого запуску він запитує все це в чаті. Нічого налаштовувати вручну.
 
-## Чого career-ops не робить
+## Чого project-x не робить
 
 - **Надсилати відгук автоматично.** Він готує чернетку відповіді для кожного поля; ви перевіряєте й натискаєте «Надіслати». Скрипт ніколи не робить POST (`prepare-application.mjs`).
 - **Не надсилає листи.** Лише чернетки. У всьому коді немає жодного поштового транспорту.
@@ -176,7 +176,7 @@ career-ops безкоштовний для кандидатів, назавжд�
 | **Оцінка A-H**           | Резюме ролі, відповідність резюме (з вагою кожної вимоги для цієї вакансії та позначкою, чи взято вагу з формулювання опису, його структури чи з оцінки, з підписом для кожної вимоги; оцінка ніколи не може бути найвищого рівня), стратегія рівня, дослідження компенсації, персоналізація, підготовка до співбесіди (STAR+R), плюс перевірка легітимності вакансії в блоці G (чи вона ще відкрита, чи це не повторна публікація: спостереження, а не вердикти) і сигнал дозволу на роботу, що позначає опис із явною відмовою у спонсорстві візи як жорсткий блокер |
 | **Human-in-the-Loop**    | AI оцінює та рекомендує, ви вирішуєте та дієте. Система ніколи не подає заявку: останнє слово завжди за вами <!-- hitl: absolute guarantee. Do not add "automatically", "by itself", "without your permission" or any other hedge when translating this row. -->               |
 | **Генерація ATS PDF**    | Резюме, читабельні для ATS і адаптовані під кожен опис вакансії на основі вашого власного досвіду, у дизайні Space Grotesk + DM Sans |
-| **Генератор супровідних листів** | Супровідні листи на основі дослідження з віддзеркаленням ключових слів, чотирма інтерактивними запитаннями про кут подачі (чому/проблеми/підхід/тон), затвердженням чернетки в чаті та A4 PDF через той самий конвеєр HTML + Playwright, що й для резюме. Готує чернетку при кожній оцінці; завершити й згенерувати на вимогу через `/career-ops cover` |
+| **Генератор супровідних листів** | Супровідні листи на основі дослідження з віддзеркаленням ключових слів, чотирма інтерактивними запитаннями про кут подачі (чому/проблеми/підхід/тон), затвердженням чернетки в чаті та A4 PDF через той самий конвеєр HTML + Playwright, що й для резюме. Готує чернетку при кожній оцінці; завершити й згенерувати на вимогу через `/project-x cover` |
 | **Поза межами резюме**   | Дослідження компанії ([`deep`](modes/deep.md)) розкриває AI-стратегію, нещодавні кроки, інженерну культуру та кут, під яким варто подати ваш профіль. Пошук контактів ([`contacto`](modes/contacto.md)) визначає hiring-менеджера, рекрутера або колегу з команди, до кого варто звернутися, і готує повідомлення для LinkedIn до 300 символів під кожен тип контакту. Чернетки формальних листів-заявок ([`email`](modes/email.md)) перетворюють оцінений звіт або вставлений опис на тему, текст і чекліст вкладень, нічого не надсилаючи, не подаючи і не клікаючи. Заявка ставить вас у чергу, дослідження дає вам розмову. |
 | **Аналіз патернів**      | Патерни відмов і частка проходження по каналах ATS (`analyze-patterns.mjs`), статистика воронки за весь пошук (`stats.mjs`), виявлення перепублікацій, які можуть вказувати на вакансію-привид (`detect-reposts.mjs`) |
 
@@ -188,7 +188,7 @@ career-ops безкоштовний для кандидатів, назавжд�
 | **Авто-конвеєр**         | Вставте URL і отримайте повну оцінку + PDF + запис у трекері                                                                             |
 | **Банк історій для співбесід** | Накопичує історії STAR+Reflection між оцінками: 5-10 головних історій, які можна адаптувати під поставлені вам поведінкові питання             |
 | **Скрипти переговорів**  | Фреймворки переговорів про зарплату, відповідь на географічну знижку, важіль конкурентних оферів                                          |
-| **Чернетки листів-заявок** | Формальні листи рекрутеру, за рекомендацією або холодні заявки зі звіту чи вставленого опису, з темою, чеклістом вкладень, обґрунтованими пунктами відповідності та блоком контактів із профілю. Лише чернетки: career-ops ніколи не надсилає, не подає і не клікає нічого. |
+| **Чернетки листів-заявок** | Формальні листи рекрутеру, за рекомендацією або холодні заявки зі звіту чи вставленого опису, з темою, чеклістом вкладень, обґрунтованими пунктами відповідності та блоком контактів із профілю. Лише чернетки: project-x ніколи не надсилає, не подає і не клікає нічого. |
 | **Сканер порталів**      | 100+ попередньо налаштованих компаній (Anthropic, OpenAI, ElevenLabs, Retool, n8n...) + власні пошукові веб-запити по Ashby, Greenhouse, Lever, Wellfound |
 | **Пошук профінансованих компаній** | Команда `company:funded` (спершу перегляд) показує компанії з нещодавнім фінансуванням і діагностику джерел зі структурованих публічних стрічок, не змінюючи ваші дані |
 | **Пакетна обробка**      | Паралельна оцінка headless CLI-воркерами (`claude -p` / `opencode run`)                                                                 |
@@ -210,28 +210,28 @@ career-ops безкоштовний для кандидатів, назавжд�
 **Найшвидший шлях, одна команда:**
 
 ```bash
-npx @santifer/career-ops init
+npx @santifer/project-x init
 ```
 
 > 💡 `npx` іде разом із [Node.js](https://nodejs.org): він запускає інсталятор один раз,
 > нічого не встановлюючи глобально. Ще немає Node? Спершу встановіть його.
 > (Уже користуєтеся CLI Claude Code / Codex? Тоді він у вас уже є.)
 
-Це клонує останній реліз у `./career-ops` і встановлює залежності. Потім:
+Це клонує останній реліз у `./project-x` і встановлює залежності. Потім:
 
 ```bash
-cd career-ops
+cd project-x
 claude   # or codex / qwen / opencode / agy / grok — open your AI CLI here
 ```
 
-**При першому запуску career-ops проведе вас через налаштування (ваше резюме, профіль і цільові ролі) просто в розмові. Нічого не треба редагувати вручну.**
+**При першому запуску project-x проведе вас через налаштування (ваше резюме, профіль і цільові ролі) просто в розмові. Нічого не треба редагувати вручну.**
 
 <details>
 <summary><b>Хочете налаштувати вручну? (git clone)</b></summary>
 
 ```bash
-git clone https://github.com/career-ops-hq/career-ops.git
-cd career-ops && npm install
+git clone https://github.com/project-x-hq/project-x.git
+cd project-x && npm install
 npx playwright install chromium   # only needed for PDF generation
 # On a non-Debian/Ubuntu Linux distro (Fedora, Arch, ...), Chromium's system
 # libraries aren't installed by the line above — install them yourself with
@@ -258,14 +258,14 @@ claude   # or codex / opencode / qwen / agy / grok
 ### Глобальне встановлення
 
 ```bash
-npm i -g @santifer/career-ops
+npm i -g @santifer/project-x
 ```
 
-Це встановлює бінарник `career-ops` глобально, тож ви можете запускати `career-ops init [folder]` без `npx`. `init` — його єдина команда: вона створює робочий простір, а все подальше відбувається всередині вашого AI-кодинг CLI (див. «Використання» нижче), а не через цей бінарник.
+Це встановлює бінарник `project-x` глобально, тож ви можете запускати `project-x init [folder]` без `npx`. `init` — його єдина команда: вона створює робочий простір, а все подальше відбувається всередині вашого AI-кодинг CLI (див. «Використання» нижче), а не через цей бінарник.
 
 **Що обрати?**
-- `npx @santifer/career-ops init`: найкраще для першого запуску; створює окрему теку проєкту.
-- `npm i -g @santifer/career-ops`: якщо вам зручніше набирати `career-ops init`, ніж форму з `npx`. Інших команд він не додає.
+- `npx @santifer/project-x init`: найкраще для першого запуску; створює окрему теку проєкту.
+- `npm i -g @santifer/project-x`: якщо вам зручніше набирати `project-x init`, ніж форму з `npx`. Інших команд він не додає.
 
 ### Інші способи запуску
 
@@ -274,23 +274,23 @@ npm i -g @santifer/career-ops
 
 > **Система спроєктована так, щоб її налаштовував сам ваш AI-кодинг CLI.** Режими, архетипи, ваги оцінювання, скрипти переговорів: просто попросіть його змінити їх. Він читає ті самі файли, якими користується, тож точно знає, що редагувати.
 
-Дивіться [docs/SETUP.md](docs/SETUP.md) для повного посібника з налаштування, [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md) для дешевого запуску career-ops на власних або локальних моделях (і [docs/FREE_TIER.md](docs/FREE_TIER.md) для запуску без витрат на безкоштовному тарифі Antigravity CLI), [docs/AUTOMATION.md](docs/AUTOMATION.md) для планування регулярних сканувань і рецепту відбору в шортліст без витрат токенів, [docs/APPLY_AUTOFILL.md](docs/APPLY_AUTOFILL.md) для деталей автозаповнення форм ATS, [docs/LINKEDIN_JOIN.md](docs/LINKEDIN_JOIN.md) для звірки експорту ваших контактів LinkedIn з компаніями у вашій воронці, та [docs/FAQ.md](docs/FAQ.md) для відповідей на типові питання з налаштування, зокрема [як походження історій запобігає вигаданим цифрам](docs/FAQ.md#why-does-career-ops-refuse-to-use-a-number-from-my-story-bank). Принципи дизайну в [ARCHITECTURE.md](ARCHITECTURE.md); потоки виконання в [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+Дивіться [docs/SETUP.md](docs/SETUP.md) для повного посібника з налаштування, [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md) для дешевого запуску project-x на власних або локальних моделях (і [docs/FREE_TIER.md](docs/FREE_TIER.md) для запуску без витрат на безкоштовному тарифі Antigravity CLI), [docs/AUTOMATION.md](docs/AUTOMATION.md) для планування регулярних сканувань і рецепту відбору в шортліст без витрат токенів, [docs/APPLY_AUTOFILL.md](docs/APPLY_AUTOFILL.md) для деталей автозаповнення форм ATS, [docs/LINKEDIN_JOIN.md](docs/LINKEDIN_JOIN.md) для звірки експорту ваших контактів LinkedIn з компаніями у вашій воронці, та [docs/FAQ.md](docs/FAQ.md) для відповідей на типові питання з налаштування, зокрема [як походження історій запобігає вигаданим цифрам](docs/FAQ.md#why-does-project-x-refuse-to-use-a-number-from-my-story-bank). Принципи дизайну в [ARCHITECTURE.md](ARCHITECTURE.md); потоки виконання в [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## Використання
 
-Вставте URL або опис вакансії у ваш ШІ-CLI. career-ops перевіряє, що вакансія за посиланням ще відкрита (у вставленого тексту немає посилання для перевірки), оцінює її за вашим резюме, пише звіт, адаптує ваше резюме (за замовчуванням у PDF) і додає рядок до трекера. Цього вистачає на більшість днів. Усе інше — режими, які ви викликаєте за назвою. Якщо вакансію не вдається прочитати, пайплайн зупиняється і просить вставити текст.
+Вставте URL або опис вакансії у ваш ШІ-CLI. project-x перевіряє, що вакансія за посиланням ще відкрита (у вставленого тексту немає посилання для перевірки), оцінює її за вашим резюме, пише звіт, адаптує ваше резюме (за замовчуванням у PDF) і додає рядок до трекера. Цього вистачає на більшість днів. Усе інше — режими, які ви викликаєте за назвою. Якщо вакансію не вдається прочитати, пайплайн зупиняється і просить вставити текст.
 
 ### Як викликати режим
 
 | CLI | Як викликати `scan` |
 | --- | --- |
-| Claude Code, OpenCode, Antigravity CLI (`agy`), Grok Build CLI | `/career-ops scan` |
-| Pi | `/skill:career-ops scan` |
-| Codex, Qwen, Cursor або будь-який інший підтримуваний CLI | Звичайною мовою: "Run the career-ops scan mode" |
+| Claude Code, OpenCode, Antigravity CLI (`agy`), Grok Build CLI | `/project-x scan` |
+| Pi | `/skill:project-x scan` |
+| Codex, Qwen, Cursor або будь-який інший підтримуваний CLI | Звичайною мовою: "Run the project-x scan mode" |
 
-`/career-ops` без аргументів показує меню команд у CLI, які його використовують. Звичайна мова працює в будь-якому підтримуваному CLI. Якщо career-ops встановлено як плагін Claude Code, команда має вигляд `/career-ops:career-ops`.
+`/project-x` без аргументів показує меню команд у CLI, які його використовують. Звичайна мова працює в будь-якому підтримуваному CLI. Якщо project-x встановлено як плагін Claude Code, команда має вигляд `/project-x:project-x`.
 
-Усі вони мають один спільний роутер, `.agents/skills/career-ops/SKILL.md`, і ті самі файли `modes/*.md`, тому будь-який CLI спрямовує запит однаково (режимам, що активно використовують браузер, також потрібні інструменти Playwright). Slash-команди в Codex не гарантовані: просіть звичайною мовою або запустіть один промпт у headless-режимі через `codex exec "Evaluate this JD with career-ops auto-pipeline: https://company.com/jobs/123"` ([docs/CODEX.md](docs/CODEX.md)). Як запускати career-ops у кожному підтримуваному CLI, headless-команди там, де вони є, і нотатки щодо налаштування окремих CLI — у [docs/SUPPORTED_CLIS.md](docs/SUPPORTED_CLIS.md).
+Усі вони мають один спільний роутер, `.agents/skills/project-x/SKILL.md`, і ті самі файли `modes/*.md`, тому будь-який CLI спрямовує запит однаково (режимам, що активно використовують браузер, також потрібні інструменти Playwright). Slash-команди в Codex не гарантовані: просіть звичайною мовою або запустіть один промпт у headless-режимі через `codex exec "Evaluate this JD with project-x auto-pipeline: https://company.com/jobs/123"` ([docs/CODEX.md](docs/CODEX.md)). Як запускати project-x у кожному підтримуваному CLI, headless-команди там, де вони є, і нотатки щодо налаштування окремих CLI — у [docs/SUPPORTED_CLIS.md](docs/SUPPORTED_CLIS.md).
 
 ### Щоденні команди
 
@@ -389,7 +389,7 @@ npm i -g @santifer/career-ops
 | Команда | Що робить |
 | --- | --- |
 | [`agent-inbox`](modes/agent-inbox.md) | Ставить запити в чергу на наступну сесію й опрацьовує їх уже в ній (`data/agent-inbox.md`). `inbox` теж працює |
-| [`update`](modes/update.md) | Оновлює системні файли career-ops з попереднім переглядом diff і перевіркою сумісності |
+| [`update`](modes/update.md) | Оновлює системні файли project-x з попереднім переглядом diff і перевіркою сумісності |
 
 </details>
 
@@ -432,7 +432,7 @@ npm run build:dashboard   # optional: build the standalone binary
 ## Структура проєкту
 
 ```
-career-ops/
+project-x/
 ├── AGENTS.md                    # Canonical agent instructions (all CLIs)
 ├── CLAUDE.md                    # Claude Code wrapper (imports AGENTS.md)
 ├── CODEX.md                     # Codex wrapper (imports AGENTS.md)
@@ -473,20 +473,20 @@ career-ops/
 
 Щоб відокремити особисті дані від коду (простіше перемикати гілки, підтягувати оновлення чи тестувати кілька профілів), ви можете налаштувати зовнішній каталог даних із таким пріоритетом:
 
-1. **Змінні середовища:** задайте змінну `CAREER_OPS_ROOT` або `CAREER_OPS_DATA_DIR`:
+1. **Змінні середовища:** задайте змінну `PROJECT_X_ROOT` або `PROJECT_X_DATA_DIR`:
    ```bash
-   export CAREER_OPS_ROOT=~/my-career-data
+   export PROJECT_X_ROOT=~/my-career-data
    ```
-2. **Файл-маркер:** створіть у корені репозиторію файл `.career-ops-data` зі шляхом до вашого каталогу даних.
+2. **Файл-маркер:** створіть у корені репозиторію файл `.project-x-data` зі шляхом до вашого каталогу даних.
 3. **За замовчуванням:** корінь репозиторію.
 
 Після визначення всі користувацькі файли розв'язуються і записуються відносно цієї теки, тоді як файли промптів і скрипти далі розв'язуються відносно репозиторію.
 
-- **Перевизначення трекера:** можна також задати `CAREER_OPS_TRACKER`, щоб напряму вказати шлях до файлу трекера заявок.
+- **Перевизначення трекера:** можна також задати `PROJECT_X_TRACKER`, щоб напряму вказати шлях до файлу трекера заявок.
 - **Записи:** усі операції запису (наприклад, злиття) канонічно спрямовані в `{DATA_ROOT}/data/applications.md`.
 - **Конфігурація сканера:** `portals.yml` читається й валідується за шляхом `{DATA_ROOT}/portals.yml`, тож `node validate-portals.mjs` перевіряє той самий файл, який читає `scan.mjs`.
-- **Згенеровані документи:** адаптовані резюме та супровідні листи записуються в `{DATA_ROOT}/output/`, а PDF-маніфест, що пов'язує їх зі звітом, лежить у `{DATA_ROOT}/data/pdf-index.tsv`. Поки `CAREER_OPS_TRACKER` не задано, робочим простором трекера, що обмежує ці записи, є корінь даних, а не checkout репозиторію.
-- **PDF із перевизначеним трекером:** `generate-pdf.mjs` розв'язує `CAREER_OPS_TRACKER` до того, як визначити робочий простір, тож із заданим перевизначенням робочим простором стає тека з цим трекером (або тека рівнем вище, якщо трекер лежить у теці `data/`). HTML резюме і кожен PDF мають тоді бути всередині цього робочого простору, а маніфест переїжджає в його `data/pdf-index.tsv`. Супровідні листи й далі записуються в `{DATA_ROOT}/output/`, тож їх буде відхилено, якщо ця тека опиниться поза робочим простором трекера.
+- **Згенеровані документи:** адаптовані резюме та супровідні листи записуються в `{DATA_ROOT}/output/`, а PDF-маніфест, що пов'язує їх зі звітом, лежить у `{DATA_ROOT}/data/pdf-index.tsv`. Поки `PROJECT_X_TRACKER` не задано, робочим простором трекера, що обмежує ці записи, є корінь даних, а не checkout репозиторію.
+- **PDF із перевизначеним трекером:** `generate-pdf.mjs` розв'язує `PROJECT_X_TRACKER` до того, як визначити робочий простір, тож із заданим перевизначенням робочим простором стає тека з цим трекером (або тека рівнем вище, якщо трекер лежить у теці `data/`). HTML резюме і кожен PDF мають тоді бути всередині цього робочого простору, а маніфест переїжджає в його `data/pdf-index.tsv`. Супровідні листи й далі записуються в `{DATA_ROOT}/output/`, тож їх буде відхилено, якщо ця тека опиниться поза робочим простором трекера.
 - **Шар коду лишається на місці:** `node_modules/`, `providers/`, `modes/` і самі скрипти завжди розв'язуються відносно репозиторію, ніколи відносно кореня даних.
 
 Дашборд TUI на Go, скрипти Node.js і режими AI-агента автоматично дотримуються цієї ієрархії.
@@ -508,7 +508,7 @@ career-ops/
 - **Дані**: таблиці Markdown + конфігурація YAML + пакетні файли TSV
 
 <p align="center">
-  <a href="https://github.com/career-ops-hq/career-ops/releases/latest"><img src="docs/npm-badge.svg" alt="Latest release"></a>
+  <a href="https://github.com/project-x-hq/project-x/releases/latest"><img src="docs/npm-badge.svg" alt="Latest release"></a>
 </p>
 
 <p align="center">
@@ -541,43 +541,43 @@ career-ops/
 
 ## FAQ
 
-**Що таке career-ops?**
-career-ops ([career-ops.org](https://career-ops.org), також відомий як **careerops**) є AI-пошуком роботи з відкритим кодом, який працює локально у вашому AI-кодинг CLI (Claude Code, Codex, OpenCode та інших) і залишає кожне рішення за вами. Він оцінює вакансії відносно вашого резюме, генерує ATS-адаптовані PDF, знаходить потрібну людину для контакту і відстежує все в одному місці: останнє слово завжди за вами. Це перша еталонна реалізація [Маніфесту CareerOps](https://career-ops.org/manifesto).
+**Що таке project-x?**
+project-x ([project-x.org](https://project-x.org), також відомий як **projectx**) є AI-пошуком роботи з відкритим кодом, який працює локально у вашому AI-кодинг CLI (Claude Code, Codex, OpenCode та інших) і залишає кожне рішення за вами. Він оцінює вакансії відносно вашого резюме, генерує ATS-адаптовані PDF, знаходить потрібну людину для контакту і відстежує все в одному місці: останнє слово завжди за вами. Це перша еталонна реалізація [Маніфесту ProjectX](https://project-x.org/manifesto).
 
 **Чи може адаптоване резюме щось вигадати?**
-Не має права, і промпти це кажуть: переформульовувати, ніколи не вигадувати. `generate-pdf` блокує резюме, у якому є цифри чи факти, відсутні у ваших джерелах, якщо тільки ви не передасте `--skip-fact-check`. Режим `pdf` також запускає `cv-title-check.mjs`: він порівнює кожну назву посади в адаптованому резюме з назвою, яку cv.md дає тій самій роботі (зіставлення за компанією та датами), і питає, залишити чи повернути кожну, що відрізняється. Він лише попереджає, а не блокує, бо переформулювати назву посади іноді ваше рішення. Переформулювання поки ніщо не оцінює: це відстежує [#1411](https://github.com/career-ops-hq/career-ops/issues/1411) (перевірка достовірності, що блокує в разі невідповідності). До того часу читайте кожне резюме перед відправкою. [Юридичне застереження](LEGAL_DISCLAIMER.md) каже те саме довше.
+Не має права, і промпти це кажуть: переформульовувати, ніколи не вигадувати. `generate-pdf` блокує резюме, у якому є цифри чи факти, відсутні у ваших джерелах, якщо тільки ви не передасте `--skip-fact-check`. Режим `pdf` також запускає `cv-title-check.mjs`: він порівнює кожну назву посади в адаптованому резюме з назвою, яку cv.md дає тій самій роботі (зіставлення за компанією та датами), і питає, залишити чи повернути кожну, що відрізняється. Він лише попереджає, а не блокує, бо переформулювати назву посади іноді ваше рішення. Переформулювання поки ніщо не оцінює: це відстежує [#1411](https://github.com/project-x-hq/project-x/issues/1411) (перевірка достовірності, що блокує в разі невідповідності). До того часу читайте кожне резюме перед відправкою. [Юридичне застереження](LEGAL_DISCLAIMER.md) каже те саме довше.
 
-**Чи можу я запускати career-ops безкоштовно або на дешевшій / локальній моделі?**
-Так. career-ops не залежить від CLI і працює на безкоштовних та локальних моделях (безкоштовні моделі OpenRouter, Ollama або будь-який OpenAI-сумісний ендпоінт), тож ви не прив'язані до платної підписки. Повне налаштування: [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md).
+**Чи можу я запускати project-x безкоштовно або на дешевшій / локальній моделі?**
+Так. project-x не залежить від CLI і працює на безкоштовних та локальних моделях (безкоштовні моделі OpenRouter, Ollama або будь-який OpenAI-сумісний ендпоінт), тож ви не прив'язані до платної підписки. Повне налаштування: [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md).
 
-**Я плачу за Claude Pro/Max, але career-ops спалює API-кредити. Чому?**
+**Я плачу за Claude Pro/Max, але project-x спалює API-кредити. Чому?**
 Бо `ANTHROPIC_API_KEY` у вашому середовищі має пріоритет над підпискою, в яку ви увійшли: CLI використовує ключ і тарифікує за токен. Виконайте `echo $ANTHROPIC_API_KEY`, і якщо щось виводиться, приберіть його з профілю оболонки, перезапустіть термінал і виконайте `/login`. Пакетний режим є винятком, бо воркери `claude -p` не використовують інтерактивний вхід: один раз виконайте `claude setup-token` і експортуйте результат як `CLAUDE_CODE_OAUTH_TOKEN`. Повний покроковий опис: [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md#2b-already-paying-for-a-subscription-make-sure-you-are-using-it).
 
-**З якими AI CLI працює career-ops?**
-career-ops працює з будь-яким основним AI-кодинг CLI (Claude Code, Codex, Gemini / Antigravity, OpenCode, Grok, Qwen та іншими) через відкритий Agent Skill Standard, тож ніколи не прив'язаний до одного вендора. Використовуйте той CLI, що у вас уже є.
+**З якими AI CLI працює project-x?**
+project-x працює з будь-яким основним AI-кодинг CLI (Claude Code, Codex, Gemini / Antigravity, OpenCode, Grok, Qwen та іншими) через відкритий Agent Skill Standard, тож ніколи не прив'язаний до одного вендора. Використовуйте той CLI, що у вас уже є.
 
-**Як встановити career-ops на Windows?**
-career-ops працює на Windows. Специфічне для платформи налаштування і відомі гострі кути (пошук Git Bash, кінці рядків, Планувальник завдань) описано в [docs/WINDOWS.md](docs/WINDOWS.md). Якщо скіли не завантажуються з помилкою символічного посилання під час встановлення, рішення в [docs/FAQ.md](docs/FAQ.md). Повні кроки в [docs/SETUP.md](docs/SETUP.md).
+**Як встановити project-x на Windows?**
+project-x працює на Windows. Специфічне для платформи налаштування і відомі гострі кути (пошук Git Bash, кінці рядків, Планувальник завдань) описано в [docs/WINDOWS.md](docs/WINDOWS.md). Якщо скіли не завантажуються з помилкою символічного посилання під час встановлення, рішення в [docs/FAQ.md](docs/FAQ.md). Повні кроки в [docs/SETUP.md](docs/SETUP.md).
 
-**Чи подає career-ops заявки замість мене?**
-Ні. career-ops є фільтром, а не інструментом масової автоматичної розсилки. AI оцінює, ранжує і готує чернетки; ви переглядаєте і вирішуєте. Він готує чернетки й заповнює поля; він ніколи не подає заявку. Ви натискаєте «Надіслати». Саме в цьому дизайні з людиною в контурі вся суть.
+**Чи подає project-x заявки замість мене?**
+Ні. project-x є фільтром, а не інструментом масової автоматичної розсилки. AI оцінює, ранжує і готує чернетки; ви переглядаєте і вирішуєте. Він готує чернетки й заповнює поля; він ніколи не подає заявку. Ви натискаєте «Надіслати». Саме в цьому дизайні з людиною в контурі вся суть.
 
-**Чи career-ops безкоштовний і з відкритим кодом?**
-Так. career-ops безкоштовний і з відкритим кодом, і для кандидата так буде завжди. Це перша еталонна реалізація [Маніфесту CareerOps](https://career-ops.org/manifesto). Прочитайте його, і якщо він каже те, у що ви вірите, підпишіть.
+**Чи project-x безкоштовний і з відкритим кодом?**
+Так. project-x безкоштовний і з відкритим кодом, і для кандидата так буде завжди. Це перша еталонна реалізація [Маніфесту ProjectX](https://project-x.org/manifesto). Прочитайте його, і якщо він каже те, у що ви вірите, підпишіть.
 
 ## Про автора
 
-Я [Santiago Fernández de Valderrama Aparicio](https://santifer.io/about) (santifer), колишній засновник: побудував і продав бізнес, який досі працює під моїм ім'ям. Я створив career-ops для управління власним пошуком роботи, і це спрацювало: з його допомогою я отримав посаду Head of Applied AI. Через пів року я залишив цю посаду, щоб зосередитися на career-ops і працювати над ним повний робочий день.
+Я [Santiago Fernández de Valderrama Aparicio](https://santifer.io/about) (santifer), колишній засновник: побудував і продав бізнес, який досі працює під моїм ім'ям. Я створив project-x для управління власним пошуком роботи, і це спрацювало: з його допомогою я отримав посаду Head of Applied AI. Через пів року я залишив цю посаду, щоб зосередитися на project-x і працювати над ним повний робочий день.
 
-Цікаво, як флот AI-агентів підтримує репозиторій такого розміру, а рішення про кожне злиття ухвалює людина? Читайте [Agentic maintenance: how career-ops is run by a fleet of AI agents](https://santifer.io/ai-agent-fleet).
+Цікаво, як флот AI-агентів підтримує репозиторій такого розміру, а рішення про кожне злиття ухвалює людина? Читайте [Agentic maintenance: how project-x is run by a fleet of AI agents](https://santifer.io/ai-agent-fleet).
 
 Моє портфоліо та інші open source проєкти → [santifer.io](https://santifer.io)
 
-Wikidata: [Santiago Fernández de Valderrama Aparicio](https://www.wikidata.org/wiki/Q138710224) · [career-ops](https://www.wikidata.org/wiki/Q139007988).
+Wikidata: [Santiago Fernández de Valderrama Aparicio](https://www.wikidata.org/wiki/Q138710224) · [project-x](https://www.wikidata.org/wiki/Q139007988).
 
 ## Застереження
 
-**career-ops є локальним інструментом з відкритим кодом, а НЕ хмарним сервісом.** Використовуючи це програмне забезпечення, ви підтверджуєте:
+**project-x є локальним інструментом з відкритим кодом, а НЕ хмарним сервісом.** Використовуючи це програмне забезпечення, ви підтверджуєте:
 
 1. **Ви контролюєте свої дані.** Ваше резюме, контактна інформація та персональні дані залишаються на вашому комп'ютері і надсилаються безпосередньо обраному вами AI-провайдеру (Anthropic, OpenAI тощо). Ми не збираємо, не зберігаємо і не маємо доступу до жодних ваших даних.
 2. **Ви контролюєте AI.** Промпти за замовчуванням інструктують AI не подавати заявки автоматично, але AI-моделі можуть поводитися непередбачувано. Якщо ви змінюєте промпти або використовуєте інші моделі, ви робите це на власний ризик. **Завжди перевіряйте точність згенерованого AI контенту перед надсиланням.**
@@ -588,20 +588,20 @@ Wikidata: [Santiago Fernández de Valderrama Aparicio](https://www.wikidata.org/
 
 ## Контриб'ютори
 
-<a href="https://github.com/career-ops-hq/career-ops/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=career-ops-hq/career-ops&v=2" />
+<a href="https://github.com/project-x-hq/project-x/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=project-x-hq/project-x&v=2" />
 </a>
 
 Усі, хто зробив внесок кодом, документацією, перекладами чи тестами, перелічені в
 [CONTRIBUTORS.md](CONTRIBUTORS.md), включно з внесками без коду, які
 графік вище показати не може.
 
-Отримали роботу з career-ops? [Поділіться своєю історією!](https://github.com/career-ops-hq/career-ops/issues/new?template=i-got-hired.yml)
+Отримали роботу з project-x? [Поділіться своєю історією!](https://github.com/project-x-hq/project-x/issues/new?template=i-got-hired.yml)
 
 ## Ліцензія та торгова марка
 
 Код ліцензовано за [MIT](LICENSE). Назва та бренд
-"career-ops" регулюються [Політикою торгової марки](TRADEMARK.md): дозвільною
+"project-x" регулюються [Політикою торгової марки](TRADEMARK.md): дозвільною
 для використання спільнотою, зарезервованою для назв комерційних продуктів
 і схвалень.
 
@@ -613,7 +613,7 @@ Wikidata: [Santiago Fernández de Valderrama Aparicio](https://www.wikidata.org/
   <a href="https://warpchart.dev/hq">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://warpchart.dev/api/chart?theme=dark&v=3">
-      <img alt="Live star telemetry of career-ops-hq/career-ops" src="https://warpchart.dev/api/chart?theme=light&v=3" loading="lazy">
+      <img alt="Live star telemetry of project-x-hq/project-x" src="https://warpchart.dev/api/chart?theme=light&v=3" loading="lazy">
     </picture>
   </a>
 </p>

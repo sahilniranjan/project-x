@@ -1,4 +1,4 @@
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/wordmark-dark.svg"><img src="docs/wordmark-light.svg" alt="career-ops" width="250" height="56"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/wordmark-dark.svg"><img src="docs/wordmark-light.svg" alt="project-x" width="250" height="56"></picture></p>
 
 <p align="center">Agen AI open-source untuk pencarian kerja.</p>
 
@@ -26,7 +26,7 @@
 
 <!-- The non-breaking spaces (&nbsp;) and word joiners (&#8288;) below decide where each line wraps on a phone. Keep them when editing. -->
 
-<p align="center"><a href="https://github.com/santifer"><img src="docs/avatar-santifer.png" width="48" height="48" align="middle" alt="Santiago Fernández de Valderrama Aparicio"></a>&nbsp;&nbsp;Dibuat oleh <a href="https://github.com/santifer"><strong>@santifer</strong></a>, bersama&nbsp;&nbsp;<a href="https://github.com/career-ops-hq/career-ops/blob/main/README.id.md#builders"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/builders-stack-dark.svg"><img src="docs/builders-stack-light.svg" alt="" height="32" align="middle"></picture></a>&nbsp;&nbsp;<a href="https://github.com/career-ops-hq/career-ops/blob/main/README.id.md#builders">800+ kontributor</a></p>
+<p align="center"><a href="https://github.com/santifer"><img src="docs/avatar-santifer.png" width="48" height="48" align="middle" alt="Santiago Fernández de Valderrama Aparicio"></a>&nbsp;&nbsp;Dibuat oleh <a href="https://github.com/santifer"><strong>@santifer</strong></a>, bersama&nbsp;&nbsp;<a href="https://github.com/project-x-hq/project-x/blob/main/README.id.md#builders"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/builders-stack-dark.svg"><img src="docs/builders-stack-light.svg" alt="" height="32" align="middle"></picture></a>&nbsp;&nbsp;<a href="https://github.com/project-x-hq/project-x/blob/main/README.id.md#builders">800+ kontributor</a></p>
 
 <p align="center">
 <strong>Berbulan-bulan kirim CV tanpa&nbsp;kabar.</strong><br>
@@ -44,7 +44,7 @@ CV disesuaikan dan draf jawaban disiapkan. <strong>Anda&nbsp;yang&nbsp;menekan&n
 </p>
 
 <p align="center">
-  <img src="docs/demo.gif" alt="Pencarian kerja pembuatnya sendiri di dashboard career-ops: daftar lowongan dengan skor, hitungan merah untuk yang ditandai jangan lamar, lalu laporan evaluasi lengkap" width="800">
+  <img src="docs/demo.gif" alt="Pencarian kerja pembuatnya sendiri di dashboard project-x: daftar lowongan dengan skor, hitungan merah untuk yang ditandai jangan lamar, lalu laporan evaluasi lengkap" width="800">
 </p>
 
 <p align="center"><sub>Pencarian kerja saya sendiri di tengah jalan, dengan&nbsp;UI&nbsp;berbahasa&nbsp;Spanyol.</sub></p>
@@ -56,15 +56,15 @@ CV disesuaikan dan draf jawaban disiapkan. <strong>Anda&nbsp;yang&nbsp;menekan&n
 
 <p align="center">
   Enam bulan kemudian, <strong>saya meninggalkan pekerjaan itu.</strong><br>
-  Sekarang kami membangun career-ops, supaya&nbsp;Anda&nbsp;bisa&nbsp;mendapatkan&nbsp;pekerjaan&nbsp;impian&nbsp;Anda.
+  Sekarang kami membangun project-x, supaya&nbsp;Anda&nbsp;bisa&nbsp;mendapatkan&nbsp;pekerjaan&nbsp;impian&nbsp;Anda.
 </p>
 
-<p align="center"><a href="#giliran-anda">Coba pada satu lowongan&nbsp;↓</a> · <a href="https://santifer.io/career-ops-system">Baca cerita&nbsp;lengkapnya&nbsp;→</a></p>
-<p align="center"><sub>Lebih suka tidak memakai terminal? <a href="https://career-ops.org/waitlist?ref=readme-id">Gabung ke daftar tunggu versi web&nbsp;→</a></sub></p>
+<p align="center"><a href="#giliran-anda">Coba pada satu lowongan&nbsp;↓</a> · <a href="https://santifer.io/project-x-system">Baca cerita&nbsp;lengkapnya&nbsp;→</a></p>
+<p align="center"><sub>Lebih suka tidak memakai terminal? <a href="https://project-x.org/waitlist?ref=readme-id">Gabung ke daftar tunggu versi web&nbsp;→</a></sub></p>
 
 <br>
 
-<p align="center"><a href="HIRED.md"><img src="docs/hired-badge.svg" alt="Diterima kerja berkat career-ops: cerita publik yang tercatat"></a></p>
+<p align="center"><a href="HIRED.md"><img src="docs/hired-badge.svg" alt="Diterima kerja berkat project-x: cerita publik yang tercatat"></a></p>
 
 <p align="center">Orang-orang setelah saya menuliskan bagaimana mereka berhasil diterima kerja.</p>
 
@@ -72,9 +72,9 @@ CV disesuaikan dan draf jawaban disiapkan. <strong>Anda&nbsp;yang&nbsp;menekan&n
   <a href="HIRED.md"><img src="docs/hired-wall.svg" alt="Cerita mereka yang diterima kerja, bisa Anda buka dan baca" width="800"></a>
 </p>
 
-<p align="center"><sub>Setiap kartu adalah <em>issue</em> publik yang bisa Anda buka. Sudah dapat kerja? <a href="https://github.com/career-ops-hq/career-ops/issues/new?template=i-got-hired.yml">Tinggalkan kartu Anda →</a></sub></p>
+<p align="center"><sub>Setiap kartu adalah <em>issue</em> publik yang bisa Anda buka. Sudah dapat kerja? <a href="https://github.com/project-x-hq/project-x/issues/new?template=i-got-hired.yml">Tinggalkan kartu Anda →</a></sub></p>
 
-<p align="center">⭐ <strong>Jika career-ops membantu Anda, satu bintang (<em>star</em>) akan membantu orang berikutnya menemukan&nbsp;alat&nbsp;ini.</strong></p>
+<p align="center">⭐ <strong>Jika project-x membantu Anda, satu bintang (<em>star</em>) akan membantu orang berikutnya menemukan&nbsp;alat&nbsp;ini.</strong></p>
 
 <br>
 
@@ -99,7 +99,7 @@ CV disesuaikan dan draf jawaban disiapkan. <strong>Anda&nbsp;yang&nbsp;menekan&n
 Tempel satu lowongan yang tadinya hendak Anda lamar malam ini. Kalau hasilnya menyarankan <em>jangan lamar</em>, waktu malam Anda terselamatkan. Kalau hasilnya berupa rencana, Anda tahu persis apa langkah selanjutnya.
 
 ```bash
-npx @santifer/career-ops init
+npx @santifer/project-x init
 ```
 
 <p align="center"><sub>Open source. Lokal. Berjalan di AI CLI yang sudah Anda gunakan. <a href="docs/RUNNING_ON_A_BUDGET.md">Termasuk dukungan model gratis dan lokal.</a></sub></p>
@@ -111,15 +111,15 @@ Heningnya kabar setelah Anda menekan tombol kirim bukanlah salah Anda. Cukup ban
 
 > Melamar lebih matang ke lebih sedikit tempat. Kualitas sinyal di atas kuantitas. Bukti nyata di atas sekadar kata kunci. Manusia yang mengambil keputusan. Lokal-pertama (*local-first*). Martabat di kedua sisi meja.
 
-<p align="center"><a href="https://career-ops.org/manifesto?utm_source=readme"><img src="https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcareer-ops-hq%2Fcareer-ops%2Fmain%2FSIGNATURES.md&search=n%3A(%5Cd%2B)%5Cs*%24&replace=%241%20signatories&label=THE%20CAREEROPS%20MANIFESTO&color=DD7627&style=for-the-badge&labelColor=2b3137" alt="Manifesto CareerOps: jumlah penandatangan secara langsung"></a></p>
+<p align="center"><a href="https://project-x.org/manifesto?utm_source=readme"><img src="https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fproject-x-hq%2Fproject-x%2Fmain%2FSIGNATURES.md&search=n%3A(%5Cd%2B)%5Cs*%24&replace=%241%20signatories&label=THE%20PROJECTX%20MANIFESTO&color=DD7627&style=for-the-badge&labelColor=2b3137" alt="Manifesto ProjectX: jumlah penandatangan secara langsung"></a></p>
 
 <p align="center">Beberapa dari mereka, melalui kata-kata mereka sendiri.</p>
 
 <p align="center">
-  <a href="https://career-ops.org/manifesto?utm_source=readme"><img src="docs/manifesto-wall.svg" alt="Tiga penandatangan manifesto CareerOps, dalam kata-kata mereka sendiri" width="800"></a>
+  <a href="https://project-x.org/manifesto?utm_source=readme"><img src="docs/manifesto-wall.svg" alt="Tiga penandatangan manifesto ProjectX, dalam kata-kata mereka sendiri" width="800"></a>
 </p>
 
-<p align="center"><sub>Setiap tanda tangan adalah <em>commit</em> yang bisa Anda audit. <a href="https://career-ops.org/manifesto?utm_source=readme">Baca semuanya, atau tambahkan tanda tangan Anda →</a></sub></p>
+<p align="center"><sub>Setiap tanda tangan adalah <em>commit</em> yang bisa Anda audit. <a href="https://project-x.org/manifesto?utm_source=readme">Baca semuanya, atau tambahkan tanda tangan Anda →</a></sub></p>
 
 <br>
 
@@ -131,21 +131,21 @@ Proses rekrutmen tidak akan membaik dengan sendirinya. Orang-orang yang menjalan
 
 [Di sinilah perbaikan itu ditulis](CONTRIBUTING.md). Sebuah ruang bersama, bukan klub eksklusif. **Mari kita bangun bersama.**
 
-<p align="center"><a href="https://discord.gg/8pRpHETxa4"><img src="docs/discord-badge.svg" alt="Discord: jumlah anggota langsung di server career-ops"></a></p>
+<p align="center"><a href="https://discord.gg/8pRpHETxa4"><img src="docs/discord-badge.svg" alt="Discord: jumlah anggota langsung di server project-x"></a></p>
 
 ## Sponsor
 
-career-ops gratis untuk para pencari kerja, selamanya. Perusahaan-perusahaan berikut mensponsori proyek ini:
+project-x gratis untuk para pencari kerja, selamanya. Perusahaan-perusahaan berikut mensponsori proyek ini:
 
 <p align="center">
-  <a href="https://serpapi.com/career-ops-org" title="SerpApi"><img src="docs/sponsors/serpapi.svg" alt="SerpApi" height="48"></a>
+  <a href="https://serpapi.com/project-x-org" title="SerpApi"><img src="docs/sponsors/serpapi.svg" alt="SerpApi" height="48"></a>
 </p>
 
 <p align="center"><strong>SerpApi</strong> · Build a portfolio project with live search data. SerpApi gives developers structured JSON/Markdown from Google Search, Maps, Shopping, and other engines through a simple API call.</p>
 
 > Sponsor hanya membeli visibilitas yang diberi label secara jelas, bukan pengaruh: tidak ada sejumlah uang pun yang dapat mengubah *roadmap* atau menyisipkan apa pun ke dalam produk. Sponsor tidak pernah muncul dalam evaluasi, peringkat, maupun rekomendasi.
 
-## Apa yang dilakukan career-ops untuk Anda
+## Apa yang dilakukan project-x untuk Anda
 
 Tempel info lowongan. Alat ini memberi tahu apakah lowongan itu layak diperjuangkan malam ini.
 
@@ -160,7 +160,7 @@ Percobaan awal mungkin terasa belum mulus karena sistem ini belum mengenal Anda.
 
 Saat pertama kali dijalankan, semua itu akan ditanyakan langsung lewat obrolan (*chat*). Tidak ada yang perlu dikonfigurasi secara manual.
 
-## Apa yang tidak akan dilakukan career-ops
+## Apa yang tidak akan dilakukan project-x
 
 - **Mengirim lamaran secara otomatis (*auto-submit*).** Alat ini membuatkan draf jawaban untuk setiap kolom; Anda yang meninjau dan menekan tombol Submit. Skripnya tidak pernah melakukan request POST (`prepare-application.mjs`).
 - **Mengirim email.** Hanya sebatas draf. Tidak ada mekanisme pengiriman email sama sekali di dalam *codebase* ini.
@@ -176,7 +176,7 @@ Alat ini menyusun ulang kalimat di CV Anda, tetapi pantang mengarang bebas. Peng
 | **Evaluasi A-H** | Ringkasan peran, kecocokan CV (lengkap dengan seberapa penting tiap persyaratan untuk lowongan tersebut, serta label per persyaratan apakah bobot itu berasal dari kata-kata langsung di JD, strukturnya, atau sekadar estimasi; estimasi tidak pernah bisa masuk kategori teratas), strategi level, riset kompensasi, personalisasi, persiapan wawancara (STAR+R) -- ditambah pengecekan keabsahan lowongan pada Blok G (apakah masih buka, apakah hasil *repost*: berupa observasi, bukan vonis), dan sinyal izin kerja (*Work-Auth*) yang menandai pernyataan eksplisit dalam JD bahwa sponsor visa tidak tersedia sebagai penghalang mutlak (*hard blocker*) |
 | **Human-in-the-Loop** | AI mengevaluasi dan memberi rekomendasi, Anda yang memutuskan dan bertindak. Sistem ini tidak pernah mengirim lamaran -- keputusan akhir selalu ada di tangan Anda <!-- hitl: absolute guarantee. Do not add "automatically", "by itself", "without your permission" or any other hedge when translating this row. --> |
 | **Pembuatan PDF Ramah ATS** | CV yang mudah dibaca mesin ATS dan disesuaikan dengan setiap JD berdasarkan pengalaman asli Anda, menggunakan desain font Space Grotesk + DM Sans |
-| **Generator Cover Letter** | *Cover letter* berbasis riset dengan pencocokan kata kunci (*keyword mirroring*), empat pilihan sudut pandang interaktif (alasan/masalah/pendekatan/nada bicara), tahap persetujuan draf di ruang *chat*, dan ekspor PDF ukuran A4 lewat *pipeline* HTML + Playwright yang sama dengan CV. Otomatis membuat draf di setiap evaluasi; lengkapi dan cetak kapan saja lewat `/career-ops cover` |
+| **Generator Cover Letter** | *Cover letter* berbasis riset dengan pencocokan kata kunci (*keyword mirroring*), empat pilihan sudut pandang interaktif (alasan/masalah/pendekatan/nada bicara), tahap persetujuan draf di ruang *chat*, dan ekspor PDF ukuran A4 lewat *pipeline* HTML + Playwright yang sama dengan CV. Otomatis membuat draf di setiap evaluasi; lengkapi dan cetak kapan saja lewat `/project-x cover` |
 | **Lebih dari Sekadar CV** | Riset perusahaan ([`deep`](modes/deep.md)) menggali strategi AI, langkah bisnis terbaru, budaya *engineering*, dan sudut pandang yang sebaiknya ditonjolkan dari profil Anda. Pencarian kontak ([`contacto`](modes/contacto.md)) mengidentifikasi *hiring manager*, rekruter, atau rekan setim yang tepat untuk dihubungi sekaligus menyiapkan draf pesan LinkedIn ≤300 karakter yang disesuaikan dengan tipe kontaknya. Draf email lamaran formal ([`email`](modes/email.md)) mengubah laporan evaluasi atau teks JD menjadi baris subjek, isi email, dan daftar periksa lampiran tanpa mengirim, mengajukan, atau mengeklik apa pun. Lamaran memasukkan Anda ke dalam antrean; riset membuka peluang percakapan. |
 | **Analisis Pola** | Pola penolakan dan rasio lolos per kanal ATS (`analyze-patterns.mjs`), statistik *funnel* keseluruhan (`stats.mjs`), serta deteksi *repost* yang bisa menjadi indikasi lowongan hantu / *ghost job* (`detect-reposts.mjs`) |
 
@@ -188,7 +188,7 @@ Alat ini menyusun ulang kalimat di CV Anda, tetapi pantang mengarang bebas. Peng
 | **Auto-Pipeline** | Tempel URL, dapatkan evaluasi lengkap + PDF + entri di *tracker* |
 | **Bank Cerita Wawancara** | Mengumpulkan cerita berformat STAR+Reflection dari berbagai evaluasi -- 5-10 cerita utama yang bisa Anda adaptasikan untuk menjawab pertanyaan *behavioral* |
 | **Skrip Negosiasi** | Kerangka kerja negosiasi gaji, cara menanggapi potongan gaji berbasis lokasi geografis, serta pemanfaatan tawaran kerja lain (*competing offer*) |
-| **Draf Email Lamaran** | Draf email lamaran formal untuk jalur rekruter, *referral*, maupun *cold email* dari laporan atau teks JD, lengkap dengan subjek, daftar periksa lampiran, poin kecocokan berbasis sumber asli, dan blok kontak dari profil Anda. Hanya berupa draf -- career-ops tidak pernah mengirim, mengajukan, atau mengeklik apa pun. |
+| **Draf Email Lamaran** | Draf email lamaran formal untuk jalur rekruter, *referral*, maupun *cold email* dari laporan atau teks JD, lengkap dengan subjek, daftar periksa lampiran, poin kecocokan berbasis sumber asli, dan blok kontak dari profil Anda. Hanya berupa draf -- project-x tidak pernah mengirim, mengajukan, atau mengeklik apa pun. |
 | **Pemindai Portal** | Lebih dari 100 perusahaan sudah dikonfigurasi dari awal (Anthropic, OpenAI, ElevenLabs, Retool, n8n...) + kueri pencarian web kustom lintas Ashby, Greenhouse, Lever, Wellfound |
 | **Penemuan Perusahaan yang Baru Mendapat Pendanaan** | Skrip `npm run company:funded` yang mengutamakan peninjauan (*review-first*) menampilkan perusahaan yang baru mendapat pendanaan beserta diagnostik sumber dari *feed* publik terstruktur tanpa mengubah data Anda |
 | **Pemrosesan Batch** | Evaluasi paralel menggunakan *worker* CLI *headless* (`claude -p` / `opencode run`) |
@@ -210,27 +210,27 @@ Alat ini menyusun ulang kalimat di CV Anda, tetapi pantang mengarang bebas. Peng
 **Cara tercepat, cukup satu perintah:**
 
 ```bash
-npx @santifer/career-ops init
+npx @santifer/project-x init
 ```
 
 > 💡 `npx` sudah sepaket dengan [Node.js](https://nodejs.org): perintah ini menjalankan *installer* satu kali tanpa perlu menginstal apa pun secara global. Belum punya Node? Instal terlebih dahulu.
 > (Sudah memakai CLI Claude Code / Codex? Berarti Anda sudah memilikinya.)
 
-Perintah di atas akan mengkloning rilis terbaru ke dalam folder `./career-ops` dan menginstal semua dependensi. Selanjutnya:
+Perintah di atas akan mengkloning rilis terbaru ke dalam folder `./project-x` dan menginstal semua dependensi. Selanjutnya:
 
 ```bash
-cd career-ops
+cd project-x
 claude   # atau codex / qwen / opencode / agy / grok — buka AI CLI Anda di direktori ini
 ```
 
-**Saat pertama kali dijalankan, career-ops akan memandu proses penyiapan (CV, profil, dan target peran Anda) cukup lewat obrolan. Tidak ada file yang perlu diedit secara manual.**
+**Saat pertama kali dijalankan, project-x akan memandu proses penyiapan (CV, profil, dan target peran Anda) cukup lewat obrolan. Tidak ada file yang perlu diedit secara manual.**
 
 <details>
 <summary><b>Lebih suka menyiapkannya secara manual? (git clone)</b></summary>
 
 ```bash
-git clone https://github.com/career-ops-hq/career-ops.git
-cd career-ops && npm install
+git clone https://github.com/project-x-hq/project-x.git
+cd project-x && npm install
 npx playwright install chromium   # hanya diperlukan untuk pembuatan PDF
 # Pada distro Linux selain Debian/Ubuntu (Fedora, Arch, ...), library sistem
 # untuk Chromium tidak terinstal lewat perintah di atas — instal sendiri menggunakan
@@ -256,19 +256,19 @@ claude   # atau codex / opencode / qwen / agy / grok
 
 ### Memindai melalui *outbound proxy*
 
-Kalau Anda memindai dari *sandbox* yang hanya mengizinkan koneksi keluar lewat *proxy*, jalankan `CAREER_OPS_TRUST_PROXY_EGRESS=1 node scan.mjs`. Aktifkan *flag* ini **hanya jika *proxy* yang Anda konfigurasi memang memblokir alamat privat, *loopback*, dan metadata**. Langkah lengkapnya (dalam bahasa Inggris) ada di [docs/SETUP.md](docs/SETUP.md#scanning-through-an-outbound-proxy).
+Kalau Anda memindai dari *sandbox* yang hanya mengizinkan koneksi keluar lewat *proxy*, jalankan `PROJECT_X_TRUST_PROXY_EGRESS=1 node scan.mjs`. Aktifkan *flag* ini **hanya jika *proxy* yang Anda konfigurasi memang memblokir alamat privat, *loopback*, dan metadata**. Langkah lengkapnya (dalam bahasa Inggris) ada di [docs/SETUP.md](docs/SETUP.md#scanning-through-an-outbound-proxy).
 
 ### Instalasi global
 
 ```bash
-npm i -g @santifer/career-ops
+npm i -g @santifer/project-x
 ```
 
-Perintah ini menginstal *binary* `career-ops` secara global sehingga Anda bisa menjalankan `career-ops init [folder]` tanpa `npx`. `init` adalah satu-satunya perintahnya: ia menyiapkan *workspace*, dan semua langkah sesudahnya berlangsung di dalam AI coding CLI Anda (lihat Penggunaan di bawah), bukan melalui *binary* ini.
+Perintah ini menginstal *binary* `project-x` secara global sehingga Anda bisa menjalankan `project-x init [folder]` tanpa `npx`. `init` adalah satu-satunya perintahnya: ia menyiapkan *workspace*, dan semua langkah sesudahnya berlangsung di dalam AI coding CLI Anda (lihat Penggunaan di bawah), bukan melalui *binary* ini.
 
 **Mana yang sebaiknya Anda gunakan?**
-- `npx @santifer/career-ops init`: paling pas untuk penggunaan pertama kali; membuatkan folder proyek khusus.
-- `npm i -g @santifer/career-ops`: jika Anda lebih suka mengetik `career-ops init` daripada bentuk `npx`. Instalasi ini tidak menambahkan perintah lain.
+- `npx @santifer/project-x init`: paling pas untuk penggunaan pertama kali; membuatkan folder proyek khusus.
+- `npm i -g @santifer/project-x`: jika Anda lebih suka mengetik `project-x init` daripada bentuk `npx`. Instalasi ini tidak menambahkan perintah lain.
 
 ### Cara lain untuk menjalankannya
 
@@ -277,23 +277,23 @@ Perintah ini menginstal *binary* `career-ops` secara global sehingga Anda bisa m
 
 > **Sistem ini dirancang agar bisa dikustomisasi langsung oleh AI coding CLI Anda.** Mode, arketipe peran, bobot penilaian, hingga skrip negosiasi -- cukup minta AI CLI Anda untuk mengubahnya. Karena ia membaca file yang sama dengan yang ia gunakan, ia tahu persis bagian mana yang harus diedit.
 
-Lihat [docs/SETUP.md](docs/SETUP.md) untuk panduan penyiapan lengkap (termasuk [memindai melalui *outbound proxy*](docs/SETUP.md#scanning-through-an-outbound-proxy)), [docs/SUPPORTED_CLIS.md](docs/SUPPORTED_CLIS.md) untuk cara menjalankan career-ops di setiap CLI yang didukung beserta perintah *headless*-nya bila ada, [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md) untuk petunjuk menjalankan career-ops secara hemat memakai model kustom atau lokal (dan [docs/FREE_TIER.md](docs/FREE_TIER.md) untuk menjalankannya tanpa biaya di *free tier* Antigravity CLI), [docs/AUTOMATION.md](docs/AUTOMATION.md) untuk menjadwalkan pemindaian berkala dan resep penyaringan nol-token menjadi daftar incaran (*shortlist*), [docs/KEEPING_PORTALS_LIVE.md](docs/KEEPING_PORTALS_LIVE.md) untuk menjaga daftar perusahaan Anda tetap mutakhir, [docs/BACKUP_STRATEGIES.md](docs/BACKUP_STRATEGIES.md) untuk mencadangkan CV, tracker, dan laporan Anda, [docs/APPLY_AUTOFILL.md](docs/APPLY_AUTOFILL.md) untuk detail alur pengisian formulir ATS otomatis, [docs/LINKEDIN_JOIN.md](docs/LINKEDIN_JOIN.md) untuk mencocokkan ekspor koneksi LinkedIn dengan daftar perusahaan di *funnel* Anda, dan [docs/FAQ.md](docs/FAQ.md) untuk jawaban atas pertanyaan umum seputar penyiapan, termasuk [bagaimana pelacakan sumber cerita (*story provenance*) mencegah munculnya angka karangan](docs/FAQ.md#why-does-career-ops-refuse-to-use-a-number-from-my-story-bank). Prinsip desain ada di [ARCHITECTURE.md](ARCHITECTURE.md); alur *runtime* ada di [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+Lihat [docs/SETUP.md](docs/SETUP.md) untuk panduan penyiapan lengkap (termasuk [memindai melalui *outbound proxy*](docs/SETUP.md#scanning-through-an-outbound-proxy)), [docs/SUPPORTED_CLIS.md](docs/SUPPORTED_CLIS.md) untuk cara menjalankan project-x di setiap CLI yang didukung beserta perintah *headless*-nya bila ada, [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md) untuk petunjuk menjalankan project-x secara hemat memakai model kustom atau lokal (dan [docs/FREE_TIER.md](docs/FREE_TIER.md) untuk menjalankannya tanpa biaya di *free tier* Antigravity CLI), [docs/AUTOMATION.md](docs/AUTOMATION.md) untuk menjadwalkan pemindaian berkala dan resep penyaringan nol-token menjadi daftar incaran (*shortlist*), [docs/KEEPING_PORTALS_LIVE.md](docs/KEEPING_PORTALS_LIVE.md) untuk menjaga daftar perusahaan Anda tetap mutakhir, [docs/BACKUP_STRATEGIES.md](docs/BACKUP_STRATEGIES.md) untuk mencadangkan CV, tracker, dan laporan Anda, [docs/APPLY_AUTOFILL.md](docs/APPLY_AUTOFILL.md) untuk detail alur pengisian formulir ATS otomatis, [docs/LINKEDIN_JOIN.md](docs/LINKEDIN_JOIN.md) untuk mencocokkan ekspor koneksi LinkedIn dengan daftar perusahaan di *funnel* Anda, dan [docs/FAQ.md](docs/FAQ.md) untuk jawaban atas pertanyaan umum seputar penyiapan, termasuk [bagaimana pelacakan sumber cerita (*story provenance*) mencegah munculnya angka karangan](docs/FAQ.md#why-does-project-x-refuse-to-use-a-number-from-my-story-bank). Prinsip desain ada di [ARCHITECTURE.md](ARCHITECTURE.md); alur *runtime* ada di [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## Penggunaan
 
-Tempelkan URL atau deskripsi lowongan ke CLI AI Anda. career-ops memeriksa apakah lowongan yang ditautkan masih aktif (teks yang ditempel tidak memiliki tautan untuk diperiksa), menilainya terhadap CV Anda, menulis laporan, menyesuaikan CV Anda (PDF secara bawaan), dan menambahkan satu baris ke tracker Anda. Itu saja sudah mencakup sebagian besar kebutuhan harian Anda. Sisanya adalah mode yang Anda minta dengan menyebut namanya. Jika sebuah lowongan tidak dapat dibaca, pipeline berhenti dan meminta Anda menempelkan teksnya.
+Tempelkan URL atau deskripsi lowongan ke CLI AI Anda. project-x memeriksa apakah lowongan yang ditautkan masih aktif (teks yang ditempel tidak memiliki tautan untuk diperiksa), menilainya terhadap CV Anda, menulis laporan, menyesuaikan CV Anda (PDF secara bawaan), dan menambahkan satu baris ke tracker Anda. Itu saja sudah mencakup sebagian besar kebutuhan harian Anda. Sisanya adalah mode yang Anda minta dengan menyebut namanya. Jika sebuah lowongan tidak dapat dibaca, pipeline berhenti dan meminta Anda menempelkan teksnya.
 
 ### Cara meminta sebuah mode
 
 | CLI | Cara meminta `scan` |
 | --- | --- |
-| Claude Code, OpenCode, Antigravity CLI (`agy`), Grok Build CLI | `/career-ops scan` |
-| Pi | `/skill:career-ops scan` |
-| Codex, Qwen, Cursor, atau CLI lain yang didukung | Bahasa biasa: "Run the career-ops scan mode" |
+| Claude Code, OpenCode, Antigravity CLI (`agy`), Grok Build CLI | `/project-x scan` |
+| Pi | `/skill:project-x scan` |
+| Codex, Qwen, Cursor, atau CLI lain yang didukung | Bahasa biasa: "Run the project-x scan mode" |
 
-`/career-ops` tanpa tambahan apa pun menampilkan menu perintah di CLI yang memakainya. Bahasa biasa berfungsi di semua CLI yang didukung. Sebagai plugin Claude Code, perintahnya adalah `/career-ops:career-ops`.
+`/project-x` tanpa tambahan apa pun menampilkan menu perintah di CLI yang memakainya. Bahasa biasa berfungsi di semua CLI yang didukung. Sebagai plugin Claude Code, perintahnya adalah `/project-x:project-x`.
 
-Semuanya memakai satu router yang sama, `.agents/skills/career-ops/SKILL.md`, dan berkas `modes/*.md` yang sama, sehingga sebuah mode berperilaku sama di CLI mana pun. Perintah slash tidak dijamin di Codex: minta dengan bahasa biasa, atau jalankan satu prompt secara headless dengan `codex exec "Evaluate this JD with career-ops auto-pipeline: https://company.com/jobs/123"` ([docs/CODEX.md](docs/CODEX.md)). Cara menjalankannya di setiap CLI yang didukung, perintah headless untuk CLI yang memilikinya, dan catatan penyiapan per CLI ada di [docs/SUPPORTED_CLIS.md](docs/SUPPORTED_CLIS.md).
+Semuanya memakai satu router yang sama, `.agents/skills/project-x/SKILL.md`, dan berkas `modes/*.md` yang sama, sehingga sebuah mode berperilaku sama di CLI mana pun. Perintah slash tidak dijamin di Codex: minta dengan bahasa biasa, atau jalankan satu prompt secara headless dengan `codex exec "Evaluate this JD with project-x auto-pipeline: https://company.com/jobs/123"` ([docs/CODEX.md](docs/CODEX.md)). Cara menjalankannya di setiap CLI yang didukung, perintah headless untuk CLI yang memilikinya, dan catatan penyiapan per CLI ada di [docs/SUPPORTED_CLIS.md](docs/SUPPORTED_CLIS.md).
 
 ### Perintah sehari-hari
 
@@ -392,7 +392,7 @@ Semuanya memakai satu router yang sama, `.agents/skills/career-ops/SKILL.md`, da
 | Perintah | Fungsinya |
 | --- | --- |
 | [`agent-inbox`](modes/agent-inbox.md) | Mengantrikan permintaan untuk sesi berikutnya, lalu mengerjakannya pada sesi itu (`data/agent-inbox.md`). `inbox` juga bisa |
-| [`update`](modes/update.md) | Memperbarui berkas sistem career-ops, dengan pratinjau diff dan pemeriksaan kompatibilitas |
+| [`update`](modes/update.md) | Memperbarui berkas sistem project-x, dengan pratinjau diff dan pemeriksaan kompatibilitas |
 
 </details>
 
@@ -437,7 +437,7 @@ Tersedia juga **UI web eksperimental** (masih berstatus *alpha* dan bersifat *op
 ## Struktur Proyek
 
 ```
-career-ops/
+project-x/
 ├── AGENTS.md                    # Instruksi agen utama (untuk semua CLI)
 ├── CLAUDE.md                    # Wrapper Claude Code (mengimpor AGENTS.md)
 ├── CODEX.md                     # Wrapper Codex (mengimpor AGENTS.md)
@@ -478,20 +478,20 @@ Secara bawaan, data lapisan pengguna (seperti `cv.md`, `portals.yml`, serta fold
 
 Untuk memisahkan data pribadi Anda dari kode program (sehingga lebih mudah saat berpindah *branch*, menarik pembaruan/*pull updates*, atau menguji beberapa profil berbeda), Anda dapat mengonfigurasi direktori data eksternal dengan urutan prioritas berikut:
 
-1. **Environment Variable:** Atur variabel `CAREER_OPS_ROOT` atau `CAREER_OPS_DATA_DIR`:
+1. **Environment Variable:** Atur variabel `PROJECT_X_ROOT` atau `PROJECT_X_DATA_DIR`:
    ```bash
-   export CAREER_OPS_ROOT=~/my-career-data
+   export PROJECT_X_ROOT=~/my-career-data
    ```
-2. **File Penanda (*Marker File*):** Buat file bernama `.career-ops-data` di *root* repositori yang berisi *path* menuju direktori data Anda.
+2. **File Penanda (*Marker File*):** Buat file bernama `.project-x-data` di *root* repositori yang berisi *path* menuju direktori data Anda.
 3. **Bawaan (*Default*):** Kembali menggunakan *root* repositori.
 
 Setelah lokasi ditentukan, semua file pengguna akan dibaca dan ditulis secara relatif terhadap folder tersebut, sementara file *prompt* dan skrip tetap mengacu pada folder repositori.
 
-- **Override Tracker:** Anda juga bisa mengatur `CAREER_OPS_TRACKER` untuk mengubah lokasi file *tracker* lamaran secara langsung.
+- **Override Tracker:** Anda juga bisa mengatur `PROJECT_X_TRACKER` untuk mengubah lokasi file *tracker* lamaran secara langsung.
 - **Operasi Tulis:** Semua operasi penulisan (seperti penggabungan data/*merge*) secara baku diarahkan ke `{DATA_ROOT}/data/applications.md`.
 - **Konfigurasi Pemindai:** `portals.yml` dibaca dan divalidasi di `{DATA_ROOT}/portals.yml`, sehingga `node validate-portals.mjs` memeriksa file yang sama persis dengan yang dibaca oleh `scan.mjs`.
-- **Dokumen yang Dihasilkan:** CV dan *cover letter* yang telah disesuaikan ditulis ke dalam `{DATA_ROOT}/output/`, sedangkan manifes PDF yang menghubungkannya dengan laporan evaluasi tersimpan di `{DATA_ROOT}/data/pdf-index.tsv`. Selama `CAREER_OPS_TRACKER` tidak diatur, *workspace tracker* yang membatasi area penulisan file-file tersebut adalah *data root*, bukan folder kode repositori.
-- **PDF di bawah Override Tracker:** `generate-pdf.mjs` memeriksa `CAREER_OPS_TRACKER` terlebih dahulu sebelum menentukan *workspace*. Jadi ketika *override* diaktifkan, *workspace*-nya adalah folder tempat *tracker* tersebut berada (atau satu folder di atasnya apabila *tracker* berada di dalam folder `data/`). File HTML CV beserta seluruh PDF harus berada di dalam *workspace* tersebut, dan lokasi manifesnya berpindah ke `data/pdf-index.tsv` di *workspace* itu. *Cover letter* tetap menargetkan `{DATA_ROOT}/output/`, sehingga pembuatannya akan ditolak apabila folder tersebut berada di luar *workspace tracker*.
+- **Dokumen yang Dihasilkan:** CV dan *cover letter* yang telah disesuaikan ditulis ke dalam `{DATA_ROOT}/output/`, sedangkan manifes PDF yang menghubungkannya dengan laporan evaluasi tersimpan di `{DATA_ROOT}/data/pdf-index.tsv`. Selama `PROJECT_X_TRACKER` tidak diatur, *workspace tracker* yang membatasi area penulisan file-file tersebut adalah *data root*, bukan folder kode repositori.
+- **PDF di bawah Override Tracker:** `generate-pdf.mjs` memeriksa `PROJECT_X_TRACKER` terlebih dahulu sebelum menentukan *workspace*. Jadi ketika *override* diaktifkan, *workspace*-nya adalah folder tempat *tracker* tersebut berada (atau satu folder di atasnya apabila *tracker* berada di dalam folder `data/`). File HTML CV beserta seluruh PDF harus berada di dalam *workspace* tersebut, dan lokasi manifesnya berpindah ke `data/pdf-index.tsv` di *workspace* itu. *Cover letter* tetap menargetkan `{DATA_ROOT}/output/`, sehingga pembuatannya akan ditolak apabila folder tersebut berada di luar *workspace tracker*.
 - **Lapisan Kode Tetap di Tempatnya:** `node_modules/`, `providers/`, `modes/`, dan skrip-skripnya sendiri selalu mengacu pada repositori, tidak pernah berpindah ke *data root*.
 
 Dashboard TUI Go, skrip Node.js, dan semua mode agen AI secara otomatis mematuhi hierarki penentuan lokasi ini.
@@ -513,7 +513,7 @@ Dashboard TUI Go, skrip Node.js, dan semua mode agen AI secara otomatis mematuhi
 - **Data**: Tabel Markdown + konfigurasi YAML + file *batch* TSV
 
 <p align="center">
-  <a href="https://github.com/career-ops-hq/career-ops/releases/latest"><img src="docs/npm-badge.svg" alt="Rilis terbaru"></a>
+  <a href="https://github.com/project-x-hq/project-x/releases/latest"><img src="docs/npm-badge.svg" alt="Rilis terbaru"></a>
 </p>
 
 <p align="center">
@@ -546,43 +546,43 @@ Dashboard TUI Go, skrip Node.js, dan semua mode agen AI secara otomatis mematuhi
 
 ## FAQ
 
-**Apa itu career-ops?**
-career-ops ([career-ops.org](https://career-ops.org), juga dikenal sebagai **careerops**) adalah alat pencarian kerja AI *open-source* yang berjalan secara lokal di dalam AI coding CLI Anda (Claude Code, Codex, OpenCode, dan lainnya) serta menyerahkan setiap keputusan sepenuhnya kepada Anda. Alat ini mengevaluasi lowongan kerja terhadap CV Anda, membuatkan PDF ramah ATS yang disesuaikan, menemukan kontak yang tepat untuk dihubungi, dan melacak semuanya di satu tempat: keputusan akhir selalu ada di tangan Anda. Proyek ini adalah implementasi referensi pertama dari [Manifesto CareerOps](https://career-ops.org/manifesto).
+**Apa itu project-x?**
+project-x ([project-x.org](https://project-x.org), juga dikenal sebagai **projectx**) adalah alat pencarian kerja AI *open-source* yang berjalan secara lokal di dalam AI coding CLI Anda (Claude Code, Codex, OpenCode, dan lainnya) serta menyerahkan setiap keputusan sepenuhnya kepada Anda. Alat ini mengevaluasi lowongan kerja terhadap CV Anda, membuatkan PDF ramah ATS yang disesuaikan, menemukan kontak yang tepat untuk dihubungi, dan melacak semuanya di satu tempat: keputusan akhir selalu ada di tangan Anda. Proyek ini adalah implementasi referensi pertama dari [Manifesto ProjectX](https://project-x.org/manifesto).
 
 **Apakah CV yang disesuaikan bisa mengarang hal yang tidak nyata?**
-Tidak boleh, dan *prompt*-nya secara tegas menginstruksikan demikian: susun ulang kalimatnya, jangan pernah mengarang bebas. Skrip `generate-pdf` akan memblokir pembuatan CV jika ada angka atau fakta yang tidak ditemukan di dalam sumber data Anda, kecuali jika Anda menyertakan *flag* `--skip-fact-check`. Mode `pdf` juga menjalankan `cv-title-check.mjs`, yang membandingkan setiap nama jabatan di CV yang disesuaikan dengan nama jabatan yang tertulis di cv.md untuk pekerjaan yang sama (dicocokkan berdasarkan perusahaan dan tanggal), lalu menanyakan apakah Anda ingin mempertahankan atau mengembalikan setiap nama jabatan yang berbeda. Pemeriksaan ini hanya memberi peringatan, tidak memblokir, karena membingkai ulang nama jabatan terkadang memang keputusan Anda. Belum ada yang menilai perubahan gaya bahasa: *issue* [#1411](https://github.com/career-ops-hq/career-ops/issues/1411) (pemeriksaan keakuratan berbasis *fail-closed*) melacak hal tersebut. Sampai saat itu, pastikan Anda selalu membaca setiap CV sebelum mengirimkannya. [Penafian Hukum (Legal Disclaimer)](LEGAL_DISCLAIMER.md) menjelaskan hal yang sama secara lebih rinci.
+Tidak boleh, dan *prompt*-nya secara tegas menginstruksikan demikian: susun ulang kalimatnya, jangan pernah mengarang bebas. Skrip `generate-pdf` akan memblokir pembuatan CV jika ada angka atau fakta yang tidak ditemukan di dalam sumber data Anda, kecuali jika Anda menyertakan *flag* `--skip-fact-check`. Mode `pdf` juga menjalankan `cv-title-check.mjs`, yang membandingkan setiap nama jabatan di CV yang disesuaikan dengan nama jabatan yang tertulis di cv.md untuk pekerjaan yang sama (dicocokkan berdasarkan perusahaan dan tanggal), lalu menanyakan apakah Anda ingin mempertahankan atau mengembalikan setiap nama jabatan yang berbeda. Pemeriksaan ini hanya memberi peringatan, tidak memblokir, karena membingkai ulang nama jabatan terkadang memang keputusan Anda. Belum ada yang menilai perubahan gaya bahasa: *issue* [#1411](https://github.com/project-x-hq/project-x/issues/1411) (pemeriksaan keakuratan berbasis *fail-closed*) melacak hal tersebut. Sampai saat itu, pastikan Anda selalu membaca setiap CV sebelum mengirimkannya. [Penafian Hukum (Legal Disclaimer)](LEGAL_DISCLAIMER.md) menjelaskan hal yang sama secara lebih rinci.
 
-**Bisakah saya menjalankan career-ops secara gratis, atau dengan model lokal / yang lebih murah?**
-Bisa. career-ops bersifat CLI-agnostik dan dapat berjalan di atas model gratis maupun lokal (model gratis di OpenRouter, Ollama, atau *endpoint* apa pun yang kompatibel dengan OpenAI), sehingga Anda tidak terikat pada langganan berbayar. Lihat [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md) untuk panduan lengkapnya.
+**Bisakah saya menjalankan project-x secara gratis, atau dengan model lokal / yang lebih murah?**
+Bisa. project-x bersifat CLI-agnostik dan dapat berjalan di atas model gratis maupun lokal (model gratis di OpenRouter, Ollama, atau *endpoint* apa pun yang kompatibel dengan OpenAI), sehingga Anda tidak terikat pada langganan berbayar. Lihat [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md) untuk panduan lengkapnya.
 
-**Saya sudah berlangganan Claude Pro/Max, tapi kenapa career-ops tetap memotong saldo kredit API saya?**
+**Saya sudah berlangganan Claude Pro/Max, tapi kenapa project-x tetap memotong saldo kredit API saya?**
 Karena variabel `ANTHROPIC_API_KEY` yang ada di *environment* terminal Anda memiliki prioritas lebih tinggi daripada akun langganan yang sedang *login*: akibatnya, CLI menggunakan API key tersebut dan menagih biaya per token. Jalankan `echo $ANTHROPIC_API_KEY`, dan jika muncul sesuatu, hapus variabel tersebut dari profil *shell* Anda (`.bashrc`, `.zshrc`, dll.), mulai ulang terminal, lalu jalankan `/login`. Mode *batch* adalah pengecualian karena *worker* `claude -p` tidak menggunakan sesi *login* interaktif: jalankan `claude setup-token` satu kali dan ekspor hasilnya sebagai `CLAUDE_CODE_OAUTH_TOKEN`. Panduan lengkapnya ada di [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md#2b-already-paying-for-a-subscription-make-sure-you-are-using-it).
 
-**AI CLI apa saja yang kompatibel dengan career-ops?**
-career-ops dapat berjalan di berbagai AI coding CLI utama (Claude Code, Codex, Gemini / Antigravity, OpenCode, Grok, Qwen, dan lainnya) melalui *Agent Skill Standard* terbuka, sehingga tidak pernah terkunci pada satu vendor saja. Gunakan CLI yang sudah Anda miliki.
+**AI CLI apa saja yang kompatibel dengan project-x?**
+project-x dapat berjalan di berbagai AI coding CLI utama (Claude Code, Codex, Gemini / Antigravity, OpenCode, Grok, Qwen, dan lainnya) melalui *Agent Skill Standard* terbuka, sehingga tidak pernah terkunci pada satu vendor saja. Gunakan CLI yang sudah Anda miliki.
 
-**Bagaimana cara menginstal career-ops di Windows?**
-career-ops dapat berjalan dengan baik di Windows. Panduan penyiapan khusus Windows beserta solusi untuk beberapa kendala umum (pencarian lokasi Git Bash, karakter akhir baris/*line endings*, Task Scheduler) tersedia di [docs/WINDOWS.md](docs/WINDOWS.md). Jika *skill* gagal dimuat karena error *symlink* saat instalasi, solusinya bisa dilihat di [docs/FAQ.md](docs/FAQ.md). Langkah instalasi lengkap ada di [docs/SETUP.md](docs/SETUP.md). Untuk pengguna NixOS, gunakan *dev shell flake* alih-alih menjalankan `npx playwright install`; lihat [docs/NIXOS.md](docs/NIXOS.md).
+**Bagaimana cara menginstal project-x di Windows?**
+project-x dapat berjalan dengan baik di Windows. Panduan penyiapan khusus Windows beserta solusi untuk beberapa kendala umum (pencarian lokasi Git Bash, karakter akhir baris/*line endings*, Task Scheduler) tersedia di [docs/WINDOWS.md](docs/WINDOWS.md). Jika *skill* gagal dimuat karena error *symlink* saat instalasi, solusinya bisa dilihat di [docs/FAQ.md](docs/FAQ.md). Langkah instalasi lengkap ada di [docs/SETUP.md](docs/SETUP.md). Untuk pengguna NixOS, gunakan *dev shell flake* alih-alih menjalankan `npx playwright install`; lihat [docs/NIXOS.md](docs/NIXOS.md).
 
-**Apakah career-ops melamar pekerjaan secara otomatis untuk saya?**
-Tidak. career-ops adalah penyaring (*filter*), bukan alat pelamar massal membabi buta (*spray-and-pray auto-applier*). AI bertugas mengevaluasi, mengurutkan prioritas, dan membuat draf; Anda yang meninjau dan memutuskan. Alat ini menyiapkan draf dan membantu mengisi kolom formulir, tetapi tidak pernah menekan kirim. Anda yang menekan tombol Submit. Konsep *human-in-the-loop* inilah inti utamanya.
+**Apakah project-x melamar pekerjaan secara otomatis untuk saya?**
+Tidak. project-x adalah penyaring (*filter*), bukan alat pelamar massal membabi buta (*spray-and-pray auto-applier*). AI bertugas mengevaluasi, mengurutkan prioritas, dan membuat draf; Anda yang meninjau dan memutuskan. Alat ini menyiapkan draf dan membantu mengisi kolom formulir, tetapi tidak pernah menekan kirim. Anda yang menekan tombol Submit. Konsep *human-in-the-loop* inilah inti utamanya.
 
-**Apakah career-ops gratis dan open source?**
-Ya. career-ops sepenuhnya gratis dan *open source*, dan bagi para pencari kerja akan selalu gratis selamanya. Proyek ini adalah implementasi referensi pertama dari [Manifesto CareerOps](https://career-ops.org/manifesto). Silakan baca, dan jika isinya sejalan dengan apa yang Anda yakini, ikutlah menandatanganinya.
+**Apakah project-x gratis dan open source?**
+Ya. project-x sepenuhnya gratis dan *open source*, dan bagi para pencari kerja akan selalu gratis selamanya. Proyek ini adalah implementasi referensi pertama dari [Manifesto ProjectX](https://project-x.org/manifesto). Silakan baca, dan jika isinya sejalan dengan apa yang Anda yakini, ikutlah menandatanganinya.
 
 ## Tentang Pembuat
 
-Saya [Santiago Fernández de Valderrama Aparicio](https://santifer.io/about) (santifer), seorang mantan *founder*: saya pernah membangun dan menjual bisnis yang hingga kini masih beroperasi menyandang nama saya. Saya membangun career-ops untuk mengelola pencarian kerja saya sendiri, dan hasilnya terbukti berhasil: alat ini mengantarkan saya mendapatkan posisi Head of Applied AI. Enam bulan kemudian, saya meninggalkan posisi tersebut untuk fokus membangun career-ops secara penuh waktu.
+Saya [Santiago Fernández de Valderrama Aparicio](https://santifer.io/about) (santifer), seorang mantan *founder*: saya pernah membangun dan menjual bisnis yang hingga kini masih beroperasi menyandang nama saya. Saya membangun project-x untuk mengelola pencarian kerja saya sendiri, dan hasilnya terbukti berhasil: alat ini mengantarkan saya mendapatkan posisi Head of Applied AI. Enam bulan kemudian, saya meninggalkan posisi tersebut untuk fokus membangun project-x secara penuh waktu.
 
-Penasaran bagaimana repositori sebesar ini dikelola oleh sekumpulan agen AI dengan manusia yang memegang keputusan akhir untuk setiap *merge*? Baca [Agentic maintenance: bagaimana career-ops dijalankan oleh armada agen AI](https://santifer.io/ai-agent-fleet).
+Penasaran bagaimana repositori sebesar ini dikelola oleh sekumpulan agen AI dengan manusia yang memegang keputusan akhir untuk setiap *merge*? Baca [Agentic maintenance: bagaimana project-x dijalankan oleh armada agen AI](https://santifer.io/ai-agent-fleet).
 
 Portofolio dan proyek *open source* saya lainnya → [santifer.io](https://santifer.io)
 
-Wikidata: [Santiago Fernández de Valderrama Aparicio](https://www.wikidata.org/wiki/Q138710224) · [career-ops](https://www.wikidata.org/wiki/Q139007988).
+Wikidata: [Santiago Fernández de Valderrama Aparicio](https://www.wikidata.org/wiki/Q138710224) · [project-x](https://www.wikidata.org/wiki/Q139007988).
 
 ## Penafian (Disclaimer)
 
-**career-ops adalah alat *open-source* lokal, BUKAN layanan terkelola (*hosted service*).** Dengan menggunakan perangkat lunak ini, Anda memahami dan menyetujui bahwa:
+**project-x adalah alat *open-source* lokal, BUKAN layanan terkelola (*hosted service*).** Dengan menggunakan perangkat lunak ini, Anda memahami dan menyetujui bahwa:
 
 1. **Anda memegang kendali atas data Anda.** CV, informasi kontak, dan data pribadi Anda tetap tersimpan di komputer Anda dan dikirimkan langsung ke penyedia layanan AI yang Anda pilih (Anthropic, OpenAI, dll.). Kami tidak mengumpulkan, menyimpan, atau memiliki akses ke data Anda sama sekali.
 2. **Anda memegang kendali atas AI.** *Prompt* bawaan telah menginstruksikan AI agar tidak mengirim lamaran secara otomatis, namun model AI tetap dapat bertindak di luar dugaan. Jika Anda memodifikasi *prompt* atau menggunakan model yang berbeda, risiko sepenuhnya ditanggung oleh Anda sendiri. **Selalu periksa keakuratan konten yang dihasilkan AI sebelum mengirimkannya.**
@@ -593,18 +593,18 @@ Lihat [LEGAL_DISCLAIMER.md](LEGAL_DISCLAIMER.md) untuk detail selengkapnya. Pera
 
 ## Kontributor
 
-<a href="https://github.com/career-ops-hq/career-ops/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=career-ops-hq/career-ops&v=2" />
+<a href="https://github.com/project-x-hq/project-x/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=project-x-hq/project-x&v=2" />
 </a>
 
 Setiap orang yang telah berkontribusi lewat kode, dokumentasi, terjemahan, maupun pengujian tercantum di dalam
 [CONTRIBUTORS.md](CONTRIBUTORS.md), termasuk kontribusi non-kode yang tidak dapat ditampilkan oleh grafik di atas.
 
-Diterima kerja berkat career-ops? [Bagikan cerita Anda!](https://github.com/career-ops-hq/career-ops/issues/new?template=i-got-hired.yml)
+Diterima kerja berkat project-x? [Bagikan cerita Anda!](https://github.com/project-x-hq/project-x/issues/new?template=i-got-hired.yml)
 
 ## Lisensi & Merek Dagang
 
-Kode program dilisensikan di bawah [MIT](LICENSE). Nama dan merek "career-ops" diatur dalam [Kebijakan Merek Dagang](TRADEMARK.md), yang bersifat terbuka untuk penggunaan komunitas namun dilindungi untuk penamaan produk komersial dan *endorsement*.
+Kode program dilisensikan di bawah [MIT](LICENSE). Nama dan merek "project-x" diatur dalam [Kebijakan Merek Dagang](TRADEMARK.md), yang bersifat terbuka untuk penggunaan komunitas namun dilindungi untuk penamaan produk komersial dan *endorsement*.
 
 Kode berlisensi MIT; data di [`employers/`](employers/) berlisensi [CC BY 4.0](employers/LICENSE).
 
@@ -614,7 +614,7 @@ Kode berlisensi MIT; data di [`employers/`](employers/) berlisensi [CC BY 4.0](e
   <a href="https://warpchart.dev/hq">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://warpchart.dev/api/chart?theme=dark&v=3">
-      <img alt="Telemetri bintang langsung dari career-ops-hq/career-ops" src="https://warpchart.dev/api/chart?theme=light&v=3" loading="lazy">
+      <img alt="Telemetri bintang langsung dari project-x-hq/project-x" src="https://warpchart.dev/api/chart?theme=light&v=3" loading="lazy">
     </picture>
   </a>
 </p>

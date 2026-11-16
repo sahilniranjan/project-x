@@ -20,10 +20,10 @@ function check(label, run) {
 
 function fixture(run) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "company-evidence-truth-"));
-  const env = Object.fromEntries(Object.entries(process.env).filter(([key]) => !key.startsWith("CAREER_OPS_")));
-  Object.assign(env, { CAREER_OPS_ROOT: root, CAREER_OPS_PORTALS: path.join(root, "portals.yml"), CAREER_OPS_PROFILE: path.join(root, "config/profile.yml") });
+  const env = Object.fromEntries(Object.entries(process.env).filter(([key]) => !key.startsWith("PROJECT_X_")));
+  Object.assign(env, { PROJECT_X_ROOT: root, PROJECT_X_PORTALS: path.join(root, "portals.yml"), PROJECT_X_PROFILE: path.join(root, "config/profile.yml") });
   fs.mkdirSync(path.join(root, "data"));
-  fs.writeFileSync(env.CAREER_OPS_PORTALS, "companies: []\n");
+  fs.writeFileSync(env.PROJECT_X_PORTALS, "companies: []\n");
   const card = () => JSON.parse(execFileSync(process.execPath, [script, "--company", "Globex", "--include-stale"], { cwd: root, env, encoding: "utf8" }));
   const tracker = (status, notes = "—") => fs.writeFileSync(path.join(root, "data/applications.md"), header + `| 1 | 2026-08-01 | Globex | Platform Engineer | 4/5 | ${status} | — | — | ${notes} |\n`);
   try { run({ root, env, card, tracker }); }
@@ -40,7 +40,7 @@ check("the real single-company CLI distinguishes missing, empty and responded tr
     assert.equal(empty.responsiveness.label, "no-history");
     tracker("Interview");
     assert.equal(card().responsiveness.facts[0].outcome, "Interview");
-    env.CAREER_OPS_TRACKER = path.join(root, "missing-selected-tracker.md");
+    env.PROJECT_X_TRACKER = path.join(root, "missing-selected-tracker.md");
     assert.equal(card().metadata.sources.tracker, false);
   });
 });

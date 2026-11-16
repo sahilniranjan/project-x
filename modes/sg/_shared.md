@@ -1,10 +1,10 @@
-# Shared context -- career-ops (Singapore)
+# Shared context -- project-x (Singapore)
 
 <!-- ============================================================
      PERSONALIZING THIS FILE
      ============================================================
-     This file holds the shared context for all career-ops Singapore
-     market modes. Before using career-ops, you MUST:
+     This file holds the shared context for all project-x Singapore
+     market modes. Before using project-x, you MUST:
      1. Fill in config/profile.yml with your personal information
      2. Create cv.md in the project root (Markdown CV)
      3. (Optional) Create article-digest.md with your measurable proof points

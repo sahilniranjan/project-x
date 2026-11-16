@@ -9,8 +9,8 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/x/ansi"
 
-	"github.com/santifer/career-ops/dashboard/internal/model"
-	"github.com/santifer/career-ops/dashboard/internal/theme"
+	"github.com/santifer/project-x/dashboard/internal/model"
+	"github.com/santifer/project-x/dashboard/internal/theme"
 )
 
 func viewerKey(s string) tea.KeyMsg {

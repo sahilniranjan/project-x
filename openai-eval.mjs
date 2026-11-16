@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * openai-eval.mjs — OpenAI-compatible Job Offer Evaluator for career-ops
+ * openai-eval.mjs — OpenAI-compatible Job Offer Evaluator for project-x
  *
  * Evaluate job offers with ANY OpenAI-compatible chat endpoint instead of Claude.
  * Works with OpenAI, OpenRouter, Requesty, Cheaper Inference, API Route, Runcrate, CloudGPU, cheapaimodel, UberLLM, Standard Compute, Together, Groq, DeepSeek, Zhipu GLM,
@@ -31,7 +31,7 @@ import { readFileSync, existsSync, writeFileSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { randomUUID } from 'crypto';
-import { getCareerOpsRoot, getProfilePath } from './path-resolver.mjs';
+import { getProjectXRoot, getProfilePath } from './path-resolver.mjs';
 import { localToday } from './lib/local-today.mjs';
 import { withJdArchiveSection } from './lib/jd-archive-section.mjs';
 import { TSV_ADDITION_HEADER } from './tracker-parse.mjs';
@@ -62,11 +62,11 @@ try {
   // The data root's .env first: doctor.mjs, remember-cli.mjs, scan.mjs and the
   // plugin engine all read it there. The working directory's .env, the only one
   // read before, still supplies what the data root's leaves unset.
-  config({ path: [join(getCareerOpsRoot(), '.env'), join(process.cwd(), '.env')] });
+  config({ path: [join(getProjectXRoot(), '.env'), join(process.cwd(), '.env')] });
 } catch { /* dotenv optional */ }
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
-const DATA_ROOT = getCareerOpsRoot();
+const DATA_ROOT = getProjectXRoot();
 
 // ---------------------------------------------------------------------------
 // Paths
@@ -79,11 +79,11 @@ const PATHS = {
   profile:    join(DATA_ROOT, 'modes', '_profile.md'),
   custom:     join(DATA_ROOT, 'modes', '_custom.md'),
   reports:    join(DATA_ROOT, 'reports'),
-  // CAREER_OPS_ADDITIONS mirrors merge-tracker.mjs:43. Writing under DATA_ROOT
+  // PROJECT_X_ADDITIONS mirrors merge-tracker.mjs:43. Writing under DATA_ROOT
   // regardless would drop the addition somewhere the merge it instructs never
   // looks, so the evaluation would sit there unread.
-  trackerAdditions: process.env.CAREER_OPS_ADDITIONS
-    ? process.env.CAREER_OPS_ADDITIONS
+  trackerAdditions: process.env.PROJECT_X_ADDITIONS
+    ? process.env.PROJECT_X_ADDITIONS
     : join(DATA_ROOT, 'batch', 'tracker-additions'),
 };
 
@@ -95,7 +95,7 @@ const args = process.argv.slice(2);
 if (args.length === 0 || args[0] === '--help' || args[0] === '-h') {
   console.log(`
 ╔══════════════════════════════════════════════════════════════════╗
-║       career-ops — OpenAI-compatible Evaluator (any endpoint)     ║
+║       project-x — OpenAI-compatible Evaluator (any endpoint)     ║
 ╚══════════════════════════════════════════════════════════════════╝
 
   Evaluate a job offer with any OpenAI-compatible chat API instead of Claude.
@@ -120,7 +120,7 @@ if (args.length === 0 || args[0] === '--help' || args[0] === '-h') {
 
   ENV
     OPENAI_API_KEY, OPENAI_BASE_URL, OPENAI_MODEL, OPENAI_TIMEOUT_MS
-    CAREER_OPS_MAX_TOKENS  Output cap per evaluation (default 32768). Keeps a
+    PROJECT_X_MAX_TOKENS  Output cap per evaluation (default 32768). Keeps a
                      gateway like OpenRouter from reserving credit for the
                      model's whole output window (HTTP 402 on a low balance).
 
@@ -317,7 +317,7 @@ if (budgetReport.compressed) {
   console.log(`📊  Token budget: ${budgetReport.totalTokens} tokens (within ${budgetReport.budget} limit)`);
 }
 
-const systemPrompt = `You are career-ops, an AI-powered job search assistant.
+const systemPrompt = `You are project-x, an AI-powered job search assistant.
 You evaluate job offers against the user's CV using a structured A-G scoring system.
 
 Your evaluation methodology is defined below. Follow it exactly.
@@ -394,10 +394,10 @@ if (!Number.isSafeInteger(timeoutMs) || timeoutMs <= 0 || timeoutMs > 2_147_483_
 
 // Empty means unset, as for every other variable here. Digits only, so "8k"
 // is refused instead of being read as 8.
-const maxTokensEnv = process.env.CAREER_OPS_MAX_TOKENS?.trim();
+const maxTokensEnv = process.env.PROJECT_X_MAX_TOKENS?.trim();
 const maxTokens = maxTokensEnv ? (/^\d+$/.test(maxTokensEnv) ? Number(maxTokensEnv) : NaN) : DEFAULT_MAX_TOKENS;
 if (!(maxTokens > 0)) {
-  console.error(`❌  Invalid CAREER_OPS_MAX_TOKENS: "${process.env.CAREER_OPS_MAX_TOKENS}" — must be a positive integer (output tokens).`);
+  console.error(`❌  Invalid PROJECT_X_MAX_TOKENS: "${process.env.PROJECT_X_MAX_TOKENS}" — must be a positive integer (output tokens).`);
   process.exit(1);
 }
 
@@ -407,14 +407,14 @@ console.log(`🤖  Calling ${modelName} via ${endpointHost} (output cap ${maxTok
 // One evaluation is one conversation: a single id for every request in this run.
 const SESSION_ID = randomUUID();
 // VERSION may carry a release-please marker ("1.38.0 # x-release-please-version").
-let careerOpsVersion;
-try { careerOpsVersion = readFileSync(join(ROOT, 'VERSION'), 'utf-8').trim().split(/\s+/)[0] || undefined; } catch { /* default User-Agent version */ }
+let projectXVersion;
+try { projectXVersion = readFileSync(join(ROOT, 'VERSION'), 'utf-8').trim().split(/\s+/)[0] || undefined; } catch { /* default User-Agent version */ }
 
 const headers = { 'Content-Type': 'application/json' };
 if (apiKey) headers['Authorization'] = `Bearer ${apiKey}`;
 // OpenCode Go asks for a session id and an own user agent (observed: HTTP 400 MissingSessionID without it):
 // https://opencode.ai/v2/docs/console/go/#where-can-i-use-it
-Object.assign(headers, endpointHeaders(endpointHost, SESSION_ID, careerOpsVersion));
+Object.assign(headers, endpointHeaders(endpointHost, SESSION_ID, projectXVersion));
 
 let evaluationText;
 let evaluationUsage = null;
@@ -462,7 +462,7 @@ try {
       console.error(`    → Check your API key for ${endpointHost}.`);
     } else if (res.status === 402) {
       console.error(`    → Not enough credit at ${endpointHost} for the prompt plus the ${maxTokens}-token output cap.`);
-      console.error(`      Top up, or lower CAREER_OPS_MAX_TOKENS.`);
+      console.error(`      Top up, or lower PROJECT_X_MAX_TOKENS.`);
     } else if (res.status === 404) {
       console.error(`    → Check --url (it should include any /v1 segment) and --model id.`);
     }
@@ -506,7 +506,7 @@ try {
       finishReason = choice.finish_reason;
       if (finishReason === 'length') {
         console.error(`⚠️   The reply stopped at the ${maxTokens}-token output cap, so the evaluation may be truncated (missing blocks or score summary).`);
-        console.error(`    Raise CAREER_OPS_MAX_TOKENS to allow a longer reply.`);
+        console.error(`    Raise PROJECT_X_MAX_TOKENS to allow a longer reply.`);
       }
       if (finishReason !== 'stop') throw new Error(`Incomplete evaluation: finish_reason=${finishReason}`);
     }
@@ -576,7 +576,7 @@ try {
 evaluationText = normalizeEvaluationText(evaluationText, jdText);
 
 console.log('\n' + '═'.repeat(66));
-console.log('  CAREER-OPS EVALUATION — powered by ' + modelName + ' (' + endpointHost + ')');
+console.log('  PROJECT-X EVALUATION — powered by ' + modelName + ' (' + endpointHost + ')');
 console.log('═'.repeat(66) + '\n');
 console.log(evaluationText);
 

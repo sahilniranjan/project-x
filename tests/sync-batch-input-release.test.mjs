@@ -10,7 +10,7 @@ import { batchInputLockTarget } from '../sync-batch-input.mjs';
 
 for (const scenario of ['append', 'already-queued', 'append-error']) {
   test(`batch sync preserves ${scenario} outcome when lock cleanup fails`, () => {
-    const root = realpathSync(mkdtempSync(join(tmpdir(), 'career-ops-batch-release-')));
+    const root = realpathSync(mkdtempSync(join(tmpdir(), 'project-x-batch-release-')));
     const input = join(root, 'batch', 'input.tsv');
     try {
       const pipeline = join(root, 'pipeline.md');
@@ -40,7 +40,7 @@ fs.appendFileSync = (path, ...args) => {
 };
 syncBuiltinESMExports();\n`);
       const result = spawnSync(process.execPath, ['--import', pathToFileURL(hook).href, join(ROOT, 'sync-batch-input.mjs'), '--pipeline', pipeline, '--input', input, '--state', join(root, 'state.tsv')], {
-        env: { ...process.env, CAREER_OPS_ROOT: root, BATCH_INPUT: input, BATCH_LOCK: batchInputLockTarget(input) + '.lock', BATCH_SCENARIO: scenario }, encoding: 'utf8', timeout: 15000,
+        env: { ...process.env, PROJECT_X_ROOT: root, BATCH_INPUT: input, BATCH_LOCK: batchInputLockTarget(input) + '.lock', BATCH_SCENARIO: scenario }, encoding: 'utf8', timeout: 15000,
       });
       assert.equal(result.error, undefined);
       assert.equal(result.status, scenario === 'append-error' ? 1 : 0, result.stderr);

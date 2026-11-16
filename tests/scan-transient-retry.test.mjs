@@ -30,10 +30,10 @@ function run(script) {
   ].join('\n'));
   const marker = join(dir, 'runs.txt');
   const env = { ...process.env };
-  for (const name of Object.keys(env)) if (name.toUpperCase().startsWith('CAREER_OPS_')) delete env[name];
+  for (const name of Object.keys(env)) if (name.toUpperCase().startsWith('PROJECT_X_')) delete env[name];
   const result = spawnSync(process.execPath, [SCAN, '--quiet', '--dry-run'], {
     cwd: dir,
-    env: { ...env, CAREER_OPS_ROOT: dir, CAREER_OPS_PORTALS: join(dir, 'portals.yml'), CO_TEST_PARSER_MARKER: marker },
+    env: { ...env, PROJECT_X_ROOT: dir, PROJECT_X_PORTALS: join(dir, 'portals.yml'), CO_TEST_PARSER_MARKER: marker },
     encoding: 'utf-8',
   });
   let runs = 0;

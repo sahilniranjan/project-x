@@ -14,11 +14,11 @@ const CAPTCHA = ['radware captcha page', 'botmanager_support', 'validate.perfdri
 
 // Keep this recipe self-contained: users copy this file to local/, where core
 // module-relative imports would no longer resolve. The local-parser provider
-// launches scripts with the career-ops checkout as cwd.
-function getCareerOpsRoot() {
-  const env = process.env.CAREER_OPS_ROOT?.trim() || process.env.CAREER_OPS_DATA_DIR?.trim();
+// launches scripts with the project-x checkout as cwd.
+function getProjectXRoot() {
+  const env = process.env.PROJECT_X_ROOT?.trim() || process.env.PROJECT_X_DATA_DIR?.trim();
   if (env) return resolve(process.cwd(), env);
-  const marker = join(process.cwd(), '.career-ops-data');
+  const marker = join(process.cwd(), '.project-x-data');
   if (existsSync(marker)) {
     const configured = readFileSync(marker, 'utf8').trim();
     if (configured) return resolve(process.cwd(), configured);
@@ -98,12 +98,12 @@ export function parseSavedHtml(html, source = 'saved HTML') {
 
 function inputFiles(paths) {
   const canonicalize = realpathSync.native ?? realpathSync;
-  const root = canonicalize(getCareerOpsRoot());
+  const root = canonicalize(getProjectXRoot());
   const insideRoot = (candidate, source) => {
     const canonical = canonicalize(candidate);
     const rel = relative(root, canonical);
     if (rel === '..' || rel.startsWith(`..${sep}`) || isAbsolute(rel)) {
-      throw new Error(`input is outside the career-ops data root: ${source}`);
+      throw new Error(`input is outside the project-x data root: ${source}`);
     }
     return canonical;
   };

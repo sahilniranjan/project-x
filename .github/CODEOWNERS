@@ -39,7 +39,7 @@
 # .opencode/, .qwen/, .kimi/, .grok/, .antigravitycli/) is a symlink to this
 # one file, so an edit here changes only this path — the symlinks never show
 # up in the diff.
-/.agents/skills/career-ops/SKILL.md  @santifer
+/.agents/skills/project-x/SKILL.md  @santifer
 
 # Scoring & the system/user data contract (CI-blind; silent-danger)
 /modes/_shared.md      @santifer

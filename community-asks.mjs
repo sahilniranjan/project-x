@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 /**
- * community-asks.mjs — decides whether career-ops asks the user for support,
+ * community-asks.mjs — decides whether project-x asks the user for support,
  * and which ask.
  *
- * career-ops never phones home, so the only signals the maintainers get are
+ * project-x never phones home, so the only signals the maintainers get are
  * the ones people choose to give. It asks for them in words, rarely, and at
  * the right moment (AGENTS.md → "Community asks"):
  *
@@ -17,15 +17,15 @@
  *   node community-asks.mjs open <ask>      opens the ask's page, after the user said yes
  *   node community-asks.mjs status          the state as JSON
  *   node community-asks.mjs off             never ask again
- *   CAREER_OPS_NO_ASKS=1                    the same, without writing anything
+ *   PROJECT_X_NO_ASKS=1                    the same, without writing anything
  *
  * Guarantees (tests/community-asks.test.mjs):
  *   - At most once. `next` claims data/.community-asks/<ask> with an exclusive
  *     create BEFORE it prints. When the marker exists or cannot be written, it
  *     prints nothing. The markers are user-layer data (DATA_CONTRACT.md): an
  *     update, or a reinstall that keeps the data, never asks again.
- *   - Never unattended: silent under CI, batch workers (CAREER_OPS_HEADLESS,
- *     CAREER_OPS_BATCH_STATE) and Claude Code's headless entrypoints. Never
+ *   - Never unattended: silent under CI, batch workers (PROJECT_X_HEADLESS,
+ *     PROJECT_X_BATCH_STATE) and Claude Code's headless entrypoints. Never
  *     decided by isTTY: an agent's shell has no TTY, so a TTY check would hide
  *     the ask from almost every user.
  *   - No network. The script never makes a request. `open` hands one fixed URL
@@ -39,12 +39,12 @@ import { join, resolve } from 'path';
 import { execFileSync } from 'child_process';
 import { isMainModule } from './lib/is-main-module.mjs';
 
-export const STAR_URL = 'https://github.com/career-ops-hq/career-ops';
-export const MANIFESTO_URL = 'https://career-ops.org/manifesto?utm_source=ask';
+export const STAR_URL = 'https://github.com/project-x-hq/project-x';
+export const MANIFESTO_URL = 'https://project-x.org/manifesto?utm_source=ask';
 export const MANIFESTO_MIN_REPORTS = 5;
 export const MANIFESTO_MIN_DAYS_AFTER_STAR = 7;
 export const ASKS = Object.freeze(['star', 'manifesto']);
-/** From this many reports the star ask names the count: the user has run career-ops for a while. */
+/** From this many reports the star ask names the count: the user has run project-x for a while. */
 export const VETERAN_MIN_REPORTS = 5;
 
 // The drawing for the star ask ("yours is missing"). `next` prints it in a fenced
@@ -74,14 +74,14 @@ const USAGE = `Usage:
   node community-asks.mjs next          print the one ask that is due, or nothing (always exits 0)
   node community-asks.mjs open <ask>    open the page of an ask the user said yes to (star | manifesto)
   node community-asks.mjs status        show the state as JSON
-  node community-asks.mjs off           never ask again (CAREER_OPS_NO_ASKS=1 does the same without writing)
+  node community-asks.mjs off           never ask again (PROJECT_X_NO_ASKS=1 does the same without writing)
 
 Options:
-  --root <dir>   data root (default: the configured career-ops data root)
+  --root <dir>   data root (default: the configured project-x data root)
   --now <iso>    clock override, for tests`;
 
 /**
- * The line the agent says. The star line says career-ops "collects nothing
+ * The line the agent says. The star line says project-x "collects nothing
  * about you": that holds while LEGAL_DISCLAIMER.md says it collects no
  * analytics, telemetry or usage data, and the test ties the two together. A
  * change that starts sending any data, even opt-in, revisits this sentence in
@@ -94,16 +94,16 @@ Options:
 export function askText(ask, { reports = 0 } = {}) {
   if (ask === 'star') {
     const opening = reports >= VETERAN_MIN_REPORTS
-      ? `You've run ${reports} evaluations with career-ops so far. It's free and collects nothing about you, `
-      : 'If this report saved you some time: career-ops is free and collects nothing about you, ';
+      ? `You've run ${reports} evaluations with project-x so far. It's free and collects nothing about you, `
+      : 'If this report saved you some time: project-x is free and collects nothing about you, ';
     return opening
       + "so we can't tell whether it helped. A Star on GitHub 🌟 (the button at the top right of the page) "
       + 'is one of the few ways we find out, '
-      + 'and it helps the next job seeker find career-ops. '
+      + 'and it helps the next job seeker find project-x. '
       + `Say "yes" and I'll open the page (${STAR_URL}). I won't ask for a star again.`;
   }
   if (ask === 'manifesto') {
-    return "The way you've been searching has a name: CareerOps, and it has a manifesto. "
+    return "The way you've been searching has a name: ProjectX, and it has a manifesto. "
       + 'If it speaks for you, sign it (your name goes on the public wall). '
       + `Say "yes" and I'll open it (${MANIFESTO_URL}). I won't ask about the manifesto again.`;
   }
@@ -135,9 +135,9 @@ const isOn = (value) => value !== undefined && value !== null && value !== ''
  * @returns {string|null}
  */
 export function unattendedReason(env = process.env) {
-  if (isOn(env.CAREER_OPS_NO_ASKS)) return 'CAREER_OPS_NO_ASKS is set';
-  if (isOn(env.CAREER_OPS_HEADLESS)) return 'CAREER_OPS_HEADLESS is set';
-  if (env.CAREER_OPS_BATCH_STATE) return 'this is a batch worker (CAREER_OPS_BATCH_STATE is set)';
+  if (isOn(env.PROJECT_X_NO_ASKS)) return 'PROJECT_X_NO_ASKS is set';
+  if (isOn(env.PROJECT_X_HEADLESS)) return 'PROJECT_X_HEADLESS is set';
+  if (env.PROJECT_X_BATCH_STATE) return 'this is a batch worker (PROJECT_X_BATCH_STATE is set)';
   if (isOn(env.CI)) return 'CI is set';
   const ci = CI_VARS.find((name) => isOn(env[name]));
   if (ci) return `${ci} is set`;
@@ -223,7 +223,7 @@ export function claim(asksDir, name, now = new Date()) {
  */
 export function readState(root, env = process.env, now = new Date()) {
   const asksDir = join(root, 'data', '.community-asks');
-  const reportsDir = resolve(env.CAREER_OPS_REPORTS_DIR || join(root, 'reports'));
+  const reportsDir = resolve(env.PROJECT_X_REPORTS_DIR || join(root, 'reports'));
   // scan.mjs used to show the manifesto once in a terminal and leave this file
   // in the folder it ran from. Whoever saw it is not asked again.
   const legacyManifesto = [root, process.cwd()].some((dir) => existsSync(join(dir, '.manifesto-noted')));
@@ -265,9 +265,9 @@ function parseArgs(argv) {
 async function defaultRoot() {
   // Loaded lazily: `next` must stay silent and exit 0 even if the resolver
   // throws (for example, an unsafe data root), and the tests pass --root.
-  const { getCareerOpsRoot } = await import('./path-resolver.mjs');
+  const { getProjectXRoot } = await import('./path-resolver.mjs');
   const { resolveWorkspaceRootFor } = await import('./tracker-utils.mjs');
-  return resolveWorkspaceRootFor(getCareerOpsRoot());
+  return resolveWorkspaceRootFor(getProjectXRoot());
 }
 
 /**
@@ -322,11 +322,11 @@ export async function main(argv = process.argv.slice(2), env = process.env) {
     const root = resolve(flags.root || await defaultRoot());
     const asksDir = join(root, 'data', '.community-asks');
     if (claim(asksDir, 'off', now) || existsSync(join(asksDir, 'off'))) {
-      process.stdout.write("Community asks are off: career-ops won't ask for a star or a signature again. "
+      process.stdout.write("Community asks are off: project-x won't ask for a star or a signature again. "
         + `Delete ${join(asksDir, 'off')} to undo.\n`);
       return 0;
     }
-    process.stderr.write(`community-asks: could not write ${join(asksDir, 'off')}; set CAREER_OPS_NO_ASKS=1 instead.\n`);
+    process.stderr.write(`community-asks: could not write ${join(asksDir, 'off')}; set PROJECT_X_NO_ASKS=1 instead.\n`);
     return 1;
   }
 

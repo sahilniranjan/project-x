@@ -9,10 +9,10 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/x/ansi"
 
-	"github.com/santifer/career-ops/dashboard/internal/data"
-	"github.com/santifer/career-ops/dashboard/internal/i18n"
-	"github.com/santifer/career-ops/dashboard/internal/model"
-	"github.com/santifer/career-ops/dashboard/internal/theme"
+	"github.com/santifer/project-x/dashboard/internal/data"
+	"github.com/santifer/project-x/dashboard/internal/i18n"
+	"github.com/santifer/project-x/dashboard/internal/model"
+	"github.com/santifer/project-x/dashboard/internal/theme"
 )
 
 // The Inbox tab (#5269): pending rows of data/pipeline.md beside the tracker

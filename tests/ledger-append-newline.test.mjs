@@ -30,7 +30,7 @@ function node(script) {
   const r = spawnSync(NODE, ['--input-type=module', '-e', script], {
     cwd: root,
     encoding: 'utf-8',
-    env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_TRACKER: '' },
+    env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_TRACKER: '' },
   });
   if (r.status !== 0) throw new Error(`child failed: ${r.stderr.trim().split('\n').pop()}`);
   return r.stdout;
@@ -79,7 +79,7 @@ try {
     const log = join(dataDir, 'status-log.tsv');
     writeFileSync(log, '7\t2026-01-05\t-\tEvaluated\tcorrection\t');
     const r = spawnSync(NODE, [join(ROOT, 'set-status.mjs'), '--row', '1', 'Applied'], {
-      cwd: root, encoding: 'utf-8', env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_TRACKER: '' },
+      cwd: root, encoding: 'utf-8', env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_TRACKER: '' },
     });
     assert.equal(r.status, 0, describeSpawn(r));
     const rows = lines(readFileSync(log, 'utf-8')).map(l => l.split('\t'));

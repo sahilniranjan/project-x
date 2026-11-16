@@ -24,7 +24,7 @@ ok('merge reads a decimal-comma tracker score as 4.2, not 4', () => {
     const output = execFileSync(NODE, [join(ROOT, 'merge-tracker.mjs'), '--allow-headerless'], {
       encoding: 'utf-8',
       stdio: ['ignore', 'pipe', 'pipe'],
-      env: { ...process.env, CAREER_OPS_TRACKER: tracker, CAREER_OPS_ADDITIONS: adds, CAREER_OPS_BATCH_STATE: isolatedBatchStatePath(adds) },
+      env: { ...process.env, PROJECT_X_TRACKER: tracker, PROJECT_X_ADDITIONS: adds, PROJECT_X_BATCH_STATE: isolatedBatchStatePath(adds) },
     });
     const row = readFileSync(tracker, 'utf-8').split('\n').find(l => /\bExampleCorp\b/.test(l)) || '';
     assert.match(row, /Superseded report/);

@@ -5,7 +5,7 @@
 // the model's whole output window (prompt + max output, at the model's price)
 // and answers HTTP 402 when the balance cannot cover that reservation, even
 // when the tailored CV would have cost cents. The limit comes from
-// CAREER_OPS_MAX_TOKENS (default 32768) and is sent as `max_tokens`, except to
+// PROJECT_X_MAX_TOKENS (default 32768) and is sent as `max_tokens`, except to
 // api.openai.com, which takes `max_completion_tokens`. A reply that stops at
 // the limit is a CV cut short, so it is not saved.
 //
@@ -21,7 +21,7 @@ import { join } from 'path';
 import { pathToFileURL } from 'url';
 import { pass, fail, NODE, ROOT } from './helpers.mjs';
 
-console.log('\nopenai-tailor.mjs — caps the completion with max_tokens (CAREER_OPS_MAX_TOKENS)');
+console.log('\nopenai-tailor.mjs — caps the completion with max_tokens (PROJECT_X_MAX_TOKENS)');
 
 const DEFAULT_MAX_TOKENS = 32768;
 const HTML = '<!DOCTYPE html><html><body><h1>Test Candidate</h1></body></html>';
@@ -69,8 +69,8 @@ const savedHtml = () => (existsSync(outputDir) ? readdirSync(outputDir).filter((
 /** Run openai-tailor once; resolves with the exit code, output and captured request. */
 function run({ env = {}, url = base, preload = null } = {}) {
   rmSync(outputDir, { recursive: true, force: true });
-  const childEnv = Object.fromEntries(Object.entries(process.env).filter(([k]) => !/^(OPENAI_|CAREER_OPS_)/.test(k)));
-  Object.assign(childEnv, { CAREER_OPS_ROOT: scratch }, env);
+  const childEnv = Object.fromEntries(Object.entries(process.env).filter(([k]) => !/^(OPENAI_|PROJECT_X_)/.test(k)));
+  Object.assign(childEnv, { PROJECT_X_ROOT: scratch }, env);
   const before = requests.length;
   const argv = [
     ...(preload ? ['--import', pathToFileURL(preload).href] : []),
@@ -104,20 +104,20 @@ try {
     else fail(`complete reply: exit ${r.code}, saved ${JSON.stringify(r.saved)}\n${r.out.slice(-400)}`);
   }
 
-  // 2. CAREER_OPS_MAX_TOKENS overrides the default.
+  // 2. PROJECT_X_MAX_TOKENS overrides the default.
   {
-    const r = await run({ env: { CAREER_OPS_MAX_TOKENS: '4096' } });
-    if (r.body?.max_tokens === 4096) pass('CAREER_OPS_MAX_TOKENS=4096 sends max_tokens = 4096');
-    else fail(`CAREER_OPS_MAX_TOKENS=4096 not honoured: max_tokens=${r.body?.max_tokens} (exit ${r.code})`);
+    const r = await run({ env: { PROJECT_X_MAX_TOKENS: '4096' } });
+    if (r.body?.max_tokens === 4096) pass('PROJECT_X_MAX_TOKENS=4096 sends max_tokens = 4096');
+    else fail(`PROJECT_X_MAX_TOKENS=4096 not honoured: max_tokens=${r.body?.max_tokens} (exit ${r.code})`);
   }
 
   // 3. An invalid value stops before any request is made, naming the variable.
   for (const bad of ['abc', '0', '-5', '8k']) {
-    const r = await run({ env: { CAREER_OPS_MAX_TOKENS: bad } });
-    if (r.code !== 0 && r.body === null && /CAREER_OPS_MAX_TOKENS/.test(r.stderr)) {
-      pass(`CAREER_OPS_MAX_TOKENS=${JSON.stringify(bad)} is refused before any request`);
+    const r = await run({ env: { PROJECT_X_MAX_TOKENS: bad } });
+    if (r.code !== 0 && r.body === null && /PROJECT_X_MAX_TOKENS/.test(r.stderr)) {
+      pass(`PROJECT_X_MAX_TOKENS=${JSON.stringify(bad)} is refused before any request`);
     } else {
-      fail(`CAREER_OPS_MAX_TOKENS=${JSON.stringify(bad)}: exit ${r.code}, request ${r.body ? 'sent' : 'not sent'}, stderr: ${r.stderr.trim().split('\n').pop()}`);
+      fail(`PROJECT_X_MAX_TOKENS=${JSON.stringify(bad)}: exit ${r.code}, request ${r.body ? 'sent' : 'not sent'}, stderr: ${r.stderr.trim().split('\n').pop()}`);
     }
   }
 
@@ -135,9 +135,9 @@ try {
   // 5. A reply cut off by the limit is not saved, and the error names the variable.
   {
     finishReason = 'length';
-    const r = await run({ env: { CAREER_OPS_MAX_TOKENS: '4096' } });
+    const r = await run({ env: { PROJECT_X_MAX_TOKENS: '4096' } });
     finishReason = 'stop';
-    if (r.code !== 0 && r.saved.length === 0 && /4096-token output cap/.test(r.stderr) && /CAREER_OPS_MAX_TOKENS/.test(r.stderr)) {
+    if (r.code !== 0 && r.saved.length === 0 && /4096-token output cap/.test(r.stderr) && /PROJECT_X_MAX_TOKENS/.test(r.stderr)) {
       pass('a reply that stops at the cap (finish_reason "length") is not saved');
     } else {
       fail(`finish_reason "length": exit ${r.code}, saved ${JSON.stringify(r.saved)}, stderr: ${r.stderr.trim().split('\n').slice(-2).join(' | ')}`);
@@ -149,7 +149,7 @@ try {
     status = 402;
     const r = await run();
     status = 200;
-    if (r.code !== 0 && /HTTP 402/.test(r.stderr) && /lower CAREER_OPS_MAX_TOKENS/.test(r.stderr)) pass('an HTTP 402 names CAREER_OPS_MAX_TOKENS');
+    if (r.code !== 0 && /HTTP 402/.test(r.stderr) && /lower PROJECT_X_MAX_TOKENS/.test(r.stderr)) pass('an HTTP 402 names PROJECT_X_MAX_TOKENS');
     else fail(`HTTP 402 without the hint: exit ${r.code}, stderr: ${r.stderr.trim().split('\n').slice(-3).join(' | ')}`);
   }
 } finally {

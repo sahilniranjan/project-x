@@ -5,9 +5,9 @@ import { syncBuiltinESMExports } from 'node:module';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { pass, fail } from './helpers.mjs';
-const root = mkdtempSync(join(tmpdir(), 'career-ops-capture-collision-'));
-const previousRoot = process.env.CAREER_OPS_ROOT;
-process.env.CAREER_OPS_ROOT = root;
+const root = mkdtempSync(join(tmpdir(), 'project-x-capture-collision-'));
+const previousRoot = process.env.PROJECT_X_ROOT;
+process.env.PROJECT_X_ROOT = root;
 const { archiveUrl } = await import('../archive-posting.mjs?archive-posting-collision');
 function browser() {
   return { async newContext() {
@@ -92,7 +92,7 @@ try {
     }
   }
 } finally {
-  if (previousRoot === undefined) delete process.env.CAREER_OPS_ROOT;
-  else process.env.CAREER_OPS_ROOT = previousRoot;
+  if (previousRoot === undefined) delete process.env.PROJECT_X_ROOT;
+  else process.env.PROJECT_X_ROOT = previousRoot;
   rmSync(root, { recursive: true, force: true, maxRetries: 10 });
 }

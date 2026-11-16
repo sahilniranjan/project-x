@@ -52,16 +52,16 @@ import { dirname, extname, join, relative, resolve, sep } from 'path';
 import { fileURLToPath } from 'url';
 import { isMainModule } from './lib/is-main-module.mjs';
 import { flagValue, hasFlag, validateFlags } from './lib/cli-flags.mjs';
-import { getCareerOpsRoot } from './path-resolver.mjs';
+import { getProjectXRoot } from './path-resolver.mjs';
 import { writeFileAtomic, acquireTrackerLock } from './tracker-utils.mjs';
 import { isNestedCheckout } from './lib/mjs-files.mjs';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
-const DATA_ROOT = getCareerOpsRoot();
-const DOCS_DIR = process.env.CAREER_OPS_DOCUMENTS_DIR || join(DATA_ROOT, 'documents');
-const STATE_FILE = process.env.CAREER_OPS_INTAKE_STATE || join(DATA_ROOT, 'data', 'intake-state.json');
+const DATA_ROOT = getProjectXRoot();
+const DOCS_DIR = process.env.PROJECT_X_DOCUMENTS_DIR || join(DATA_ROOT, 'documents');
+const STATE_FILE = process.env.PROJECT_X_INTAKE_STATE || join(DATA_ROOT, 'data', 'intake-state.json');
 // Beside the ledger rather than under DATA_ROOT, so an overridden state file
-// (CAREER_OPS_INTAKE_STATE, which the tests use) takes its snapshots with it.
+// (PROJECT_X_INTAKE_STATE, which the tests use) takes its snapshots with it.
 // With no override this is {DATA_ROOT}/data/intake-snapshots/.
 const SNAPSHOT_DIR = join(dirname(STATE_FILE), 'intake-snapshots');
 

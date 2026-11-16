@@ -1,55 +1,55 @@
-# Running career-ops as a Claude Code plugin
+# Running project-x as a Claude Code plugin
 
-career-ops ships a Claude Code plugin manifest (`.claude-plugin/`), so you can install it once and use it from any folder: the Claude Code CLI, or the Code tab of the Claude desktop app. You don't need to open the career-ops checkout as your project.
+project-x ships a Claude Code plugin manifest (`.claude-plugin/`), so you can install it once and use it from any folder: the Claude Code CLI, or the Code tab of the Claude desktop app. You don't need to open the project-x checkout as your project.
 
-If you already work inside a career-ops checkout, you don't need the plugin: the checkout's own `.claude/skills/career-ops` gives you `/career-ops` there.
+If you already work inside a project-x checkout, you don't need the plugin: the checkout's own `.claude/skills/project-x` gives you `/project-x` there.
 
 ## Install
 
 **From the Claude desktop app (Customize):**
 
 1. Open **Customize → Plugins**.
-2. Select **Add → Add marketplace** and enter `career-ops-hq/career-ops`.
-3. Open **Discover**, find **career-ops**, and select **Add**.
+2. Select **Add → Add marketplace** and enter `project-x-hq/project-x`.
+3. Open **Discover**, find **project-x**, and select **Add**.
 
 The plugin is saved to your claude.ai account. The Code tab downloads it as a synced plugin the next time a session starts.
 
 **From a Claude Code session:**
 
 ```text
-/plugin marketplace add career-ops-hq/career-ops
-/plugin install career-ops@career-ops
+/plugin marketplace add project-x-hq/project-x
+/plugin install project-x@project-x
 ```
 
-For a fork, replace `career-ops-hq/career-ops` with your fork's `owner/repo`.
+For a fork, replace `project-x-hq/project-x` with your fork's `owner/repo`.
 
-Then start a new session. The first start takes a few seconds longer while the plugin installs its Node packages. Run `/career-ops:career-ops` to open the command menu, or paste a job URL. On a fresh setup the agent walks you through onboarding.
+Then start a new session. The first start takes a few seconds longer while the plugin installs its Node packages. Run `/project-x:project-x` to open the command menu, or paste a job URL. On a fresh setup the agent walks you through onboarding.
 
 ## Where your files live
 
 | What | Where | Survives a plugin update? |
 |------|-------|---------------------------|
-| career-ops code | `~/.claude/plugins/cache/career-ops/career-ops/<version>/` (Customize installs: `~/.claude/plugins/synced/`) | No, it is replaced |
-| Node packages | `${CLAUDE_PLUGIN_DATA}/node_modules`: `~/.claude/plugins/data/career-ops-career-ops/` for a `/plugin` install, `~/.claude/plugins/data/career-ops-synced/` for a Customize install | Yes |
-| Your CV, profile, tracker, reports | `~/career-ops-data` | Yes, Claude Code never touches it |
+| project-x code | `~/.claude/plugins/cache/project-x/project-x/<version>/` (Customize installs: `~/.claude/plugins/synced/`) | No, it is replaced |
+| Node packages | `${CLAUDE_PLUGIN_DATA}/node_modules`: `~/.claude/plugins/data/project-x-project-x/` for a `/plugin` install, `~/.claude/plugins/data/project-x-synced/` for a Customize install | Yes |
+| Your CV, profile, tracker, reports | `~/project-x-data` | Yes, Claude Code never touches it |
 
-Claude Code replaces the code folder on every plugin update, so career-ops never keeps your files there. `path-resolver.mjs` detects a plugin install and uses `~/career-ops-data` when nothing else names a data folder.
+Claude Code replaces the code folder on every plugin update, so project-x never keeps your files there. `path-resolver.mjs` detects a plugin install and uses `~/project-x-data` when nothing else names a data folder.
 
-To use another folder, set `CAREER_OPS_ROOT` (or `CAREER_OPS_DATA_DIR`) to an absolute path in `~/.claude/settings.json`. A folder inside `~/.claude/plugins/` is refused: career-ops scripts stop with an error that names the variable, and `node doctor.mjs` reports it.
+To use another folder, set `PROJECT_X_ROOT` (or `PROJECT_X_DATA_DIR`) to an absolute path in `~/.claude/settings.json`. A folder inside `~/.claude/plugins/` is refused: project-x scripts stop with an error that names the variable, and `node doctor.mjs` reports it.
 
 ```json
 {
   "env": {
-    "CAREER_OPS_ROOT": "/absolute/path/to/job-search"
+    "PROJECT_X_ROOT": "/absolute/path/to/job-search"
   }
 }
 ```
 
-That setting applies to every Claude Code session, including one you open in a career-ops checkout, where it moves the checkout's data root too.
+That setting applies to every Claude Code session, including one you open in a project-x checkout, where it moves the checkout's data root too.
 
-To keep using the files in a checkout you already have, point `CAREER_OPS_ROOT` at that checkout. Alternatively, add the checkout itself as a local marketplace (`/plugin marketplace add ~/career-ops`). Claude Code then loads the plugin in place from the checkout, nothing is copied, and the checkout keeps its own data and `node_modules`.
+To keep using the files in a checkout you already have, point `PROJECT_X_ROOT` at that checkout. Alternatively, add the checkout itself as a local marketplace (`/plugin marketplace add ~/project-x`). Claude Code then loads the plugin in place from the checkout, nothing is copied, and the checkout keeps its own data and `node_modules`.
 
-Uninstalling the plugin deletes the Node packages folder, not `~/career-ops-data`.
+Uninstalling the plugin deletes the Node packages folder, not `~/project-x-data`.
 
 ## What the plugin adds at session start
 
@@ -60,19 +60,19 @@ Uninstalling the plugin deletes the Node packages folder, not `~/career-ops-data
 
 For a checkout loaded in place, the hook does nothing. Its packages and data are yours to manage.
 
-The hook skips Playwright's browser download because it takes minutes. `node doctor.mjs` reports when Chromium is missing. Install it from the plugin's code folder with `npx playwright install chromium`; Chromium is shared per user, so an existing career-ops checkout may already have it.
+The hook skips Playwright's browser download because it takes minutes. `node doctor.mjs` reports when Chromium is missing. Install it from the plugin's code folder with `npx playwright install chromium`; Chromium is shared per user, so an existing project-x checkout may already have it.
 
 ## Updating
 
 Claude updates the plugin, not `update-system.mjs`. Inside a plugin install, `node update-system.mjs check` reports `managed-by-plugin`, and `apply` and `rollback` refuse.
 
 - **Customize installs:** open the marketplace under **Customize → Plugins** and turn on **Sync automatically**, or select **Check for updates** to pull now.
-- **`/plugin` installs:** open `/plugin`, find career-ops under **Installed** and update it, or turn on auto-update for its marketplace on the **Marketplaces** tab.
+- **`/plugin` installs:** open `/plugin`, find project-x under **Installed** and update it, or turn on auto-update for its marketplace on the **Marketplaces** tab.
 
 The manifest pins `version`, so an install stays on that version until `version` changes. If you ship changes from a fork, bump `version` in `.claude-plugin/plugin.json`, then copy that file verbatim to `.codex-plugin/plugin.json` and `.github/plugin/plugin.json`.
 
 ## Known limits
 
-- **Two skills inside a checkout.** In a session opened in a career-ops checkout with the plugin enabled, both `/career-ops` (the checkout's) and `/career-ops:career-ops` (the plugin's) appear. They read different data roots unless `CAREER_OPS_ROOT` is set, so pick one.
+- **Two skills inside a checkout.** In a session opened in a project-x checkout with the plugin enabled, both `/project-x` (the checkout's) and `/project-x:project-x` (the plugin's) appear. They read different data roots unless `PROJECT_X_ROOT` is set, so pick one.
 - **Windows.** The hook links `node_modules` with a directory junction. This hasn't been verified on Windows yet.
-- **Chat and Cowork.** A Customize install also appears in Chat and Cowork, but career-ops only runs in Claude Code. Chat has no access to your files, and Cowork's shell can't install the plugin's packages. For Cowork, mount a checkout instead: see [COWORK.md](COWORK.md).
+- **Chat and Cowork.** A Customize install also appears in Chat and Cowork, but project-x only runs in Claude Code. Chat has no access to your files, and Cowork's shell can't install the plugin's packages. For Cowork, mount a checkout instead: see [COWORK.md](COWORK.md).

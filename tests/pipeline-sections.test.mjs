@@ -16,7 +16,7 @@ const DONE = 'https://jobs.example.com/done';
 const OPEN = 'https://jobs.example.com/open';
 
 function sandbox(t, pipelineText) {
-  const root = mkdtempSync(join(tmpdir(), 'career-ops-sections-'));
+  const root = mkdtempSync(join(tmpdir(), 'project-x-sections-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   for (const dir of ['data', 'batch', 'reports']) mkdirSync(join(root, dir));
   const pipeline = join(root, 'data', 'pipeline.md');
@@ -31,7 +31,7 @@ function reconcile(t, pipelineText) {
   writeFileSync(join(root, 'reports', '007-acme-2026-10-01.md'), '**Score:** 4.1/5\n**PDF:** not generated\n');
   const result = spawnSync(process.execPath, [join(ROOT, 'reconcile-pipeline.mjs'), '--pipeline', pipeline, '--state', state], {
     cwd: root,
-    env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_DATA_DIR: root, CAREER_OPS_TRACKER: '' },
+    env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_DATA_DIR: root, PROJECT_X_TRACKER: '' },
     encoding: 'utf8',
   });
   assert.equal(result.status, 0, describeSpawn(result));

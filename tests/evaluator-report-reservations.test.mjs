@@ -55,26 +55,26 @@ function prepareCode(codeRoot, engine) {
 
 function isolatedEnv() {
   return Object.fromEntries(Object.entries(process.env).filter(([key]) =>
-    !/^(CAREER_OPS_|OPENAI_|OLLAMA_|PRIVACY_|DOTENV_|NODE_OPTIONS$|NODE_PATH$|HTTPS?_PROXY$|ALL_PROXY$)/i.test(key),
+    !/^(PROJECT_X_|OPENAI_|OLLAMA_|PRIVACY_|DOTENV_|NODE_OPTIONS$|NODE_PATH$|HTTPS?_PROXY$|ALL_PROXY$)/i.test(key),
   ));
 }
 
 const cases = [
-  { name: 'CAREER_OPS_ROOT', envKey: 'CAREER_OPS_ROOT', expected: 74 },
-  { name: 'CAREER_OPS_DATA_DIR', envKey: 'CAREER_OPS_DATA_DIR', expected: 74 },
-  { name: 'relative data root', envKey: 'CAREER_OPS_ROOT', relative: true, expected: 74 },
+  { name: 'PROJECT_X_ROOT', envKey: 'PROJECT_X_ROOT', expected: 74 },
+  { name: 'PROJECT_X_DATA_DIR', envKey: 'PROJECT_X_DATA_DIR', expected: 74 },
+  { name: 'relative data root', envKey: 'PROJECT_X_ROOT', relative: true, expected: 74 },
   { name: 'relative marker file', marker: true, expected: 74 },
-  { name: 'legacy applications.md', envKey: 'CAREER_OPS_ROOT', legacy: true, expected: 74 },
-  { name: 'explicit tracker wins', envKey: 'CAREER_OPS_ROOT', override: true, expected: 109 },
+  { name: 'legacy applications.md', envKey: 'PROJECT_X_ROOT', legacy: true, expected: 74 },
+  { name: 'explicit tracker wins', envKey: 'PROJECT_X_ROOT', override: true, expected: 109 },
   { name: 'default code/data root', defaultRoot: true, expected: 8 },
-  { name: 'first run without tracker', envKey: 'CAREER_OPS_ROOT', noTracker: true, expected: 1 },
-  { name: 'deleted row retained in status log', envKey: 'CAREER_OPS_ROOT', noTracker: true, ledger: 'status-log.tsv', expected: 121 },
-  { name: 'deleted row retained in salary ledger', envKey: 'CAREER_OPS_ROOT', noTracker: true, ledger: 'salary-observations.tsv', expected: 122 },
-  { name: 'deleted row retained in contacts', envKey: 'CAREER_OPS_ROOT', noTracker: true, ledger: 'contacts.tsv', expected: 123 },
-  { name: 'deleted row retained in follow-ups', envKey: 'CAREER_OPS_ROOT', noTracker: true, ledger: 'follow-ups.md', expected: 124 },
-  { name: 'checkout failed batch row', envKey: 'CAREER_OPS_ROOT', codeBatch: true, expected: 130 },
-  { name: 'data-root failed batch row', envKey: 'CAREER_OPS_ROOT', codeBatch: true, dataBatch: true, expected: 141 },
-  { name: 'report files also reserve IDs', envKey: 'CAREER_OPS_ROOT', existingReport: true, expected: 91 },
+  { name: 'first run without tracker', envKey: 'PROJECT_X_ROOT', noTracker: true, expected: 1 },
+  { name: 'deleted row retained in status log', envKey: 'PROJECT_X_ROOT', noTracker: true, ledger: 'status-log.tsv', expected: 121 },
+  { name: 'deleted row retained in salary ledger', envKey: 'PROJECT_X_ROOT', noTracker: true, ledger: 'salary-observations.tsv', expected: 122 },
+  { name: 'deleted row retained in contacts', envKey: 'PROJECT_X_ROOT', noTracker: true, ledger: 'contacts.tsv', expected: 123 },
+  { name: 'deleted row retained in follow-ups', envKey: 'PROJECT_X_ROOT', noTracker: true, ledger: 'follow-ups.md', expected: 124 },
+  { name: 'checkout failed batch row', envKey: 'PROJECT_X_ROOT', codeBatch: true, expected: 130 },
+  { name: 'data-root failed batch row', envKey: 'PROJECT_X_ROOT', codeBatch: true, dataBatch: true, expected: 141 },
+  { name: 'report files also reserve IDs', envKey: 'PROJECT_X_ROOT', existingReport: true, expected: 91 },
 ];
 
 console.log('\nevaluator report reservations follow the configured data root');
@@ -97,10 +97,10 @@ for (const engine of ['openai', 'ollama']) {
         OLLAMA_TIMEOUT_MS: '15000', OLLAMA_NUM_CTX: '32768',
       };
       if (scenario.envKey) env[scenario.envKey] = scenario.relative ? '../external' : dataRoot;
-      if (scenario.marker) write(join(codeRoot, '.career-ops-data'), '../external\n');
+      if (scenario.marker) write(join(codeRoot, '.project-x-data'), '../external\n');
       if (scenario.override) {
-        env.CAREER_OPS_TRACKER = join(sandbox, 'custom/applications.md');
-        write(env.CAREER_OPS_TRACKER, trackerText(108, 108));
+        env.PROJECT_X_TRACKER = join(sandbox, 'custom/applications.md');
+        write(env.PROJECT_X_TRACKER, trackerText(108, 108));
       }
       if (scenario.existingReport) write(join(dataRoot, 'reports/090-existing.md'), 'Existing report.\n');
       const retainedPaths = [];
@@ -125,7 +125,7 @@ for (const engine of ['openai', 'ollama']) {
         write(batchPath, `id\turl\tstatus\tengine\tmodel\treport\n1\thttps://example.invalid/job\tfailed\tsynthetic\tsynthetic\t${num}\n`);
         retainedPaths.push(batchPath);
       }
-      const trackerPaths = [join(codeRoot, 'data/applications.md'), dataTracker, env.CAREER_OPS_TRACKER, ...retainedPaths]
+      const trackerPaths = [join(codeRoot, 'data/applications.md'), dataTracker, env.PROJECT_X_TRACKER, ...retainedPaths]
         .filter(path => path && existsSync(path));
       const before = new Map(trackerPaths.map(path => [path, readFileSync(path, 'utf-8')]));
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * followup-cadence.mjs — Follow-up Cadence Tracker for career-ops
+ * followup-cadence.mjs — Follow-up Cadence Tracker for project-x
  *
  * Parses applications.md + follow-ups.md, calculates follow-up cadence
  * for active applications, extracts contacts, and flags overdue entries.
@@ -17,7 +17,7 @@ import { fileURLToPath } from 'url';
 import { loadYaml } from './lib/yaml-document.mjs';
 import { loadCanonicalStates, foldStatusInput } from './tracker-utils.mjs';
 import { resolveColumns, parseTrackerRow, firstLinkTarget } from './tracker-parse.mjs';
-import { getCareerOpsRoot, getProfilePath, resolveTrackerPath } from './path-resolver.mjs';
+import { getProjectXRoot, getProfilePath, resolveTrackerPath } from './path-resolver.mjs';
 import { localToday } from './lib/local-today.mjs';
 import { flagValue, validateFlags } from './lib/cli-flags.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
@@ -26,10 +26,10 @@ import { parseStatusLog, foldObservations } from './funnel-velocity.mjs';
 // templates/states.yml is System Layer — resolved from the codebase, not from
 // the user's data root (#3500).
 const CODEBASE_ROOT = dirname(fileURLToPath(import.meta.url));
-const CAREER_OPS = getCareerOpsRoot();
-const APPS_FILE = resolveTrackerPath(CAREER_OPS);
+const PROJECT_X = getProjectXRoot();
+const APPS_FILE = resolveTrackerPath(PROJECT_X);
 
-const FOLLOWUPS_FILE = process.env.CAREER_OPS_FOLLOWUPS || join(CAREER_OPS, 'data/follow-ups.md');
+const FOLLOWUPS_FILE = process.env.PROJECT_X_FOLLOWUPS || join(PROJECT_X, 'data/follow-ups.md');
 const STATUS_LOG_FILE = join(dirname(APPS_FILE), 'status-log.tsv');
 const PROFILE_FILE = getProfilePath();
 
@@ -205,7 +205,7 @@ export function parseDate(dateStr) {
 // lookup exists to prevent. The leading \b still refuses "reapplied".
 //
 // A bounded gap between "applied" and the date covers the channel phrasing
-// career-ops' own apply modes write -- "Applied via Ashby 2026-08-31",
+// project-x' own apply modes write -- "Applied via Ashby 2026-08-31",
 // "Applied on 2026-08-25 via Ashby" -- which the original adjacent-only match
 // missed entirely, silently degrading to the evaluation-date fallback on the
 // exact notes this project generates (#4084). Bounded to 40 chars total and
@@ -795,7 +795,7 @@ export function contactLabel(contact) {
 }
 
 // --- Resolve report path ---
-export function resolveReportPath(reportField, appsFile = APPS_FILE, repoRoot = CAREER_OPS) {
+export function resolveReportPath(reportField, appsFile = APPS_FILE, repoRoot = PROJECT_X) {
   const target = firstLinkTarget(reportField);
   if (target == null) return null;
   // Two shapes name the same file. Writers emit a repo-root link,

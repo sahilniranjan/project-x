@@ -51,8 +51,8 @@ globalThis.fetch = (url, init) =>
 
 /** Run openai-tailor once; resolves with the exit code, output and the request's headers. */
 function run({ url, preload = null }) {
-  const env = Object.fromEntries(Object.entries(process.env).filter(([k]) => !/^(OPENAI_|CAREER_OPS_)/.test(k)));
-  Object.assign(env, { CAREER_OPS_ROOT: scratch, OPENAI_API_KEY: 'test-key-not-real' });
+  const env = Object.fromEntries(Object.entries(process.env).filter(([k]) => !/^(OPENAI_|PROJECT_X_)/.test(k)));
+  Object.assign(env, { PROJECT_X_ROOT: scratch, OPENAI_API_KEY: 'test-key-not-real' });
   const before = requests.length;
   const argv = [
     ...(preload ? ['--import', pathToFileURL(preload).href] : []),
@@ -77,13 +77,13 @@ try {
   } else {
     fail(`opencode.ai request has no session id: ${JSON.stringify(h['x-opencode-session'])} (exit ${go.code})\n${go.out.slice(-300)}`);
   }
-  if (h['user-agent'] === `career-ops/${version}`) pass(`opencode.ai gets the User-Agent career-ops/${version}`);
+  if (h['user-agent'] === `project-x/${version}`) pass(`opencode.ai gets the User-Agent project-x/${version}`);
   else fail(`opencode.ai User-Agent: ${JSON.stringify(h['user-agent'])}`);
   if (go.code === 0) pass('the tailoring run completes');
   else fail(`tailoring against opencode.ai exited ${go.code}\n${go.out.slice(-300)}`);
 
   const other = await run({ url: base });
-  if (other.headers && !('x-opencode-session' in other.headers) && other.headers['user-agent'] !== `career-ops/${version}`) {
+  if (other.headers && !('x-opencode-session' in other.headers) && other.headers['user-agent'] !== `project-x/${version}`) {
     pass('any other host gets no extra headers');
   } else {
     fail(`other host headers: ${JSON.stringify(other.headers)} (exit ${other.code})`);

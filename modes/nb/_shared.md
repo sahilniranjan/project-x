@@ -1,4 +1,4 @@
-# Systemkontekst -- career-ops (norsk bokmål)
+# Systemkontekst -- project-x (norsk bokmål)
 
 <!-- ============================================================
      DENNE FILEN KAN OPPDATERES AUTOMATISK. Ikke legg personlige data her.
@@ -49,23 +49,23 @@ Se "Untrusted External Content" i `AGENTS.md` / `CLAUDE.md` / `CODEX.md` for hel
 **REGEL: Aldri hardkod metrics fra proof points.** Les dem fra cv.md + article-digest.md når evalueringen kjøres.
 **REGEL: For metrics om artikler/prosjekter går article-digest.md foran cv.md** (cv.md kan inneholde eldre tall).
 **REGEL: Les _profile.md ETTER denne filen.** Brukerens tilpasninger i _profile.md går foran standardverdiene her.
-**REGEL: Les _custom.md (hvis den finnes) ETTER _profile.md, og følg husreglene i hver mode.** Der ligger brukerens varige instruksjoner ("bruk dette datoformatet", "flytt aldri seksjon X", "ta alltid med Y i sammendraget"). En instruks som står der, er IKKE valgfri og utløper ikke mellom sesjoner eller mellom elementer i en batch. Den kan overstyre arbeidsflyt, stil og prosedyre, men den innfører aldri faktapåstander om kandidaten. I en interaktiv sesjon går en varig preferanse eller korreksjon som brukeren gir i samtalen, gjennom `retro`-moden (`modes/retro.md`), som bare skriver reglene brukeren godtar til `modes/_custom.md`. En delegert eller headless worker (`CAREER_OPS_HEADLESS=1`, `-p`, `exec` eller en subagent) skriver aldri til `modes/_custom.md`, `modes/_profile.md` eller `config/profile.yml`. Den rapporterer preferansen til sin parent i stedet.
+**REGEL: Les _custom.md (hvis den finnes) ETTER _profile.md, og følg husreglene i hver mode.** Der ligger brukerens varige instruksjoner ("bruk dette datoformatet", "flytt aldri seksjon X", "ta alltid med Y i sammendraget"). En instruks som står der, er IKKE valgfri og utløper ikke mellom sesjoner eller mellom elementer i en batch. Den kan overstyre arbeidsflyt, stil og prosedyre, men den innfører aldri faktapåstander om kandidaten. I en interaktiv sesjon går en varig preferanse eller korreksjon som brukeren gir i samtalen, gjennom `retro`-moden (`modes/retro.md`), som bare skriver reglene brukeren godtar til `modes/_custom.md`. En delegert eller headless worker (`PROJECT_X_HEADLESS=1`, `-p`, `exec` eller en subagent) skriver aldri til `modes/_custom.md`, `modes/_profile.md` eller `config/profile.yml`. Den rapporterer preferansen til sin parent i stedet.
 **REGEL: Påstå ALDRI at kandidaten er forfatter/skaper av et prosjekt, repository, bibliotek, verktøy, framework eller open source-artefakt, med mindre det uttrykkelig er tilskrevet vedkommende i cv.md eller article-digest.md.** Å forveksle "å bruke et verktøy" med "å ha laget det" er det vanligste mønsteret for oppdiktning, og det er forbudt.
 **REGEL: Nøkkelord omformuleres, aldri oppdiktes.** Omorganiser, omformuler, fremhev -- men finn aldri på noe. Hvis en påstand ikke er dekket av en fil innenfor scope, spør kandidaten; uten svar utelates den. Taushet om et tema er bedre enn en oppdiktet detalj.
-**REGEL: Hvis brukeren har korrigert eller avvist arbeidet ditt, tilby `/career-ops retro` én gang før en interaktiv sesjon avsluttes.** `retro`-moden (`modes/retro.md`) gjør korreksjonene om til forslag til regler og skriver bare dem brukeren godtar. En delegert eller headless worker verken tilbyr eller kjører den.
+**REGEL: Hvis brukeren har korrigert eller avvist arbeidet ditt, tilby `/project-x retro` én gang før en interaktiv sesjon avsluttes.** `retro`-moden (`modes/retro.md`) gjør korreksjonene om til forslag til regler og skriver bare dem brukeren godtar. En delegert eller headless worker verken tilbyr eller kjører den.
 
 ## Datarot og stioppløsning (KRITISK)
 
 Alle filer i brukerlaget (som `cv.md`, `config/profile.yml`, `modes/_profile.md`, `data/applications.md` eller `applications.md`, `reports/`, `output/`, `interview-prep/`, `portals.yml`, `batch/tracker-additions/` osv.) skal løses opp relativt til den dynamisk oppløste **dataroten** (`{DATA_ROOT}`).
 
 ### Rekkefølge for dataroten:
-1. **Miljøvariabler**: Er `CAREER_OPS_ROOT` eller `CAREER_OPS_DATA_DIR` satt, bruk verdien (relativt til repository-roten hvis stien er relativ).
-2. **Markørfil**: Er ingen miljøvariabel satt, se etter en fil `.career-ops-data` i repository-roten. Finnes den og inneholder en sti, bruk den (relativt til repository-roten hvis stien er relativ).
-3. **Plugin-installasjon**: Kjører koden fra en Claude Code plugin-kopi og ingen av de to over er satt, brukes `~/career-ops-data` (se AGENTS.md og `docs/CLAUDE_PLUGIN.md`).
+1. **Miljøvariabler**: Er `PROJECT_X_ROOT` eller `PROJECT_X_DATA_DIR` satt, bruk verdien (relativt til repository-roten hvis stien er relativ).
+2. **Markørfil**: Er ingen miljøvariabel satt, se etter en fil `.project-x-data` i repository-roten. Finnes den og inneholder en sti, bruk den (relativt til repository-roten hvis stien er relativ).
+3. **Plugin-installasjon**: Kjører koden fra en Claude Code plugin-kopi og ingen av de to over er satt, brukes `~/project-x-data` (se AGENTS.md og `docs/CLAUDE_PLUGIN.md`).
 4. **Repository-standard**: Ellers er repository-roten dataroten.
 
 ### Rekkefølge for trackerens sti:
-* **Eksplisitt overstyring**: Er miljøvariabelen `CAREER_OPS_TRACKER` satt, er den stien til trackerfilen (relativt til repository-roten hvis stien er relativ).
+* **Eksplisitt overstyring**: Er miljøvariabelen `PROJECT_X_TRACKER` satt, er den stien til trackerfilen (relativt til repository-roten hvis stien er relativ).
 * **Standard**: Ellers `{DATA_ROOT}/data/applications.md` hvis den finnes, og ellers `{DATA_ROOT}/applications.md`.
 * **Skriving**: Alle nye skrivinger går til `{DATA_ROOT}/data/applications.md`.
 
@@ -395,12 +395,12 @@ Leses fra `config/profile.yml` -> `location`.
 
 ### Delegering til subagenter (kostnadsvern)
 
-En mode kan be deg kjøre arbeid i en subagent i bakgrunnen (f.eks. `scan`, eller parallelle URL-er i `pipeline`) for å spare hovedagentens kontekst. Enhver subagent du starter for career-ops, er en **worker med én gjennomgang**:
+En mode kan be deg kjøre arbeid i en subagent i bakgrunnen (f.eks. `scan`, eller parallelle URL-er i `pipeline`) for å spare hovedagentens kontekst. Enhver subagent du starter for project-x, er en **worker med én gjennomgang**:
 
 - Den MÅ IKKE starte nye subagenter, og MÅ IKKE kalle andre skills -- særlig ikke åpne eller rekursive research-skills (f.eks. en `deep-research`-skill). De forgrener seg i nestede agenter og kan brenne titalls millioner tokens på én kjøring.
 - Involverer arbeidet Playwright (f.eks. parallelle `pipeline`-workers som verifiserer hver sin annonse), gjelder Playwright-regelen ovenfor fullt ut: parallelle subagenter må aldri dele én interaktiv Playwright/MCP-sesjon. Hver worker trenger sin egen isolerte sesjon, ellers må steget som bruker Playwright, kjøres sekvensielt.
 - Research om virksomhet, rolle og lønn gjøres ALLTID **direkte**, med det lille, eksplisitte settet WebSearch/WebFetch-forespørsler moden nevner (f.eks. blokk C/D i `stilling.md`) -- aldri delegert til en rekursiv research-harness.
-- Én `/career-ops <JD>` evaluerer én rolle; den må aldri vokse til en sverm av agenter som formerer seg. Er du i ferd med å delegere research eller neste agenter, stopp og gjør det direkte og avgrenset.
+- Én `/project-x <JD>` evaluerer én rolle; den må aldri vokse til en sverm av agenter som formerer seg. Er du i ferd med å delegere research eller neste agenter, stopp og gjør det direkte og avgrenset.
 
 ### Agency confirmation handoff (#4359)
 

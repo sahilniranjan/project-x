@@ -21,7 +21,7 @@ const TRACKER = [
 const digest = (content) => createHash('sha256').update(content, 'utf8').digest('hex');
 
 function fixture(t) {
-  const root = mkdtempSync(join(tmpdir(), 'career-ops-status-expect-'));
+  const root = mkdtempSync(join(tmpdir(), 'project-x-status-expect-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   const data = join(root, 'data');
   mkdirSync(data);
@@ -29,7 +29,7 @@ function fixture(t) {
   writeFileSync(tracker, TRACKER);
   return {
     root, data, tracker,
-    env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_DATA_DIR: '', CAREER_OPS_TRACKER: tracker },
+    env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_DATA_DIR: '', PROJECT_X_TRACKER: tracker },
   };
 }
 
@@ -88,7 +88,7 @@ test('dry-run checks the same digest but never writes', (t) => {
 
 test('invalid or missing hashes fail as usage errors before tracker access', (t) => {
   const f = fixture(t);
-  f.env.CAREER_OPS_TRACKER = join(f.root, 'missing.md');
+  f.env.PROJECT_X_TRACKER = join(f.root, 'missing.md');
   for (const value of ['', 'a'.repeat(63), 'a'.repeat(65), 'A'.repeat(64), 'g'.repeat(64), `${'a'.repeat(64)}\n`, '--dry-run']) {
     const r = run(f, '--row', '1', 'interview', '--expect-tracker', value);
     assert.equal(r.status, 1, describeSpawn(r, `${JSON.stringify(value)}`));

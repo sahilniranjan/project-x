@@ -10,7 +10,7 @@ import { ROOT, pass, fail } from './helpers.mjs';
 function check(label, fn) {
   try { fn(); pass(label); } catch (err) { fail(`${label}: ${err.message}`); process.exitCode = 1; }
 }
-const root = realpathSync(mkdtempSync(join(tmpdir(), 'career-ops-batch-sync-')));
+const root = realpathSync(mkdtempSync(join(tmpdir(), 'project-x-batch-sync-')));
 const input = join(root, 'batch', 'batch-input.tsv');
 const state = join(root, 'batch-state.tsv');
 mkdirSync(join(root, 'batch'));
@@ -32,7 +32,7 @@ const pipelines = Array.from({ length: 4 }, (_, i) => {
   return file;
 });
 const sync = (pipeline, args = []) => new Promise((resolve, reject) => {
-  const child = spawn(process.execPath, ['--import', pathToFileURL(hook).href, join(ROOT, 'sync-batch-input.mjs'), '--pipeline', pipeline, '--input', input, '--state', state, ...args], { env: { ...process.env, CAREER_OPS_ROOT: root, BATCH_INPUT: input }, stdio: ['ignore', 'pipe', 'pipe'] });
+  const child = spawn(process.execPath, ['--import', pathToFileURL(hook).href, join(ROOT, 'sync-batch-input.mjs'), '--pipeline', pipeline, '--input', input, '--state', state, ...args], { env: { ...process.env, PROJECT_X_ROOT: root, BATCH_INPUT: input }, stdio: ['ignore', 'pipe', 'pipe'] });
   let stdout = '', stderr = '';
   child.stdout.on('data', bytes => stdout += bytes);
   child.stderr.on('data', bytes => stderr += bytes);

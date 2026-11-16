@@ -3,9 +3,9 @@ package screens
 import (
 	"testing"
 
-	"github.com/santifer/career-ops/dashboard/internal/data"
-	"github.com/santifer/career-ops/dashboard/internal/model"
-	"github.com/santifer/career-ops/dashboard/internal/theme"
+	"github.com/santifer/project-x/dashboard/internal/data"
+	"github.com/santifer/project-x/dashboard/internal/model"
+	"github.com/santifer/project-x/dashboard/internal/theme"
 )
 
 // The grouped view sorts by data.StatusPriority, while the group headers and

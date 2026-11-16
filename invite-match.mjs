@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * invite-match.mjs — Interview-Invite / Rejection → Tracker Matcher for career-ops
+ * invite-match.mjs — Interview-Invite / Rejection → Tracker Matcher for project-x
  *
  * Recruiter calendar/ATS invite emails frequently name only the company
  * (generic subject lines like "Schedule Your Phone Screen") with no job
@@ -34,7 +34,7 @@
  *      node invite-match.mjs --no-clarification-draft   (omit the pre-interview clarification draft)
  *      node invite-match.mjs --self-test
  *
- * Issue #1495, #2098 — github.com/career-ops-hq/career-ops
+ * Issue #1495, #2098 — github.com/project-x-hq/project-x
  */
 
 import { readFileSync, existsSync } from 'fs';
@@ -42,20 +42,20 @@ import { join, dirname, resolve, relative, isAbsolute } from 'path';
 import { fileURLToPath } from 'url';
 import { execFileSync } from 'child_process';
 import { resolveColumns, parseTrackerRow, extractReqNumber } from './tracker-parse.mjs';
-import { getCareerOpsRoot, resolveTrackerPath } from './path-resolver.mjs';
+import { getProjectXRoot, resolveTrackerPath } from './path-resolver.mjs';
 import { validateFlags } from './lib/cli-flags.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
 import { LEGAL_SUFFIXES, GENERIC_DESCRIPTORS } from './tracker-utils.mjs';
 import { inviteEvidence } from './lib/invite-evidence.mjs';
 
-const CAREER_OPS = getCareerOpsRoot();
+const PROJECT_X = getProjectXRoot();
 // Sibling scripts live next to this file in the *code* checkout, which is a
-// different directory from CAREER_OPS whenever the data root is external
-// (CAREER_OPS_ROOT / a .career-ops-data marker). Resolving them off the data
+// different directory from PROJECT_X whenever the data root is external
+// (PROJECT_X_ROOT / a .project-x-data marker). Resolving them off the data
 // root made --apply die with `Cannot find module <data-root>/set-status.mjs`.
 // Same split, and the same constant name, as merge-tracker.mjs (#3761).
-const CAREER_OPS_CODE_ROOT = dirname(fileURLToPath(import.meta.url));
-const APPS_FILE = resolveTrackerPath(CAREER_OPS);
+const PROJECT_X_CODE_ROOT = dirname(fileURLToPath(import.meta.url));
+const APPS_FILE = resolveTrackerPath(PROJECT_X);
 
 // --- CLI args ---
 const args = process.argv.slice(2);
@@ -1027,7 +1027,7 @@ export function analyzeInvite(text, trackerRows = null, options = {}) {
     const row = candidates.length === 1 ? rows.find(r => r.num === candidates[0].appNumber) : null;
     clarificationDraft = buildClarificationDraft(result, text, {
       row,
-      readReport: options.readReport ?? (r => readReportHeader(r.report, [dirname(APPS_FILE), CAREER_OPS])),
+      readReport: options.readReport ?? (r => readReportHeader(r.report, [dirname(APPS_FILE), PROJECT_X])),
     });
   }
   // Additive (#6167): appended last, after clarificationDraft.
@@ -1045,12 +1045,12 @@ export function analyzeInvite(text, trackerRows = null, options = {}) {
  * reaching this function.
  *
  * @param {number} appNumber - Tracker # to update (must be unambiguous).
- * @param {{appsFile?: string}} [options] - appsFile overrides CAREER_OPS_TRACKER for the child process (tests only).
+ * @param {{appsFile?: string}} [options] - appsFile overrides PROJECT_X_TRACKER for the child process (tests only).
  * @returns {object} set-status.mjs's own --json result (or its structured error).
  */
 export function applyRejectionStatus(appNumber, options = {}) {
-  const scriptPath = join(CAREER_OPS_CODE_ROOT, 'set-status.mjs');
-  const env = options.appsFile ? { ...process.env, CAREER_OPS_TRACKER: options.appsFile } : process.env;
+  const scriptPath = join(PROJECT_X_CODE_ROOT, 'set-status.mjs');
+  const env = options.appsFile ? { ...process.env, PROJECT_X_TRACKER: options.appsFile } : process.env;
   try {
     const out = execFileSync(process.execPath, [scriptPath, String(appNumber), 'Rejected', '--json'], {
       encoding: 'utf-8', env,
@@ -1159,7 +1159,7 @@ function printClarificationDraft(draft) {
 
 function printSummary(result) {
   console.log(`\n${'='.repeat(70)}`);
-  console.log('  Interview Invite / Rejection Matcher — career-ops');
+  console.log('  Interview Invite / Rejection Matcher — project-x');
   console.log(`${'='.repeat(70)}\n`);
 
   console.log(`  Classification:     ${result.classification}`);

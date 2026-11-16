@@ -1,5 +1,5 @@
 // tests/plugins-pipeline-lane.test.mjs — #6353: plugins.mjs honors the
-// CAREER_OPS_PIPELINE lane override everywhere it touches the pipeline.
+// PROJECT_X_PIPELINE lane override everywhere it touches the pipeline.
 //
 // The write went through scan.mjs's appendToPipeline(), which honors the lane,
 // but plugins.mjs hardcoded data/pipeline.md for the de-duplication read
@@ -44,7 +44,7 @@ function probe(env) {
 }
 
 function fixture() {
-  const dir = realpathSync(mkdtempSync(join(tmpdir(), 'career-ops-plugins-lane-')));
+  const dir = realpathSync(mkdtempSync(join(tmpdir(), 'project-x-plugins-lane-')));
   mkdirSync(join(dir, 'data'), { recursive: true });
   writeFileSync(join(dir, 'data', 'applications.md'), '# Applications Tracker\n');
   writeFileSync(join(dir, 'data', 'pipeline.md'), '# Pipeline\n- [ ] https://example.com/main/1\n');
@@ -53,22 +53,22 @@ function fixture() {
   return { dir, lane };
 }
 
-const BASE_ENV = { CAREER_OPS_DATA_DIR: undefined, CAREER_OPS_TRACKER: undefined, CAREER_OPS_SCAN_HISTORY: undefined };
+const BASE_ENV = { PROJECT_X_DATA_DIR: undefined, PROJECT_X_TRACKER: undefined, PROJECT_X_SCAN_HISTORY: undefined };
 
-test('with CAREER_OPS_PIPELINE set, de-dup and export read the lane file', (t) => {
+test('with PROJECT_X_PIPELINE set, de-dup and export read the lane file', (t) => {
   const { dir, lane } = fixture();
   t.after(() => rmSync(dir, { recursive: true, force: true }));
-  const got = probe({ ...BASE_ENV, CAREER_OPS_ROOT: dir, CAREER_OPS_PIPELINE: lane });
+  const got = probe({ ...BASE_ENV, PROJECT_X_ROOT: dir, PROJECT_X_PIPELINE: lane });
   assert.equal(got.pipelinePath, lane);
   assert.deepEqual(got.snapshotUrls, ['https://example.com/lane/1', 'https://example.com/lane/2']);
   // A lead already in the lane is skipped; one only the main pipeline holds is admitted to the lane.
   assert.deepEqual(got.admittedUrls, ['https://example.com/main/1', 'https://example.com/new/1']);
 });
 
-test('without CAREER_OPS_PIPELINE, the data-root pipeline is used', (t) => {
+test('without PROJECT_X_PIPELINE, the data-root pipeline is used', (t) => {
   const { dir } = fixture();
   t.after(() => rmSync(dir, { recursive: true, force: true }));
-  const got = probe({ ...BASE_ENV, CAREER_OPS_ROOT: dir, CAREER_OPS_PIPELINE: undefined });
+  const got = probe({ ...BASE_ENV, PROJECT_X_ROOT: dir, PROJECT_X_PIPELINE: undefined });
   assert.equal(got.pipelinePath, join(dir, 'data', 'pipeline.md'));
   assert.deepEqual(got.snapshotUrls, ['https://example.com/main/1']);
   assert.deepEqual(got.admittedUrls, ['https://example.com/lane/1', 'https://example.com/new/1']);

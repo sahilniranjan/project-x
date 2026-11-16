@@ -3,7 +3,7 @@
 ## Purpose
 
 Take a list of companies and resolve each to a scannable ATS board by probing
-the public JSON APIs career-ops already supports — Greenhouse, Ashby, Lever, and
+the public JSON APIs project-x already supports — Greenhouse, Ashby, Lever, and
 Workday — via the existing `providers/` layer. Zero LLM tokens, zero auth. A
 company "resolves" when a vendor's board exists AND currently lists ≥1 job.
 Confirmed entries are appended to `portals.yml` `tracked_companies` (deduped,
@@ -41,7 +41,7 @@ reusable tool that feeds the scanner.
   ```
 
 - `portals.yml` — dedupe target and write destination (user layer). Honors the
-  `CAREER_OPS_PORTALS` env override for scratch/testing.
+  `PROJECT_X_PORTALS` env override for scratch/testing.
 
 ### Generating the input list from scan history
 
@@ -145,11 +145,11 @@ careers_url) and the unresolved list with reasons. Call out:
   host after — are never probed further or written. Report them as skipped; to
   track one anyway, the user removes it from the blacklist first.
 - **Genuinely unknown**: for a JS-only portal with no ATS API, paste a specific
-  JD into `data/pipeline.md` and run `/career-ops pipeline`.
+  JD into `data/pipeline.md` and run `/project-x pipeline`.
 
 ## Step 3 — Handoff
 
-After writing, tell the user to run `/career-ops scan` to pull matching roles from the newly tracked boards.
+After writing, tell the user to run `/project-x scan` to pull matching roles from the newly tracked boards.
 
 ## Rules
 

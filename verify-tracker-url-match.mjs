@@ -35,7 +35,7 @@
 
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { basename, join } from 'node:path';
-import { getCareerOpsRoot } from './path-resolver.mjs';
+import { getProjectXRoot } from './path-resolver.mjs';
 import { resolveTrackerPath, trackerLinkDirsFor, reportUrlToken } from './tracker-utils.mjs';
 import { detectColumns, isHeaderRow, isSeparatorRow, parseTrackerRow, parseMarkdownLinks, LEGACY_COLMAP } from './tracker-parse.mjs';
 import { normalizeUrl, isAggregatorUrl, postingUrlRelation } from './url-key.mjs';
@@ -64,7 +64,7 @@ skipped, following AGENTS.md's URL identity rule. Exit 1 on any mismatch.`;
  *
  * @param {string} target - Link target from the row's Report cell.
  * @param {string[]} trackerDirs - From trackerLinkDirsFor(root).
- * @param {string} dataRoot - getCareerOpsRoot().
+ * @param {string} dataRoot - getProjectXRoot().
  * @returns {string|null} Absolute path to the report file, or null when absent.
  */
 function resolveReportPath(target, trackerDirs, dataRoot) {
@@ -107,7 +107,7 @@ export function classifyPair(rowUrlRaw, reportUrlRaw) {
  * @returns {{tracker: string, checked: number, matched: number, mismatches: object[], skipped: Record<string, number>, ok: boolean}}
  */
 export function runCheck() {
-  const root = getCareerOpsRoot();
+  const root = getProjectXRoot();
   const trackerPath = resolveTrackerPath(root);
   // Both spellings of the tracker's own directory, so a symlinked tracker's
   // links resolve exactly as verify-pipeline's Check 3 resolves them (#5374).

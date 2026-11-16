@@ -48,7 +48,7 @@ const { default: joinProvider, parseCompanySitemap } = await import(pathToFileUR
 }
 
 // loadCompanyList() with parseDataset: the text is parsed, and the cache holds the array.
-const cacheDir = mkdtempSync(join(tmpdir(), 'career-ops-ats-companies-'));
+const cacheDir = mkdtempSync(join(tmpdir(), 'project-x-ats-companies-'));
 try {
   const sitemap = '<urlset><url><loc>https://join.com/companies/acme-corp</loc></url><url><loc>https://join.com/companies/bigco</loc></url></urlset>';
   let textCalls = 0;

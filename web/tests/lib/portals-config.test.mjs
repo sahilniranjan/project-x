@@ -12,7 +12,7 @@ import {
 const fixtureDirs = [];
 
 function fixture() {
-  const dir = mkdtempSync(path.join(tmpdir(), "career-ops-portals-"));
+  const dir = mkdtempSync(path.join(tmpdir(), "project-x-portals-"));
   fixtureDirs.push(dir);
   const file = path.join(dir, "portals.yml");
   const template = path.join(dir, "portals.example.yml");

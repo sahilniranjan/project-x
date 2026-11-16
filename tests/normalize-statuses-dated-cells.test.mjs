@@ -112,7 +112,7 @@ ok('the CLI rewrites dated cells and reports no unknown statuses', () => {
     ].join('\n'));
     const r = spawnSync(process.execPath, [join(ROOT, 'normalize-statuses.mjs')], {
       encoding: 'utf-8',
-      env: { ...process.env, CAREER_OPS_TRACKER: tracker },
+      env: { ...process.env, PROJECT_X_TRACKER: tracker },
     });
     assert.strictEqual(r.status, 0, `normalize-statuses exited ${r.status}: ${r.stderr}`);
     assert.doesNotMatch(r.stdout, /unknown status/, r.stdout);
@@ -140,7 +140,7 @@ ok('without a Notes column, a cell with words after its date is left as it is', 
     ].join('\n'));
     const r = spawnSync(process.execPath, [join(ROOT, 'normalize-statuses.mjs')], {
       encoding: 'utf-8',
-      env: { ...process.env, CAREER_OPS_TRACKER: tracker },
+      env: { ...process.env, PROJECT_X_TRACKER: tracker },
     });
     assert.strictEqual(r.status, 0, `normalize-statuses exited ${r.status}: ${r.stderr}`);
     assert.doesNotMatch(r.stdout, /unknown status/, 'the state is known; only the words have nowhere to go');
@@ -160,9 +160,9 @@ ok('every cell verify-pipeline flags as dated comes out clean after normalizing'
   const dir = mkdtempSync(join(tmpdir(), 'normalize-verify-test-'));
   const cells = ['Applied 2026-01-02', 'Applied (2026-01-02)', 'Applied - 2026-01-02', 'Applied, 2026-01-02', 'Applied: 2026-01-02',
     'Applied on 2026-01-02', '2026-01-02 Applied', '**Interview** (2026-02-10)', 'Rejected - 2026-05-06 by mail'];
-  const env = { ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_DATA_DIR: '', CAREER_OPS_TRACKER: '', CAREER_OPS_PIPELINE: '',
-    CAREER_OPS_SCAN_HISTORY: '', CAREER_OPS_PORTALS: '', CAREER_OPS_PROFILE: '', CAREER_OPS_FOLLOWUPS: '', CAREER_OPS_REPORTS: '',
-    CAREER_OPS_CV: '', CAREER_OPS_JDS: '', CAREER_OPS_ADDITIONS: '', CAREER_OPS_ACTIVITY_DIR: '' };
+  const env = { ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_DATA_DIR: '', PROJECT_X_TRACKER: '', PROJECT_X_PIPELINE: '',
+    PROJECT_X_SCAN_HISTORY: '', PROJECT_X_PORTALS: '', PROJECT_X_PROFILE: '', PROJECT_X_FOLLOWUPS: '', PROJECT_X_REPORTS: '',
+    PROJECT_X_CV: '', PROJECT_X_JDS: '', PROJECT_X_ADDITIONS: '', PROJECT_X_ACTIVITY_DIR: '' };
   const run = (script) => spawnSync(process.execPath, [join(ROOT, script)], { encoding: 'utf-8', env, cwd: dir });
   const dated = (out) => (out.match(/Status contains date/g) ?? []).length;
   try {
@@ -192,8 +192,8 @@ ok('every cell verify-pipeline flags as dated comes out clean after normalizing'
 // not find the note and --note added it a second time.
 ok('moved text is its own Notes entry, and a "—" placeholder gives way to it', () => {
   const dir = mkdtempSync(join(tmpdir(), 'normalize-notes-test-'));
-  const env = { ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_DATA_DIR: '', CAREER_OPS_TRACKER: '', CAREER_OPS_FOLLOWUPS: '',
-    CAREER_OPS_ACTIVITY_DIR: '' };
+  const env = { ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_DATA_DIR: '', PROJECT_X_TRACKER: '', PROJECT_X_FOLLOWUPS: '',
+    PROJECT_X_ACTIVITY_DIR: '' };
   const run = (script, ...args) => spawnSync(process.execPath, [join(ROOT, script), ...args], { encoding: 'utf-8', env, cwd: dir });
   try {
     mkdirSync(join(dir, 'data'));

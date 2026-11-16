@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
 import type { ChildProcess } from "node:child_process";
-import { careerOpsRoot } from "@/lib/career-ops";
+import { projectXRoot } from "@/lib/project-x";
 import { runDiscovery } from "./scan";
 import { selectCompanies, removeSelection } from "./company-index";
 import type { DiscoveredOffer, ExploreFilters, ScanEvent } from "@/lib/explore";
@@ -174,7 +174,7 @@ class RateMeter {
   save() {
     this.close();
     if (!Object.keys(this.samples).length) return;
-    const file = path.join(careerOpsRoot(), "data/cache/scan-rates.json");
+    const file = path.join(projectXRoot(), "data/cache/scan-rates.json");
     let prev: Record<string, number> = {};
     try {
       prev = JSON.parse(fs.readFileSync(file, "utf8"));

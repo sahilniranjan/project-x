@@ -41,7 +41,7 @@ function addTsv(env, name, cols) {
 function runMerge(env, args = []) {
   return execFileSync('node', [MERGE, '--allow-headerless', ...args], {
     encoding: 'utf-8',
-    env: { ...process.env, CAREER_OPS_TRACKER: env.tracker, CAREER_OPS_ADDITIONS: env.addDir, CAREER_OPS_BATCH_STATE: isolatedBatchStatePath(env.addDir) },
+    env: { ...process.env, PROJECT_X_TRACKER: env.tracker, PROJECT_X_ADDITIONS: env.addDir, PROJECT_X_BATCH_STATE: isolatedBatchStatePath(env.addDir) },
   });
 }
 function trackerRows(env) {
@@ -139,7 +139,7 @@ ok('the report-file tier does not stat every existing row\'s report', () => {
       encoding: 'utf-8',
       env: {
         ...process.env,
-        CAREER_OPS_TRACKER: env.tracker, CAREER_OPS_ADDITIONS: env.addDir, CAREER_OPS_BATCH_STATE: isolatedBatchStatePath(env.addDir),
+        PROJECT_X_TRACKER: env.tracker, PROJECT_X_ADDITIONS: env.addDir, PROJECT_X_BATCH_STATE: isolatedBatchStatePath(env.addDir),
         // Both spellings: macOS reports a tmpdir path as /var or /private/var.
         COUNT_STAT_DIRS: JSON.stringify([env.reportsDir, realpathSync(env.reportsDir)]),
         COUNT_STAT_FILE: countFile,

@@ -24,7 +24,7 @@ import { trackedFiles } from '../lib/mjs-files.mjs';
 
 console.log('\nscan-history skip rows — once per posting per status, not once per run');
 
-const root = mkdtempSync(join(tmpdir(), 'career-ops-skip-once-'));
+const root = mkdtempSync(join(tmpdir(), 'project-x-skip-once-'));
 const historyPath = join(root, 'data', 'scan-history.tsv');
 
 // The offers and the status come from a JSON file read at run time, never
@@ -43,20 +43,20 @@ function record(urls, status) {
   const offers = urls.map((u) => ({ url: u, source: 'interamt', title: 'Referent', company: 'Stadt', location: 'Berlin' }));
   writeFileSync(jobFile, JSON.stringify({ offers, status }));
   const out = execFileSync(NODE, ['--input-type=module', '-e', writerSource, pathToFileURL(join(ROOT, 'scan.mjs')).href, jobFile], {
-    // An exported path override outranks CAREER_OPS_ROOT, and the history one
+    // An exported path override outranks PROJECT_X_ROOT, and the history one
     // would take these fixture rows into the developer's real file. So it is
     // pinned to the fixture's, and every other override scan.mjs honours is
     // blanked, which reads as unset.
     env: {
       ...process.env,
-      CAREER_OPS_ROOT: root,
-      CAREER_OPS_DATA_DIR: '',
-      CAREER_OPS_SCAN_HISTORY: historyPath,
-      CAREER_OPS_PIPELINE: '',
-      CAREER_OPS_PORTALS: '',
-      CAREER_OPS_PROFILE: '',
-      CAREER_OPS_TRACKER: '',
-      CAREER_OPS_AGGREGATOR_DOMAINS: '',
+      PROJECT_X_ROOT: root,
+      PROJECT_X_DATA_DIR: '',
+      PROJECT_X_SCAN_HISTORY: historyPath,
+      PROJECT_X_PIPELINE: '',
+      PROJECT_X_PORTALS: '',
+      PROJECT_X_PROFILE: '',
+      PROJECT_X_TRACKER: '',
+      PROJECT_X_AGGREGATOR_DOMAINS: '',
     },
     encoding: 'utf8',
   });

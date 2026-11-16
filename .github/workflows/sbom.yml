@@ -8,11 +8,11 @@ permissions:
 
 jobs:
   sbom:
-    # Only career-ops releases: web-vX.Y.Z is the sibling component, and the
+    # Only project-x releases: web-vX.Y.Z is the sibling component, and the
     # repository-wide SBOM attached to it described the wrong thing. Since
     # releases are created with the release App's token (release.yml), they
     # trigger this workflow; with GITHUB_TOKEN they never did.
-    if: ${{ startsWith(github.event.release.tag_name, 'career-ops-v') }}
+    if: ${{ startsWith(github.event.release.tag_name, 'project-x-v') }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -21,9 +21,9 @@ jobs:
       - name: Generate SBOM (SPDX)
         uses: anchore/sbom-action@66cbf4bc1f1c0d2edc94016e65bc221b6bb0ad6c # v0.24.3
         with:
-          artifact-name: career-ops-sbom.spdx.json
+          artifact-name: project-x-sbom.spdx.json
           format: spdx-json
-          output-file: career-ops-sbom.spdx.json
+          output-file: project-x-sbom.spdx.json
           # The step below uploads it, once. With the action's default (true)
           # the file was already attached and `gh release upload` failed with
           # "asset under the same name already exists" on every release.
@@ -34,4 +34,4 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ github.event.release.tag_name }}
         # --clobber: a re-run replaces the asset instead of failing on it.
-        run: gh release upload "$TAG" career-ops-sbom.spdx.json --clobber --repo "$GITHUB_REPOSITORY"
+        run: gh release upload "$TAG" project-x-sbom.spdx.json --clobber --repo "$GITHUB_REPOSITORY"

@@ -31,11 +31,11 @@ const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 /** Run the validator against a throwaway DATA root, leaving the repo alone. */
 function runAgainst(dataRoot) {
   // Keep the validator off the developer's exported profile override: with
-  // CAREER_OPS_PROFILE set in the parent shell, the child validator would read
+  // PROJECT_X_PROFILE set in the parent shell, the child validator would read
   // that file instead of the fixture's config/profile.yml, and the profile
   // assertions would pass or fail on the developer's own data.
-  const env = { ...process.env, CAREER_OPS_ROOT: dataRoot };
-  delete env.CAREER_OPS_PROFILE;
+  const env = { ...process.env, PROJECT_X_ROOT: dataRoot };
+  delete env.PROJECT_X_PROFILE;
   const r = spawnSync(process.execPath, [join(ROOT, 'cv-sync-check.mjs')], {
     cwd: ROOT,
     encoding: 'utf-8',
@@ -54,11 +54,11 @@ function looksLikeCrash(text) {
 test('it reaches its checks instead of throwing at module scope', () => {
   // The regression itself. Nothing here is about WHAT it reports — only that it
   // got far enough to report anything.
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-sync-check-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-sync-check-'));
   try {
     const r = runAgainst(dir);
     assert.ok(!looksLikeCrash(r.all), `crashed instead of running:\n${r.all.slice(0, 400)}`);
-    assert.match(r.stdout, /career-ops sync check/, 'no report header — the run never reached its checks');
+    assert.match(r.stdout, /project-x sync check/, 'no report header — the run never reached its checks');
   } finally {
     rmSync(dir, { recursive: true, force: true, maxRetries: 10 });
   }
@@ -67,7 +67,7 @@ test('it reaches its checks instead of throwing at module scope', () => {
 test('a missing cv.md is reported as an error, not a crash', () => {
   // The legitimate non-zero exit, which is what makes the crash invisible: both
   // leave status 1. The difference is that this one says something useful.
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-sync-check-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-sync-check-'));
   try {
     const r = runAgainst(dir);
     assert.equal(r.status, 1, describeSpawn(r));
@@ -80,7 +80,7 @@ test('a missing cv.md is reported as an error, not a crash', () => {
 
 test('a complete setup passes', () => {
   // The other side, so "always errors" cannot satisfy the tests above.
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-sync-check-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-sync-check-'));
   try {
     mkdirSync(join(dir, 'config'), { recursive: true });
     writeFileSync(join(dir, 'cv.md'), `# Jane Roe\n\n## Experience\n\n${'Backend engineer. '.repeat(12)}\n`);
@@ -96,10 +96,10 @@ test('a complete setup passes', () => {
 
 test('the prompt-file checks read the CODE root, not the data root', () => {
   // What the three broken call sites were for. modes/ and batch/ ship with the
-  // code, so an externalized data root (the whole point of CAREER_OPS_ROOT)
+  // code, so an externalized data root (the whole point of PROJECT_X_ROOT)
   // must not make them unreadable — pointing DATA_ROOT at an empty directory
   // must not produce "file not found" warnings for them.
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-sync-check-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-sync-check-'));
   try {
     const r = runAgainst(dir);
     for (const name of ['_shared.md', '_writing.md', 'batch-prompt.md']) {
@@ -112,10 +112,10 @@ test('the prompt-file checks read the CODE root, not the data root', () => {
 });
 
 test('the shipped prompt files raise no hardcoded-metric warning', () => {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-sync-check-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-sync-check-'));
   try {
     const r = runAgainst(dir);
-    assert.match(r.stdout, /career-ops sync check/);
+    assert.match(r.stdout, /project-x sync check/);
     assert.doesNotMatch(r.stdout, /Possible hardcoded metric/);
   } finally {
     rmSync(dir, { recursive: true, force: true, maxRetries: 10 });
@@ -153,7 +153,7 @@ test('importing the module runs no checks', async () => {
 
 /** Run the validator against a throwaway root holding `profileBody`. */
 function runWithProfile(profileBody) {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-sync-check-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-sync-check-'));
   try {
     mkdirSync(join(dir, 'config'), { recursive: true });
     writeFileSync(join(dir, 'cv.md'), `# Jane Roe\n\n## Experience\n\n${'Backend engineer. '.repeat(12)}\n`);
@@ -253,7 +253,7 @@ test('an empty or blank string is reported as missing, not as a wrong type', () 
 // about the missing field, not about unparseable YAML.
 test('a comment-only profile warns about the missing field, not a parse error', () => {
   const r = runWithProfile([
-    '# Career-Ops Profile Configuration',
+    '# Project-X Profile Configuration',
     '# candidate:',
     '#   full_name: "Jane Smith"',
     '',

@@ -6,7 +6,7 @@ Two things this log deliberately is not: a ranking, and a promise. Rule 4 says i
 
 **How to read an entry.** "Verified" means someone ran a command and reported the output, not that a claim was accepted. Where a check could only be done against a live endpoint, the entry says what was sampled and when, because live checks expire: a source that passed in August can drift in November, and re-verification is normal rather than an accusation.
 
-**Adding an entry.** A source is logged when its provider merges. Anyone can open a [source proposal](https://github.com/santifer/career-ops/issues/new?template=source-proposal.yml); the discussion happens in the issue and the PR, and this file is the durable summary with links back to both.
+**Adding an entry.** A source is logged when its provider merges. Anyone can open a [source proposal](https://github.com/santifer/project-x/issues/new?template=source-proposal.yml); the discussion happens in the issue and the PR, and this file is the durable summary with links back to both.
 
 ---
 
@@ -20,9 +20,9 @@ Two things this log deliberately is not: a ranking, and a promise. Rule 4 says i
 
 ## Rule 6 changed (2026-11-08)
 
-Until 2026-11-08, rule 6 made a source's `robots.txt` a gate: a `Disallow` covering the listing paths a provider reads was a stop. It no longer is. `robots.txt` is written for crawlers that index or copy a site; a provider reads a posting on one person's machine so that person can understand it and, if it fits, apply on the employer's page. What stays a stop: a login or a user account, a CAPTCHA, and an operator who asks career-ops not to read their source ([open an issue](https://github.com/career-ops-hq/career-ops/issues/new) to ask).
+Until 2026-11-08, rule 6 made a source's `robots.txt` a gate: a `Disallow` covering the listing paths a provider reads was a stop. It no longer is. `robots.txt` is written for crawlers that index or copy a site; a provider reads a posting on one person's machine so that person can understand it and, if it fits, apply on the employer's page. What stays a stop: a login or a user account, a CAPTCHA, and an operator who asks project-x not to read their source ([open an issue](https://github.com/project-x-hq/project-x/issues/new) to ask).
 
-The rule 6 notes in the entries below stay as the record of the old rule. The sources it kept out or narrowed (Lagou, TopDev, CareerLink and TurboHire in [Evaluated, not supported](SUPPORTED_JOB_BOARDS.md#evaluated-not-supported); jobspresso's feed path) can come back, or be widened, through a source proposal or a PR. Google's first results page was one of these; it was widened to page through the results on 2026-11-08 ([#6694](https://github.com/career-ops-hq/career-ops/issues/6694)). Thanks to @benbalter for the rule 6 checks in #5774 and #5776: they are why each of those cases is easy to find.
+The rule 6 notes in the entries below stay as the record of the old rule. The sources it kept out or narrowed (Lagou, TopDev, CareerLink and TurboHire in [Evaluated, not supported](SUPPORTED_JOB_BOARDS.md#evaluated-not-supported); jobspresso's feed path) can come back, or be widened, through a source proposal or a PR. Google's first results page was one of these; it was widened to page through the results on 2026-11-08 ([#6694](https://github.com/project-x-hq/project-x/issues/6694)). Thanks to @benbalter for the rule 6 checks in #5774 and #5776: they are why each of those cases is easy to find.
 
 ---
 
@@ -32,7 +32,7 @@ The rule 6 notes in the entries below stay as the record of the old rule. The so
 |---|---|
 | **Proposed by** | @eliador90, **who operates the source** (declared in the proposal) |
 | **Provider** | `providers/remotli.mjs` |
-| **PR** | [#2465](https://github.com/santifer/career-ops/pull/2465) · issue [#2464](https://github.com/santifer/career-ops/issues/2464) |
+| **PR** | [#2465](https://github.com/santifer/project-x/pull/2465) · issue [#2464](https://github.com/santifer/project-x/issues/2464) |
 | **Merged** | 2026-08-07 |
 | **Status** | Listed |
 
@@ -58,13 +58,13 @@ First source reviewed under the written policy. The operator proposing their own
 |---|---|
 | **Proposed by** | @justma16ze (community contributor, not affiliated with the source) |
 | **Provider** | `providers/a16z-speedrun.mjs` |
-| **PR** | [#2231](https://github.com/santifer/career-ops/pull/2231) |
+| **PR** | [#2231](https://github.com/santifer/project-x/pull/2231) |
 | **Merged** | 2026-07-29 |
 | **Status** | Listed |
 
 Merged before the policy was written, and logged here because it is the case that prompted writing it: a large, well-connected talent network is exactly where "does indexing imply endorsement?" stops being theoretical.
 
-**Rule 3, retroactively.** Two coverage defects were found and fixed after listing, both by contributors reading the live feed rather than the code: the page size was set to 100 while the feed serves 50, so the fetch stopped silently after one page ([#2419](https://github.com/santifer/career-ops/pull/2419)), and a single transient upstream failure aborted the whole board fetch ([#2506](https://github.com/santifer/career-ops/issues/2506)). Both are the failure mode rule 3 targets: partial coverage that reads as complete.
+**Rule 3, retroactively.** Two coverage defects were found and fixed after listing, both by contributors reading the live feed rather than the code: the page size was set to 100 while the feed serves 50, so the fetch stopped silently after one page ([#2419](https://github.com/santifer/project-x/pull/2419)), and a single transient upstream failure aborted the whole board fetch ([#2506](https://github.com/santifer/project-x/issues/2506)). Both are the failure mode rule 3 targets: partial coverage that reads as complete.
 
 **Rule 4.** Listed with its operator declared. Rule 4's 40% ceiling exists so no single source, however large, dominates the registry.
 
@@ -72,13 +72,13 @@ Merged before the policy was written, and logged here because it is the case tha
 
 | | |
 |---|---|
-| **Proposed by** | @d-ulker (registration issue [#1697](https://github.com/career-ops-hq/career-ops/issues/1697)); plugin published by @uelkerd |
-| **Plugin** | `career-ops-plugin-theirstack` (community plugin, `provider` hook, `THEIRSTACK_API_KEY`) |
+| **Proposed by** | @d-ulker (registration issue [#1697](https://github.com/project-x-hq/project-x/issues/1697)); plugin published by @uelkerd |
+| **Plugin** | `project-x-plugin-theirstack` (community plugin, `provider` hook, `THEIRSTACK_API_KEY`) |
 | **Listed** | 2026-07-07, before this policy existed (2026-08-04) |
 | **Retired** | 2026-09-05 |
 | **Status** | Not listed. The plugin remains published in its own repository; the registry is only what the project lists. |
 
-Re-read against the written policy after a second source of the same shape asked to be listed (JobsPipe, [#3841](https://github.com/career-ops-hq/career-ops/pull/3841)), so that the two answers match.
+Re-read against the written policy after a second source of the same shape asked to be listed (JobsPipe, [#3841](https://github.com/project-x-hq/project-x/pull/3841)), so that the two answers match.
 
 **Rule 1 (real listings, identifiable employer, free for candidates).** Not met as a listed source: access to the listings goes through a metered, paid API on the job seeker's side, and a free tier does not change that. Manifesto right 4 (*"You never pay"*) applied to sources is the whole of this rule; it has no free-tier exception.
 
@@ -94,7 +94,7 @@ Re-read against the written policy after a second source of the same shape asked
 |---|---|
 | **Proposed by** | @nikitacometa, who operates none of the channels measured |
 | **Provider** | `providers/telegram-channel.mjs` |
-| **PR** | [#3668](https://github.com/career-ops-hq/career-ops/pull/3668) · issue [#3701](https://github.com/career-ops-hq/career-ops/issues/3701) |
+| **PR** | [#3668](https://github.com/project-x-hq/project-x/pull/3668) · issue [#3701](https://github.com/project-x-hq/project-x/issues/3701) |
 | **Merged** | 2026-09-05 |
 | **Status** | Provider listed; no channel is listed. The shipped `job_boards:` entry is a disabled template, and a channel added to the registry gets its operator declared per channel. |
 
@@ -141,7 +141,7 @@ The 350 new posts name 227 distinct employers. Each employer name was reviewed b
 
 **Board mirror added to the board list (rule 4).** A post that links a mirror's vacancy page rather than the employer's own is emitted with the mirror page as `url`, so the mirror host is declared here with its operator.
 
-- **ingamejob.com** (InGame Job, a games-industry job board). Operator: InGameJob OÜ, Tallinn, Estonia, named with its address in the site's [privacy policy](https://ingamejob.com/privacy); Estonian registry code 14769069, active; the same policy gives a contact address at the site's own domain. Rule 1: a vacancy page is free to read without an account, and the apply form on it (name, e-mail, message, PDF CV) needs no sign-in and no payment. What the site sells is on the employer side (job credits, candidate-database access, boosters). Rule 2: the post links the InGame Job vacancy page, whose apply form is the application path; it is the `url`. Rule 3: paid boosters ("Top", "Hot", "Premium") put a job at the top of the site's search and in its newsletters and social channels, and the site lists jobs posted on it ahead of the vacancies it aggregates. None of that reaches career-ops, which reads each Telegram post the same way and ranks on the user's machine. Rule 6: `User-agent: *` disallows only `/away/` and `/email/`, with `Crawl-delay: 5`; the provider never fetches the vacancy page. Checked 2026-11-03; no out-of-band confirmation from the operator yet.
+- **ingamejob.com** (InGame Job, a games-industry job board). Operator: InGameJob OÜ, Tallinn, Estonia, named with its address in the site's [privacy policy](https://ingamejob.com/privacy); Estonian registry code 14769069, active; the same policy gives a contact address at the site's own domain. Rule 1: a vacancy page is free to read without an account, and the apply form on it (name, e-mail, message, PDF CV) needs no sign-in and no payment. What the site sells is on the employer side (job credits, candidate-database access, boosters). Rule 2: the post links the InGame Job vacancy page, whose apply form is the application path; it is the `url`. Rule 3: paid boosters ("Top", "Hot", "Premium") put a job at the top of the site's search and in its newsletters and social channels, and the site lists jobs posted on it ahead of the vacancies it aggregates. None of that reaches project-x, which reads each Telegram post the same way and ranks on the user's machine. Rule 6: `User-agent: *` disallows only `/away/` and `/email/`, with `Crawl-delay: 5`; the provider never fetches the vacancy page. Checked 2026-11-03; no out-of-band confirmation from the operator yet.
 
 Still out of reach by design: posts whose only application path is a Telegram contact or an e-mail address, digests carrying several vacancy links, and channels that link only through teletype or telegra.ph.
 
@@ -153,29 +153,29 @@ Still out of reach by design: posts whose only application path is a Telegram co
 |---|---|
 | **Proposed by** | @configurowebmax (community contributor; no affiliation with the source declared) |
 | **Provider** | `providers/computrabajo.mjs` |
-| **PR** | [#2650](https://github.com/career-ops-hq/career-ops/pull/2650) |
+| **PR** | [#2650](https://github.com/project-x-hq/project-x/pull/2650) |
 | **Merged** | pending (this PR) |
 | **Status** | Provider listed; the shipped `job_boards:` entry is `enabled: false`. |
 
-A general job board with one host per Latin American country. Only the Colombian host was measured: one GET of `https://co.computrabajo.com/trabajo-de-sistemas` on 2026-10-23, no key, cookie or session, career-ops' default User-Agent: HTTP 200, 20 posting cards.
+A general job board with one host per Latin American country. Only the Colombian host was measured: one GET of `https://co.computrabajo.com/trabajo-de-sistemas` on 2026-10-23, no key, cookie or session, project-x' default User-Agent: HTTP 200, 20 posting cards.
 
-**Rule 1 (real listings, identifiable employer, free for candidates).** Employer attribution, measured: 17 of the 20 cards name an employer; 3 show "Importante empresa del sector" (hidden employer), which the provider emits as `?`. Several named employers are staffing agencies rather than the hiring company. Free for candidates: met. Creating an account and applying cost nothing ("Registro gratuito" on `co.computrabajo.com`, read 2026-10-23); applying goes through a free candidate sign-in. Computrabajo also sells candidates an optional "Cuenta Premium" (`co.computrabajo.com/cuenta-premium/`, about COP 12,000 a month on 2026-10-23) that, among other things, puts the profile in the first positions employers see and allows applying more than once to the same vacancy. Applying does not require it. career-ops does not use, link to or recommend that plan: the provider only reads public listings and links each posting page.
+**Rule 1 (real listings, identifiable employer, free for candidates).** Employer attribution, measured: 17 of the 20 cards name an employer; 3 show "Importante empresa del sector" (hidden employer), which the provider emits as `?`. Several named employers are staffing agencies rather than the hiring company. Free for candidates: met. Creating an account and applying cost nothing ("Registro gratuito" on `co.computrabajo.com`, read 2026-10-23); applying goes through a free candidate sign-in. Computrabajo also sells candidates an optional "Cuenta Premium" (`co.computrabajo.com/cuenta-premium/`, about COP 12,000 a month on 2026-10-23) that, among other things, puts the profile in the first positions employers see and allows applying more than once to the same vacancy. Applying does not require it. project-x does not use, link to or recommend that plan: the provider only reads public listings and links each posting page.
 
 **Rule 2 (canonical URL is the employer's).** The listing card carries no employer or ATS URL, only the board's own posting page, so `url` is that page (fragment dropped). Whether the posting page links on to the employer: unverified.
 
-**Rule 3 (complete inventory, no paid placement).** Partly met, flagged for the maintainer. Employers can pay Computrabajo (not career-ops) to feature a posting as "Empleo destacado", and the board interleaves those cards in every sort order: 9 of 20 in the default "Relevancia" order and 11 of 20 in the "Fecha" order (`?by=publicationtime`), measured on 2026-10-23. There is no order without them, and they are real postings by real employers, so the provider keeps them. It requests the "Fecha" order so the newest postings come first, keeps every card it reads, does no ranking of its own, and stops at 3 pages / 15 postings by design. career-ops receives nothing from Computrabajo or from any employer. Pagination (`?p=N`) is unverified.
+**Rule 3 (complete inventory, no paid placement).** Partly met, flagged for the maintainer. Employers can pay Computrabajo (not project-x) to feature a posting as "Empleo destacado", and the board interleaves those cards in every sort order: 9 of 20 in the default "Relevancia" order and 11 of 20 in the "Fecha" order (`?by=publicationtime`), measured on 2026-10-23. There is no order without them, and they are real postings by real employers, so the provider keeps them. It requests the "Fecha" order so the newest postings come first, keeps every card it reads, does no ranking of its own, and stops at 3 pages / 15 postings by design. project-x receives nothing from Computrabajo or from any employer. Pagination (`?p=N`) is unverified.
 
 **Rule 4 (operator declared).** Operator not declared in the PR; unverified.
 
 **Rule 5 (aggregation stays in core).** Verified in code: the provider reads one search URL per entry, on a `<country>.computrabajo.com` host only.
 
-**Rule 6 (`robots.txt`).** Checked on 2026-10-23: one GET of `https://co.computrabajo.com/robots.txt` with career-ops' default User-Agent, HTTP 200, a single `User-agent: *` group. Its `Disallow` lines cover `/ofertas-de-trabajo/` with filter parameters (`*by=`, `*pubdate=`, ...), `/hojas-de-vida/`, `/curriculums/`, `/empresas/` filters, `/Ajax/`, `/_services/` and `/go/`; none covers the search page the provider fetches (`/trabajo-de-sistemas?by=publicationtime&p=N`). A configured search URL under `/ofertas-de-trabajo/` fell under the `*by=` rule once the provider added `by=publicationtime`, so the provider used to drop the sort on that path; after the [rule 6 change](#rule-6-changed-2026-11-08) (2026-11-08, #6691) the sort is sent on every path (#6694). Other country hosts: unverified.
+**Rule 6 (`robots.txt`).** Checked on 2026-10-23: one GET of `https://co.computrabajo.com/robots.txt` with project-x' default User-Agent, HTTP 200, a single `User-agent: *` group. Its `Disallow` lines cover `/ofertas-de-trabajo/` with filter parameters (`*by=`, `*pubdate=`, ...), `/hojas-de-vida/`, `/curriculums/`, `/empresas/` filters, `/Ajax/`, `/_services/` and `/go/`; none covers the search page the provider fetches (`/trabajo-de-sistemas?by=publicationtime&p=N`). A configured search URL under `/ofertas-de-trabajo/` fell under the `*by=` rule once the provider added `by=publicationtime`, so the provider used to drop the sort on that path; after the [rule 6 change](#rule-6-changed-2026-11-08) (2026-11-08, #6691) the sort is sent on every path (#6694). Other country hosts: unverified.
 
 ---
 
 ## ElEmpleo (not listed)
 
-Proposed in [#2650](https://github.com/career-ops-hq/career-ops/pull/2650) together with Computrabajo and Magneto365, and taken out of it on 2026-10-23. The comments in `https://www.elempleo.com/robots.txt` (read 2026-10-23) say that extracting or scraping its content by automated means is prohibited without ELEMPLEO's prior written permission. A provider reads the board by automated means, so it is not listed. The provider code stays in the history of #2650 (`providers/elempleo.mjs` at e40e148) in case ELEMPLEO gives that permission.
+Proposed in [#2650](https://github.com/project-x-hq/project-x/pull/2650) together with Computrabajo and Magneto365, and taken out of it on 2026-10-23. The comments in `https://www.elempleo.com/robots.txt` (read 2026-10-23) say that extracting or scraping its content by automated means is prohibited without ELEMPLEO's prior written permission. A provider reads the board by automated means, so it is not listed. The provider code stays in the history of #2650 (`providers/elempleo.mjs` at e40e148) in case ELEMPLEO gives that permission.
 
 ## Magneto365
 
@@ -183,11 +183,11 @@ Proposed in [#2650](https://github.com/career-ops-hq/career-ops/pull/2650) toget
 |---|---|
 | **Proposed by** | @configurowebmax (community contributor; no affiliation with the source declared) |
 | **Provider** | `providers/magneto.mjs` |
-| **PR** | [#2650](https://github.com/career-ops-hq/career-ops/pull/2650) |
+| **PR** | [#2650](https://github.com/project-x-hq/project-x/pull/2650) |
 | **Merged** | pending (this PR) |
 | **Status** | Provider listed; the shipped `job_boards:` entry is `enabled: false`. |
 
-A general job board for Colombia. Measured: one GET of `https://www.magneto365.com/co/trabajos/buscar/tecnologia` on 2026-10-23, no key, cookie or session, career-ops' default User-Agent: HTTP 200, 20 job cards, pager links up to page 20.
+A general job board for Colombia. Measured: one GET of `https://www.magneto365.com/co/trabajos/buscar/tecnologia` on 2026-10-23, no key, cookie or session, project-x' default User-Agent: HTTP 200, 20 job cards, pager links up to page 20.
 
 **Rule 1 (real listings, identifiable employer, free for candidates).** Employer attribution, measured: 11 of the 20 cards name an employer; 5 read "Confidencial" and 4 carry the board's own name ("Magneto empleos"), and the provider emits all 9 as `?`. Free for candidates: met according to the press, not to a Magneto page: candidates register, upload a CV and apply at no cost, and employers pay for credits to see candidate contacts ([El Colombiano](https://www.elcolombiano.com/empleos/contenidos/como-acceder-ofertas-empleo-magneto-mas-de-100-mil-vacantes-NJ27958140), read 2026-10-23). Applying requires a free account.
 
@@ -199,7 +199,7 @@ A general job board for Colombia. Measured: one GET of `https://www.magneto365.c
 
 **Rule 5 (aggregation stays in core).** Verified in code: the provider reads one search URL per entry, on `www.magneto365.com` / `magneto365.com` only.
 
-**Rule 6 (`robots.txt`).** Checked on 2026-10-23: one GET of `https://www.magneto365.com/robots.txt` with career-ops' default User-Agent, HTTP 200. Under `User-agent: *` it allows `/`, disallows `/*?` and `/manager/*`, and allows `/*paginator[page]`. Every URL the provider fetches carries `paginator[page]=N`, which the longer `Allow` covers; a configured search URL with other query parameters still carries it. No group names career-ops.
+**Rule 6 (`robots.txt`).** Checked on 2026-10-23: one GET of `https://www.magneto365.com/robots.txt` with project-x' default User-Agent, HTTP 200. Under `User-agent: *` it allows `/`, disallows `/*?` and `/manager/*`, and allows `/*paginator[page]`. Every URL the provider fetches carries `paginator[page]=N`, which the longer `Allow` covers; a configured search URL with other query parameters still carries it. No group names project-x.
 
 ---
 
@@ -209,7 +209,7 @@ A general job board for Colombia. Measured: one GET of `https://www.magneto365.c
 |---|---|
 | **Proposed by** | @kosinal (not the operator) |
 | **Provider** | `providers/jobscz.mjs`, `providers/pracecz.mjs` |
-| **PR** | [#5631](https://github.com/career-ops-hq/career-ops/pull/5631) · issue [#5627](https://github.com/career-ops-hq/career-ops/issues/5627) |
+| **PR** | [#5631](https://github.com/project-x-hq/project-x/pull/5631) · issue [#5627](https://github.com/project-x-hq/project-x/issues/5627) |
 | **Merged** | — |
 | **Status** | Proposed |
 
@@ -231,15 +231,15 @@ A general job board for Colombia. Measured: one GET of `https://www.magneto365.c
 
 | | |
 |---|---|
-| **Proposed by** | issue [#1310](https://github.com/career-ops-hq/career-ops/issues/1310); provider by @aakash811 |
+| **Proposed by** | issue [#1310](https://github.com/project-x-hq/project-x/issues/1310); provider by @aakash811 |
 | **Provider** | `providers/jobspresso.mjs` |
-| **PR** | [#1320](https://github.com/career-ops-hq/career-ops/pull/1320) · rule 6 re-check in issue [#5774](https://github.com/career-ops-hq/career-ops/issues/5774) |
+| **PR** | [#1320](https://github.com/project-x-hq/project-x/pull/1320) · rule 6 re-check in issue [#5774](https://github.com/project-x-hq/project-x/issues/5774) |
 | **Merged** | 2026-06-29, before this policy existed (2026-08-04) |
 | **Status** | Listed; query string `?posts_per_page=100` enabled on 2026-11-09 (#6694) |
 
-Re-read against rule 6 after a contributor checked the live `robots.txt` in [#5774](https://github.com/career-ops-hq/career-ops/issues/5774).
+Re-read against rule 6 after a contributor checked the live `robots.txt` in [#5774](https://github.com/project-x-hq/project-x/issues/5774).
 
-**Rule 6 (the source's own `robots.txt`).** Checked on 2026-10-23 and again on 2026-11-05: one GET of `https://jobspresso.co/robots.txt`, HTTP 200. Under `User-agent: *` it disallows `/*?` and sets `Crawl-delay: 3`; its only `Allow` lines are `/*.css` and `/*.js`. No group names career-ops. `/*?` covered the URL the provider originally fetched, `/?feed=job_feed`. Following the Rule 6 update in #6691 and #6694 where robots.txt is no longer a gate for providers, the feed requests `?posts_per_page=100` (within Crawl-delay: 3, 1 request per scan) to return 100 items instead of 10.
+**Rule 6 (the source's own `robots.txt`).** Checked on 2026-10-23 and again on 2026-11-05: one GET of `https://jobspresso.co/robots.txt`, HTTP 200. Under `User-agent: *` it disallows `/*?` and sets `Crawl-delay: 3`; its only `Allow` lines are `/*.css` and `/*.js`. No group names project-x. `/*?` covered the URL the provider originally fetched, `/?feed=job_feed`. Following the Rule 6 update in #6691 and #6694 where robots.txt is no longer a gate for providers, the feed requests `?posts_per_page=100` (within Crawl-delay: 3, 1 request per scan) to return 100 items instead of 10.
 
 **Rules 1 to 5.** Not re-verified here.
 
@@ -249,19 +249,19 @@ Re-read against rule 6 after a contributor checked the live `robots.txt` in [#57
 
 | | |
 |---|---|
-| **Proposed by** | provider by [#1260](https://github.com/career-ops-hq/career-ops/pull/1260); rule 3 re-check in this PR |
+| **Proposed by** | provider by [#1260](https://github.com/project-x-hq/project-x/pull/1260); rule 3 re-check in this PR |
 | **Provider** | `providers/jobicy.mjs` |
-| **PR** | [#1260](https://github.com/career-ops-hq/career-ops/pull/1260) · rule 3 re-check: this PR |
+| **PR** | [#1260](https://github.com/project-x-hq/project-x/pull/1260) · rule 3 re-check: this PR |
 | **Merged** | 2026-06-29, before this policy existed (2026-08-04) |
 | **Status** | Listed; walks the whole 7-day feed since this PR |
 
 Re-read against rule 3 after the feed's documentation ([jobi.cy/apidocs](https://jobi.cy/apidocs), updated 2026-10-19) turned out to describe cursor pagination the provider never used.
 
-**Rule 3 (complete inventory, no paid placement).** The provider read one page, `?count=50`. Measured on 2026-11-05 with career-ops' default User-Agent, no key, cookie or session: the feed is a 7-day window served newest first, 100 postings a page, and one full walk of its `nextCursor` returned 1,358 postings over 14 pages (largest page 0.9 MB), zero duplicates, published 2026-10-30 to 2026-11-05. The 50 the provider read were 3.7% of the board and had all been published the same day. The provider now follows `nextCursor` until the feed reports `hasMore: false`, up to `max_pages` (default 25, max 100), and warns when that cap cuts the walk short. The public payload has no promoted or sponsored field, and the documentation states the order: publication time, newest first, listing id as tie-breaker. The optional `geo` / `industry` / `tag` keys are the feed's own documented filters, chosen by the user per entry; with `geo=argentina` the same walk returned 124 postings over 2 pages.
+**Rule 3 (complete inventory, no paid placement).** The provider read one page, `?count=50`. Measured on 2026-11-05 with project-x' default User-Agent, no key, cookie or session: the feed is a 7-day window served newest first, 100 postings a page, and one full walk of its `nextCursor` returned 1,358 postings over 14 pages (largest page 0.9 MB), zero duplicates, published 2026-10-30 to 2026-11-05. The 50 the provider read were 3.7% of the board and had all been published the same day. The provider now follows `nextCursor` until the feed reports `hasMore: false`, up to `max_pages` (default 25, max 100), and warns when that cap cuts the walk short. The public payload has no promoted or sponsored field, and the documentation states the order: publication time, newest first, listing id as tie-breaker. The optional `geo` / `industry` / `tag` keys are the feed's own documented filters, chosen by the user per entry; with `geo=argentina` the same walk returned 124 postings over 2 pages.
 
 **Rule 2 (canonical URL).** For a public request the payload carries one URL per posting, the Jobicy listing page; the employer's ATS link is a field of the paid Commercial API only. Jobicy's fair-use terms also ask that apply links from the free API keep pointing at the Jobicy page, so `url` stays that page.
 
-**Rule 6 (the source's own `robots.txt`).** Checked on 2026-11-05: one GET of `https://jobicy.com/robots.txt`, HTTP 200. Its `User-agent: *` group disallows query shapes such as `/*?s=`, `/*?p=`, `/*?q=`, `/*?offset=0` and `/*api_access_key=`, and paths such as `/search/` and `/job-listings/`; none covers `/api/v2/remote-jobs` with `count`, `cursor`, `geo`, `industry` or `tag`. It also carries `Content-Signal: ai-train=yes, search=yes, ai-input=yes`. No group names career-ops.
+**Rule 6 (the source's own `robots.txt`).** Checked on 2026-11-05: one GET of `https://jobicy.com/robots.txt`, HTTP 200. Its `User-agent: *` group disallows query shapes such as `/*?s=`, `/*?p=`, `/*?q=`, `/*?offset=0` and `/*api_access_key=`, and paths such as `/search/` and `/job-listings/`; none covers `/api/v2/remote-jobs` with `count`, `cursor`, `geo`, `industry` or `tag`. It also carries `Content-Signal: ai-train=yes, search=yes, ai-input=yes`. No group names project-x.
 
 **Fair use.** The documentation asks integrations to start an automated pass no more than once an hour and to follow its cursor pages in order. One scan is one pass per `provider: jobicy` entry, with 250 ms between pages.
 
@@ -271,7 +271,7 @@ Re-read against rule 3 after the feed's documentation ([jobi.cy/apidocs](https:/
 
 | | |
 |---|---|
-| **Proposed by** | [#6685](https://github.com/career-ops-hq/career-ops/issues/6685) |
+| **Proposed by** | [#6685](https://github.com/project-x-hq/project-x/issues/6685) |
 | **Provider** | `providers/tes.mjs` |
 | **PR** | this PR |
 | **Status** | Listed |
@@ -282,7 +282,7 @@ UK and international teaching jobs from schools and other education employers. T
 
 **Rule 2 (canonical URL).** The search payload carries one URL per posting, the Tes vacancy page (`canonicalUrl`), and `url` is that page. The per-posting detail query (`jobs.getById`) also exposes the school's own application link (`item.application.url`, for example an international-school ATS), but reading it costs one request per posting, about 5,700 for the whole board, so the provider does not read it. The Tes vacancy page links to it. A bounded, opt-in detail pass that carries that link is a possible follow-up.
 
-**Rule 3 (complete inventory, no paid placement).** Measured on 2026-11-09 with career-ops' default User-Agent, no key, cookie or session: sorted by `date`, the board returned 5,679 postings over 114 pages of 50, zero duplicate URLs, the last page short and the next one empty. A `limit` above 50 passes the endpoint's validation (`<= 100`) but returns zero rows, so the page size is 50. Rows carry a `promoted` flag and the payload a `sponsoredJobIds` list; the provider keeps every row in the order the date sort returns and never moves or filters by either. The optional `keywords` key is Tes's own search, chosen by the user per entry; the endpoint ignores `locations`, which the provider therefore does not send.
+**Rule 3 (complete inventory, no paid placement).** Measured on 2026-11-09 with project-x' default User-Agent, no key, cookie or session: sorted by `date`, the board returned 5,679 postings over 114 pages of 50, zero duplicate URLs, the last page short and the next one empty. A `limit` above 50 passes the endpoint's validation (`<= 100`) but returns zero rows, so the page size is 50. Rows carry a `promoted` flag and the payload a `sponsoredJobIds` list; the provider keeps every row in the order the date sort returns and never moves or filters by either. The optional `keywords` key is Tes's own search, chosen by the user per entry; the endpoint ignores `locations`, which the provider therefore does not send.
 
 **Rule 6 (read like a visitor).** The requests are the ones the public search page makes, one per page, 250 ms apart, bounded by `max_pages` (default 150, cap 400). `robots.txt` (checked 2026-11-09) disallows `/auth/`, `/registration/`, attachment paths and `/api/career-profile`, `/api/job-application` and `/api/schools` at the root; none covers `/jobs/api/trpc/jobs.search` or `/jobs/vacancy/`.
 

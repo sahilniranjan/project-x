@@ -66,17 +66,17 @@ export function loadRegistry(root) {
   }
 }
 
-/** Find a registry entry by bare id, full name, or `career-ops-plugin-<id>`. */
+/** Find a registry entry by bare id, full name, or `project-x-plugin-<id>`. */
 export function findInRegistry(root, nameOrId) {
   const reg = loadRegistry(root);
   const found = reg.plugins.find(p =>
-    p.id === nameOrId || p.name === nameOrId || p.name === `career-ops-plugin-${nameOrId}`) || null;
+    p.id === nameOrId || p.name === nameOrId || p.name === `project-x-plugin-${nameOrId}`) || null;
   if (found) return found;
 
   // Fallback to codebase root registry if not found
   const baseReg = loadRegistry(CODEBASE_ROOT);
   return baseReg.plugins.find(p =>
-    p.id === nameOrId || p.name === nameOrId || p.name === `career-ops-plugin-${nameOrId}`) || null;
+    p.id === nameOrId || p.name === nameOrId || p.name === `project-x-plugin-${nameOrId}`) || null;
 }
 
 /**
@@ -115,9 +115,9 @@ export function sourceBadge(source) {
  */
 export function validateRegistryEntry(e, { idRe, hookKinds, reservedEnv }) {
   const errs = [];
-  if (typeof e.name !== 'string' || !e.name.startsWith('career-ops-plugin-')) errs.push('name must start with "career-ops-plugin-"');
+  if (typeof e.name !== 'string' || !e.name.startsWith('project-x-plugin-')) errs.push('name must start with "project-x-plugin-"');
   if (typeof e.id !== 'string' || !idRe.test(e.id)) errs.push('invalid id');
-  if (e.name && e.id && e.name !== `career-ops-plugin-${e.id}`) errs.push('name must equal career-ops-plugin-<id>');
+  if (e.name && e.id && e.name !== `project-x-plugin-${e.id}`) errs.push('name must equal project-x-plugin-<id>');
   if (!/^https:\/\/github\.com\/[^/]+\/[^/]+$/.test(e.repo || '')) errs.push('repo must be a https://github.com/<owner>/<repo> URL');
   if (!/^[0-9a-f]{40}$/.test(e.sha || '')) errs.push('sha must be a 40-hex commit');
   if (!Array.isArray(e.hooks) || e.hooks.length === 0 || e.hooks.some(h => !hookKinds.includes(h))) errs.push('hooks must be a non-empty subset of the hook kinds');

@@ -154,7 +154,7 @@ try {
   assert.equal(parseScanHistoryAtsSeeds(history).length, 2);
   pass('scan-history parsing is backward-compatible with positional TSV rows and skips malformed URLs');
 
-  const root = mkdtempSync(join(tmpdir(), 'career-ops-history-seeds-'));
+  const root = mkdtempSync(join(tmpdir(), 'project-x-history-seeds-'));
   try {
     mkdirSync(join(root, 'data'), { recursive: true });
     const trackerPath = join(root, 'custom-applications.md');
@@ -200,8 +200,8 @@ try {
       'an external report-looking target may not select a same-numbered local report',
     );
     writeFileSync(join(root, 'data/scan-history.tsv'), history, 'utf-8');
-    const oldTracker = process.env.CAREER_OPS_TRACKER;
-    process.env.CAREER_OPS_TRACKER = trackerPath;
+    const oldTracker = process.env.PROJECT_X_TRACKER;
+    process.env.PROJECT_X_TRACKER = trackerPath;
     try {
       const seeds = loadHistoryAtsSeeds({
         dataRoot: root,
@@ -210,13 +210,13 @@ try {
       assert.equal(seeds.length, 2, 'two Lever postings must collapse to one board, plus Dayforce');
       assert.deepEqual(seeds.map((seed) => seed.vendor).sort(), ['dayforce', 'lever']);
     } finally {
-      if (oldTracker === undefined) delete process.env.CAREER_OPS_TRACKER;
-      else process.env.CAREER_OPS_TRACKER = oldTracker;
+      if (oldTracker === undefined) delete process.env.PROJECT_X_TRACKER;
+      else process.env.PROJECT_X_TRACKER = oldTracker;
     }
   } finally {
     rmSync(root, { recursive: true, force: true, maxRetries: 5, retryDelay: 50 });
   }
-  pass('the nine-column tracker resolves linked report URLs, honors CAREER_OPS_TRACKER, and deduplicates boards');
+  pass('the nine-column tracker resolves linked report URLs, honors PROJECT_X_TRACKER, and deduplicates boards');
 
   const calls = [];
   const mockProvider = {

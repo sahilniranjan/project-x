@@ -98,7 +98,7 @@ test('an overflowing cover letter is reported as a cover letter, not a CV', () =
 });
 
 function runCover(flags, extraEnv = {}) {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-cover-flags-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-cover-flags-'));
   mkdirSync(join(dir, 'output'));
   writeFileSync(join(dir, 'cv.md'), 'Avery Quinn builds ledger services.\n');
   const payloadPath = join(dir, 'payload.json');
@@ -117,7 +117,7 @@ function runCover(flags, extraEnv = {}) {
     cwd: dir,
     encoding: 'utf-8',
     timeout: 60_000,
-    env: { ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_DATA_DIR: '', COVER_PDF_CAPTURE: capture, ...extraEnv },
+    env: { ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_DATA_DIR: '', COVER_PDF_CAPTURE: capture, ...extraEnv },
   });
   const captured = existsSync(capture) ? JSON.parse(readFileSync(capture, 'utf-8')) : null;
   const outputFiles = readdirSync(join(dir, 'output'));
@@ -175,7 +175,7 @@ test('CLI: with no page flags the renderer gets the 1-page warning-only default'
 // reports two pages, so it proves the cover kind reaches the budget message
 // on the path generate-cover-letter.mjs actually uses (CodeRabbit on #6384).
 test('renderHtmlToPdf reports an overflowing cover letter as a cover letter', () => {
-  const dataRoot = realpathSync(mkdtempSync(join(tmpdir(), 'career-ops-cover-budget-')));
+  const dataRoot = realpathSync(mkdtempSync(join(tmpdir(), 'project-x-cover-budget-')));
   mkdirSync(join(dataRoot, 'data'), { recursive: true });
   mkdirSync(join(dataRoot, 'output'), { recursive: true });
   writeFileSync(join(dataRoot, 'data', 'applications.md'), '# Applications Tracker\n');
@@ -211,7 +211,7 @@ test('renderHtmlToPdf reports an overflowing cover letter as a cover letter', ()
       cwd: dataRoot,
       encoding: 'utf-8',
       timeout: 60_000,
-      env: { ...process.env, CAREER_OPS_ROOT: dataRoot, CAREER_OPS_DATA_DIR: '', CAREER_OPS_TRACKER: '', CAREER_OPS_PDF_INDEX: '', CAREER_OPS_PDF_SHARED: '' },
+      env: { ...process.env, PROJECT_X_ROOT: dataRoot, PROJECT_X_DATA_DIR: '', PROJECT_X_TRACKER: '', PROJECT_X_PDF_INDEX: '', PROJECT_X_PDF_SHARED: '' },
     });
     const line = (r.stdout ?? '').split('\n').find((l) => l.startsWith('RESULT '));
     assert.ok(line, `no RESULT line:\n${r.stdout}${r.stderr}`);

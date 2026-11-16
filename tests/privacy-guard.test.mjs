@@ -28,7 +28,7 @@ import {
   bypassRequested,
   getPrivacyConfigPath,
 } from '../lib/privacy-guard.mjs';
-import { getCareerOpsRoot } from '../path-resolver.mjs';
+import { getProjectXRoot } from '../path-resolver.mjs';
 import {
   assertGoogleRequestAllowed,
   assertLlmRequestAllowed,
@@ -808,19 +808,19 @@ test('config/privacy.example.yml parses and contains no real-looking secret', as
   assert.doesNotMatch(text, /555-01-0199[\s\S]*real/i, 'no claim of real data');
 });
 
-test('CAREER_OPS_PRIVACY override resolves relative paths against getCareerOpsRoot() and preserves absolute paths', () => {
-  const orig = process.env.CAREER_OPS_PRIVACY;
+test('PROJECT_X_PRIVACY override resolves relative paths against getProjectXRoot() and preserves absolute paths', () => {
+  const orig = process.env.PROJECT_X_PRIVACY;
   try {
-    const root = getCareerOpsRoot();
-    process.env.CAREER_OPS_PRIVACY = 'custom/privacy.yml';
+    const root = getProjectXRoot();
+    process.env.PROJECT_X_PRIVACY = 'custom/privacy.yml';
     assert.equal(getPrivacyConfigPath(), resolve(root, 'custom/privacy.yml'));
 
     const absPath = resolve(root, 'somewhere', 'privacy.yml');
-    process.env.CAREER_OPS_PRIVACY = absPath;
+    process.env.PROJECT_X_PRIVACY = absPath;
     assert.equal(getPrivacyConfigPath(), absPath);
   } finally {
-    if (orig !== undefined) process.env.CAREER_OPS_PRIVACY = orig;
-    else delete process.env.CAREER_OPS_PRIVACY;
+    if (orig !== undefined) process.env.PROJECT_X_PRIVACY = orig;
+    else delete process.env.PROJECT_X_PRIVACY;
   }
 });
 
@@ -898,7 +898,7 @@ test('privacy-status renders pattern-only message when patterns are enabled with
   const { execFileSync } = await import('node:child_process');
   withConfigFile('auto_detect:\n  email: true\n', (path) => {
     const out = execFileSync(process.execPath, [resolve(import.meta.dirname, '../privacy-status.mjs')], {
-      env: { ...process.env, CAREER_OPS_PRIVACY: path },
+      env: { ...process.env, PROJECT_X_PRIVACY: path },
       encoding: 'utf-8',
     });
     assert.match(out, /running with pattern detection only/);
@@ -910,7 +910,7 @@ test('privacy-status renders too-short message when values were actually rejecte
   const { execFileSync } = await import('node:child_process');
   withConfigFile('protected:\n  short: "abc"\n', (path) => {
     const out = execFileSync(process.execPath, [resolve(import.meta.dirname, '../privacy-status.mjs')], {
-      env: { ...process.env, CAREER_OPS_PRIVACY: path },
+      env: { ...process.env, PROJECT_X_PRIVACY: path },
       encoding: 'utf-8',
     });
     assert.match(out, /every value was too short to guard/);
@@ -923,7 +923,7 @@ test('privacy-status error message reflects actual reason for top-level non-mapp
     let err;
     try {
       execFileSync(process.execPath, [resolve(import.meta.dirname, '../privacy-status.mjs'), '--json'], {
-        env: { ...process.env, CAREER_OPS_PRIVACY: path },
+        env: { ...process.env, PROJECT_X_PRIVACY: path },
         encoding: 'utf-8',
       });
     } catch (e) {

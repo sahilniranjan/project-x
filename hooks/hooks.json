@@ -1,5 +1,5 @@
 {
-  "description": "career-ops: install the plugin's Node packages and create the data folder",
+  "description": "project-x: install the plugin's Node packages and create the data folder",
   "hooks": {
     "SessionStart": [
       {

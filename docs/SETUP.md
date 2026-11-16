@@ -11,13 +11,13 @@
 ### Browser-only — Claude Code on the web
 
 [Claude Code on the web](https://code.claude.com/docs/en/web-quickstart) can run
-career-ops without a local checkout. It is currently a research preview for
+project-x without a local checkout. It is currently a research preview for
 eligible Claude plans. A web session clones a GitHub repository into an
 isolated cloud VM; it does not have your machine's files or local configuration.
 
-1. Put career-ops in a **private GitHub repository** that your account can
+1. Put project-x in a **private GitHub repository** that your account can
    access. You can use [GitHub Importer](https://docs.github.com/en/migrations/importing-source-code/using-github-importer/importing-a-repository-with-github-importer)
-   with `https://github.com/career-ops-hq/career-ops.git` as the source. A normal
+   with `https://github.com/project-x-hq/project-x.git` as the source. A normal
    fork of this public repository is public, so do not use one for personal
    career data.
 2. Open [claude.ai/code](https://claude.ai/code), connect GitHub, and select the
@@ -26,11 +26,11 @@ isolated cloud VM; it does not have your machine's files or local configuration.
 3. Submit this first task:
 
    ```text
-   Set up career-ops in this checkout. Run npm install, then start the first-run
+   Set up project-x in this checkout. Run npm install, then start the first-run
    onboarding. Keep cv.md, data/, and reports/ out of Git.
    ```
 
-career-ops still uses ordinary workspace files in the cloud checkout, not
+project-x still uses ordinary workspace files in the cloud checkout, not
 browser storage:
 
 | Path (from the repository root) | What it holds |
@@ -51,38 +51,38 @@ sessions, use the local quick start below.
 ### Recommended — one command
 
 ```bash
-npx @santifer/career-ops init
+npx @santifer/project-x init
 ```
 
-`npx` ships with Node.js — it runs the installer once without installing anything globally. This clones the latest release into `./career-ops` and installs dependencies. Then move into the workspace and open your AI CLI:
+`npx` ships with Node.js — it runs the installer once without installing anything globally. This clones the latest release into `./project-x` and installs dependencies. Then move into the workspace and open your AI CLI:
 
 ```bash
-cd career-ops
+cd project-x
 claude   # or codex / qwen / opencode / agy / grok
 ```
 
-**On first launch, career-ops walks you through setup by chatting** — it asks for your CV, your details (name, target roles, salary), and sets up the job scanner with pre-configured companies. Nothing to edit by hand: just answer its questions. Then paste a job offer URL or description and it evaluates it, writes a report, generates a tailored PDF, and tracks it.
+**On first launch, project-x walks you through setup by chatting** — it asks for your CV, your details (name, target roles, salary), and sets up the job scanner with pre-configured companies. Nothing to edit by hand: just answer its questions. Then paste a job offer URL or description and it evaluates it, writes a report, generates a tailored PDF, and tracks it.
 
-If you are using Codex, start the interactive session with `codex`. Slash commands are not guaranteed in Codex, so use the same mode names in a prompt if `/career-ops` is unavailable:
+If you are using Codex, start the interactive session with `codex`. Slash commands are not guaranteed in Codex, so use the same mode names in a prompt if `/project-x` is unavailable:
 
 ```text
-Evaluate this JD with career-ops auto-pipeline: https://company.com/jobs/123
-Run the career-ops scan mode.
-Run the career-ops pipeline mode.
-Run the career-ops pdf mode.
-Run the career-ops email mode for the latest evaluated role. Draft only; never sends, submits, or clicks.
-Run the career-ops tracker mode.
+Evaluate this JD with project-x auto-pipeline: https://company.com/jobs/123
+Run the project-x scan mode.
+Run the project-x pipeline mode.
+Run the project-x pdf mode.
+Run the project-x email mode for the latest evaluated role. Draft only; never sends, submits, or clicks.
+Run the project-x tracker mode.
 ```
 
 For one-shot workers or batch tasks in Codex, use `codex exec`. See [docs/CODEX.md](CODEX.md) for the full guide.
 
 ```bash
-codex exec "Evaluate this JD with career-ops auto-pipeline: https://company.com/jobs/123"
-codex exec "Run career-ops scan mode in this repo."
-codex exec "Run career-ops pipeline mode for data/pipeline.md."
-codex exec "Run career-ops pdf mode for the latest evaluated role."
-codex exec "Run career-ops email mode for the latest evaluated role. Draft only; do not send, submit, or click anything."
-codex exec "Run career-ops tracker mode and summarize the current statuses."
+codex exec "Evaluate this JD with project-x auto-pipeline: https://company.com/jobs/123"
+codex exec "Run project-x scan mode in this repo."
+codex exec "Run project-x pipeline mode for data/pipeline.md."
+codex exec "Run project-x pdf mode for the latest evaluated role."
+codex exec "Run project-x email mode for the latest evaluated role. Draft only; do not send, submit, or click anything."
+codex exec "Run project-x tracker mode and summarize the current statuses."
 ```
 
 ### Advanced — clone manually
@@ -91,8 +91,8 @@ codex exec "Run career-ops tracker mode and summarize the current statuses."
 <summary>Prefer to clone the repo yourself?</summary>
 
 ```bash
-git clone https://github.com/career-ops-hq/career-ops.git
-cd career-ops
+git clone https://github.com/project-x-hq/project-x.git
+cd project-x
 npm install
 ```
 
@@ -102,7 +102,7 @@ Then open your AI CLI in the folder — the same first-run onboarding applies. U
 
 ### Contributing for the first time
 
-If you want to contribute to career-ops, start with a small, focused change. Bug fixes, documentation, translations, and new zero-auth scanner providers can go straight to a pull request; new features, modes, commands, or architecture changes should start with an issue first.
+If you want to contribute to project-x, start with a small, focused change. Bug fixes, documentation, translations, and new zero-auth scanner providers can go straight to a pull request; new features, modes, commands, or architecture changes should start with an issue first.
 
 The basic workflow is:
 
@@ -110,7 +110,7 @@ The basic workflow is:
 2. Make one focused change and keep personal data such as `cv.md`, `profile.yml`, applications, and reports out of the commit.
 3. Run the relevant checks; for a broad validation, use `node test-all.mjs --quick`.
 4. Commit and push your branch to your fork.
-5. Open a pull request against `career-ops-hq/career-ops` and explain what changed and why.
+5. Open a pull request against `project-x-hq/project-x` and explain what changed and why.
 
 See [CONTRIBUTING.md](../CONTRIBUTING.md) for the full contribution guidelines and examples of good first contributions.
 
@@ -130,26 +130,26 @@ On macOS releases where Playwright fails to install or launch bundled Chromium (
 export PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 ```
 
-The same setting applies to every command that launches a browser (scan, liveness checks, `doctor` and the PDF step), and it can go in your shell or in the `.env` of your data root. To let career-ops find an installed browser instead of naming one, set `CAREER_OPS_BROWSER_AUTODETECT=true`: it uses the first browser it finds at its standard install location, in this order: Brave, Chrome, Edge, Chromium on macOS; Brave, Chrome, Chromium, Edge on Linux; Brave, Chrome, Edge on Windows (it does not look for Chromium there, so name it with `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH`). Auto-detect is off by default, so a machine where the bundled Chromium works keeps using it, and `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` wins when both are set.
+The same setting applies to every command that launches a browser (scan, liveness checks, `doctor` and the PDF step), and it can go in your shell or in the `.env` of your data root. To let project-x find an installed browser instead of naming one, set `PROJECT_X_BROWSER_AUTODETECT=true`: it uses the first browser it finds at its standard install location, in this order: Brave, Chrome, Edge, Chromium on macOS; Brave, Chrome, Chromium, Edge on Linux; Brave, Chrome, Edge on Windows (it does not look for Chromium there, so name it with `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH`). Auto-detect is off by default, so a machine where the bundled Chromium works keeps using it, and `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` wins when both are set.
 
 ### Scanning through an outbound proxy
 
-Node's ordinary `fetch()` may ignore `HTTP_PROXY`, `HTTPS_PROXY` and `NO_PROXY` in a proxy-only sandbox. Provider requests can use those variables with `CAREER_OPS_TRUST_PROXY_EGRESS=1 node scan.mjs`. This uses a request-scoped proxy dispatcher; unrelated requests are unaffected, and `NO_PROXY` destinations still use the local private-address guard.
+Node's ordinary `fetch()` may ignore `HTTP_PROXY`, `HTTPS_PROXY` and `NO_PROXY` in a proxy-only sandbox. Provider requests can use those variables with `PROJECT_X_TRUST_PROXY_EGRESS=1 node scan.mjs`. This uses a request-scoped proxy dispatcher; unrelated requests are unaffected, and `NO_PROXY` destinations still use the local private-address guard.
 
-Set this flag **only when the configured proxy itself blocks connections to private, loopback and metadata addresses**. When a proxy resolves the destination remotely, career-ops cannot verify that final address locally; the proxy must enforce that part of the SSRF boundary. Without this explicit trust setting, provider requests keep their normal direct transport and a DNS failure names the proxy setup needed. Proxy URLs containing credentials must use HTTPS, except a loopback proxy (`localhost`, `127.*` or `::1`), where the credentials never leave the machine; credential-free HTTP proxies remain supported. Existing installations keep direct transport after a system update; proxy environment variables alone do not enable it. Before enabling the flag, run `npm install` in the career-ops directory to install the added `undici` dependency. It is loaded only for an opted-in request with a configured proxy, so direct scanning continues to work even before that dependency is installed.
+Set this flag **only when the configured proxy itself blocks connections to private, loopback and metadata addresses**. When a proxy resolves the destination remotely, project-x cannot verify that final address locally; the proxy must enforce that part of the SSRF boundary. Without this explicit trust setting, provider requests keep their normal direct transport and a DNS failure names the proxy setup needed. Proxy URLs containing credentials must use HTTPS, except a loopback proxy (`localhost`, `127.*` or `::1`), where the credentials never leave the machine; credential-free HTTP proxies remain supported. Existing installations keep direct transport after a system update; proxy environment variables alone do not enable it. Before enabling the flag, run `npm install` in the project-x directory to install the added `undici` dependency. It is loaded only for an opted-in request with a configured proxy, so direct scanning continues to work even before that dependency is installed.
 
 ## Available Commands
 
 | Action | How |
 |--------|-----|
 | Evaluate an offer | Paste a URL or JD text |
-| Search for offers | `/career-ops scan` or ask the agent to run `scan` |
-| Process pending URLs | `/career-ops pipeline` or ask the agent to run `pipeline` |
-| Generate a PDF | `/career-ops pdf` or ask the agent to run `pdf` |
-| Draft application email | `/career-ops email` or ask the agent to run `email`; draft-only, never sends, submits, or clicks |
-| Batch evaluate | `/career-ops batch` or use `codex exec "Run career-ops batch mode ..."` |
-| Check tracker status | `/career-ops tracker` or ask the agent to run `tracker` |
-| Fill application form | `/career-ops apply` or ask the agent to run `apply` |
+| Search for offers | `/project-x scan` or ask the agent to run `scan` |
+| Process pending URLs | `/project-x pipeline` or ask the agent to run `pipeline` |
+| Generate a PDF | `/project-x pdf` or ask the agent to run `pdf` |
+| Draft application email | `/project-x email` or ask the agent to run `email`; draft-only, never sends, submits, or clicks |
+| Batch evaluate | `/project-x batch` or use `codex exec "Run project-x batch mode ..."` |
+| Check tracker status | `/project-x tracker` or ask the agent to run `tracker` |
+| Fill application form | `/project-x apply` or ask the agent to run `apply` |
 
 ## Verify Setup
 

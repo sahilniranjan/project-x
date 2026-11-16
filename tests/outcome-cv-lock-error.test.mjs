@@ -11,7 +11,7 @@ import { describeSpawn } from './helpers/describe-spawn.mjs';
 const initial = '| # | Date | Company | Role | Score | Status | PDF | Report | Notes |\n|---|---|---|---|---|---|---|---|---|\n| 1 | 2026-01-05 | Fictional | Engineer | 4/5 | Applied | — | — | notes |\n';
 for (const explicit of [true, false]) for (const timeout of [true, false]) for (const json of [true, false]) {
   const label = `${explicit ? 'selected' : 'automatic'} CV ${timeout ? 'lock timeout' : 'lock I/O failure'} returns ${json ? 'JSON' : 'text'} without recording an outcome`;
-  const root = realpathSync(mkdtempSync(join(tmpdir(), 'career-ops-cv-lock-error-')));
+  const root = realpathSync(mkdtempSync(join(tmpdir(), 'project-x-cv-lock-error-')));
   const tracker = join(root, 'data', 'applications.md');
   const archive = join(root, 'data', 'outcomes', '1_fictional_engineer');
   const lock = join(archive, '.submitted-cv.lock');
@@ -40,7 +40,7 @@ syncBuiltinESMExports();
 `);
   try {
     const result = spawnSync(process.execPath, ['--import', pathToFileURL(preload).href, join(ROOT, 'outcome.mjs'), '1', 'hired', ...(explicit ? ['--cv', source] : []), ...(json ? ['--json'] : [])], {
-      cwd: root, env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_TRACKER: tracker }, encoding: 'utf8', timeout: 15000,
+      cwd: root, env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_TRACKER: tracker }, encoding: 'utf8', timeout: 15000,
     });
     assert.equal(result.status, 1, result.error?.message || result.stderr);
     if (json) {

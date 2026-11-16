@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * update-system.mjs — Safe auto-updater for career-ops
+ * update-system.mjs — Safe auto-updater for project-x
  *
  * Updates system-layer files (modes, scripts, dashboard, templates) plus the
  * exact system-owned `.gitkeep` scaffolds listed in DATA_CONTRACT.md. It never
@@ -40,7 +40,7 @@
  * From a linked git worktree (an agent's default session layout), every
  * subcommand re-runs in the checkout that has `main` checked out, so the
  * update lands on main rather than the worktree's branch. Set
- * CAREER_OPS_UPDATE_IN_WORKTREE=1 to update the worktree's branch instead.
+ * PROJECT_X_UPDATE_IN_WORKTREE=1 to update the worktree's branch instead.
  *
  * See DATA_CONTRACT.md for the full system/user layer definitions.
  */
@@ -66,7 +66,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = __dirname;
 
 export function createReexecMarker() {
-  const directory = realpathSync(mkdtempSync(join(tmpdir(), 'career-ops-reexec-')));
+  const directory = realpathSync(mkdtempSync(join(tmpdir(), 'project-x-reexec-')));
   const path = join(directory, 'marker');
   const token = randomBytes(32).toString('hex');
   writeFileSync(path, token, { encoding: 'utf8', mode: 0o600 });
@@ -74,8 +74,8 @@ export function createReexecMarker() {
 }
 
 export function consumeReexecMarker() {
-  const suppliedPath = process.env.CAREER_OPS_UPDATE_REEXEC_MARKER;
-  const token = process.env.CAREER_OPS_UPDATE_REEXEC_TOKEN;
+  const suppliedPath = process.env.PROJECT_X_UPDATE_REEXEC_MARKER;
+  const token = process.env.PROJECT_X_UPDATE_REEXEC_TOKEN;
   if (!suppliedPath || !token) {
     return false;
   }
@@ -83,7 +83,7 @@ export function consumeReexecMarker() {
     const tmpRoot = realpathSync(tmpdir());
     const path = resolve(suppliedPath);
     const parent = dirname(path);
-    if (dirname(parent) !== tmpRoot || !basename(parent).startsWith('career-ops-reexec-') || basename(path) !== 'marker') {
+    if (dirname(parent) !== tmpRoot || !basename(parent).startsWith('project-x-reexec-') || basename(path) !== 'marker') {
       return false;
     }
     if (realpathSync(parent) !== parent || !lstatSync(parent).isDirectory() ||
@@ -105,7 +105,7 @@ export function consumeReexecMarker() {
 const BACKUP_BRANCH_RE = /^backup-pre-update-\d+\.\d+\.\d+-\d{8}T\d{6}Z$/;
 
 function isLegacyReexec() {
-  if (process.env.CAREER_OPS_UPDATE_REEXEC !== '1') {
+  if (process.env.PROJECT_X_UPDATE_REEXEC !== '1') {
     return false;
   }
   // A matching backup branch is durable state, not proof that a parent updater
@@ -114,7 +114,7 @@ function isLegacyReexec() {
   if (!existsSync(join(ROOT, '.update-lock'))) {
     return false;
   }
-  const backupBranch = process.env.CAREER_OPS_UPDATE_BACKUP_BRANCH || '';
+  const backupBranch = process.env.PROJECT_X_UPDATE_BACKUP_BRANCH || '';
   if (!BACKUP_BRANCH_RE.test(backupBranch)) {
     return false;
   }
@@ -128,36 +128,36 @@ function isLegacyReexec() {
   }
 }
 
-const CANONICAL_REPO = 'https://github.com/career-ops-hq/career-ops.git';
+const CANONICAL_REPO = 'https://github.com/project-x-hq/project-x.git';
 // Local snapshot of a withheld update's index, including preserved files.
 // A ref stays out of git status and contributor branches; trust it only while
 // its content matches the queried paths (see stagedUpdateBaseline).
-export const STAGED_UPDATE_REF = 'refs/career-ops/staged-update';
-const RAW_VERSION_URL = 'https://raw.githubusercontent.com/career-ops-hq/career-ops/main/VERSION';
-const RELEASES_API = 'https://api.github.com/repos/career-ops-hq/career-ops/releases/latest';
+export const STAGED_UPDATE_REF = 'refs/project-x/staged-update';
+const RAW_VERSION_URL = 'https://raw.githubusercontent.com/project-x-hq/project-x/main/VERSION';
+const RELEASES_API = 'https://api.github.com/repos/project-x-hq/project-x/releases/latest';
 // The authoritative answer to "what commit does this upstream ref name?".
 // check() has always read it for main; apply() now reads it for the ref it is
 // installing, so the tree is checked against the ref it claims to be (#3052).
-const UPSTREAM_REF_API = 'https://api.github.com/repos/career-ops-hq/career-ops/git/ref';
+const UPSTREAM_REF_API = 'https://api.github.com/repos/project-x-hq/project-x/git/ref';
 
 // Matches a semver, with or without a leading `v` and an optional
-// Release Please component prefix (e.g. `career-ops-v1.9.0` → `1.9.0`).
+// Release Please component prefix (e.g. `project-x-v1.9.0` → `1.9.0`).
 // Anchoring on `(?:^|-)` lets the releases-API fallback parse our tags,
 // which Release Please always prefixes with the component name.
 export const SEMVER_RE = /(?:^|-)v?(\d+\.\d+\.\d+)$/i;
 // 120s: local git commands are normally instant, but a cloud-evicted working
 // tree (iCloud "optimize storage", OneDrive dehydration) can stall a plain
 // `git status` for a minute of pure I/O wait re-materializing files (#1393).
-export const DEFAULT_GIT_TIMEOUT_MS = parsePositiveInt(process.env.CAREER_OPS_GIT_TIMEOUT_MS, 120000);
+export const DEFAULT_GIT_TIMEOUT_MS = parsePositiveInt(process.env.PROJECT_X_GIT_TIMEOUT_MS, 120000);
 export const DEFAULT_GIT_FETCH_TIMEOUT_MS = parsePositiveInt(
-  process.env.CAREER_OPS_GIT_FETCH_TIMEOUT_MS,
+  process.env.PROJECT_X_GIT_FETCH_TIMEOUT_MS,
   Math.max(DEFAULT_GIT_TIMEOUT_MS, 300000),
 );
-export const NPM_INSTALL_TIMEOUT_MS = parsePositiveInt(process.env.CAREER_OPS_NPM_INSTALL_TIMEOUT_MS, 60000);
-export const PLAYWRIGHT_INSTALL_TIMEOUT_MS = parsePositiveInt(process.env.CAREER_OPS_PLAYWRIGHT_INSTALL_TIMEOUT_MS, 120000);
-export const DASHBOARD_REBUILD_TIMEOUT_MS = parsePositiveInt(process.env.CAREER_OPS_DASHBOARD_REBUILD_TIMEOUT_MS, 60000);
-export const UPDATE_PATH_CHECKOUT_BUDGET_MS = parsePositiveInt(process.env.CAREER_OPS_UPDATE_PATH_CHECKOUT_BUDGET_MS, 5000);
-export const REEXEC_BUFFER_TIMEOUT_MS = parsePositiveInt(process.env.CAREER_OPS_REEXEC_BUFFER_TIMEOUT_MS, 60000);
+export const NPM_INSTALL_TIMEOUT_MS = parsePositiveInt(process.env.PROJECT_X_NPM_INSTALL_TIMEOUT_MS, 60000);
+export const PLAYWRIGHT_INSTALL_TIMEOUT_MS = parsePositiveInt(process.env.PROJECT_X_PLAYWRIGHT_INSTALL_TIMEOUT_MS, 120000);
+export const DASHBOARD_REBUILD_TIMEOUT_MS = parsePositiveInt(process.env.PROJECT_X_DASHBOARD_REBUILD_TIMEOUT_MS, 60000);
+export const UPDATE_PATH_CHECKOUT_BUDGET_MS = parsePositiveInt(process.env.PROJECT_X_UPDATE_PATH_CHECKOUT_BUDGET_MS, 5000);
+export const REEXEC_BUFFER_TIMEOUT_MS = parsePositiveInt(process.env.PROJECT_X_REEXEC_BUFFER_TIMEOUT_MS, 60000);
 // apply()'s exit code when the update was applied but `npm install` failed.
 // The re-exec'd child exits with it after its commit, so the parent can tell
 // "finished, with a follow-up step for the user" from a child that failed
@@ -333,7 +333,7 @@ const BOOTSTRAP_PATHS = [
  * that has no business having an opinion about it (#2480).
  */
 export const USER_PATHS = [
-  '.career-ops-web/',
+  '.project-x-web/',
   'cv.md',
   'config/profile.yml',
   'modes/_profile.md',
@@ -926,13 +926,13 @@ export function pinRefToCommit(ref = 'FETCH_HEAD', ctx = {}) {
  * value skips the identity check, so anything but the parent's exact SHA is
  * refused rather than resolved.
  *
- * @param {string} sha - The inherited CAREER_OPS_UPDATE_TARGET_SHA value.
+ * @param {string} sha - The inherited PROJECT_X_UPDATE_TARGET_SHA value.
  * @param {{git?: Function}} [ctx] - Test seam; defaults to the ROOT-bound runner.
  * @returns {string} The same 40-hex SHA, confirmed to exist locally as a commit.
  */
 export function pinInheritedTarget(sha, ctx = {}) {
   if (!/^[0-9a-f]{40}$/.test(sha)) {
-    throw new Error(`CAREER_OPS_UPDATE_TARGET_SHA is not a commit SHA: ${JSON.stringify(sha)}.`);
+    throw new Error(`PROJECT_X_UPDATE_TARGET_SHA is not a commit SHA: ${JSON.stringify(sha)}.`);
   }
   return pinRefToCommit(sha, ctx);
 }
@@ -1000,7 +1000,7 @@ export function downgradeRefusal(installedVersion, targetVersion) {
  * They are different questions, and #3052's expected-behaviour item 1 is this
  * one: a tree that ships a VERSION at or above the installed one still is not
  * necessarily the ref of the canonical repo that was requested —
- * `refs/heads/main` on `--channel main`, `refs/tags/career-ops-vX.Y.Z` on the
+ * `refs/heads/main` on `--channel main`, `refs/tags/project-x-vX.Y.Z` on the
  * default release channel. check() has always resolved main's authoritative
  * SHA from the GitHub ref API and apply() never consulted it; this is the
  * consumer, for whichever ref apply() is installing.
@@ -1188,7 +1188,7 @@ function timeoutSeconds(timeout) {
 }
 
 function gitTimeoutEnvVar(args) {
-  return args[0] === 'fetch' ? 'CAREER_OPS_GIT_FETCH_TIMEOUT_MS' : 'CAREER_OPS_GIT_TIMEOUT_MS';
+  return args[0] === 'fetch' ? 'PROJECT_X_GIT_FETCH_TIMEOUT_MS' : 'PROJECT_X_GIT_TIMEOUT_MS';
 }
 
 /**
@@ -1256,7 +1256,7 @@ function gitQuiet(...args) {
  * or null when ROOT is its own toplevel (or not inside any worktree at all).
  *
  * Every git call in this file runs with `cwd: ROOT` and assumes that resolves
- * to the career-ops checkout. An install with no `.git` of its own that sits
+ * to the project-x checkout. An install with no `.git` of its own that sits
  * INSIDE another repository — a ZIP unpacked into an existing project — breaks
  * that silently: git walks up, finds the outer repo, and every rev-parse,
  * fetch, branch and checkout lands there, with pathspecs failing because at
@@ -1322,16 +1322,16 @@ export function outsideGitCheckout(root = ROOT) {
  * First statement of apply() and rollback(); check() reports a status instead.
  */
 function assertOwnGitToplevel() {
-  const reclone = `Nothing was changed. To make updates work, clone career-ops fresh (git clone ${CANONICAL_REPO}) and move your user-layer files (cv.md, config/, data/, reports/ — see DATA_CONTRACT.md) into the new clone.`;
+  const reclone = `Nothing was changed. To make updates work, clone project-x fresh (git clone ${CANONICAL_REPO}) and move your user-layer files (cv.md, config/, data/, reports/ — see DATA_CONTRACT.md) into the new clone.`;
   const foreignToplevel = gitToplevelMismatch();
   if (foreignToplevel) {
     throw new Error(
-      `career-ops at ${ROOT} is not a git checkout of its own, so git operations would land in the enclosing repository at ${foreignToplevel} — this happens when the install was unpacked from a ZIP or copied without its .git directory. ${reclone}`,
+      `project-x at ${ROOT} is not a git checkout of its own, so git operations would land in the enclosing repository at ${foreignToplevel} — this happens when the install was unpacked from a ZIP or copied without its .git directory. ${reclone}`,
     );
   }
   if (outsideGitCheckout()) {
     throw new Error(
-      `career-ops at ${ROOT} is not a git checkout, and updates are installed with git — this happens when the install was downloaded as a ZIP or copied without its .git directory. ${reclone}`,
+      `project-x at ${ROOT} is not a git checkout, and updates are installed with git — this happens when the install was downloaded as a ZIP or copied without its .git directory. ${reclone}`,
     );
   }
 }
@@ -1433,7 +1433,7 @@ export function worktreeUpdateTarget(root = ROOT, run = (...args) => gitIn(root,
 
   if (target && samePath(target.path, root)) return null;
 
-  const override = 'set CAREER_OPS_UPDATE_IN_WORKTREE=1 to update this worktree\'s branch instead';
+  const override = 'set PROJECT_X_UPDATE_IN_WORKTREE=1 to update this worktree\'s branch instead';
   if (!target || target.prunable || !existsSync(target.path)) {
     return {
       branch,
@@ -1467,7 +1467,7 @@ export function worktreeUpdateTarget(root = ROOT, run = (...args) => gitIn(root,
 function redirectToMainCheckout(cmd, argv = process.argv, env = process.env) {
   if (!REDIRECTED_COMMANDS.has(cmd)) return null;
   // The user's explicit opt-out, and the loop guard for the child below.
-  if (env.CAREER_OPS_UPDATE_IN_WORKTREE === '1' || env.CAREER_OPS_UPDATE_REDIRECTED === '1') return null;
+  if (env.PROJECT_X_UPDATE_IN_WORKTREE === '1' || env.PROJECT_X_UPDATE_REDIRECTED === '1') return null;
   // A nested .git-less install has its own guards and messages (#3334);
   // its enclosing repo's worktrees are not ours to pick from.
   if (gitToplevelMismatch()) return null;
@@ -1507,7 +1507,7 @@ function redirectToMainCheckout(cmd, argv = process.argv, env = process.env) {
   const res = spawnSync(process.execPath, ['update-system.mjs', ...argv.slice(2)], {
     cwd: target.path,
     stdio: 'inherit',
-    env: { ...env, CAREER_OPS_UPDATE_REDIRECTED: '1' },
+    env: { ...env, PROJECT_X_UPDATE_REDIRECTED: '1' },
   });
   if (res.error) throw res.error;
   const status = res.status ?? 1;
@@ -1923,7 +1923,7 @@ export function configuredTemplateVariantPathsToPreserve(
  * directly testable without mutating the real repository.
  *
  * `profilePath` names the profile outright (apply() passes the one
- * CAREER_OPS_PROFILE selects); without it the profile is the one under `dataRoot`.
+ * PROJECT_X_PROFILE selects); without it the profile is the one under `dataRoot`.
  * An unparsable profile stops the update, unless `tolerateUnreadableProfile` says
  * this one is not the profile in force: then it is skipped and reported in `warnings`.
  *
@@ -2022,15 +2022,15 @@ export async function snapshotConfiguredTemplateVariants({
 
 /**
  * Environment for the self-reexec child. It runs with the checkout as its cwd, so
- * a relative CAREER_OPS_PROFILE would name another file there than in the user's
+ * a relative PROJECT_X_PROFILE would name another file there than in the user's
  * shell; the parent resolves it here and passes the absolute path.
  *
- * @returns {Promise<{CAREER_OPS_PROFILE?: string}>}
+ * @returns {Promise<{PROJECT_X_PROFILE?: string}>}
  */
 export async function reexecProfileEnv() {
   try {
     const { hasProfileOverride, getProfilePath } = await import('./path-resolver.mjs');
-    return hasProfileOverride() ? { CAREER_OPS_PROFILE: getProfilePath() } : {};
+    return hasProfileOverride() ? { PROJECT_X_PROFILE: getProfilePath() } : {};
   } catch {
     return {}; // a target without path-resolver.mjs has no override to resolve
   }
@@ -2039,7 +2039,7 @@ export async function reexecProfileEnv() {
 /**
  * snapshotConfiguredTemplateVariants() for every profile that can choose a
  * variant. The templates directory belongs to the data root, but the profile in
- * force may be one CAREER_OPS_PROFILE names elsewhere while the data root keeps
+ * force may be one PROJECT_X_PROFILE names elsewhere while the data root keeps
  * its own, so a variant either of them selects has to survive the checkout.
  *
  * @param {{profilePaths: string[]}} options profile files to read, in order;
@@ -2086,7 +2086,7 @@ export function staleSystemFiles(localFiles, remoteFiles, systemPaths, userPaths
 // the file itself survived. Scoped to preserved HTML/CSS/TeX files' on-disk
 // content, since those are the only preserved file types known to reference
 // other system files by relative path. `roots` lets apply() inspect both the
-// code checkout and an external CAREER_OPS_ROOT without treating a missing
+// code checkout and an external PROJECT_X_ROOT without treating a missing
 // directory in either location as fatal.
 export function isReferencedByPreservedFile(
   candidatePath,
@@ -2287,9 +2287,9 @@ export function systemTreeDiffers(systemPaths, upstreamRef = 'FETCH_HEAD', ctx =
  * Pathspecs for systemTreeDiffers()'s drift diff, with the CLI skill
  * entrypoints excluded (#3149, second cause).
  *
- * Upstream ships those entrypoints (`.claude/skills/career-ops/SKILL.md` and
+ * Upstream ships those entrypoints (`.claude/skills/project-x/SKILL.md` and
  * its siblings) as symlinks (git mode 120000) pointing at
- * `.agents/skills/career-ops/SKILL.md`. On a filesystem without symlink
+ * `.agents/skills/project-x/SKILL.md`. On a filesystem without symlink
  * support (core.symlinks=false — mostly Windows), apply() materializes a
  * REAL copy of that file's content in their place and commits it (logged as
  * "Materialized N skill entrypoint(s)..."), because the install genuinely
@@ -2301,7 +2301,7 @@ export function systemTreeDiffers(systemPaths, upstreamRef = 'FETCH_HEAD', ctx =
  * clears, unlike ordinary drift which a re-`apply()` resolves.
  *
  * Excluding these paths from the comparison hides nothing: the materialized
- * content is a byte-for-byte copy of `.agents/skills/career-ops/SKILL.md`,
+ * content is a byte-for-byte copy of `.agents/skills/project-x/SKILL.md`,
  * which SYSTEM_PATHS already covers via the `.agents/` entry, so a genuine
  * upstream change to the skill document still surfaces there. A change to
  * the entrypoint MECHANISM itself (the pointer paths in
@@ -2497,8 +2497,8 @@ export function locallyModifiedSystemFiles(paths, upstreamRef = 'FETCH_HEAD', ct
     if (stagedBaseline) {
       try {
         const message = runGit('log', '-1', '--format=%B', stagedBaseline);
-        const marker = message.split('\n').find(line => line.startsWith('Career-Ops-Preserved: '));
-        const preserved = new Set(marker ? JSON.parse(marker.slice('Career-Ops-Preserved: '.length)) : []);
+        const marker = message.split('\n').find(line => line.startsWith('Project-X-Preserved: '));
+        const preserved = new Set(marker ? JSON.parse(marker.slice('Project-X-Preserved: '.length)) : []);
         const delivered = runGit(
           'diff-tree', '--no-commit-id', '--name-only', '-r', stagedBaseline, '--', ...paths,
         ).split('\n').map(line => line.trim()).filter(Boolean);
@@ -3377,7 +3377,7 @@ export function addPaths(paths, ctx = {}) {
 }
 
 /** Where a scoped update commit reads its pathspecs from, under the git dir. */
-const COMMIT_PATHSPEC_FILE = 'career-ops-update-pathspecs';
+const COMMIT_PATHSPEC_FILE = 'project-x-update-pathspecs';
 
 /**
  * Write `paths` NUL-delimited to a file in the git dir, for
@@ -3745,14 +3745,14 @@ export function authoritativeShaFromRefBody(raw) {
  * object in with the ref.
  *
  * @param {string} refspec - A full upstream ref, e.g. `refs/heads/main` or
- *   `refs/tags/career-ops-v1.34.0` (see refspecForTarget()).
+ *   `refs/tags/project-x-v1.34.0` (see refspecForTarget()).
  * @param {typeof curlGet} [runCurlGet] - injection seam for check()'s tests.
  * @returns {Promise<string>} An object SHA, or '' when unavailable.
  */
 async function upstreamRefCommit(refspec, runCurlGet = curlGet) {
   const raw = await runCurlGet(`${UPSTREAM_REF_API}/${refspec.replace(/^refs\//, '')}`, [
     '--header', 'Accept: application/vnd.github+json',
-    '--header', 'User-Agent: career-ops-update-checker',
+    '--header', 'User-Agent: project-x-update-checker',
   ]);
   if (raw === null) return '';
   return authoritativeShaFromRefBody(raw);
@@ -3760,14 +3760,14 @@ async function upstreamRefCommit(refspec, runCurlGet = curlGet) {
 
 /**
  * The full upstream ref apply() fetches for a resolved target: `main` becomes
- * `refs/heads/main` and a career-ops release tag becomes `refs/tags/<tag>`.
+ * `refs/heads/main` and a project-x release tag becomes `refs/tags/<tag>`.
  *
  * A bare name is a shorthand the remote resolves, and it is what let a plain
  * `git fetch <repo> main` leave a tag in FETCH_HEAD (#3052). Spelling the ref
  * out also makes the answer unambiguous if a branch and a tag ever share a
  * name. Anything else is refused rather than guessed at: resolveTargetRef()
  * only ever produces these two shapes, so a third one reaching here (a
- * tampered CAREER_OPS_UPDATE_TARGET_REF, say) is not something to fetch.
+ * tampered PROJECT_X_UPDATE_TARGET_REF, say) is not something to fetch.
  *
  * @param {string} targetRef - what resolveTargetRef() returned.
  * @returns {string}
@@ -3775,7 +3775,7 @@ async function upstreamRefCommit(refspec, runCurlGet = curlGet) {
 export function refspecForTarget(targetRef) {
   if (targetRef === 'main') return 'refs/heads/main';
   if (releaseTagVersion(targetRef)) return `refs/tags/${targetRef}`;
-  throw new Error(`Refusing to fetch '${targetRef}': not main and not a career-ops release tag.`);
+  throw new Error(`Refusing to fetch '${targetRef}': not main and not a project-x release tag.`);
 }
 
 // ── CHANNEL RESOLUTION ──────────────────────────────────────────
@@ -3803,7 +3803,7 @@ function argvFlagValue(argv, flag) {
 
 /**
  * Which channel apply() should fetch from: the `--channel` flag wins over
- * CAREER_OPS_UPDATE_CHANNEL (the re-exec'd child's copy of the parent's
+ * PROJECT_X_UPDATE_CHANNEL (the re-exec'd child's copy of the parent's
  * resolved choice — see resolveTargetRef()'s callers). Unset means the
  * default, 'release'. Anything else is a typo, not a third channel, so it
  * throws before any lock or network call rather than silently doing
@@ -3815,7 +3815,7 @@ function argvFlagValue(argv, flag) {
  */
 function resolveChannel(argv, env) {
   const fromFlag = argvFlagValue(argv, '--channel');
-  const requested = fromFlag !== undefined ? fromFlag : env.CAREER_OPS_UPDATE_CHANNEL;
+  const requested = fromFlag !== undefined ? fromFlag : env.PROJECT_X_UPDATE_CHANNEL;
   if (requested === undefined || requested === null || requested === 'release') return 'release';
   if (requested === 'main') return 'main';
   throw new Error(`Unknown --channel '${requested}'. Supported channels: release (default), main.`);
@@ -3823,17 +3823,17 @@ function resolveChannel(argv, env) {
 
 // release-please-config.json also releases a sibling `web` component, tagged
 // `web-vX.Y.Z` — see resolveTargetRef()'s doc comment for why this matters.
-const RELEASE_TAG_PREFIX = 'career-ops-v';
+const RELEASE_TAG_PREFIX = 'project-x-v';
 
 // The whole tag, anchored at both ends. SEMVER_RE is suffix-anchored (it has
-// to be, to read `career-ops-v1.9.0` and `v1.9.0` alike), so the prefix check
-// plus SEMVER_RE on its own let `career-ops-vpreview-v1.32.0` through: right
+// to be, to read `project-x-v1.9.0` and `v1.9.0` alike), so the prefix check
+// plus SEMVER_RE on its own let `project-x-vpreview-v1.32.0` through: right
 // prefix, and a valid `-v1.32.0` suffix. A release tag is exactly the prefix
 // followed by X.Y.Z, nothing between.
 export const RELEASE_TAG_RE = new RegExp(`^${RELEASE_TAG_PREFIX}(\\d+\\.\\d+\\.\\d+)$`);
 
 /**
- * The version a career-ops release tag names (`career-ops-v1.33.0` → `1.33.0`),
+ * The version a project-x release tag names (`project-x-v1.33.0` → `1.33.0`),
  * or '' for anything that is not exactly such a tag. Shared by apply()'s
  * resolveTargetRef() and check()'s latestRelease(), so the prompt and the
  * install agree on what counts as a release.
@@ -3847,11 +3847,11 @@ export function releaseTagVersion(tagName) {
 }
 
 /**
- * The highest career-ops release named in raw `git ls-remote --tags` output,
+ * The highest project-x release named in raw `git ls-remote --tags` output,
  * or '' when there is none. Each tag goes through releaseTagVersion(), so the
  * git fallback and the releases API agree on what counts as a release: the
  * sibling `web-v*` component, historical bare tags and malformed
- * `career-ops-v…` tags are all ignored. Peeled `^{}` refs collapse onto their
+ * `project-x-v…` tags are all ignored. Peeled `^{}` refs collapse onto their
  * tag; a stray \r from a CRLF-translating wrapper is stripped before matching.
  *
  * @param {string} lsRemoteOutput
@@ -3871,7 +3871,7 @@ export function highestReleaseTag(lsRemoteOutput) {
 }
 
 /**
- * The latest career-ops release as seen over git, the transport apply() uses
+ * The latest project-x release as seen over git, the transport apply() uses
  * on `--channel main`. Consulted by checkMainChannel() only when both curl
  * sources failed: curl failing is not proof of being offline — curl may be
  * missing from PATH, the proxy may be configured only in git config
@@ -3937,7 +3937,7 @@ export function newerThanTarget(local, targetRef) {
 /**
  * Resolve the git ref apply() should fetch from CANONICAL_REPO.
  *
- * Default channel ('release'): the newest published career-ops release tag,
+ * Default channel ('release'): the newest published project-x release tag,
  * read from RELEASES_API. main's tip is not a safe default — release-please
  * can bump VERSION on main hours before the matching tag lands, so a
  * same-moment `main` checkout can carry a version string with none of that
@@ -3952,7 +3952,7 @@ export function newerThanTarget(local, targetRef) {
  * monorepo (release-please-config.json also releases a `web` component,
  * tagged `web-vX.Y.Z`), and RELEASES_API's `/releases/latest` returns
  * whichever release was created most recently across BOTH components —
- * correct only because release.yml's "Keep the career-ops release marked
+ * correct only because release.yml's "Keep the project-x release marked
  * as Latest" step re-asserts it on every push. If that step ever silently
  * stopped running, this would otherwise fetch and install a `web` tag
  * without complaint; the RELEASE_TAG_PREFIX + SEMVER_RE check makes that
@@ -3963,7 +3963,7 @@ export function newerThanTarget(local, targetRef) {
  * @param {NodeJS.ProcessEnv} env - process.env (or a test double).
  * @param {{curlGet?: typeof curlGet}} [ctx] - injection seam for tests.
  * @returns {Promise<string>} A ref fetchable from CANONICAL_REPO: a release
- *   tag verbatim (e.g. `career-ops-v1.32.0`) or the literal `main`.
+ *   tag verbatim (e.g. `project-x-v1.32.0`) or the literal `main`.
  */
 export async function resolveTargetRef(argv, env, ctx = {}) {
   const runCurlGet = ctx.curlGet || curlGet;
@@ -3973,11 +3973,11 @@ export async function resolveTargetRef(argv, env, ctx = {}) {
 
   const releaseRaw = await runCurlGet(RELEASES_API, [
     '--header', 'Accept: application/vnd.github.v3+json',
-    '--header', 'User-Agent: career-ops-update-checker',
+    '--header', 'User-Agent: project-x-update-checker',
   ]);
   if (releaseRaw === null) {
     throw new Error(
-      `Could not reach ${RELEASES_API} to resolve the latest career-ops release. ` +
+      `Could not reach ${RELEASES_API} to resolve the latest project-x release. ` +
       'Retry, or run with --channel main to update from the latest commit on main instead.',
     );
   }
@@ -3994,8 +3994,8 @@ export async function resolveTargetRef(argv, env, ctx = {}) {
       'Retry, or run with --channel main to update from the latest commit on main instead.',
     );
   }
-  // Prefix AND shape, as one anchored match: 'career-ops-vnot-a-version'
-  // passes a prefix-only check, and 'career-ops-vpreview-v1.32.0' passes a
+  // Prefix AND shape, as one anchored match: 'project-x-vnot-a-version'
+  // passes a prefix-only check, and 'project-x-vpreview-v1.32.0' passes a
   // prefix check plus the suffix-anchored SEMVER_RE — neither is a release.
   if (!releaseTagVersion(tagName)) {
     // Almost certainly the sibling `web` component's tag surfacing because
@@ -4006,7 +4006,7 @@ export async function resolveTargetRef(argv, env, ctx = {}) {
     // an actionable report instead.
     throw new Error(
       `${RELEASES_API} returned '${tagName}', which is not a valid ${RELEASE_TAG_PREFIX}X.Y.Z release tag — ` +
-      `likely the sibling 'web' component's release surfacing instead of career-ops's, or a malformed tag. ` +
+      `likely the sibling 'web' component's release surfacing instead of project-x's, or a malformed tag. ` +
       'Retry, or run with --channel main to update from the latest commit on main instead.',
     );
   }
@@ -4072,7 +4072,7 @@ function readDismissMarker() {
 // ── CHECK ───────────────────────────────────────────────────────
 
 /**
- * The newest published career-ops release: the same RELEASES_API lookup
+ * The newest published project-x release: the same RELEASES_API lookup
  * resolveTargetRef() makes for apply(), held to the same tag shape, so the
  * prompt names exactly the release an update would install. Never throws:
  * check() runs silently at the start of every session and answers with a
@@ -4086,7 +4086,7 @@ async function latestRelease(runCurlGet) {
   let detail = '';
   const releaseRaw = await runCurlGet(RELEASES_API, [
     '--header', 'Accept: application/vnd.github.v3+json',
-    '--header', 'User-Agent: career-ops-update-checker',
+    '--header', 'User-Agent: project-x-update-checker',
   ], (reason) => { detail = reason; });
   // No git fallback here, unlike checkMainChannel(): on this channel apply()
   // resolves its target through the same releases API (resolveTargetRef) and
@@ -4107,7 +4107,7 @@ async function latestRelease(runCurlGet) {
  * What check() reports, as data (check() prints it; tests call it directly).
  *
  * Default channel ('release'): an update is offered only when a newer
- * career-ops release is published. apply() installs that release, not main's
+ * project-x release is published. apply() installs that release, not main's
  * tip (#3845), so merges landing on main between releases never prompt — the
  * version number decides when users are asked (#3203, #3583). The local side
  * is VERSION: an install that tracked main before this change reads as its
@@ -4167,7 +4167,7 @@ async function checkMainChannel(local, marker, runCurlGet, localSha, runGitProbe
     runCurlGet(RAW_VERSION_URL, [], (reason) => { failed.version = reason; }),
     runCurlGet(RELEASES_API, [
       '--header', 'Accept: application/vnd.github.v3+json',
-      '--header', 'User-Agent: career-ops-update-checker',
+      '--header', 'User-Agent: project-x-update-checker',
     ], (reason) => { failed.releases = reason; }),
     upstreamRefCommit('refs/heads/main', runCurlGet),
   ]);
@@ -4212,7 +4212,7 @@ async function checkMainChannel(local, marker, runCurlGet, localSha, runGitProbe
       // console.error would flush only AFTER the wait it announces.
       writeSync(
         process.stderr.fd,
-        `career-ops update check: GitHub unreachable over curl (VERSION: ${failed.version}; ` +
+        `project-x update check: GitHub unreachable over curl (VERSION: ${failed.version}; ` +
         `releases: ${failed.releases}) — retrying over git, ≤${CHECK_GIT_PROBE_TIMEOUT_MS / 1000}s…\n`,
       );
       gitProbe = runGitProbe();
@@ -4225,7 +4225,7 @@ async function checkMainChannel(local, marker, runCurlGet, localSha, runGitProbe
       const result = { status: gitFailed ? 'offline' : 'no-remote-version', local, ...(localSha ? { local_sha: localSha } : {}) };
       if (bothNetworkFailed) {
         result.detail = `curl VERSION: ${failed.version}; curl releases: ${failed.releases}; ` +
-          (gitFailed ? `git ls-remote also failed: ${gitProbe.detail}` : 'git ls-remote reachable but returned no career-ops release tags');
+          (gitFailed ? `git ls-remote also failed: ${gitProbe.detail}` : 'git ls-remote reachable but returned no project-x release tags');
       }
       return result;
     }
@@ -4323,7 +4323,7 @@ async function check() {
 // reconciler keys off pattern presence, never off this marker, so a user who
 // deletes or moves it loses nothing.
 const GITIGNORE_BLOCK_HEADER = [
-  '# Added by career-ops update-system.mjs.',
+  '# Added by project-x update-system.mjs.',
   '# System-owned ignore rules that were missing from this file. Your own rules',
   '# are never modified, reordered or removed: the updater only appends patterns',
   '# it cannot already find somewhere in this file. Reordering these lines, or',
@@ -4500,7 +4500,7 @@ export const COMMIT_ON_BRANCH_FLAG = '--commit-on-branch';
 
 export function commitOnBranchOptIn(argv = process.argv, env = process.env) {
   return argv.includes(COMMIT_ON_BRANCH_FLAG) ||
-    env.CAREER_OPS_UPDATE_COMMIT_ON_BRANCH === '1';
+    env.PROJECT_X_UPDATE_COMMIT_ON_BRANCH === '1';
 }
 
 /** Checked-out branch, or null for detached HEAD / unavailable git. */
@@ -4628,13 +4628,13 @@ export function recordStagedUpdate(version, ctx = {}) {
     const commit = runGit(
       // commit-tree needs an identity even on fresh installs; this is a
       // synthetic snapshot, not a user-authored commit.
-      '-c', 'user.name=career-ops updater',
-      '-c', 'user.email=updater@career-ops.invalid',
+      '-c', 'user.name=project-x updater',
+      '-c', 'user.email=updater@project-x.invalid',
       'commit-tree', tree, '-p', runGit('rev-parse', 'HEAD'),
-      '-m', `career-ops staged update to v${version} (uncommitted)`,
+      '-m', `project-x staged update to v${version} (uncommitted)`,
       // The snapshot includes the whole index, including preserved user work.
       // Record its exclusions so it cannot claim those paths as delivered.
-      '-m', `Career-Ops-Preserved: ${JSON.stringify(ctx.preservedPaths || [])}`,
+      '-m', `Project-X-Preserved: ${JSON.stringify(ctx.preservedPaths || [])}`,
     );
     runGit('update-ref', STAGED_UPDATE_REF, commit);
   } catch {
@@ -4674,7 +4674,7 @@ export function skippedBranchCommitNotice({
   currentBranch, defaultBranch, version, commitCommand, unrelatedStaged = [], unrelatedUnstaged = [],
 }) {
   const branch = shellQuoteArg(defaultBranch);
-  const stashMessage = shellQuoteArg(`career-ops v${version}`);
+  const stashMessage = shellQuoteArg(`project-x v${version}`);
   const ownWorkMessage = shellQuoteArg('my work');
   const ownWorkPaths = [...new Set([...unrelatedStaged, ...unrelatedUnstaged])];
   return [
@@ -4709,14 +4709,14 @@ export function skippedBranchCommitNotice({
     '       node update-system.mjs rollback',
     '',
     `Always want it committed here? Re-run with ${COMMIT_ON_BRANCH_FLAG}, or set`,
-    'CAREER_OPS_UPDATE_COMMIT_ON_BRANCH=1.',
+    'PROJECT_X_UPDATE_COMMIT_ON_BRANCH=1.',
   ].join('\n');
 }
 
 // ── APPLY ───────────────────────────────────────────────────────
 
 /**
- * Whether apply() should trust CAREER_OPS_UPDATE_TARGET_REF from the
+ * Whether apply() should trust PROJECT_X_UPDATE_TARGET_REF from the
  * environment for this invocation, rather than resolving a fresh ref via
  * resolveTargetRef(). True only when reexec status was actually PROVEN: a
  * cryptographically authenticated marker (consumeReexecMarker()) or the more
@@ -4725,7 +4725,7 @@ export function skippedBranchCommitNotice({
  *
  * Deliberately narrower than isReexec as a whole: isReexec's own third,
  * unauthenticated disjunct (`--confirm` in argv plus a bare
- * CAREER_OPS_UPDATE_REEXEC=1 in env — no marker, no lock, no backup branch)
+ * PROJECT_X_UPDATE_REEXEC=1 in env — no marker, no lock, no backup branch)
  * proves nothing and is satisfiable from a clean state with one stray env
  * var. Letting THAT alone reach this fallback would skip resolveTargetRef()
  * entirely on what looks like a fresh invocation, silently reverting to
@@ -4755,10 +4755,10 @@ async function apply() {
   const legacyReexec = isLegacyReexec();
   const isReexec = authenticatedReexec || legacyReexec;
   const updateForce = process.argv.includes('--force') ||
-    (isReexec && process.env.CAREER_OPS_UPDATE_FORCE === '1');
+    (isReexec && process.env.PROJECT_X_UPDATE_FORCE === '1');
   const commitOnBranch = commitOnBranchOptIn();
   const updateConfirmed = process.argv.includes('--confirm') ||
-    (isReexec && (process.env.CAREER_OPS_UPDATE_CONFIRM === '1' || legacyReexec));
+    (isReexec && (process.env.PROJECT_X_UPDATE_CONFIRM === '1' || legacyReexec));
   const initialStatusPaths = new Set(gitStatusEntries().map(entry => entry.path));
   // Backups created by this apply run are expected updater output, not user
   // files the checkout modified. Record only successful copies so an unrelated
@@ -4775,7 +4775,7 @@ async function apply() {
 
   // Which ref to fetch from CANONICAL_REPO. Resolved once — a real network
   // call on the default channel — and threaded to the re-exec'd child via
-  // CAREER_OPS_UPDATE_TARGET_REF below, so both fetches in a self-reexec pair
+  // PROJECT_X_UPDATE_TARGET_REF below, so both fetches in a self-reexec pair
   // land on the exact same content; resolving independently in each process
   // would leave a window where a new release lands between the two fetches.
   //
@@ -4789,7 +4789,7 @@ async function apply() {
   // one), but the same fallback covers it as a safety net rather than crashing
   // mid-update.
   const targetRef = trustsEnvTargetRef(authenticatedReexec, legacyReexec)
-    ? (process.env.CAREER_OPS_UPDATE_TARGET_REF || 'main')
+    ? (process.env.PROJECT_X_UPDATE_TARGET_REF || 'main')
     : await resolveTargetRef(process.argv, process.env);
 
   const olderTarget = newerThanTarget(local, targetRef);
@@ -4817,7 +4817,7 @@ async function apply() {
     // invisible to `git branch` and can be lost if the update aborts.
     // `git stash create` builds a stash object without touching the stash
     // stack, giving a recoverable ref for WIP even if the update fails.
-    const inheritedBackupBranch = process.env.CAREER_OPS_UPDATE_BACKUP_BRANCH || '';
+    const inheritedBackupBranch = process.env.PROJECT_X_UPDATE_BACKUP_BRANCH || '';
     const backupBranch = isReexec ? inheritedBackupBranch : updateBackupBranchName(local);
     // Validate before any backup side effect. A malformed local VERSION must not
     // leave an unpaired branch behind when targetRefForBackup() rejects it later.
@@ -4844,12 +4844,12 @@ async function apply() {
     // own target and then install a tree different from the one the parent
     // verified and bootstrapped from. The env value is a hint, not an
     // authorization (#2866): it is read under the same trustsEnvTargetRef()
-    // gate as CAREER_OPS_UPDATE_TARGET_REF, never on isReexec's bare
-    // CAREER_OPS_UPDATE_REEXEC=1 disjunct, since an inherited SHA also skips
+    // gate as PROJECT_X_UPDATE_TARGET_REF, never on isReexec's bare
+    // PROJECT_X_UPDATE_REEXEC=1 disjunct, since an inherited SHA also skips
     // the identity check below. pinInheritedTarget() accepts only a full SHA
     // and then confirms the local object store has it as a commit.
     const inheritedTarget = trustsEnvTargetRef(authenticatedReexec, legacyReexec)
-      ? (process.env.CAREER_OPS_UPDATE_TARGET_SHA || '')
+      ? (process.env.PROJECT_X_UPDATE_TARGET_SHA || '')
       : '';
     const targetRefspec = refspecForTarget(targetRef);
 
@@ -4867,7 +4867,7 @@ async function apply() {
     // A bare `main` or tag name is a shorthand the remote resolves, and plain
     // `git fetch` then auto-follows tags that point into the fetched history —
     // writing them into FETCH_HEAD alongside the requested ref. That is the
-    // mechanism #3052 reports: FETCH_HEAD named `career-ops-v1.25.0` rather
+    // mechanism #3052 reports: FETCH_HEAD named `project-x-v1.25.0` rather
     // than main's tip. Name the ref outright (refs/heads/main or
     // refs/tags/<release>) and turn tag-following off, so the only thing this
     // fetch can leave in FETCH_HEAD is the ref this run asked for.
@@ -5036,21 +5036,21 @@ async function apply() {
           env: {
             ...process.env,
             ...await reexecProfileEnv(),
-            CAREER_OPS_UPDATE_REEXEC_MARKER: marker.path,
-            CAREER_OPS_UPDATE_REEXEC_TOKEN: marker.token,
+            PROJECT_X_UPDATE_REEXEC_MARKER: marker.path,
+            PROJECT_X_UPDATE_REEXEC_TOKEN: marker.token,
             // Compatibility for target updaters before the authenticated
             // marker was introduced; only the authenticated child receives it.
-            CAREER_OPS_UPDATE_REEXEC: '1',
-            CAREER_OPS_UPDATE_BACKUP_BRANCH: backupBranch,
-            CAREER_OPS_UPDATE_TARGET_REF: targetRef,
+            PROJECT_X_UPDATE_REEXEC: '1',
+            PROJECT_X_UPDATE_BACKUP_BRANCH: backupBranch,
+            PROJECT_X_UPDATE_TARGET_REF: targetRef,
             // The child must install the tree this parent pinned and verified,
             // not whatever its own fetch of targetRef happens to resolve.
-            CAREER_OPS_UPDATE_TARGET_SHA: targetCommit,
-            ...(updateForce ? { CAREER_OPS_UPDATE_FORCE: '1' } : {}),
-            ...(commitOnBranch ? { CAREER_OPS_UPDATE_COMMIT_ON_BRANCH: '1' } : {}),
+            PROJECT_X_UPDATE_TARGET_SHA: targetCommit,
+            ...(updateForce ? { PROJECT_X_UPDATE_FORCE: '1' } : {}),
+            ...(commitOnBranch ? { PROJECT_X_UPDATE_COMMIT_ON_BRANCH: '1' } : {}),
             // Keep the legacy confirmation channel for older target updaters;
             // this process still requires the authenticated marker above.
-            CAREER_OPS_UPDATE_CONFIRM: '1',
+            PROJECT_X_UPDATE_CONFIRM: '1',
           },
         });
         return;
@@ -5156,8 +5156,8 @@ async function apply() {
     let dataRoot = ROOT;
     let profilePaths = [];
     try {
-      const { getCareerOpsRoot, getProfilePath } = await import('./path-resolver.mjs');
-      dataRoot = getCareerOpsRoot();
+      const { getProjectXRoot, getProfilePath } = await import('./path-resolver.mjs');
+      dataRoot = getProjectXRoot();
       // The override's profile and the data root's own: the templates directory
       // is the data root's, so a variant either one selects must survive.
       profilePaths = [getProfilePath(), getProfilePath(dataRoot)];
@@ -5696,7 +5696,7 @@ export function installDependencies(ctx = {}) {
     if (isTimeoutLikeError(err)) {
       return {
         ok: false,
-        reason: `timed out after ${timeoutSeconds(NPM_INSTALL_TIMEOUT_MS)}s (raise it with CAREER_OPS_NPM_INSTALL_TIMEOUT_MS)`,
+        reason: `timed out after ${timeoutSeconds(NPM_INSTALL_TIMEOUT_MS)}s (raise it with PROJECT_X_NPM_INSTALL_TIMEOUT_MS)`,
       };
     }
     const firstErrorLine = String(err?.stderr || '').split(/\r?\n/).map((line) => line.trim()).find(Boolean);
@@ -6136,7 +6136,7 @@ if (isCli) {
         console.log(JSON.stringify({ status: 'managed-by-plugin', local: localVersion() }));
         process.exit(0);
       }
-      console.error('career-ops is installed here as a Claude Code plugin, which Claude Code updates: run /plugin, open the Installed tab and update career-ops. Nothing was changed.');
+      console.error('project-x is installed here as a Claude Code plugin, which Claude Code updates: run /plugin, open the Installed tab and update project-x. Nothing was changed.');
       process.exit(1);
     }
 
@@ -6146,7 +6146,7 @@ if (isCli) {
 
     switch (cmd) {
       case 'check': await check(); break;
-      case 'status': console.log(`career-ops v${formatLocalVersion()}`); break;
+      case 'status': console.log(`project-x v${formatLocalVersion()}`); break;
       case 'apply': await apply(); break;
       case 'rollback': rollback(); break;
       case 'dismiss': await dismiss(); break;

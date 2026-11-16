@@ -11,8 +11,8 @@
  * links them into the copy, where Node's ESM resolution looks for them
  * (NODE_PATH does not apply to `import`).
  *
- * It also creates the data root (~/career-ops-data unless CAREER_OPS_ROOT or
- * CAREER_OPS_DATA_DIR says otherwise), so the first onboarding write has a
+ * It also creates the data root (~/project-x-data unless PROJECT_X_ROOT or
+ * PROJECT_X_DATA_DIR says otherwise), so the first onboarding write has a
  * folder to land in.
  *
  * A checkout loaded in place (a marketplace added from a local path) is the
@@ -29,11 +29,11 @@ import { existsSync, lstatSync, mkdirSync, readFileSync, readlinkSync, rmSync, s
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { getCareerOpsRoot, isPluginInstallCopy } from '../path-resolver.mjs';
+import { getProjectXRoot, isPluginInstallCopy } from '../path-resolver.mjs';
 import { acquireDirLock, releaseOrWarn } from '../lib/dir-lock.mjs';
 import { isMainModule } from '../lib/is-main-module.mjs';
 
-const STAMP = 'career-ops-deps.json';
+const STAMP = 'project-x-deps.json';
 
 // Sessions that start together share ${CLAUDE_PLUGIN_DATA}, even across plugin
 // versions, so the stamp check, the install and the stamp write run under one
@@ -50,7 +50,7 @@ const DEPS_LOCK_OPTIONS = { timeoutMs: 240_000, maxWaitMs: 240_000, retryMs: 250
  */
 export function dependencyManifest(pluginRoot) {
   const pkg = JSON.parse(readFileSync(join(pluginRoot, 'package.json'), 'utf-8'));
-  return { name: 'career-ops-plugin-deps', private: true, dependencies: pkg.dependencies ?? {} };
+  return { name: 'project-x-plugin-deps', private: true, dependencies: pkg.dependencies ?? {} };
 }
 
 function readJson(path) {
@@ -115,7 +115,7 @@ export async function ensureDependencies({ pluginRoot, dataDir, install = runNpm
   const lock = await acquireDirLock(join(dataDir, DEPS_LOCK), {
     ...DEPS_LOCK_OPTIONS,
     ...lockOptions,
-    owner: { purpose: 'career-ops plugin dependency install' },
+    owner: { purpose: 'project-x plugin dependency install' },
   });
   try {
     return installAndLink({ pluginRoot, dataDir, install, link });
@@ -162,7 +162,7 @@ function installAndLink({ pluginRoot, dataDir, install, link }) {
 /**
  * Create the data root, unless it resolves inside a plugin copy, where it
  * would be deleted on the next update. With no argument the root comes from
- * getCareerOpsRoot(), which refuses such a root with an UnsafeDataRootError.
+ * getProjectXRoot(), which refuses such a root with an UnsafeDataRootError.
  *
  * @param {string} [root]
  * @returns {{status: 'ok'|'inside-plugin-copy', root: string, source?: string}}
@@ -170,9 +170,9 @@ function installAndLink({ pluginRoot, dataDir, install, link }) {
 export function ensureDataRoot(root) {
   if (root === undefined) {
     try {
-      root = getCareerOpsRoot();
+      root = getProjectXRoot();
     } catch (err) {
-      if (err?.code !== 'CAREER_OPS_UNSAFE_DATA_ROOT') throw err;
+      if (err?.code !== 'PROJECT_X_UNSAFE_DATA_ROOT') throw err;
       return { status: 'inside-plugin-copy', root: err.root, source: err.source };
     }
   }
@@ -199,10 +199,10 @@ export async function sessionStart(env = process.env) {
     deps = { status: 'failed', detail: err.message };
   }
   if (deps.status === 'installed') {
-    lines.push(`career-ops plugin: installed its Node packages into ${join(dataDir, 'node_modules')}.`);
+    lines.push(`project-x plugin: installed its Node packages into ${join(dataDir, 'node_modules')}.`);
   } else if (deps.status === 'failed') {
     lines.push(
-      `career-ops plugin: could not install its Node packages (${deps.detail}). Scripts that import js-yaml, dotenv or playwright will fail. ` +
+      `project-x plugin: could not install its Node packages (${deps.detail}). Scripts that import js-yaml, dotenv or playwright will fail. ` +
       `Ask the user to run \`npm install --omit=dev --ignore-scripts\` in ${dataDir}, then start a new session.`,
     );
   }
@@ -210,8 +210,8 @@ export async function sessionStart(env = process.env) {
   const data = ensureDataRoot();
   if (data.status === 'inside-plugin-copy') {
     lines.push(
-      `career-ops plugin: ${data.source ?? 'the data root'} points inside the plugin install (${data.root}), which Claude Code replaces on every update, ` +
-      'so career-ops scripts refuse it. Ask the user to set it to an absolute path outside ~/.claude/plugins, or to remove it to use ~/career-ops-data.',
+      `project-x plugin: ${data.source ?? 'the data root'} points inside the plugin install (${data.root}), which Claude Code replaces on every update, ` +
+      'so project-x scripts refuse it. Ask the user to set it to an absolute path outside ~/.claude/plugins, or to remove it to use ~/project-x-data.',
     );
   }
   return lines;
@@ -235,7 +235,7 @@ if (isMainModule(import.meta.url)) {
     const lines = await sessionStart();
     if (lines.length > 0) console.log(lines.join('\n'));
   } catch (err) {
-    console.log(`career-ops plugin: session setup failed (${err.message}).`);
+    console.log(`project-x plugin: session setup failed (${err.message}).`);
   }
   process.exit(0);
 }

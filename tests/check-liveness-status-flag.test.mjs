@@ -31,7 +31,7 @@ try {
   const run = (...args) => {
     const r = spawnSync(NODE, [join(ROOT, 'check-liveness.mjs'), '--tracker', '--no-record', ...args], {
       cwd: dir, encoding: 'utf-8', timeout: 30000,
-      env: { ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_TRACKER: '', CAREER_OPS_DATA_DIR: '' },
+      env: { ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_TRACKER: '', PROJECT_X_DATA_DIR: '' },
     });
     return { status: r.status, out: `${r.stdout}${r.stderr}` };
   };

@@ -78,7 +78,7 @@ function mergeStatuses(statuses) {
       encoding: 'utf-8',
       // The data root is the fixture too: the merge reads its ledgers for
       // occupied numbers, and the developer's own would renumber these rows.
-      env: { ...process.env, CAREER_OPS_ROOT: work, CAREER_OPS_DATA_DIR: '', CAREER_OPS_FOLLOWUPS: '', CAREER_OPS_TRACKER: tracker, CAREER_OPS_ADDITIONS: adds, CAREER_OPS_BATCH_STATE: isolatedBatchStatePath(adds) },
+      env: { ...process.env, PROJECT_X_ROOT: work, PROJECT_X_DATA_DIR: '', PROJECT_X_FOLLOWUPS: '', PROJECT_X_TRACKER: tracker, PROJECT_X_ADDITIONS: adds, PROJECT_X_BATCH_STATE: isolatedBatchStatePath(adds) },
     });
     assert.strictEqual(run.status, 0, run.stderr);
     const rows = readFileSync(tracker, 'utf-8').split('\n').filter(l => /^\|\s*\d+\s*\|/.test(l));
@@ -109,7 +109,7 @@ function withTracker(rows, fn) {
     writeFileSync(join(root, 'data', 'applications.md'), [...TRACKER_HEAD, ...rows, ''].join('\n'));
     const run = (script, ...args) => spawnSync(NODE, [join(ROOT, script), ...args], {
       encoding: 'utf-8',
-      env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_TRACKER: '' },
+      env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_TRACKER: '' },
     });
     fn(run, () => readFileSync(join(root, 'data', 'applications.md'), 'utf-8'));
   } finally {

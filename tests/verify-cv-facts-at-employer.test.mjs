@@ -17,7 +17,7 @@ console.log('\nAn employer named by "at <Name>, I ..."');
 // The other half of this file matters as much. A letter also names the company
 // it is addressed to, which cv.md never contains, so a sentence that only
 // mentions a company must stay unread or a truthful letter stops generating.
-const tmp = mkdtempSync(join(tmpdir(), 'career-ops-at-employer-'));
+const tmp = mkdtempSync(join(tmpdir(), 'project-x-at-employer-'));
 try {
   const source = join(tmp, 'cv.md');
   const config = join(tmp, 'cv-facts.json');

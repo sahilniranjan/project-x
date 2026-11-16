@@ -21,25 +21,25 @@ import { matchCandidates, classifyReply } from './reply-matcher.mjs';
 import { resolveColumns, parseTrackerRow, trackerRowIdentity } from './tracker-parse.mjs';
 import { resolveTrackerPath, loadCanonicalStates } from './tracker-utils.mjs';
 import { readReplyProposals, hasProposalReceipt } from './lib/reply-proposals.mjs';
-import { getCareerOpsRoot } from './path-resolver.mjs';
+import { getProjectXRoot } from './path-resolver.mjs';
 import { validateFlags } from './lib/cli-flags.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
 import { parseFollowups } from './followup-cadence.mjs';
 import { performance } from 'node:perf_hooks';
 
 // Every file here is user layer, so it resolves against the data root
-// (CAREER_OPS_ROOT / CAREER_OPS_DATA_DIR / .career-ops-data marker), never the
+// (PROJECT_X_ROOT / PROJECT_X_DATA_DIR / .project-x-data marker), never the
 // script's own directory — which is only the default when none is configured.
-const DATA_ROOT = getCareerOpsRoot();
-export const DEFAULT_CANDIDATES_PATH = process.env.CAREER_OPS_REPLY_CANDIDATES
+const DATA_ROOT = getProjectXRoot();
+export const DEFAULT_CANDIDATES_PATH = process.env.PROJECT_X_REPLY_CANDIDATES
   || path.join(DATA_ROOT, 'data', 'reply-candidates.json');
 export const APPS_FILE = resolveTrackerPath(DATA_ROOT);
 export const FOLLOWUPS_FILE = path.join(DATA_ROOT, 'data', 'follow-ups.md');
 const CODE_ROOT = path.dirname(fileURLToPath(import.meta.url));
-// CAREER_OPS_DEBUG=1 turns on the timing output (it always reports the sync
+// PROJECT_X_DEBUG=1 turns on the timing output (it always reports the sync
 // time and forwards tracker.mjs's parse/ledger/write timing), and a sync slower
 // than 5s is reported on stderr even without it.
-const DEBUG = process.env.CAREER_OPS_DEBUG === '1';
+const DEBUG = process.env.PROJECT_X_DEBUG === '1';
 
 // Helper to ask a question in the CLI
 function askQuestion(query) {
@@ -177,7 +177,7 @@ function runSetStatus(args) {
   try {
     const output = execFileSync(process.execPath, [path.join(CODE_ROOT, 'set-status.mjs'), ...args, '--json'], {
       encoding: 'utf8',
-      env: { ...process.env, CAREER_OPS_ROOT: DATA_ROOT, CAREER_OPS_TRACKER: APPS_FILE },
+      env: { ...process.env, PROJECT_X_ROOT: DATA_ROOT, PROJECT_X_TRACKER: APPS_FILE },
       // stdout is the JSON result. stderr is passed through: it carries what
       // the hooks have to tell the user directly, such as another session
       // already working this row, or a failed JD archive.
@@ -424,7 +424,7 @@ async function main() {
         const stdio = DEBUG ? ['ignore', 'ignore', 'inherit'] : 'ignore';
         execFileSync(process.execPath, [path.join(CODE_ROOT, 'tracker.mjs'), 'sync'], {
           stdio,
-          env: { ...process.env, CAREER_OPS_ROOT: DATA_ROOT, CAREER_OPS_TRACKER: APPS_FILE },
+          env: { ...process.env, PROJECT_X_ROOT: DATA_ROOT, PROJECT_X_TRACKER: APPS_FILE },
         });
         console.log('Synced database index (applications.db).');
       } catch (e) {

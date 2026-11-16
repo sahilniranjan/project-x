@@ -3,11 +3,11 @@
 //
 // #3511 fixed this for the scanners and added a structural guard against a new
 // bare cwd-relative literal. These three had a different spelling of the same
-// bug and that guard does not see it: the constant was named CAREER_OPS and
+// bug and that guard does not see it: the constant was named PROJECT_X and
 // assigned `dirname(fileURLToPath(import.meta.url))`, so it reads as the
 // project root and is in fact the CODE root. Both documented overrides —
-// CAREER_OPS_ROOT / CAREER_OPS_DATA_DIR and the .career-ops-data marker — were
-// ignored, and getCareerOpsRoot() is the only thing that honours them.
+// PROJECT_X_ROOT / PROJECT_X_DATA_DIR and the .project-x-data marker — were
+// ignored, and getProjectXRoot() is the only thing that honours them.
 //
 // The failures were quiet in the way that matters:
 //
@@ -34,8 +34,8 @@ import { describeSpawn } from './helpers/describe-spawn.mjs';
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 
 function fixture() {
-  const dataRoot = mkdtempSync(join(tmpdir(), 'career-ops-analysisroot-'));
-  const decoyCwd = mkdtempSync(join(tmpdir(), 'career-ops-analysiscwd-'));
+  const dataRoot = mkdtempSync(join(tmpdir(), 'project-x-analysisroot-'));
+  const decoyCwd = mkdtempSync(join(tmpdir(), 'project-x-analysiscwd-'));
   mkdirSync(join(dataRoot, 'data'), { recursive: true });
   mkdirSync(join(dataRoot, 'interview-prep', 'sessions'), { recursive: true });
   writeFileSync(join(dataRoot, 'data', 'applications.md'), [
@@ -59,7 +59,7 @@ function run(script, args, { dataRoot, decoyCwd }) {
     cwd: decoyCwd,
     encoding: 'utf-8',
     timeout: 60_000,
-    env: { ...process.env, CAREER_OPS_ROOT: dataRoot, CAREER_OPS_DATA_DIR: '' },
+    env: { ...process.env, PROJECT_X_ROOT: dataRoot, PROJECT_X_DATA_DIR: '' },
   });
   assert.equal(r.error, undefined, `spawn failed: ${r.error?.message}`);
   return { ...r, all: `${r.stdout ?? ''}${r.stderr ?? ''}` };
@@ -133,7 +133,7 @@ test('system files still resolve from the CODE root, not the data root', () => {
  * import.meta.dirname always, plus every constant assigned
  * dirname(fileURLToPath(import.meta.url)), __dirname or import.meta.dirname.
  *
- * The check used to key on two fixed names, CAREER_OPS and CODE_ROOT. Those
+ * The check used to key on two fixed names, PROJECT_X and CODE_ROOT. Those
  * are what company-history.mjs and funnel-velocity.mjs call it, but stats.mjs
  * calls its code root ROOT, and calibrate.mjs and weekly-digest.mjs declare
  * none today, so `join(ROOT, 'data', …)` in stats.mjs, or a reintroduced
@@ -163,10 +163,10 @@ test('the code-root detector finds the binding whatever it is named', () => {
   assert.equal(flagged("const p = join(__dirname, 'interview-prep/story-bank.md');"), 1);
   assert.equal(flagged("const p = join(import.meta.dirname, 'output');"), 1);
   // The data root and a system file under the code root are both fine.
-  assert.equal(flagged("const DATA_ROOT = getCareerOpsRoot();\nconst T = join(DATA_ROOT, 'data', 'applications.md');"), 0);
+  assert.equal(flagged("const DATA_ROOT = getProjectXRoot();\nconst T = join(DATA_ROOT, 'data', 'applications.md');"), 0);
   assert.equal(flagged("const ROOT = dirname(fileURLToPath(import.meta.url));\nconst S = join(ROOT, 'templates/states.yml');"), 0);
   assert.equal(flagged("const ROOT = dirname(fileURLToPath(import.meta.url));\nconst P = join(ROOT, 'config', 'profile.yml');"), 1);
-  assert.equal(flagged("const DATA_ROOT = getCareerOpsRoot();\nconst P = join(DATA_ROOT, 'config', 'profile.yml');"), 0);
+  assert.equal(flagged("const DATA_ROOT = getProjectXRoot();\nconst P = join(DATA_ROOT, 'config', 'profile.yml');"), 0);
 });
 
 test('no analysis script derives a data path from its own directory', () => {
@@ -184,6 +184,6 @@ test('no analysis script derives a data path from its own directory', () => {
   // names they actually use.
   assert.ok(bound['stats.mjs'].includes('ROOT'), `stats.mjs's code root not found: ${bound['stats.mjs']}`);
   assert.ok(bound['funnel-velocity.mjs'].includes('CODE_ROOT'), `funnel-velocity.mjs's code root not found: ${bound['funnel-velocity.mjs']}`);
-  assert.ok(bound['company-history.mjs'].includes('CAREER_OPS'), `company-history.mjs's code root not found: ${bound['company-history.mjs']}`);
+  assert.ok(bound['company-history.mjs'].includes('PROJECT_X'), `company-history.mjs's code root not found: ${bound['company-history.mjs']}`);
   assert.deepEqual(offenders, [], `user-layer path(s) joined onto the code root:\n${offenders.join('\n')}`);
 });

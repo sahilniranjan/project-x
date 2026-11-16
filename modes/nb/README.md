@@ -1,6 +1,6 @@
-# career-ops -- Norske modes (`modes/nb/`)
+# project-x -- Norske modes (`modes/nb/`)
 
-Denne mappen inneholder de norske (bokmål) oversettelsene av de viktigste career-ops-modene for kandidater som søker jobb på det norske markedet.
+Denne mappen inneholder de norske (bokmål) oversettelsene av de viktigste project-x-modene for kandidater som søker jobb på det norske markedet.
 
 ## Når bør du bruke disse modene?
 

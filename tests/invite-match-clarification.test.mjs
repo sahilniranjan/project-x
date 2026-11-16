@@ -174,7 +174,7 @@ check('buildClarificationDraft returns null for a non-invite analysis or no anal
 function runCli(args, input) {
   return JSON.parse(execFileSync(process.execPath, [SCRIPT_PATH, ...args], {
     encoding: 'utf-8', input, cwd: dirname(SCRIPT_PATH), timeout: 10000,
-    env: { ...process.env, CAREER_OPS_TRACKER: join(dirname(SCRIPT_PATH), 'does-not-exist.md') },
+    env: { ...process.env, PROJECT_X_TRACKER: join(dirname(SCRIPT_PATH), 'does-not-exist.md') },
   }));
 }
 
@@ -186,7 +186,7 @@ check('CLI: JSON carries the draft by default and --no-clarification-draft suppr
 check('CLI: --summary prints the draft, and omits it with the flag', () => {
   const run = args => execFileSync(process.execPath, [SCRIPT_PATH, ...args], {
     encoding: 'utf-8', input: INVITE, cwd: dirname(SCRIPT_PATH), timeout: 10000,
-    env: { ...process.env, CAREER_OPS_TRACKER: join(dirname(SCRIPT_PATH), 'does-not-exist.md') },
+    env: { ...process.env, PROJECT_X_TRACKER: join(dirname(SCRIPT_PATH), 'does-not-exist.md') },
   });
   assert.match(run(['--summary']), /Clarification draft \(not sent/);
   assert.doesNotMatch(run(['--summary', '--no-clarification-draft']), /Clarification draft/);

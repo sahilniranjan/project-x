@@ -4,7 +4,7 @@
   "packages": {
     ".": {
       "release-type": "simple",
-      "package-name": "career-ops",
+      "package-name": "project-x",
       "extra-files": [
         {
           "type": "json",
@@ -44,7 +44,7 @@
     },
     "web": {
       "release-type": "node",
-      "package-name": "career-ops-web",
+      "package-name": "project-x-web",
       "component": "web",
       "include-component-in-tag": true
     }

@@ -13,7 +13,7 @@
 //   NO arranca al agente. Por eso hace falta el secret COPILOT_ASSIGN_TOKEN (fine-grained PAT de Santiago,
 //   permisos Issues: write y Pull requests: write en el repo). Sin él, el script solo informa (no cambia labels).
 //   Comprobación de que el agente está habilitado: suggestedActors(capabilities:[CAN_BE_ASSIGNED]) contiene
-//   login `copilot-swe-agent` (comprobado el 22-sep en career-ops-hq/career-ops: id BOT_kgDOC9w8XQ).
+//   login `copilot-swe-agent` (comprobado el 22-sep en project-x-hq/project-x: id BOT_kgDOC9w8XQ).
 // Env: GITHUB_TOKEN · COPILOT_ASSIGN_TOKEN · GITHUB_REPOSITORY · DRY_RUN · GFI_HANDOFF_MAX (3)
 
 import fs from 'node:fs';
@@ -31,7 +31,7 @@ const log = (l) => { lines.push(l); process.stdout.write(l + '\n'); };
 
 async function rest(method, url, body, token = TOKEN) {
   const res = await fetch(url.startsWith('http') ? url : `${API}/${url}`, {
-    method, headers: { authorization: `Bearer ${token}`, accept: 'application/vnd.github+json', 'x-github-api-version': '2022-11-28', 'user-agent': 'career-ops-gfi-handoff', ...(body ? { 'content-type': 'application/json' } : {}) },
+    method, headers: { authorization: `Bearer ${token}`, accept: 'application/vnd.github+json', 'x-github-api-version': '2022-11-28', 'user-agent': 'project-x-gfi-handoff', ...(body ? { 'content-type': 'application/json' } : {}) },
     body: body ? JSON.stringify(body) : undefined,
   });
   const text = await res.text();

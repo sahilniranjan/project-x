@@ -65,8 +65,8 @@ export async function resolve(specifier, context, nextResolve) {
   const register = join(root, 'register.mjs');
   writeFileSync(register, `import { register } from 'node:module';\nregister(${JSON.stringify(pathToFileURL(hooks).href)});\n`);
 
-  const env = Object.fromEntries(Object.entries(process.env).filter(([k]) => !/^(CAREER_OPS_|NODE_OPTIONS$)/.test(k)));
-  Object.assign(env, { CAREER_OPS_ROOT: root, CAREER_OPS_TRACKER: tracker, NODE_OPTIONS: `--import=${pathToFileURL(register).href}` });
+  const env = Object.fromEntries(Object.entries(process.env).filter(([k]) => !/^(PROJECT_X_|NODE_OPTIONS$)/.test(k)));
+  Object.assign(env, { PROJECT_X_ROOT: root, PROJECT_X_TRACKER: tracker, NODE_OPTIONS: `--import=${pathToFileURL(register).href}` });
   const record = () => {
     const r = spawnSync(NODE, [join(ROOT, 'outcome.mjs'), '8', 'rejected', '--json'], { cwd: root, encoding: 'utf-8', timeout: 120000, env });
     let json = null;

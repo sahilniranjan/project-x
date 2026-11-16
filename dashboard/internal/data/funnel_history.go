@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/santifer/career-ops/dashboard/internal/model"
+	"github.com/santifer/project-x/dashboard/internal/model"
 )
 
 func funnelRank(status string) int {

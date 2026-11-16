@@ -1,5 +1,5 @@
 #!/bin/bash
-# nightly-scan.sh — unattended full-network sweep for career-ops.
+# nightly-scan.sh — unattended full-network sweep for project-x.
 #
 #   ./nightly-scan.sh fast      greenhouse + lever + ashby   (~6 min, 15,862 companies)
 #   ./nightly-scan.sh workday   workday only                 (15+ min, rate-limited)
@@ -23,7 +23,7 @@ PROFILE="${1:-fast}"
 SEED_MODE=0
 [ "${2:-}" = "--seed" ] && SEED_MODE=1
 
-LOG_DIR="$HOME/Library/Logs/career-ops"
+LOG_DIR="$HOME/Library/Logs/project-x"
 LOCK="$ROOT/data/.nightly-scan.lock"
 SINCE_DAYS=30          # wide on purpose — scan-history decides what is NEW, not this
 mkdir -p "$LOG_DIR"

@@ -41,8 +41,8 @@ async function fixture(engine, scenario, check) {
     write(join(data, 'config/profile.yml'), 'language:\n  output: en\n');
     write(join(data, 'modes/_profile.md'), 'SYNTHETIC_PROFILE_TARGET: engineering roles.\n');
     const env = Object.fromEntries(Object.entries(process.env).filter(([key]) =>
-      !/^(CAREER_OPS_|OPENAI_|OLLAMA_|DOTENV_|NODE_OPTIONS$|NODE_PATH$|HTTPS?_PROXY$|ALL_PROXY$)/i.test(key)));
-    Object.assign(env, { CAREER_OPS_ROOT: data, OPENAI_API_KEY: '', OPENAI_TIMEOUT_MS: '10000',
+      !/^(PROJECT_X_|OPENAI_|OLLAMA_|DOTENV_|NODE_OPTIONS$|NODE_PATH$|HTTPS?_PROXY$|ALL_PROXY$)/i.test(key)));
+    Object.assign(env, { PROJECT_X_ROOT: data, OPENAI_API_KEY: '', OPENAI_TIMEOUT_MS: '10000',
       OLLAMA_TIMEOUT_MS: '10000', OLLAMA_NUM_CTX: '32768' });
     await scenario.setup?.({ code, data, env });
     const nodeArgs = [];

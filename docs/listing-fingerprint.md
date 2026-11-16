@@ -1,6 +1,6 @@
 # Local listing fingerprint v1
 
-This is the **local schema** approved in [#1030](https://github.com/career-ops-hq/career-ops/issues/1030#issuecomment-4944351269).
+This is the **local schema** approved in [#1030](https://github.com/project-x-hq/project-x/issues/1030#issuecomment-4944351269).
 It identifies one public ATS posting from an explicitly resolved
 `ats_provider + board_slug + posting_id` triple. A local cache can use the key
 across branded/ATS URLs and URL rotations, provided the caller has established

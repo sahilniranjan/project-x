@@ -680,7 +680,7 @@ function lintCli(userCv) {
       writeFileSync(join(root, 'data', 'templates', 'cv-template.standard.html'), userCv);
     }
     const out = execFileSync(process.execPath, ['cv-templates.mjs', 'lint', 'cv', 'standard', '--render'], {
-      cwd: ROOT, encoding: 'utf-8', env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_DATA_DIR: '' },
+      cwd: ROOT, encoding: 'utf-8', env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_DATA_DIR: '' },
     });
     return JSON.parse(out);
   } finally {

@@ -28,7 +28,7 @@ mkdirSync(outputRoot, { recursive: true });
 // then fail against empty output rather than against behaviour (#3165).
 const sandbox = realpathSync(mkdtempSync(join(outputRoot, 'page-budget-test-')));
 const externalOutput = realpathSync(mkdtempSync(join(outputRoot, 'page-budget-external-')));
-const externalInputRoot = mkdtempSync(join(tmpdir(), 'career-ops-pdf-external-input-'));
+const externalInputRoot = mkdtempSync(join(tmpdir(), 'project-x-pdf-external-input-'));
 const script = join(sandbox, 'generate-pdf.mjs');
 const input = join(sandbox, 'two-pages.html');
 const defaultOverflowInput = join(sandbox, 'three-pages.html');
@@ -56,7 +56,7 @@ copyFileSync(join(ROOT, 'pipeline-lock.mjs'), join(sandbox, 'pipeline-lock.mjs')
 // ./cv-sections-core.mjs (#3986), another local sibling this sandbox needs.
 copyFileSync(join(ROOT, 'cv-sections-core.mjs'), join(sandbox, 'cv-sections-core.mjs'));
 // ...and generate-pdf resolves user-layer paths via path-resolver.mjs
-// (CAREER_OPS_ROOT), so the fixture carries that too.
+// (PROJECT_X_ROOT), so the fixture carries that too.
 copyFileSync(join(ROOT, 'path-resolver.mjs'), join(sandbox, 'path-resolver.mjs'));
 // generate-pdf.mjs's main-guard lives in lib/is-main-module.mjs (#3170). Without
 // it the copy dies with ERR_MODULE_NOT_FOUND before parsing an argument.
@@ -226,7 +226,7 @@ try {
   const defaultTracker = join(sandbox, 'applications.md');
   writeFileSync(defaultTracker, '# Applications\n', 'utf-8');
   const withinBudget = runPdf([input, withinBudgetPdf, '--max-pages=2'], {
-    CAREER_OPS_TRACKER: defaultTracker,
+    PROJECT_X_TRACKER: defaultTracker,
   });
   if (
     withinBudget.status === 0 &&
@@ -367,7 +367,7 @@ try {
 
   const bareFlagPdf = join(sandbox, 'bare-max-pages.pdf');
   const bareFlag = runPdf([input, bareFlagPdf, '--max-pages'],
-    { CAREER_OPS_PROFILE: join(sandbox, 'no-such-profile.yml') });
+    { PROJECT_X_PROFILE: join(sandbox, 'no-such-profile.yml') });
   if (
     bareFlag.status !== 0 &&
     bareFlag.output.includes('Invalid --max-pages ""') &&
@@ -380,13 +380,13 @@ try {
 
   // #6325: with no flag, cv.max_pages / cv.strict_pages in config/profile.yml set
   // the budget, so a one-page preference holds on every render path. Each case
-  // writes its own profile and points CAREER_OPS_PROFILE at it.
+  // writes its own profile and points PROJECT_X_PROFILE at it.
   const profileDir = join(sandbox, 'profiles');
   mkdirSync(profileDir, { recursive: true });
   const withProfile = (name, cvBlock) => {
     const path = join(profileDir, `${name}.yml`);
     writeFileSync(path, `name: Test Candidate\ncv:\n${cvBlock}`, 'utf-8');
-    return { CAREER_OPS_PROFILE: path };
+    return { PROJECT_X_PROFILE: path };
   };
 
   const profileStrictPdf = join(sandbox, 'profile-strict.pdf');
@@ -495,8 +495,8 @@ try {
   writeFileSync(redirectedTracker, '# Applications\n', 'utf8');
 
   const redirected = runPdf([redirectedInput, redirectedPdf, '--report=42'], {
-    CAREER_OPS_TRACKER: redirectedTracker,
-    CAREER_OPS_PDF_INDEX: redirectedManifest,
+    PROJECT_X_TRACKER: redirectedTracker,
+    PROJECT_X_PDF_INDEX: redirectedManifest,
   });
   const redirectedManifestText = existsSync(redirectedManifest)
     ? readFileSync(redirectedManifest, 'utf8')
@@ -532,7 +532,7 @@ try {
   const externalInputPdf = join(sandbox, 'external-input.pdf');
   const externalInputRun = runPdf([externalInput, externalInputPdf]);
   const externalTempFiles = readdirSync(externalInputRoot)
-    .filter((name) => name.startsWith('.career-ops-render-'));
+    .filter((name) => name.startsWith('.project-x-render-'));
   if (
     externalInputRun.status !== 0 &&
     externalInputRun.output.includes('Refusing to write the PDF outside the tracker workspace') &&
@@ -630,7 +630,7 @@ try {
   const { startPdfServer } = await import(pathToFileURL(join(sandbox, 'lib', 'pdf-server.mjs')).href);
   const socketDir = mkdtempSync(join(tmpdir(), 'co-pb-'));
   const socketPath = process.platform === 'win32'
-    ? `\\\\.\\pipe\\career-ops-page-budget-${process.pid}`
+    ? `\\\\.\\pipe\\project-x-page-budget-${process.pid}`
     : join(socketDir, 'pdf.sock');
   let painted = false;
   const server = await startPdfServer({
@@ -642,14 +642,14 @@ try {
       return { outputPath, pageCount: 1, size: 29 };
     },
   });
-  const savedShared = process.env.CAREER_OPS_PDF_SHARED;
-  const savedSocket = process.env.CAREER_OPS_PDF_SOCKET;
+  const savedShared = process.env.PROJECT_X_PDF_SHARED;
+  const savedSocket = process.env.PROJECT_X_PDF_SOCKET;
   const sharedPdf = join(sandbox, 'shared-invalid-budget.pdf');
   writeFileSync(sharedPdf, 'PREVIOUS GOOD PDF', 'latin1');
   let sharedRejection = null;
   try {
-    process.env.CAREER_OPS_PDF_SHARED = '1';
-    process.env.CAREER_OPS_PDF_SOCKET = socketPath;
+    process.env.PROJECT_X_PDF_SHARED = '1';
+    process.env.PROJECT_X_PDF_SOCKET = socketPath;
     await renderHtmlToPdf('<!doctype html><html><body>shared</body></html>', sharedPdf, {
       workspaceRoot: sandbox,
       maxPages: Number.NaN,
@@ -658,10 +658,10 @@ try {
   } catch (err) {
     sharedRejection = err;
   } finally {
-    if (savedShared === undefined) delete process.env.CAREER_OPS_PDF_SHARED;
-    else process.env.CAREER_OPS_PDF_SHARED = savedShared;
-    if (savedSocket === undefined) delete process.env.CAREER_OPS_PDF_SOCKET;
-    else process.env.CAREER_OPS_PDF_SOCKET = savedSocket;
+    if (savedShared === undefined) delete process.env.PROJECT_X_PDF_SHARED;
+    else process.env.PROJECT_X_PDF_SHARED = savedShared;
+    if (savedSocket === undefined) delete process.env.PROJECT_X_PDF_SOCKET;
+    else process.env.PROJECT_X_PDF_SOCKET = savedSocket;
     await server.close();
     rmSync(socketDir, { recursive: true, force: true });
   }
@@ -681,7 +681,7 @@ try {
   // instead of logging a PDF generated at the output path.
   const draftSocketDir = mkdtempSync(join(tmpdir(), 'co-pb-draft-'));
   const draftSocketPath = process.platform === 'win32'
-    ? `\\\\.\\pipe\\career-ops-page-budget-draft-${process.pid}`
+    ? `\\\\.\\pipe\\project-x-page-budget-draft-${process.pid}`
     : join(draftSocketDir, 'pdf.sock');
   const sharedDraftPdf = join(sandbox, 'shared-overflow.pdf');
   const sharedDraft = join(sandbox, 'shared-overflow.overflow.pdf');
@@ -700,8 +700,8 @@ try {
   let sharedDraftResult = null;
   let sharedDraftError = null;
   try {
-    process.env.CAREER_OPS_PDF_SHARED = '1';
-    process.env.CAREER_OPS_PDF_SOCKET = draftSocketPath;
+    process.env.PROJECT_X_PDF_SHARED = '1';
+    process.env.PROJECT_X_PDF_SOCKET = draftSocketPath;
     console.log = (...args) => clientLines.push(args.join(' '));
     console.warn = (...args) => clientLines.push(args.join(' '));
     sharedDraftResult = await renderHtmlToPdf('<!doctype html><html><body>shared</body></html>', sharedDraftPdf, {
@@ -713,10 +713,10 @@ try {
   } finally {
     console.log = savedLog;
     console.warn = savedWarn;
-    if (savedShared === undefined) delete process.env.CAREER_OPS_PDF_SHARED;
-    else process.env.CAREER_OPS_PDF_SHARED = savedShared;
-    if (savedSocket === undefined) delete process.env.CAREER_OPS_PDF_SOCKET;
-    else process.env.CAREER_OPS_PDF_SOCKET = savedSocket;
+    if (savedShared === undefined) delete process.env.PROJECT_X_PDF_SHARED;
+    else process.env.PROJECT_X_PDF_SHARED = savedShared;
+    if (savedSocket === undefined) delete process.env.PROJECT_X_PDF_SOCKET;
+    else process.env.PROJECT_X_PDF_SOCKET = savedSocket;
     await draftServer.close();
     rmSync(draftSocketDir, { recursive: true, force: true });
   }

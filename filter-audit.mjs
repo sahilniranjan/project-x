@@ -37,11 +37,11 @@ import { matchedTitleKeywords, seenJobKey, PORTALS_PATH, SCAN_HISTORY_PATH } fro
 import { foldTitle } from './title-keywords.mjs';
 import { parseScanHistoryLine } from './lib/scan-history-columns.mjs';
 import { parseScore, unwrapReportUrlToken } from './tracker-parse.mjs';
-import { getCareerOpsRoot } from './path-resolver.mjs';
+import { getProjectXRoot } from './path-resolver.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
 import { validateFlags } from './lib/cli-flags.mjs';
 
-const REPORTS_DIR = join(getCareerOpsRoot(), 'reports');
+const REPORTS_DIR = join(getProjectXRoot(), 'reports');
 
 const KNOWN_FLAGS = ['--summary', '--help', '-h'];
 const USAGE = `filter-audit.mjs — what your title_filter is actually doing

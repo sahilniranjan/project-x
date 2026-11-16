@@ -114,7 +114,7 @@ Legal、demographic、work-authorization、visa/sponsorship、salary、disabilit
 2. **Previous Section H / `## Application Answers`:** Draft か final response があれば base として使い refine
 3. **"I'm choosing you" tone:** Same auto-pipeline framework
 4. **Specificity:** 画面上に見える JD の specific detail を reference
-5. **career-ops proof point:** "Additional info" field があれば含める
+5. **project-x proof point:** "Additional info" field があれば含める
 6. **Recruiter-side risk map:** `modes/heuristics/recruiter-side.md` を使い、question が解消しようとしている doubt（motivation、stack fit、logistics、comp、work-auth、availability、seniority）を特定し、そこに直接答える
 7. **Disclosure discipline:** Logistics questions には truthfully に答えるが、unrelated motivation/fit answers で sensitive or HR-only details を自発的に出さない
 
@@ -158,7 +158,7 @@ Notes:
 候補者が application を submitted したと確認した場合：
 1. 正規 CLI で status を "Applied" に update: `node set-status.mjs --report <report#> Applied`（`applications.md` のテーブルを手動編集しない）
 2. Final responses を report の `## Application Answers` section に `**State:** submitted` で記録: `node application-answers.mjs --report reports/NNN-company-role-date.md --input answers.json --state submitted`（JSON の field は `node application-answers.mjs --help` を参照）。Section G（Posting Legitimacy）と Section H（evaluation の draft）は変更しない
-3. Next step として LinkedIn outreach 用の `/career-ops contacto` を提案
+3. Next step として LinkedIn outreach 用の `/project-x contacto` を提案
 
 ## Scroll handling
 

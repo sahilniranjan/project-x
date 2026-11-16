@@ -110,7 +110,7 @@ try {
     }
     execFileSync('git', ['init', '-q'], { cwd });
     execFileSync('git', ['config', 'user.email', 'tests@example.invalid'], { cwd });
-    execFileSync('git', ['config', 'user.name', 'career-ops tests'], { cwd });
+    execFileSync('git', ['config', 'user.name', 'project-x tests'], { cwd });
     execFileSync('git', ['add', 'update-system.mjs', 'updater-migration-tests.mjs', 'AGENTS.md'], { cwd });
     execFileSync('git', ['commit', '-qm', 'test fixture'], { cwd });
   }
@@ -145,7 +145,7 @@ const bootstrapPaths = extractArray('BOOTSTRAP_PATHS');
 if (/const updateConfirmed = process\.argv\.includes\('--confirm'\)[\s\S]{0,160}isReexec/.test(source) &&
     /Installation requires explicit confirmation/.test(source) &&
     /'apply',\s*'--confirm'/.test(source) &&
-    /CAREER_OPS_UPDATE_REEXEC_MARKER/.test(source) &&
+    /PROJECT_X_UPDATE_REEXEC_MARKER/.test(source) &&
     /function isLegacyReexec/.test(source)) {
   pass('apply requires explicit confirmation and carries it through authenticated and legacy self-reexec');
 } else {
@@ -163,20 +163,20 @@ function runApplyWithEnv(env, args = ['apply']) {
     encoding: 'utf8',
     env: {
       ...process.env,
-      CAREER_OPS_UPDATE_CONFIRM: '',
-      CAREER_OPS_UPDATE_FORCE: '',
-      CAREER_OPS_UPDATE_REEXEC: '',
-      CAREER_OPS_UPDATE_BACKUP_BRANCH: '',
-      CAREER_OPS_UPDATE_REEXEC_MARKER: '',
-      CAREER_OPS_UPDATE_REEXEC_TOKEN: '',
+      PROJECT_X_UPDATE_CONFIRM: '',
+      PROJECT_X_UPDATE_FORCE: '',
+      PROJECT_X_UPDATE_REEXEC: '',
+      PROJECT_X_UPDATE_BACKUP_BRANCH: '',
+      PROJECT_X_UPDATE_REEXEC_MARKER: '',
+      PROJECT_X_UPDATE_REEXEC_TOKEN: '',
       ...env,
     },
   });
 }
 
 const envOnlyConfirmation = runApplyWithEnv({
-  CAREER_OPS_UPDATE_CONFIRM: '1',
-  CAREER_OPS_UPDATE_REEXEC: '',
+  PROJECT_X_UPDATE_CONFIRM: '1',
+  PROJECT_X_UPDATE_REEXEC: '',
 });
 if (envOnlyConfirmation.status !== 0 &&
     /Installation requires explicit confirmation/.test(envOnlyConfirmation.stderr)) {
@@ -186,8 +186,8 @@ if (envOnlyConfirmation.status !== 0 &&
 }
 
 const envOnlyForce = runApplyWithEnv({
-  CAREER_OPS_UPDATE_FORCE: '1',
-  CAREER_OPS_UPDATE_REEXEC: '',
+  PROJECT_X_UPDATE_FORCE: '1',
+  PROJECT_X_UPDATE_REEXEC: '',
 });
 if (envOnlyForce.status !== 0 &&
     /Installation requires explicit confirmation/.test(envOnlyForce.stderr)) {
@@ -205,9 +205,9 @@ if (forceWithoutConfirmation.status !== 0 &&
 }
 
 const forgedReexec = runApplyWithEnv({
-  CAREER_OPS_UPDATE_REEXEC_MARKER: '/tmp/career-ops-reexec-forged/marker',
-  CAREER_OPS_UPDATE_REEXEC_TOKEN: 'forged',
-  CAREER_OPS_UPDATE_CONFIRM: '1',
+  PROJECT_X_UPDATE_REEXEC_MARKER: '/tmp/project-x-reexec-forged/marker',
+  PROJECT_X_UPDATE_REEXEC_TOKEN: 'forged',
+  PROJECT_X_UPDATE_CONFIRM: '1',
 });
 if (forgedReexec.status !== 0 &&
     /Installation requires explicit confirmation/.test(forgedReexec.stderr)) {
@@ -219,9 +219,9 @@ if (forgedReexec.status !== 0 &&
 const legacyBranch = `backup-pre-update-99.99.99-${new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z')}`;
 const createdLegacyBranch = spawnSync('git', ['branch', legacyBranch, 'HEAD'], { encoding: 'utf8' });
 const forgedLegacyReexec = runApplyWithEnv({
-  CAREER_OPS_UPDATE_REEXEC: '1',
-  CAREER_OPS_UPDATE_BACKUP_BRANCH: legacyBranch,
-  CAREER_OPS_UPDATE_CONFIRM: '1',
+  PROJECT_X_UPDATE_REEXEC: '1',
+  PROJECT_X_UPDATE_BACKUP_BRANCH: legacyBranch,
+  PROJECT_X_UPDATE_CONFIRM: '1',
 });
 if (createdLegacyBranch.status !== 0) {
   fail(`could not create the matching backup branch fixture: ${createdLegacyBranch.stderr}`);
@@ -236,11 +236,11 @@ if (createdLegacyBranch.status === 0) {
 }
 
 const marker = createReexecMarker();
-const previousMarkerPath = process.env.CAREER_OPS_UPDATE_REEXEC_MARKER;
-const previousMarkerToken = process.env.CAREER_OPS_UPDATE_REEXEC_TOKEN;
+const previousMarkerPath = process.env.PROJECT_X_UPDATE_REEXEC_MARKER;
+const previousMarkerToken = process.env.PROJECT_X_UPDATE_REEXEC_TOKEN;
 try {
-  process.env.CAREER_OPS_UPDATE_REEXEC_MARKER = marker.path;
-  process.env.CAREER_OPS_UPDATE_REEXEC_TOKEN = marker.token;
+  process.env.PROJECT_X_UPDATE_REEXEC_MARKER = marker.path;
+  process.env.PROJECT_X_UPDATE_REEXEC_TOKEN = marker.token;
   const firstConsume = consumeReexecMarker();
   const secondConsume = consumeReexecMarker();
   if (firstConsume && !secondConsume && !existsSync(marker.path)) {
@@ -249,10 +249,10 @@ try {
     fail('created reexec marker does not authorize exactly once');
   }
 } finally {
-  if (previousMarkerPath === undefined) delete process.env.CAREER_OPS_UPDATE_REEXEC_MARKER;
-  else process.env.CAREER_OPS_UPDATE_REEXEC_MARKER = previousMarkerPath;
-  if (previousMarkerToken === undefined) delete process.env.CAREER_OPS_UPDATE_REEXEC_TOKEN;
-  else process.env.CAREER_OPS_UPDATE_REEXEC_TOKEN = previousMarkerToken;
+  if (previousMarkerPath === undefined) delete process.env.PROJECT_X_UPDATE_REEXEC_MARKER;
+  else process.env.PROJECT_X_UPDATE_REEXEC_MARKER = previousMarkerPath;
+  if (previousMarkerToken === undefined) delete process.env.PROJECT_X_UPDATE_REEXEC_TOKEN;
+  else process.env.PROJECT_X_UPDATE_REEXEC_TOKEN = previousMarkerToken;
   rmSync(dirname(marker.path), { recursive: true, force: true });
 }
 
@@ -354,7 +354,7 @@ for (const path of requiredBootstrapPaths) {
 const twoPassManifestChecks = [
   {
     name: 'apply has a re-exec guard',
-    pattern: /CAREER_OPS_UPDATE_REEXEC/,
+    pattern: /PROJECT_X_UPDATE_REEXEC/,
   },
   {
     // #3052's own mechanism: bare `main` lets git auto-follow a tag into
@@ -439,11 +439,11 @@ const twoPassManifestChecks = [
   },
   {
     name: 'apply carries the original backup branch across re-exec',
-    pattern: /CAREER_OPS_UPDATE_BACKUP_BRANCH:\s*backupBranch/,
+    pattern: /PROJECT_X_UPDATE_BACKUP_BRANCH:\s*backupBranch/,
   },
   {
     name: 'authenticated re-exec consumes the inherited backup branch instead of generating another',
-    pattern: /const inheritedBackupBranch = process\.env\.CAREER_OPS_UPDATE_BACKUP_BRANCH[^;]*;[\s\S]{0,160}?const backupBranch = isReexec \? inheritedBackupBranch : updateBackupBranchName\(local\)/,
+    pattern: /const inheritedBackupBranch = process\.env\.PROJECT_X_UPDATE_BACKUP_BRANCH[^;]*;[\s\S]{0,160}?const backupBranch = isReexec \? inheritedBackupBranch : updateBackupBranchName\(local\)/,
   },
   {
     name: 'apply reads the target updater manifest from the pinned target (#3052)',

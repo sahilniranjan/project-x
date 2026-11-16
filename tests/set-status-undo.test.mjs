@@ -13,7 +13,7 @@ const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const states = loadCanonicalStates(join(ROOT, 'templates', 'states.yml'));
 
 function sandbox(status = 'Evaluated', ledger = null) {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-undo-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-undo-'));
   mkdirSync(join(dir, 'data'));
   const tracker = join(dir, 'data', 'applications.md');
   writeFileSync(tracker, [
@@ -26,7 +26,7 @@ function sandbox(status = 'Evaluated', ledger = null) {
   const run = (...args) => spawnSync(process.execPath, [join(ROOT, 'set-status.mjs'), ...args], {
     cwd: ROOT,
     encoding: 'utf-8',
-    env: { ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_TRACKER: tracker },
+    env: { ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_TRACKER: tracker },
   });
   const status7 = () => readFileSync(tracker, 'utf-8').split('\n').find(l => l.startsWith('| 7 |')).split('|')[6].trim();
   const logPath = join(dir, 'data', 'status-log.tsv');

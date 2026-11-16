@@ -74,7 +74,7 @@ check(
 );
 
 async function review(change, expectsConflict = true) {
-  const root = mkdtempSync(join(tmpdir(), 'career-ops-reply-identity-'));
+  const root = mkdtempSync(join(tmpdir(), 'project-x-reply-identity-'));
   let child, timer;
   try {
     mkdirSync(join(root, 'data'));
@@ -86,7 +86,7 @@ async function review(change, expectsConflict = true) {
       subject: 'Acme Backend Engineer', body_snippet: 'We invite you to interview.',
     }]));
     child = spawn(NODE, [join(ROOT, 'reply-watch.mjs'), candidates], {
-      cwd: root, env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_TRACKER: tracker },
+      cwd: root, env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_TRACKER: tracker },
       stdio: ['pipe', 'pipe', 'pipe'],
     });
     let stdout = '', stderr = '', changed = false;

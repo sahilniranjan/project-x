@@ -1,7 +1,7 @@
 package data
 
 import (
-	"github.com/santifer/career-ops/dashboard/internal/model"
+	"github.com/santifer/project-x/dashboard/internal/model"
 	"testing"
 )
 

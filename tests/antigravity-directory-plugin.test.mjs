@@ -8,7 +8,7 @@
 // "Pre-publish checklist"). agy is not installed in CI, so these tests check
 // the same rules in Node; run `agy plugin validate --strict antigravity-directory`
 // by hand before each submission. Like the other directory plugins, this is the
-// thin plugin: the router SKILL.md, a README that says what career-ops runs,
+// thin plugin: the router SKILL.md, a README that says what project-x runs,
 // sends and fetches, the license and the logo.
 //
 // The copies must not drift from their sources, and every version in the
@@ -68,8 +68,8 @@ async function decodePng(buf) {
 }
 
 test('the skill and the license are byte-identical copies of the canonical ones', () => {
-  assert.equal(read('antigravity-directory/skills/career-ops/SKILL.md'), read('.agents/skills/career-ops/SKILL.md'),
-    'antigravity-directory/skills/career-ops/SKILL.md diverged: copy .agents/skills/career-ops/SKILL.md over it');
+  assert.equal(read('antigravity-directory/skills/project-x/SKILL.md'), read('.agents/skills/project-x/SKILL.md'),
+    'antigravity-directory/skills/project-x/SKILL.md diverged: copy .agents/skills/project-x/SKILL.md over it');
   assert.equal(read('antigravity-directory/LICENSE'), read('LICENSE'), 'antigravity-directory/LICENSE diverged: copy LICENSE over it');
 });
 
@@ -92,7 +92,7 @@ test('the manifest has every field the marketplace requires', () => {
   assert.equal(manifest.$schema, 'https://antigravity.google/schemas/v1/plugin.json');
   assert.equal(manifest.name, canon.name);
   assert.match(manifest.name, KEBAB, 'name must be lowercase kebab-case');
-  assert.equal(manifest.displayName, 'career-ops');
+  assert.equal(manifest.displayName, 'project-x');
   for (const key of ['name', 'displayName']) {
     assert.doesNotMatch(manifest[key], RESERVED_PREFIX, `${key} must not lead with Antigravity, Gemini, Claude or Cursor`);
   }
@@ -147,19 +147,19 @@ test('only the skill: no hooks, MCP servers, agents, rules or scripts', () => {
   }
 });
 
-test('every package launcher is pinned to an exact version, and career-ops to this release', () => {
+test('every package launcher is pinned to an exact version, and project-x to this release', () => {
   const launcher = /\b(?:npx|bunx|uvx|pnpm dlx|yarn dlx|pipx run)\s+(?:-{1,2}[\w-]+(?:=\S+)?\s+)*([^\s`'"]+)/g;
-  let careerOps = 0;
+  let projectX = 0;
   for (const { path, rel } of files.filter(({ rel }) => !rel.endsWith('.png'))) {
     for (const [, pkg] of readFileSync(path, 'utf8').matchAll(launcher)) {
       assert.match(pkg, /^(?:@[\w.-]+\/)?[\w.-]+(?:@|==)\d+\.\d+\.\d+$/, `${rel}: "${pkg}" is not pinned to an exact version`);
-      if (pkg.startsWith('@santifer/career-ops@')) {
-        careerOps++;
-        assert.equal(pkg, `@santifer/career-ops@${version}`, `${rel}: the init command must pin the current release`);
+      if (pkg.startsWith('@santifer/project-x@')) {
+        projectX++;
+        assert.equal(pkg, `@santifer/project-x@${version}`, `${rel}: the init command must pin the current release`);
       }
     }
   }
-  assert.ok(careerOps >= 3, 'the skill (twice) and the README name the pinned init command');
+  assert.ok(projectX >= 3, 'the skill (twice) and the README name the pinned init command');
 });
 
 test('every line that carries the release version is marked for release-please', () => {
@@ -168,7 +168,7 @@ test('every line that carries the release version is marked for release-please',
   const generic = extra.filter((f) => f.type === 'generic').map((f) => f.path);
   assert.ok(extra.some((f) => f.path === 'antigravity-directory/plugin.json' && f.jsonpath === '$.version'),
     'release-please-config.json does not bump antigravity-directory/plugin.json');
-  for (const rel of ['antigravity-directory/skills/career-ops/SKILL.md', 'antigravity-directory/README.md']) {
+  for (const rel of ['antigravity-directory/skills/project-x/SKILL.md', 'antigravity-directory/README.md']) {
     assert.ok(generic.includes(rel), `release-please-config.json does not bump ${rel}`);
     for (const line of read(rel).split('\n').filter((l) => l.includes(version))) {
       assert.match(line, /x-release-please-version/, `${rel}: a line with ${version} has no x-release-please-version marker`);
@@ -182,7 +182,7 @@ test('the README says what the plugin runs, sends and fetches, for Antigravity',
   const prose = readme.replace(/```[\s\S]*?```/g, '').replaceAll('<!-- x-release-please-version -->', '');
   assert.ok(prose.split(/\s+/).filter(Boolean).length >= 40, 'the README is under 40 words outside code blocks');
   assert.match(readme, /^## What it runs, sends and fetches$/m, 'the disclosure section is gone from the README');
-  for (const fact of ['npm registry', 'GitHub API', 'npm install', 'Chromium', 'portals.yml', 'the model you use in Antigravity', 'https://career-ops.org/privacy']) {
+  for (const fact of ['npm registry', 'GitHub API', 'npm install', 'Chromium', 'portals.yml', 'the model you use in Antigravity', 'https://project-x.org/privacy']) {
     assert.ok(readme.includes(fact), `README no longer mentions ${fact}`);
   }
   assert.doesNotMatch(readme, /\/plugin (?:install|marketplace)|ChatGPT|Codex|Claude|Cursor/, 'instructions for other platforms do not belong in the Antigravity README');

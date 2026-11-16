@@ -117,7 +117,7 @@ ok('CLI: add take-home, submit appends a row (append-only), open lists then drop
   const root = mkdtempSync(join(tmpdir(), 'al-cli-'));
   mkdirSync(join(root, 'data'), { recursive: true });
   const cli = (...a) => spawnSync(NODE, [join(ROOT, 'assessment-log.mjs'), ...a], {
-    cwd: root, encoding: 'utf-8', env: { ...process.env, CAREER_OPS_ROOT: root },
+    cwd: root, encoding: 'utf-8', env: { ...process.env, PROJECT_X_ROOT: root },
   });
   try {
     const log = join(root, 'data', 'assessments.tsv');
@@ -170,7 +170,7 @@ ok('open --tz with no value fails instead of falling back silently', () => {
   mkdirSync(join(root, 'data'), { recursive: true });
   try {
     const r = spawnSync(NODE, [join(ROOT, 'assessment-log.mjs'), 'open', '--tz'], {
-      cwd: root, encoding: 'utf-8', env: { ...process.env, CAREER_OPS_ROOT: root },
+      cwd: root, encoding: 'utf-8', env: { ...process.env, PROJECT_X_ROOT: root },
     });
     assert.ok(exitedNonZero(r), describeSpawn(r, 'expected a non-zero exit'));
     assert.match(r.stderr, /--tz requires/);

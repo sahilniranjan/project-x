@@ -31,7 +31,7 @@ export function prFromQueueRef(ref) {
   return m ? Number(m[1]) : null;
 }
 
-const H = () => ({ authorization: `Bearer ${process.env.GITHUB_TOKEN}`, accept: 'application/vnd.github+json', 'x-github-api-version': '2022-11-28', 'user-agent': 'career-ops-direction-gate', 'content-type': 'application/json' });
+const H = () => ({ authorization: `Bearer ${process.env.GITHUB_TOKEN}`, accept: 'application/vnd.github+json', 'x-github-api-version': '2022-11-28', 'user-agent': 'project-x-direction-gate', 'content-type': 'application/json' });
 async function api(method, path, body) {
   const res = await fetch(`https://api.github.com/repos/${process.env.GITHUB_REPOSITORY}/${path}`, { method, headers: H(), body: body ? JSON.stringify(body) : undefined });
   if (!res.ok) throw new Error(`${method} ${path} → ${res.status}`);
@@ -49,7 +49,7 @@ export async function dispatchGate(number) {
 
 async function labelsOf(number) {
   const res = await fetch(`https://api.github.com/repos/${process.env.GITHUB_REPOSITORY}/issues/${number}/labels?per_page=100`, {
-    headers: { authorization: `Bearer ${process.env.GITHUB_TOKEN}`, accept: 'application/vnd.github+json', 'x-github-api-version': '2022-11-28', 'user-agent': 'career-ops-direction-gate' },
+    headers: { authorization: `Bearer ${process.env.GITHUB_TOKEN}`, accept: 'application/vnd.github+json', 'x-github-api-version': '2022-11-28', 'user-agent': 'project-x-direction-gate' },
   });
   if (!res.ok) throw new Error(`labels #${number} → ${res.status}`);
   return (await res.json()).map((l) => l.name);

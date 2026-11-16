@@ -106,8 +106,8 @@ function runCheck(root) {
   const res = spawnSync(process.execPath, [join(ROOT, 'verify-tracker-url-match.mjs'), '--json'], {
     encoding: 'utf-8', timeout: 30000, stdio: ['ignore', 'pipe', 'pipe'],
     // Pin the root at the fixture and blank the inherited overrides, so a
-    // developer's exported CAREER_OPS_TRACKER / DATA_DIR cannot redirect the run.
-    env: ownRootEnv({ CAREER_OPS_ROOT: root, CAREER_OPS_TRACKER: '', CAREER_OPS_ADDITIONS: '' }),
+    // developer's exported PROJECT_X_TRACKER / DATA_DIR cannot redirect the run.
+    env: ownRootEnv({ PROJECT_X_ROOT: root, PROJECT_X_TRACKER: '', PROJECT_X_ADDITIONS: '' }),
   });
   return { code: res.status, out: String(res.stdout ?? ''), err: String(res.stderr ?? '') };
 }

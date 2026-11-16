@@ -13,7 +13,7 @@ const NODE = process.execPath;
 
 // Windows IPC only listens on named pipes, the same kind of path the batch uses there.
 function testSocket(dir) {
-  if (process.platform === 'win32') return `\\\\.\\pipe\\career-ops-pdf-test-${process.pid}-${Math.random().toString(36).slice(2)}`;
+  if (process.platform === 'win32') return `\\\\.\\pipe\\project-x-pdf-test-${process.pid}-${Math.random().toString(36).slice(2)}`;
   return join(dir, 'pdf.sock');
 }
 
@@ -22,7 +22,7 @@ function runNode(args, env) {
     cwd: ROOT,
     encoding: 'utf8',
     timeout: 30_000,
-    env: { ...process.env, CAREER_OPS_PDF_SHARED: '', ...env },
+    env: { ...process.env, PROJECT_X_PDF_SHARED: '', ...env },
   });
 }
 
@@ -44,7 +44,7 @@ test('build-cv-html self-test does not load Playwright', () => {
 
 test('one shared browser paints two documents', async () => {
   const serverMod = await import(new URL('../lib/pdf-server.mjs', import.meta.url));
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-pdf-shared-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-pdf-shared-'));
   const socketPath = testSocket(dir);
   let launches = 0;
   const server = await serverMod.startPdfServer({
@@ -83,7 +83,7 @@ test('one shared browser paints two documents', async () => {
 test('renderHtmlToPdf uses the shared browser when the batch asks it to', async () => {
   const serverMod = await import(new URL('../lib/pdf-server.mjs', import.meta.url));
   const { renderHtmlToPdf } = await import(new URL('../generate-pdf.mjs', import.meta.url));
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-pdf-delegate-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-pdf-delegate-'));
   const socketPath = testSocket(dir);
   let launches = 0;
   const seen = [];
@@ -99,10 +99,10 @@ test('renderHtmlToPdf uses the shared browser when the batch asks it to', async 
       return { outputPath, pageCount: 1, size: 10 };
     },
   });
-  const previousShared = process.env.CAREER_OPS_PDF_SHARED;
-  const previousSocket = process.env.CAREER_OPS_PDF_SOCKET;
-  process.env.CAREER_OPS_PDF_SHARED = '1';
-  process.env.CAREER_OPS_PDF_SOCKET = socketPath;
+  const previousShared = process.env.PROJECT_X_PDF_SHARED;
+  const previousSocket = process.env.PROJECT_X_PDF_SOCKET;
+  process.env.PROJECT_X_PDF_SHARED = '1';
+  process.env.PROJECT_X_PDF_SOCKET = socketPath;
   try {
     const outputPath = join(dir, 'shared-delegate.pdf');
     const result = await renderHtmlToPdf('<html><body><p>Casey Example</p></body></html>', outputPath, {
@@ -115,10 +115,10 @@ test('renderHtmlToPdf uses the shared browser when the batch asks it to', async 
     assert.equal(result.pageCount, 1);
     assert.equal(readFileSync(outputPath, 'utf8'), 'shared-pdf');
   } finally {
-    if (previousShared === undefined) delete process.env.CAREER_OPS_PDF_SHARED;
-    else process.env.CAREER_OPS_PDF_SHARED = previousShared;
-    if (previousSocket === undefined) delete process.env.CAREER_OPS_PDF_SOCKET;
-    else process.env.CAREER_OPS_PDF_SOCKET = previousSocket;
+    if (previousShared === undefined) delete process.env.PROJECT_X_PDF_SHARED;
+    else process.env.PROJECT_X_PDF_SHARED = previousShared;
+    if (previousSocket === undefined) delete process.env.PROJECT_X_PDF_SOCKET;
+    else process.env.PROJECT_X_PDF_SOCKET = previousSocket;
     await server.close();
     rmSync(dir, { recursive: true, force: true });
   }
@@ -126,7 +126,7 @@ test('renderHtmlToPdf uses the shared browser when the batch asks it to', async 
 
 test('a painter that is gone reads as unavailable, so the caller paints locally', async () => {
   const serverMod = await import(new URL('../lib/pdf-server.mjs', import.meta.url));
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-pdf-gone-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-pdf-gone-'));
   try {
     await assert.rejects(
       serverMod.requestPdfRender(testSocket(dir), { html: '<p>x</p>', outputPath: join(dir, 'x.pdf'), opts: {} }),
@@ -139,7 +139,7 @@ test('a painter that is gone reads as unavailable, so the caller paints locally'
 
 test('a painter that drops the request reads as unavailable, and a render error does not', async () => {
   const serverMod = await import(new URL('../lib/pdf-server.mjs', import.meta.url));
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-pdf-drop-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-pdf-drop-'));
   const failing = testSocket(dir);
   const server = await serverMod.startPdfServer({
     socketPath: failing,
@@ -168,7 +168,7 @@ test('a painter that drops the request reads as unavailable, and a render error 
 test('the shared path repeats the page-budget warning the painter cannot print', async () => {
   const serverMod = await import(new URL('../lib/pdf-server.mjs', import.meta.url));
   const { renderHtmlToPdf } = await import(new URL('../generate-pdf.mjs', import.meta.url));
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-pdf-budget-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-pdf-budget-'));
   const socketPath = testSocket(dir);
   const server = await serverMod.startPdfServer({
     socketPath,
@@ -178,9 +178,9 @@ test('the shared path repeats the page-budget warning the painter cannot print',
       return { outputPath, pageCount: 3, size: 10 };
     },
   });
-  const saved = { shared: process.env.CAREER_OPS_PDF_SHARED, socket: process.env.CAREER_OPS_PDF_SOCKET };
-  process.env.CAREER_OPS_PDF_SHARED = '1';
-  process.env.CAREER_OPS_PDF_SOCKET = socketPath;
+  const saved = { shared: process.env.PROJECT_X_PDF_SHARED, socket: process.env.PROJECT_X_PDF_SOCKET };
+  process.env.PROJECT_X_PDF_SHARED = '1';
+  process.env.PROJECT_X_PDF_SOCKET = socketPath;
   const warnings = [];
   const originalWarn = console.warn;
   console.warn = (...args) => { warnings.push(args.join(' ')); };
@@ -192,8 +192,8 @@ test('the shared path repeats the page-budget warning the painter cannot print',
     });
   } finally {
     console.warn = originalWarn;
-    if (saved.shared === undefined) delete process.env.CAREER_OPS_PDF_SHARED; else process.env.CAREER_OPS_PDF_SHARED = saved.shared;
-    if (saved.socket === undefined) delete process.env.CAREER_OPS_PDF_SOCKET; else process.env.CAREER_OPS_PDF_SOCKET = saved.socket;
+    if (saved.shared === undefined) delete process.env.PROJECT_X_PDF_SHARED; else process.env.PROJECT_X_PDF_SHARED = saved.shared;
+    if (saved.socket === undefined) delete process.env.PROJECT_X_PDF_SOCKET; else process.env.PROJECT_X_PDF_SOCKET = saved.socket;
     await server.close();
     rmSync(dir, { recursive: true, force: true });
   }
@@ -201,7 +201,7 @@ test('the shared path repeats the page-budget warning the painter cannot print',
 });
 
 function runOneOffer(skipPdf) {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-batch-pdf-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-batch-pdf-'));
   const batchDir = join(dir, 'batch');
   const binDir = join(dir, 'bin');
   mkdirSync(batchDir, { recursive: true });
@@ -225,7 +225,7 @@ function runOneOffer(skipPdf) {
   }
   writeFileSync(join(binDir, 'curl'), '#!/usr/bin/env bash\nexit 1\n');
   writeFileSync(join(binDir, 'claude'), `#!/usr/bin/env bash
-printf '%s\\n' "\${CAREER_OPS_PDF_SHARED-unset}" > "$FIXTURE_DIR/pdf-shared"
+printf '%s\\n' "\${PROJECT_X_PDF_SHARED-unset}" > "$FIXTURE_DIR/pdf-shared"
 exit 0
 `);
   chmodSync(join(binDir, 'curl'), 0o755);
@@ -233,7 +233,7 @@ exit 0
   const args = ['--max-retries', '0', '--parallel', '1'];
   if (skipPdf) args.push('--skip-pdf');
   const env = { ...process.env, PATH: `${binDir}${delimiter}${process.env.PATH}`, FIXTURE_DIR: dir };
-  delete env.CAREER_OPS_PDF_SHARED;
+  delete env.PROJECT_X_PDF_SHARED;
   try {
     const result = spawnSync(getBash(), [join(batchDir, 'batch-runner.sh'), ...args], {
       cwd: dir,
@@ -261,12 +261,12 @@ test('batch runner shares one PDF browser across offers', () => {
 
 test('the painter socket sits in a directory only this user can open', { skip: process.platform === 'win32' && 'named pipes, no socket directory' }, async () => {
   const serverMod = await import(new URL('../lib/pdf-server.mjs', import.meta.url));
-  const base = mkdtempSync(join(tmpdir(), 'career-ops-pdf-dir-'));
-  const saved = { TMPDIR: process.env.TMPDIR, SOCKET: process.env.CAREER_OPS_PDF_SOCKET };
+  const base = mkdtempSync(join(tmpdir(), 'project-x-pdf-dir-'));
+  const saved = { TMPDIR: process.env.TMPDIR, SOCKET: process.env.PROJECT_X_PDF_SOCKET };
   process.env.TMPDIR = base;
-  delete process.env.CAREER_OPS_PDF_SOCKET;
+  delete process.env.PROJECT_X_PDF_SOCKET;
   try {
-    const socketPath = serverMod.sharedPdfSocketPath('/example/career-ops');
+    const socketPath = serverMod.sharedPdfSocketPath('/example/project-x');
     assert.ok(socketPath.startsWith(base), socketPath);
     // A unix socket path is capped near 104 bytes and the macOS temp dir is about 50.
     assert.ok(socketPath.length - base.length <= 40, `name under the temp dir is short: ${socketPath.slice(base.length)}`);
@@ -277,10 +277,10 @@ test('the painter socket sits in a directory only this user can open', { skip: p
     // A directory another user could write (or pre-create) is refused, so the
     // CV HTML never goes to a socket someone else planted there.
     chmodSync(dirname(socketPath), 0o777);
-    assert.throws(() => serverMod.sharedPdfSocketPath('/example/career-ops'), (err) => err.code === 'PDF_SERVER_UNAVAILABLE');
+    assert.throws(() => serverMod.sharedPdfSocketPath('/example/project-x'), (err) => err.code === 'PDF_SERVER_UNAVAILABLE');
   } finally {
     if (saved.TMPDIR === undefined) delete process.env.TMPDIR; else process.env.TMPDIR = saved.TMPDIR;
-    if (saved.SOCKET !== undefined) process.env.CAREER_OPS_PDF_SOCKET = saved.SOCKET;
+    if (saved.SOCKET !== undefined) process.env.PROJECT_X_PDF_SOCKET = saved.SOCKET;
     rmSync(base, { recursive: true, force: true });
   }
 });

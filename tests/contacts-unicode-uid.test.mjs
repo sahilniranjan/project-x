@@ -27,7 +27,7 @@ test('contact UID folds Unicode composition in both name and company', () => {
   assert.equal(uidPart(NAME.normalize('NFD')), uidPart(NAME));
   assert.equal(uidPart(COMPANY.normalize('NFD')), uidPart(COMPANY));
   assert.equal(contactUid({ name: 'Jane Doe', company: 'Acme' }),
-    'careerops-jane-doe-bc225ac5--acme-293abb6b', 'existing ASCII UIDs stay stable');
+    'projectx-jane-doe-bc225ac5--acme-293abb6b', 'existing ASCII UIDs stay stable');
   assert.equal(uidPart(NAME), 'jos-8e9c993b', 'existing NFC UIDs stay stable');
   assert.notEqual(uidPart(NAME), uidPart('Jos\u00e8'), 'different accents remain different identities');
 });
@@ -50,7 +50,7 @@ test('contacts CLI writes one current vCard for composition variants', () => {
   try {
     mkdirSync(join(root, 'data'));
     writeFileSync(join(root, 'data', 'contacts.tsv'), store(), 'utf8');
-    const options = { env: { ...process.env, CAREER_OPS_ROOT: root }, encoding: 'utf8', windowsHide: true, timeout: 20000 };
+    const options = { env: { ...process.env, PROJECT_X_ROOT: root }, encoding: 'utf8', windowsHide: true, timeout: 20000 };
     const json = JSON.parse(execFileSync(process.execPath, [SCRIPT], options));
     execFileSync(process.execPath, [SCRIPT, '--vcf'], options);
     const vcf = unfold(readFileSync(join(root, 'output', 'contacts.vcf'), 'utf8'));

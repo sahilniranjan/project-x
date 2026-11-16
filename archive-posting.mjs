@@ -28,7 +28,7 @@ import { createHash } from 'crypto';
 import { existsSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { getCareerOpsRoot } from './path-resolver.mjs';
+import { getProjectXRoot } from './path-resolver.mjs';
 import { captureSlug, reportPrefix } from './jd-capture.mjs';
 import { rejectPrivateOrInvalid, validateUrlSecurity } from './liveness-browser.mjs';
 import { cloudflareInterstitial } from './liveness-core.mjs';
@@ -39,7 +39,7 @@ import { detectNonContentMarker } from './check-jd-archive.mjs';
 import { browserLaunchOptions } from './lib/browser-launch.mjs';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
-const DATA_ROOT = getCareerOpsRoot();
+const DATA_ROOT = getProjectXRoot();
 const JDS_DIR = join(DATA_ROOT, 'jds');
 const PIPELINE_PATH = join(DATA_ROOT, 'data', 'pipeline.md');
 
@@ -68,7 +68,7 @@ const NON_CONTENT_PAGE_MAX_CHARS = 600;
 
 const HELP_TEXT = `
 ╔══════════════════════════════════════════════════════════════════╗
-║           career-ops — Job Posting Archiver                     ║
+║           project-x — Job Posting Archiver                     ║
 ╚══════════════════════════════════════════════════════════════════╝
 
   Save a live job posting as PDF before it disappears.

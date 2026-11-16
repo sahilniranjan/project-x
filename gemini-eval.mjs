@@ -10,7 +10,7 @@ if (process.platform === 'win32') {
 }
 
 /**
- * gemini-eval.mjs — Gemini-powered Job Offer Evaluator for career-ops
+ * gemini-eval.mjs — Gemini-powered Job Offer Evaluator for project-x
  *
  * A free-tier alternative to the Claude-based pipeline.
  * Reads evaluation logic from modes/oferta.md + modes/_shared.md,
@@ -72,7 +72,7 @@ try {
   // The data root's .env first: doctor.mjs, remember-cli.mjs, scan.mjs and the
   // plugin engine all read it there. The working directory's .env, the only one
   // read before, still supplies what the data root's leaves unset.
-  config({ path: [join(getCareerOpsRoot(), '.env'), join(process.cwd(), '.env')] });
+  config({ path: [join(getProjectXRoot(), '.env'), join(process.cwd(), '.env')] });
 } catch {
   // dotenv is optional — fall back to process.env if not installed
 }
@@ -82,7 +82,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 // ---------------------------------------------------------------------------
 // Paths
 // ---------------------------------------------------------------------------
-import { getCareerOpsRoot, getProfilePath, resolveTrackerPath } from './path-resolver.mjs';
+import { getProjectXRoot, getProfilePath, resolveTrackerPath } from './path-resolver.mjs';
 import { localToday } from './lib/local-today.mjs';
 import { withJdArchiveSection } from './lib/jd-archive-section.mjs';
 import { TSV_ADDITION_HEADER } from './tracker-parse.mjs';
@@ -95,14 +95,14 @@ import { installPiiInterceptor } from './lib/pii-interceptor.mjs';
 installPiiInterceptor();
 
 const CODE_ROOT = dirname(fileURLToPath(import.meta.url));
-const DATA_ROOT = getCareerOpsRoot();
+const DATA_ROOT = getProjectXRoot();
 
 const PATHS = {
   // Primary evaluation logic lives in these two mode files (default values)
   shared:      join(CODE_ROOT, 'modes', '_shared.md'),
   oferta:      join(CODE_ROOT, 'modes', 'oferta.md'),
   // Canonical skill path referenced in Issue #344
-  evaluate:    join(CODE_ROOT, '.claude', 'skills', 'career-ops', 'SKILL.md'),
+  evaluate:    join(CODE_ROOT, '.claude', 'skills', 'project-x', 'SKILL.md'),
   cv:          join(DATA_ROOT, 'cv.md'),
   profile:     join(DATA_ROOT, 'modes', '_profile.md'),
   custom:      join(DATA_ROOT, 'modes', '_custom.md'),
@@ -144,7 +144,7 @@ function resolveModesDirCandidate(customModesDir) {
   return customModesDir;
 }
 
-// Same recognition as resolveEvalModeFile in web/src/lib/career-ops.ts: the
+// Same recognition as resolveEvalModeFile in web/src/lib/project-x.ts: the
 // evaluation mode is the markdown file whose title states the block range it
 // produces (A-F, A-G, or A-H; the dash may be ASCII or typographic). A
 // filename allow-list goes stale whenever a market ships under a new name
@@ -229,7 +229,7 @@ const args = process.argv.slice(2);
 if (args.length === 0 || args[0] === '--help' || args[0] === '-h') {
   console.log(`
 ╔══════════════════════════════════════════════════════════════════╗
-║           career-ops — Gemini Evaluator (free-tier)             ║
+║           project-x — Gemini Evaluator (free-tier)             ║
 ╚══════════════════════════════════════════════════════════════════╝
 
   Evaluate a job offer using Google Gemini instead of Claude.
@@ -376,7 +376,7 @@ function validateEvaluationShape(text) {
   }
 
   if (issues.length > 0) {
-    throw new Error(`Gemini returned an invalid career-ops report: ${issues.join('; ')}`);
+    throw new Error(`Gemini returned an invalid project-x report: ${issues.join('; ')}`);
   }
 }
 
@@ -471,7 +471,7 @@ if (budgetReport.compressed) {
   console.log(`📊  Token budget: ${budgetReport.totalTokens} tokens (within ${budgetReport.budget} limit)`);
 }
 
-const systemPrompt = `You are career-ops, an AI-powered job search assistant.
+const systemPrompt = `You are project-x, an AI-powered job search assistant.
 You evaluate job offers against the user's CV using a structured A-G scoring system.
 
 Your evaluation methodology is defined below. Follow it exactly.
@@ -570,7 +570,7 @@ try {
 // Display evaluation
 // ---------------------------------------------------------------------------
 console.log('\n' + '═'.repeat(66));
-console.log('  CAREER-OPS EVALUATION — powered by Google Gemini');
+console.log('  PROJECT-X EVALUATION — powered by Google Gemini');
 console.log('═'.repeat(66) + '\n');
 console.log(evaluationText);
 

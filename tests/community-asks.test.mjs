@@ -26,11 +26,11 @@ const at = (days) => new Date(T0.getTime() + days * DAY).toISOString();
 const UNATTENDED_VARS = [
   'CI', 'GITHUB_ACTIONS', 'GITLAB_CI', 'BUILDKITE', 'CIRCLECI', 'TRAVIS', 'TF_BUILD', 'JENKINS_URL',
   'TEAMCITY_VERSION', 'BITBUCKET_BUILD_NUMBER', 'CODEBUILD_BUILD_ID', 'DRONE', 'APPVEYOR',
-  'CAREER_OPS_NO_ASKS', 'CAREER_OPS_HEADLESS', 'CAREER_OPS_BATCH_STATE', 'CLAUDE_CODE_ENTRYPOINT',
-  'CAREER_OPS_REPORTS_DIR',
+  'PROJECT_X_NO_ASKS', 'PROJECT_X_HEADLESS', 'PROJECT_X_BATCH_STATE', 'CLAUDE_CODE_ENTRYPOINT',
+  'PROJECT_X_REPORTS_DIR',
 ];
 function childEnv(extra = {}) {
-  const env = { ...process.env, CAREER_OPS_ROOT: '', CAREER_OPS_DATA_DIR: '' };
+  const env = { ...process.env, PROJECT_X_ROOT: '', PROJECT_X_DATA_DIR: '' };
   for (const name of UNATTENDED_VARS) delete env[name];
   return { ...env, ...extra };
 }
@@ -44,7 +44,7 @@ after(() => {
 });
 
 function workspace(reports = 0) {
-  const root = realpathSync(mkdtempSync(join(tmpdir(), 'career-ops-asks-')));
+  const root = realpathSync(mkdtempSync(join(tmpdir(), 'project-x-asks-')));
   roots.push(root);
   mkdirSync(join(root, 'data'), { recursive: true });
   mkdirSync(join(root, 'reports'), { recursive: true });
@@ -96,9 +96,9 @@ test('two sessions at once still ask once', async () => {
 test('an unattended run never asks and leaves no marker', () => {
   const cases = [
     ['CI', 'true'], ['GITHUB_ACTIONS', 'true'], ['GITLAB_CI', 'true'],
-    ['CAREER_OPS_HEADLESS', '1'], ['CAREER_OPS_BATCH_STATE', join(tmpdir(), 'batch-state.tsv')],
+    ['PROJECT_X_HEADLESS', '1'], ['PROJECT_X_BATCH_STATE', join(tmpdir(), 'batch-state.tsv')],
     ['CLAUDE_CODE_ENTRYPOINT', 'sdk-cli'], ['CLAUDE_CODE_ENTRYPOINT', 'sdk-ts'], ['CLAUDE_CODE_ENTRYPOINT', 'mcp'],
-    ['CAREER_OPS_NO_ASKS', '1'],
+    ['PROJECT_X_NO_ASKS', '1'],
   ];
   for (const [name, value] of cases) {
     const root = workspace(1);
@@ -187,7 +187,7 @@ test('only evaluation reports count', () => {
 test('unattendedReason reads only what it should', () => {
   assert.equal(unattendedReason({}), null);
   assert.equal(unattendedReason({ CI: 'false' }), null);
-  assert.equal(unattendedReason({ CAREER_OPS_HEADLESS: '0' }), null);
+  assert.equal(unattendedReason({ PROJECT_X_HEADLESS: '0' }), null);
   assert.equal(unattendedReason({ CLAUDE_CODE_ENTRYPOINT: 'cli' }), null);
   assert.ok(unattendedReason({ CI: '1' }));
   assert.ok(unattendedReason({ CLAUDE_CODE_ENTRYPOINT: 'sdk-py' }));
@@ -226,7 +226,7 @@ test('the texts keep their promises', () => {
   const first = askText('star', { reports: 1 });
   const veteran = askText('star', { reports: 12 });
   assert.ok(first.startsWith('If this report saved you some time'));
-  assert.ok(veteran.startsWith("You've run 12 evaluations with career-ops so far."));
+  assert.ok(veteran.startsWith("You've run 12 evaluations with project-x so far."));
   assert.equal(askText('star', { reports: VETERAN_MIN_REPORTS - 1 }), first);
   for (const star of [first, veteran]) {
     assert.ok(star.includes(STAR_URL));

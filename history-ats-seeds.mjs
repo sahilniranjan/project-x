@@ -3,7 +3,7 @@ import path from 'path';
 import { atsVendorOf } from './ats-vendor.mjs';
 import { parseScanHistoryLine } from './lib/scan-history-columns.mjs';
 import { detectColumns, extractCellUrl, isHeaderRow, isSeparatorRow, linkedReportNumbers, reportUrlForNumbers as reportUrlFromReports } from './tracker-parse.mjs';
-import { getCareerOpsRoot, resolveTrackerPath } from './path-resolver.mjs';
+import { getProjectXRoot, resolveTrackerPath } from './path-resolver.mjs';
 import { hireHiveTenantOf } from './providers/hirehive.mjs';
 import { resolveHibobTenant } from './providers/hibob.mjs';
 import { resolveBoard as resolveTalentlinkBoard } from './providers/talentlink.mjs';
@@ -141,9 +141,9 @@ function readIfPresent(file) {
  * Duplicate postings from the same board collapse to one provider fetch.
  */
 export function loadHistoryAtsSeeds({
-  dataRoot = getCareerOpsRoot(),
+  dataRoot = getProjectXRoot(),
   trackerPath = resolveTrackerPath(dataRoot),
-  scanHistoryPath = process.env.CAREER_OPS_SCAN_HISTORY || path.join(dataRoot, 'data/scan-history.tsv'),
+  scanHistoryPath = process.env.PROJECT_X_SCAN_HISTORY || path.join(dataRoot, 'data/scan-history.tsv'),
 } = {}) {
   const reportsRoot = path.join(resolveWorkspaceRoot(trackerPath), 'reports');
   const combined = [

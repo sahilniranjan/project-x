@@ -19,7 +19,7 @@
 // dedup-tracker-status-aliases.test.mjs). Only the decoration goes.
 //
 // Drives the REAL dedup-tracker.mjs CLI against a temp tracker via the
-// CAREER_OPS_TRACKER hook. The status-log and follow-ups land next to it.
+// PROJECT_X_TRACKER hook. The status-log and follow-ups land next to it.
 import { pass, fail, rmSync, ROOT } from './helpers.mjs';
 import assert from 'node:assert';
 import { existsSync, mkdtempSync, writeFileSync, readFileSync } from 'node:fs';
@@ -52,7 +52,7 @@ function promote(keeperStatus, donorStatus) {
     writeFileSync(join(dir, 'status-log.tsv'), PRIOR_LEDGER);
     const r = spawnSync(process.execPath, [DEDUP], {
       encoding: 'utf-8',
-      env: { ...process.env, CAREER_OPS_TRACKER: tracker },
+      env: { ...process.env, PROJECT_X_TRACKER: tracker },
     });
     assert.strictEqual(r.status, 0, `dedup-tracker exited ${r.status}: ${r.stderr}`);
     const rows = readFileSync(tracker, 'utf-8').split('\n').filter(l => /^\|\s*\d+\s*\|/.test(l));

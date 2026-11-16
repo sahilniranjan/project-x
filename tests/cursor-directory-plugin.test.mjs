@@ -3,9 +3,9 @@
 //
 // Cursor is sent a link to the repository and looks for the plugin at its
 // root: a plugin.json there, or a .cursor-plugin/marketplace.json that points
-// at the plugin folder. The repository root is the whole of career-ops, so the
+// at the plugin folder. The repository root is the whole of project-x, so the
 // root carries only that marketplace.json, pointing at cursor-directory/, the
-// thin plugin: the router SKILL.md, a README that says what career-ops runs,
+// thin plugin: the router SKILL.md, a README that says what project-x runs,
 // sends and fetches, the license and the logo. The checks follow the
 // validator in github.com/cursor/plugin-template (scripts/validate-template.mjs):
 // kebab-case names that match, a source folder that exists with its
@@ -68,7 +68,7 @@ test('plugin.json is valid and names the project, its license and the release ve
   const canon = JSON.parse(read('.claude-plugin/plugin.json'));
   assert.equal(manifest.name, canon.name);
   assert.match(manifest.name, KEBAB, 'name must be lowercase kebab-case');
-  assert.equal(manifest.displayName, 'career-ops');
+  assert.equal(manifest.displayName, 'project-x');
   assert.match(manifest.version ?? '', /^\d+\.\d+\.\d+$/, 'version must be semver');
   assert.equal(manifest.version, version, 'cursor-directory/.cursor-plugin/plugin.json version must match package.json');
   assert.equal(manifest.license, 'MIT');
@@ -98,8 +98,8 @@ test('the logo exists and is a square PNG', () => {
 });
 
 test('the skill and the license are byte-identical copies of the canonical ones', () => {
-  assert.equal(read('cursor-directory/skills/career-ops/SKILL.md'), read('.agents/skills/career-ops/SKILL.md'),
-    'cursor-directory/skills/career-ops/SKILL.md diverged: copy .agents/skills/career-ops/SKILL.md over it');
+  assert.equal(read('cursor-directory/skills/project-x/SKILL.md'), read('.agents/skills/project-x/SKILL.md'),
+    'cursor-directory/skills/project-x/SKILL.md diverged: copy .agents/skills/project-x/SKILL.md over it');
   assert.equal(read('cursor-directory/LICENSE'), read('LICENSE'), 'cursor-directory/LICENSE diverged: copy LICENSE over it');
 });
 
@@ -107,8 +107,8 @@ test('the Cursor plugin contains exactly the expected skill with valid frontmatt
   const skillFiles = files.filter(({rel}) => rel.endsWith('/SKILL.md'));
   assert.deepEqual(
     skillFiles.map(({rel}) => rel),
-    ['skills/career-ops/SKILL.md'],
-    `Cursor plugin must contain exactly skills/career-ops/SKILL.md`
+    ['skills/project-x/SKILL.md'],
+    `Cursor plugin must contain exactly skills/project-x/SKILL.md`
   );
 
   for (const { path, rel } of skillFiles) {
@@ -152,20 +152,20 @@ test('only the skill: no hooks, MCP servers, rules, agents or commands', () => {
   }
 });
 
-test('every package launcher is pinned to an exact version, and career-ops to this release', () => {
+test('every package launcher is pinned to an exact version, and project-x to this release', () => {
   const launcher = /\b(?:npx|bunx|uvx|pnpm dlx|yarn dlx|pipx run)\s+(?:-{1,2}[\w-]+(?:=\S+)?\s+)*([^\s`'"]+)/g;
-  let careerOps = 0;
+  let projectX = 0;
   for (const { path, rel } of files) {
     if (rel.endsWith('.png')) continue;
     for (const [, pkg] of readFileSync(path, 'utf8').matchAll(launcher)) {
       assert.match(pkg, /^(?:@[\w.-]+\/)?[\w.-]+(?:@|==)\d+\.\d+\.\d+$/, `${rel}: "${pkg}" is not pinned to an exact version`);
-      if (pkg.startsWith('@santifer/career-ops@')) {
-        careerOps++;
-        assert.equal(pkg, `@santifer/career-ops@${version}`, `${rel}: the init command must pin the current release`);
+      if (pkg.startsWith('@santifer/project-x@')) {
+        projectX++;
+        assert.equal(pkg, `@santifer/project-x@${version}`, `${rel}: the init command must pin the current release`);
       }
     }
   }
-  assert.ok(careerOps >= 3, 'the skill (twice) and the README name the pinned init command');
+  assert.ok(projectX >= 3, 'the skill (twice) and the README name the pinned init command');
 });
 
 test('every line that carries the release version is marked for release-please', () => {
@@ -174,7 +174,7 @@ test('every line that carries the release version is marked for release-please',
   const generic = extra.filter((f) => f.type === 'generic').map((f) => f.path);
   assert.ok(extra.some((f) => f.path === 'cursor-directory/.cursor-plugin/plugin.json' && f.jsonpath === '$.version'),
     'release-please-config.json does not bump cursor-directory/.cursor-plugin/plugin.json');
-  for (const rel of ['cursor-directory/skills/career-ops/SKILL.md', 'cursor-directory/README.md']) {
+  for (const rel of ['cursor-directory/skills/project-x/SKILL.md', 'cursor-directory/README.md']) {
     assert.ok(generic.includes(rel), `release-please-config.json does not bump ${rel}`);
     for (const line of read(rel).split('\n').filter((l) => l.includes(version))) {
       assert.match(line, /x-release-please-version/, `${rel}: a line with ${version} has no x-release-please-version marker`);
@@ -187,7 +187,7 @@ test('the README says what the plugin runs, sends and fetches, for Cursor', () =
   const prose = readme.replace(/```[\s\S]*?```/g, '').replaceAll('<!-- x-release-please-version -->', '');
   assert.ok(prose.split(/\s+/).filter(Boolean).length >= 40, 'the README is under 40 words outside code blocks');
   assert.match(readme, /^## What it runs, sends and fetches$/m, 'the disclosure section is gone from the README');
-  for (const fact of ['npm registry', 'GitHub API', 'npm install', 'Chromium', 'portals.yml', 'the model you use in Cursor', 'https://career-ops.org/privacy']) {
+  for (const fact of ['npm registry', 'GitHub API', 'npm install', 'Chromium', 'portals.yml', 'the model you use in Cursor', 'https://project-x.org/privacy']) {
     assert.ok(readme.includes(fact), `README no longer mentions ${fact}`);
   }
   assert.doesNotMatch(readme, /\/plugin (?:install|marketplace)|ChatGPT|Codex|Claude/, 'instructions for other platforms do not belong in the Cursor README');

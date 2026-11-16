@@ -60,7 +60,7 @@ function runChild(script, args, env) {
 }
 
 test('parallel renders each keep their manifest row', async () => {
-  const sandbox = realpathSync(mkdtempSync(join(tmpdir(), 'career-ops-pdfindex-race-')));
+  const sandbox = realpathSync(mkdtempSync(join(tmpdir(), 'project-x-pdfindex-race-')));
   try {
     const manifest = join(sandbox, 'data', 'pdf-index.tsv');
     mkdirSync(join(sandbox, 'data'), { recursive: true });
@@ -76,10 +76,10 @@ test('parallel renders each keep their manifest row', async () => {
 
     const env = {
       ...process.env,
-      CAREER_OPS_ROOT: sandbox,
-      CAREER_OPS_DATA_DIR: '',
-      CAREER_OPS_TRACKER: '',
-      CAREER_OPS_PDF_INDEX: manifest,
+      PROJECT_X_ROOT: sandbox,
+      PROJECT_X_DATA_DIR: '',
+      PROJECT_X_TRACKER: '',
+      PROJECT_X_PDF_INDEX: manifest,
     };
     const startAt = String(Date.now() + 4_000);
     const runs = [];

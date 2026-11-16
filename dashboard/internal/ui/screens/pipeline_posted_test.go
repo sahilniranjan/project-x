@@ -6,9 +6,9 @@ import (
 	"time"
 
 	"github.com/charmbracelet/x/ansi"
-	"github.com/santifer/career-ops/dashboard/internal/i18n"
-	"github.com/santifer/career-ops/dashboard/internal/model"
-	"github.com/santifer/career-ops/dashboard/internal/theme"
+	"github.com/santifer/project-x/dashboard/internal/i18n"
+	"github.com/santifer/project-x/dashboard/internal/model"
+	"github.com/santifer/project-x/dashboard/internal/theme"
 )
 
 // A posting dated today renders its age, not the dash reserved for a date in

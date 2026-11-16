@@ -135,7 +135,7 @@ test('plugin results get the discovery filters only when the manifest declares j
 
 test('the manifest jobPostings flag is validated and carried through', () => {
   const base = { id: 'demo', apiVersion: 1, description: 'Demo.', humanInTheLoop: true, hooks: ['ingest'] };
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-manifest-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-manifest-'));
   try {
     assert.equal(validateManifest({ ...base, jobPostings: true }, dir, 'demo').jobPostings, true);
     assert.equal(validateManifest(base, dir, 'demo').jobPostings, false);
@@ -160,14 +160,14 @@ test('every non-scan.mjs pipeline writer admits through the shared gate', () => 
 });
 
 function tempRoot() {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-admission-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-admission-'));
   mkdirSync(join(dir, 'data'), { recursive: true });
   return dir;
 }
 
 function runModule(dir, code) {
-  const env = { ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_DATA_DIR: '' };
-  for (const n of ['CAREER_OPS_PORTALS', 'CAREER_OPS_PIPELINE', 'CAREER_OPS_SCAN_HISTORY', 'CAREER_OPS_TRACKER', 'CAREER_OPS_MODEL']) delete env[n];
+  const env = { ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_DATA_DIR: '' };
+  for (const n of ['PROJECT_X_PORTALS', 'PROJECT_X_PIPELINE', 'PROJECT_X_SCAN_HISTORY', 'PROJECT_X_TRACKER', 'PROJECT_X_MODEL']) delete env[n];
   return spawnSync(process.execPath, ['--input-type=module', '-e', code], { cwd: dir, encoding: 'utf8', timeout: 30000, env });
 }
 

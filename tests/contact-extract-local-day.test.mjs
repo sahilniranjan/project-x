@@ -42,11 +42,11 @@ function saveIn(tz) {
     const email = join(root, 'email.txt');
     writeFileSync(email, 'Subject: Acme Inc — Backend Engineer: interview invitation\nFrom: Jane Doe <jane@acme.com>\n\n'
       + 'We would like to invite you to interview for the Backend Engineer role.\n');
-    const { CAREER_OPS_DATA_DIR: _d, ...env } = process.env;
+    const { PROJECT_X_DATA_DIR: _d, ...env } = process.env;
     const before = dayIn(tz);
     execFileSync(NODE, [join(ROOT, 'contact-extract.mjs'), '--file', email, '--yes'], {
       cwd: ROOT, encoding: 'utf-8', stdio: ['ignore', 'pipe', 'pipe'],
-      env: { ...env, TZ: tz, CAREER_OPS_ROOT: root, CAREER_OPS_TRACKER: tracker },
+      env: { ...env, TZ: tz, PROJECT_X_ROOT: root, PROJECT_X_TRACKER: tracker },
     });
     const after = dayIn(tz);
     const contacts = readFileSync(join(root, 'data', 'contacts.tsv'), 'utf-8');

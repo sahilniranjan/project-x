@@ -22,16 +22,16 @@ import { assertFacts, newFactWarnings, printFactWarnings } from "./verify-cv-fac
 import { resolveTemplate } from "./cv-templates.mjs";
 import { isMainModule } from "./lib/is-main-module.mjs";
 import { PAGE_FORMATS, normalizePageFormat, pageFormatForCountry } from "./lib/page-format.mjs";
-import { getCareerOpsRoot } from "./path-resolver.mjs";
+import { getProjectXRoot } from "./path-resolver.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 // output/ is a USER-layer directory. Anchoring it to the script directory made
 // the cover letter unwritable under an external data directory: this module
 // insisted on <checkout>/output while the shared PDF guard in generate-pdf.mjs
 // required the tracker workspace, and the two could not both be satisfied.
-// getCareerOpsRoot() returns the checkout when no external root is configured,
+// getProjectXRoot() returns the checkout when no external root is configured,
 // so the default install is unchanged.
-const OUTPUT_ROOT = resolve(getCareerOpsRoot(), "output");
+const OUTPUT_ROOT = resolve(getProjectXRoot(), "output");
 
 /**
  * Resolve a requested cover-letter output path.
@@ -522,7 +522,7 @@ export const DEFAULT_COVER_MAX_PAGES = 1;
  * @param {{root?: string, payload?: object}} [options]
  * @returns {Promise<string[]>} One note per kind of finding; empty when clean.
  */
-export async function coverLetterVoiceNotes(html, { root = getCareerOpsRoot(), payload = {} } = {}) {
+export async function coverLetterVoiceNotes(html, { root = getProjectXRoot(), payload = {} } = {}) {
   const { voiceIssues, candidateOwnWords } = await import("./cv-voice.mjs");
   const cvPath = join(root, "cv.md");
   const cv = existsSync(cvPath) ? readFileSync(cvPath, "utf-8") : "";

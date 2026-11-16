@@ -16,10 +16,10 @@ function render(args, cwd, dataRoot) {
     encoding: 'utf8',
     timeout: 30_000,
     env: ownRootEnv({
-      CAREER_OPS_ROOT: dataRoot,
-      CAREER_OPS_TRACKER: '',
-      CAREER_OPS_PROFILE: '',
-      CAREER_OPS_PDF_INDEX: '',
+      PROJECT_X_ROOT: dataRoot,
+      PROJECT_X_TRACKER: '',
+      PROJECT_X_PROFILE: '',
+      PROJECT_X_PDF_INDEX: '',
     }),
   });
 }
@@ -28,7 +28,7 @@ function combined(result) {
   return `${result.stdout || ''}${result.stderr || ''}`;
 }
 
-const dir = mkdtempSync(join(tmpdir(), 'career-ops-pdf-rel-'));
+const dir = mkdtempSync(join(tmpdir(), 'project-x-pdf-rel-'));
 const dataRoot = join(dir, 'data');
 const decoy = join(dir, 'decoy');
 mkdirSync(join(dataRoot, 'output'), { recursive: true });

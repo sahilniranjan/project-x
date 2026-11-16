@@ -58,7 +58,7 @@ import { dirname, resolve, join, basename } from 'path';
 import { pathToFileURL, fileURLToPath } from 'url';
 import { format } from 'util';
 import { performance } from 'node:perf_hooks';
-import { getCareerOpsRoot, resolveTrackerPath } from './path-resolver.mjs';
+import { getProjectXRoot, resolveTrackerPath } from './path-resolver.mjs';
 import { localToday } from './lib/local-today.mjs';
 import { loadYaml } from './lib/yaml-document.mjs';
 import {
@@ -80,12 +80,12 @@ import { escapeFormulaCell } from './lib/tsv-formula-escape.mjs';
  * shape for a CLI — one process, one invocation, env fixed before node starts —
  * and the wrong one the moment the module is IMPORTED: the first importer in a
  * process froze the path for every later one, so a subsequent
- * `process.env.CAREER_OPS_TRACKER_DB = ...` was silently ignored (#3506). The
+ * `process.env.PROJECT_X_TRACKER_DB = ...` was silently ignored (#3506). The
  * tracker path went the same way for the same reason (#4758): runTracker() now
  * takes both from its caller, and only the CLI branch reads the environment.
  *
  * @param {string} mdPath - The markdown tracker (the source of truth).
- * @param {string} [override] - Explicit index path (CAREER_OPS_TRACKER_DB on the CLI).
+ * @param {string} [override] - Explicit index path (PROJECT_X_TRACKER_DB on the CLI).
  * @returns {string} Absolute or relative path to the derived index.
  */
 function resolveDbPath(mdPath, override) {
@@ -95,7 +95,7 @@ function resolveDbPath(mdPath, override) {
 /**
  * Where the transition ledger lives for a given tracker: the sibling of the
  * tracker file, the same rule set-status.mjs writes by and funnel-velocity.mjs,
- * stats.mjs and followup-cadence.mjs read by. A CAREER_OPS_TRACKER redirect
+ * stats.mjs and followup-cadence.mjs read by. A PROJECT_X_TRACKER redirect
  * therefore moves the ledger with the tracker.
  *
  * @param {string} mdPath - The markdown tracker.
@@ -111,7 +111,7 @@ function resolveLedgerPath(mdPath) {
  * call time, so an override set after import still holds (#3506).
  */
 function defaultDbPath() {
-  return resolveDbPath(resolveTrackerPath(getCareerOpsRoot()), process.env.CAREER_OPS_TRACKER_DB);
+  return resolveDbPath(resolveTrackerPath(getProjectXRoot()), process.env.PROJECT_X_TRACKER_DB);
 }
 
 /**
@@ -135,9 +135,9 @@ class TrackerExit extends Error {
 // variant of #3500: that one looked for this file under the data root, this one
 // looked for it under whatever directory the shell happened to be in.
 const CODEBASE_ROOT = dirname(fileURLToPath(import.meta.url));
-// Debug-only timing output, gated behind CAREER_OPS_DEBUG=1 so normal runs are
+// Debug-only timing output, gated behind PROJECT_X_DEBUG=1 so normal runs are
 // unchanged and no new stderr appears for users.
-const DEBUG = process.env.CAREER_OPS_DEBUG === '1';
+const DEBUG = process.env.PROJECT_X_DEBUG === '1';
 const STATES_PATH = join(CODEBASE_ROOT, 'templates/states.yml');
 const HEADER = '| # | Date | Company | Role | Score | Status | PDF | Report | Notes |';
 const SEPARATOR = '|---|------|---------|------|-------|--------|-----|--------|-------|';
@@ -290,9 +290,9 @@ export function openDb(DatabaseSync, path = defaultDbPath()) {
 
 function loadStates(ctx) {
   if (!existsSync(STATES_PATH)) {
-    // No longer "run from the career-ops root" advice: the path is anchored to
+    // No longer "run from the project-x root" advice: the path is anchored to
     // the module, so a miss here is a broken install, not a wrong cwd.
-    ctx.error(`Error: ${STATES_PATH} not found — cannot validate statuses (broken install: templates/states.yml ships with career-ops).`);
+    ctx.error(`Error: ${STATES_PATH} not found — cannot validate statuses (broken install: templates/states.yml ships with project-x).`);
     throw new TrackerExit(1);
   }
   const doc = loadYaml(readFileSync(STATES_PATH, 'utf-8'));
@@ -350,7 +350,7 @@ function repairPlaceholder(cell) {
  * vanished on export — silently, over the user's own tracker with `--out`.
  *
  * TWO detection passes, and the second one matters. `isHeaderRow` only fires
- * when the alias table resolves the FULL schema, so a header career-ops cannot
+ * when the alias table resolves the FULL schema, so a header project-x cannot
  * name — a Spanish `| # | Fecha | Empresa | Puesto | Puntuación | Estado | … |`,
  * where `puntuación` and `estado` are absent from tracker-aliases.json — records
  * no layout at all and exports as the English default (PR #3794 review). Falling
@@ -1073,7 +1073,7 @@ function parseExtras(raw) {
  *   empty header means the source had no header row (legacy positional table).
  * @returns {{header: string, separator: string, body: string[], dropped: string[]}}
  *   `dropped` names every column carrying content this export cannot place —
- *   empty for every layout career-ops can reproduce.
+ *   empty for every layout project-x can reproduce.
  */
 /**
  * The recorded source layout, decoded from `meta` with safe defaults.
@@ -1198,7 +1198,7 @@ async function exportMd(args, ctx) {
       ...secondary.map(r => `row #${r.id} (${r.company} — ${r.role}) belongs to a later table; the rebuilt one has no place for it`),
     ];
     // Never lose anything quietly. Worth reporting even though the rebuild above
-    // leaves `losses` empty for every file career-ops itself produces: it is
+    // leaves `losses` empty for every file project-x itself produces: it is
     // what turns data loss into a decision the user makes.
     if (losses.length) {
       ctx.error(`Warning: ${losses.length} item(s) in ${ctx.mdPath} cannot be reproduced by export and will be dropped:`);
@@ -1397,7 +1397,7 @@ export async function runTracker(command, args = [], options = {}) {
     dbPath() {
       const path = resolveDbPath(mdPath, options.dbPath);
       // SQLite must never open the source of truth itself (an explicit
-      // CAREER_OPS_TRACKER_DB could point both names at the same file). Checked
+      // PROJECT_X_TRACKER_DB could point both names at the same file). Checked
       // where the path is used rather than up front, so a command that never
       // opens the index is not refused over it.
       if (resolve(mdPath) === resolve(path)) {
@@ -1444,8 +1444,8 @@ if (isMainModule(import.meta.url)) {
     validateFlags(args, known, usage, { valueFlags, requireOperand: true });
   }
   runTracker(command, args, {
-    mdPath: resolveTrackerPath(getCareerOpsRoot()),
-    dbPath: process.env.CAREER_OPS_TRACKER_DB,
+    mdPath: resolveTrackerPath(getProjectXRoot()),
+    dbPath: process.env.PROJECT_X_TRACKER_DB,
   }).then(
     (code) => { process.exitCode = code; },
     (err) => {

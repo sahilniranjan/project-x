@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/santifer/career-ops/dashboard/internal/model"
-	"github.com/santifer/career-ops/dashboard/internal/theme"
+	"github.com/santifer/project-x/dashboard/internal/model"
+	"github.com/santifer/project-x/dashboard/internal/theme"
 )
 
 func TestViewerDropsTerminalControlsFromReportText(t *testing.T) {

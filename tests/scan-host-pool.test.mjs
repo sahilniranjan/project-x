@@ -37,7 +37,7 @@ test('the env values reach the limits the scan uses', () => {
     `const m = await import(${JSON.stringify(SCAN_URL)}); console.log(m.SCAN_CONCURRENCY, m.HOST_CONCURRENCY, m.VERIFY_CONCURRENCY);`,
   ], {
     encoding: 'utf8',
-    env: { ...process.env, CAREER_OPS_SCAN_CONCURRENCY: '32', CAREER_OPS_SCAN_HOST_CONCURRENCY: '4' },
+    env: { ...process.env, PROJECT_X_SCAN_CONCURRENCY: '32', PROJECT_X_SCAN_HOST_CONCURRENCY: '4' },
   });
   assert.equal(child.status, 0, child.stderr);
   assert.equal(child.stdout.trim(), '32 4 10');

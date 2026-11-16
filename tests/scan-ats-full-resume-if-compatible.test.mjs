@@ -12,14 +12,14 @@ import { pass, fail, rmSync, ROOT, NODE } from './helpers.mjs';
 function childEnv(dir) {
   return {
     ...process.env,
-    CAREER_OPS_ROOT: dir,
-    CAREER_OPS_DATA_DIR: '',
-    CAREER_OPS_PROFILE: '',
-    CAREER_OPS_PORTALS: '',
-    CAREER_OPS_PIPELINE: '',
-    CAREER_OPS_SCAN_HISTORY: '',
-    CAREER_OPS_TRACKER: '',
-    CAREER_OPS_DNS_LOOKUPS_PER_MIN: '0',
+    PROJECT_X_ROOT: dir,
+    PROJECT_X_DATA_DIR: '',
+    PROJECT_X_PROFILE: '',
+    PROJECT_X_PORTALS: '',
+    PROJECT_X_PIPELINE: '',
+    PROJECT_X_SCAN_HISTORY: '',
+    PROJECT_X_TRACKER: '',
+    PROJECT_X_DNS_LOOKUPS_PER_MIN: '0',
   };
 }
 

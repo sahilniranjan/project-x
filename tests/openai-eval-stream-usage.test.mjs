@@ -49,7 +49,7 @@ function evaluate(usageChunks, extraEnv = {}, expectStatus = 0) {
   ], {
     cwd: work, encoding: 'utf-8', timeout: 30_000,
     env: {
-      PATH: process.env.PATH, HOME: work, CAREER_OPS_ROOT: work,
+      PATH: process.env.PATH, HOME: work, PROJECT_X_ROOT: work,
       OPENAI_API_KEY: 'fixture-key', REQUEST_CAPTURE: capture,
       USAGE_CHUNKS: JSON.stringify(usageChunks), ...extraEnv,
     },

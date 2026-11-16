@@ -8,9 +8,9 @@ Med `language.modes_dir: modes/nb` er dette søknadsmoden (`apply`). Interaktiv 
 
 ## Scope
 
-Arbeid bare inne i denne checkouten. Kjør `node apply-scope.mjs root`, og les eller søk bare i mappene den skriver ut. Listen er denne checkouten, pluss dataroten når `CAREER_OPS_ROOT` eller `CAREER_OPS_DATA_DIR` er satt.
+Arbeid bare inne i denne checkouten. Kjør `node apply-scope.mjs root`, og les eller søk bare i mappene den skriver ut. Listen er denne checkouten, pluss dataroten når `PROJECT_X_ROOT` eller `PROJECT_X_DATA_DIR` er satt.
 
-Ikke søk i hjemmemappen. Ikke grep i eller åpne en annen career-ops-installasjon.
+Ikke søk i hjemmemappen. Ikke grep i eller åpne en annen project-x-installasjon.
 
 Åpne skjemaet i en Playwright-nettleser dette prosjektet starter. Kjør `node apply-scope.mjs launch-options` og gi det objektet til `chromium.launch`. Ikke kall `chromium.connect` eller `connectOverCDP`. Ikke les `DevToolsActivePort`. Ikke gi en remote-debugging-port eller en Chrome-brukermappe.
 
@@ -308,7 +308,7 @@ For hvert spørsmål, lag svaret slik:
 2. **Tidligere Section H / Application Answers**: Finnes et utkast eller endelig svar, bruk det som grunnlag og finpuss
 3. **Tonen "Jeg velger dere"**: Samme rammeverk som auto-pipeline -- selvsikker, ikke bønnfallende
 4. **Spesifisitet**: Vis til noe konkret fra annonsen som er synlig på skjermen. I offentlig sektor: svar punkt for punkt på kvalifikasjonskravene i annonsen
-5. **career-ops proof point**: Ta med under "Tilleggsopplysninger" hvis det finnes et slikt felt
+5. **project-x proof point**: Ta med under "Tilleggsopplysninger" hvis det finnes et slikt felt
 6. **Rekrutterersidens risikokart**: Bruk `modes/heuristics/recruiter-side.md` til å finne hvilken tvil spørsmålet prøver å løse (motivasjon, stack, logistikk, lønn, arbeidstillatelse, tilgjengelighet, senioritet), og svar direkte på den tvilen.
 7. **Disiplin ved opplysninger**: Svar sant på logistiske spørsmål når de stilles, men gi ikke fra deg sensitive opplysninger eller opplysninger bare HR trenger, i svar om motivasjon eller match.
 
@@ -430,7 +430,7 @@ Hvis kandidaten bekrefter at søknaden er sendt:
 1. Oppdater status til Applied med den kanoniske CLI-en: `node set-status.mjs --report <report#> Applied` (rediger aldri tabellen for hånd). Sendte kandidaten søknaden en annen dag enn i dag, legg til `--on YYYY-MM-DD` med den faktiske datoen -- statusloggen skal registrere når det skjedde, ikke når det ble skrevet inn.
 2. Legg opp oppfølgingsplanen: kjør `node followup-seed.mjs {num} --json` (der `{num}` er radnummeret i trackeren). Søkte kandidaten en annen dag enn i dag, gi `--date YYYY-MM-DD` med den faktiske datoen. Den er idempotent, så det er trygt å kjøre den på nytt. (`--on` og `--date` er samme begrep -- den faktiske innsendingsdatoen -- under hvert scripts eget flaggnavn; gi samme verdi til begge.) Hopp over steget når `config/profile.yml` setter `follow_ups.enabled: false`. Har annonsen en søknadsfrist, vurderer en offentlig arbeidsgiver søkerne først etter fristen; en oppfølging før fristen er ikke nyttig.
 3. Oppdater reportens seksjon `## Application Answers` med de endelige feltverdiene og `**State:** submitted`
-4. Foreslå neste steg: kjør `contacto`-moden (`/career-ops contacto` der den er tilgjengelig) for LinkedIn-outreach. Dette er en første kontakt, ikke en oppfølging, så foreslå den selv når `follow_ups.enabled` er `false`.
+4. Foreslå neste steg: kjør `contacto`-moden (`/project-x contacto` der den er tilgjengelig) for LinkedIn-outreach. Dette er en første kontakt, ikke en oppfølging, så foreslå den selv når `follow_ups.enabled` er `false`.
 
 **Bekreftet feil i CV-verifiseringen hos denne leverandøren? Sjekk resten av pipelinen (#1870).** Bekrefter kandidaten at ATS-en stille droppet eller endret CV-innhold som ble sendt (se SuccessFactors-quirken nedenfor), behandle det ikke som et enkelttilfelle. Tracker-radene i `data/applications.md` har ikke et kanonisk felt for ATS-leverandør, så grep ikke i trackerteksten etter et leverandørnavn -- det bommer stille. Finn i stedet leverandøren per rad fra den lenkede reportens `**URL:**`-felt:
 - For leverandører med tydelig fingeravtrykk (Greenhouse, Lever, Ashby, Workday, iCIMS), match URL-ens vertsnavn slik `detectVendor()` i `analyze-patterns.mjs` gjør -- gjenbruk den funksjonen/mønsteret i stedet for å utlede det på nytt, så de to holder seg i takt.

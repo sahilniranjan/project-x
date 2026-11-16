@@ -1,9 +1,9 @@
 // tests/plugins-data-root.test.mjs — Bugs 2 & 3 regression:
 //   Bug 2: plugins.mjs must derive APPLICATIONS_PATH and PIPELINE_PATH from
-//     the data root (CAREER_OPS_ROOT), not from the code directory.
+//     the data root (PROJECT_X_ROOT), not from the code directory.
 //   Bug 3: buildSnapshot() must parse pipeline.md checklist entries, not a table.
 //
-// Imports the REAL plugins.mjs with CAREER_OPS_ROOT set before the dynamic
+// Imports the REAL plugins.mjs with PROJECT_X_ROOT set before the dynamic
 // import so the module-level constants are evaluated against the temp root.
 // Uses _testPaths and _testBuildSnapshot — the minimal named exports added to
 // plugins.mjs to make its internal constants and snapshot function inspectable
@@ -17,14 +17,14 @@ import { canonicalizeTrackerPath } from '../path-resolver.mjs';
 
 console.log('\nplugins — data-root path resolution and buildSnapshot pipeline parser');
 
-const dir = mkdtempSync(join(tmpdir(), 'career-ops-plugins-'));
+const dir = mkdtempSync(join(tmpdir(), 'project-x-plugins-'));
 // test-all runs this file in a shared process: restore, don't just delete.
-const prevRoot = process.env.CAREER_OPS_ROOT;
+const prevRoot = process.env.PROJECT_X_ROOT;
 try {
-  // Set CAREER_OPS_ROOT BEFORE importing plugins.mjs. The module-level
+  // Set PROJECT_X_ROOT BEFORE importing plugins.mjs. The module-level
   // constants DATA_ROOT / APPLICATIONS_PATH / PIPELINE_PATH are evaluated
   // once at import time, so the env must be in place before that happens.
-  process.env.CAREER_OPS_ROOT = dir;
+  process.env.PROJECT_X_ROOT = dir;
 
   // Write a real pipeline.md with checklist entries so buildSnapshot() reads
   // real content. scan.mjs (imported transitively by plugins.mjs) also calls
@@ -39,7 +39,7 @@ try {
   writeFileSync(join(dir, 'data', 'applications.md'), '# Applications Tracker\n');
 
   // Import the REAL plugins.mjs. The '?root=...' query busts the ESM cache so
-  // the module is re-evaluated with the current CAREER_OPS_ROOT even if an
+  // the module is re-evaluated with the current PROJECT_X_ROOT even if an
   // earlier test in the same test-all.mjs process already imported it (or a
   // module that transitively imports it) without that env var set.
   const { _testPaths, _testBuildSnapshot } = await import(
@@ -84,7 +84,7 @@ try {
   }
 
 } finally {
-  if (prevRoot === undefined) delete process.env.CAREER_OPS_ROOT;
-  else process.env.CAREER_OPS_ROOT = prevRoot;
+  if (prevRoot === undefined) delete process.env.PROJECT_X_ROOT;
+  else process.env.PROJECT_X_ROOT = prevRoot;
   rmSync(dir, { recursive: true, force: true });
 }

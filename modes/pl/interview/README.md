@@ -18,7 +18,7 @@ Zestaw skilli wielokrotnego użytku do kompleksowego przygotowania do rozmów re
 
 ## Konwencje plików
 
-Te skille zakładają, że istnieją następujące pliki (domyślne w career-ops):
+Te skille zakładają, że istnieją następujące pliki (domyślne w project-x):
 
 | Plik | Przeznaczenie |
 |---|---|

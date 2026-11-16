@@ -1,7 +1,7 @@
-// CAREER_OPS_PIPELINE (#2271) moves a search lane's inbox to its own file, and
+// PROJECT_X_PIPELINE (#2271) moves a search lane's inbox to its own file, and
 // scan.mjs writes new postings there. The pipeline mode and the scan's closing
 // hint have to point at the same file, or the lane's postings stay `- [ ]`
-// while `/career-ops pipeline` processes the main inbox (#6379).
+// while `/project-x pipeline` processes the main inbox (#6379).
 //
 // Run:  node --test tests/pipeline-lane-inbox.test.mjs
 
@@ -25,16 +25,16 @@ function section(text, start, end) {
   return text.slice(from, to);
 }
 
-test('the scan hint names the lane inbox when CAREER_OPS_PIPELINE is set', () => {
+test('the scan hint names the lane inbox when PROJECT_X_PIPELINE is set', () => {
   const hint = pipelineRunHint('data/pipeline.bridge.md');
-  assert.match(hint, /\/career-ops pipeline data\/pipeline\.bridge\.md /);
+  assert.match(hint, /\/project-x pipeline data\/pipeline\.bridge\.md /);
 });
 
 test('the scan hint is unchanged without a lane', () => {
-  // '' and not undefined: undefined takes the default, process.env.CAREER_OPS_PIPELINE,
+  // '' and not undefined: undefined takes the default, process.env.PROJECT_X_PIPELINE,
   // so a developer with a lane set would see this fail.
-  assert.equal(pipelineRunHint(''), '→ Run /career-ops pipeline to evaluate new offers.');
-  assert.equal(pipelineRunHint('   '), '→ Run /career-ops pipeline to evaluate new offers.');
+  assert.equal(pipelineRunHint(''), '→ Run /project-x pipeline to evaluate new offers.');
+  assert.equal(pipelineRunHint('   '), '→ Run /project-x pipeline to evaluate new offers.');
 });
 
 test('the pipeline mode takes a named file first, then the path scan.mjs writes to', () => {
@@ -49,7 +49,7 @@ test('the pipeline mode takes a named file first, then the path scan.mjs writes 
   assert.match(which, /Do not fall back to `data\/pipeline\.md`/);
 });
 
-// scan.mjs loads the data root's .env before it reads CAREER_OPS_PIPELINE, so a
+// scan.mjs loads the data root's .env before it reads PROJECT_X_PIPELINE, so a
 // lane set only there must still reach the mode (a shell-only read misses it).
 test('the command the mode runs resolves a lane set only in the data root .env', () => {
   const which = section(mode, '## Which inbox', '## Liveness sweep');
@@ -60,10 +60,10 @@ test('the command the mode runs resolves a lane set only in the data root .env',
 
   const dataRoot = mkdtempSync(join(tmpdir(), 'co-lane-env-'));
   try {
-    writeFileSync(join(dataRoot, '.env'), 'CAREER_OPS_PIPELINE=data/pipeline.bridge.md\n');
-    const env = { ...process.env, CAREER_OPS_DATA_DIR: dataRoot };
-    delete env.CAREER_OPS_PIPELINE;
-    delete env.CAREER_OPS_ROOT;
+    writeFileSync(join(dataRoot, '.env'), 'PROJECT_X_PIPELINE=data/pipeline.bridge.md\n');
+    const env = { ...process.env, PROJECT_X_DATA_DIR: dataRoot };
+    delete env.PROJECT_X_PIPELINE;
+    delete env.PROJECT_X_ROOT;
     const out = execFileSync(process.execPath, ['--input-type=module', '-e', script], { cwd: ROOT, env, encoding: 'utf-8' });
     assert.equal(out.trim(), 'data/pipeline.bridge.md');
   } finally {

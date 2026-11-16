@@ -296,10 +296,10 @@ function runCli(root, args, input, extraEnv = {}) {
     timeout: 60_000,
     env: {
       ...process.env,
-      CAREER_OPS_ROOT: root,
-      CAREER_OPS_PIPELINE: '',
-      CAREER_OPS_TRACKER: '',
-      CAREER_OPS_SCAN_HISTORY: '',
+      PROJECT_X_ROOT: root,
+      PROJECT_X_PIPELINE: '',
+      PROJECT_X_TRACKER: '',
+      PROJECT_X_SCAN_HISTORY: '',
       NO_COLOR: '1',
       ...extraEnv,
     },
@@ -348,7 +348,7 @@ test('a failed scan-history write still reports the jobs that were saved', () =>
   mkdirSync(history);
   try {
     const result = runCli(root, ['--json'], `https://www.linkedin.com/jobs/view/${A}\n`, {
-      CAREER_OPS_SCAN_HISTORY: history,
+      PROJECT_X_SCAN_HISTORY: history,
     });
     assert.equal(result.status, 0, `${result.stderr}\n${result.stdout}`);
     const parsed = JSON.parse(result.stdout);
@@ -368,7 +368,7 @@ test('a failed scan-history write says so in the normal output', () => {
   mkdirSync(history);
   try {
     const result = runCli(root, [], `https://www.linkedin.com/jobs/view/${A}\n`, {
-      CAREER_OPS_SCAN_HISTORY: history,
+      PROJECT_X_SCAN_HISTORY: history,
     });
     assert.equal(result.status, 0, `${result.stderr}\n${result.stdout}`);
     assert.match(result.stdout, /1 LinkedIn job added/);

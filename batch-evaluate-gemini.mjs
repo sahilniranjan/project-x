@@ -20,7 +20,7 @@ import { execFileSync, execFile } from 'child_process';
 import { promisify } from 'util';
 import { rejectPrivateOrInvalid, checkUrlLiveness, LIVENESS_CONTEXT_OPTIONS } from './liveness-browser.mjs';
 import { isClosureEvidence } from './liveness-core.mjs';
-import { getCareerOpsRoot, getProfilePath } from './path-resolver.mjs';
+import { getProjectXRoot, getProfilePath } from './path-resolver.mjs';
 import { withPipelineLock } from './pipeline-lock.mjs';
 import { replaceUserFile } from './tracker-utils.mjs';
 import { localToday } from './lib/local-today.mjs';
@@ -38,7 +38,7 @@ try {
   // The data root's .env first: doctor.mjs, remember-cli.mjs, scan.mjs and the
   // plugin engine all read it there. The working directory's .env, the only one
   // read before, still supplies what the data root's leaves unset.
-  config({ path: [join(getCareerOpsRoot(), '.env'), join(process.cwd(), '.env')] });
+  config({ path: [join(getProjectXRoot(), '.env'), join(process.cwd(), '.env')] });
 } catch {}
 
 import { GoogleGenerativeAI } from '@google/generative-ai';
@@ -52,7 +52,7 @@ import { installPiiInterceptor } from './lib/pii-interceptor.mjs';
 installPiiInterceptor();
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
-const DATA_ROOT = getCareerOpsRoot();
+const DATA_ROOT = getProjectXRoot();
 export const PATHS = {
   shared:      join(ROOT, 'modes', '_shared.md'),
   oferta:      join(ROOT, 'modes', 'oferta.md'),
@@ -271,7 +271,7 @@ language of the job description. Keep the SCORE_SUMMARY field names and the LEGI
 exactly as specified below. The output language must not affect the match score.
 ` : '';
 
-    systemPromptTemplate = `You are career-ops, an AI job search assistant evaluating a job offer in single-pass CV match mode.
+    systemPromptTemplate = `You are project-x, an AI job search assistant evaluating a job offer in single-pass CV match mode.
 Your objective is to extract candidate CV facts and evaluate candidate alignment with the Job Description in a single, fast inference call to minimize token overhead, bypassing the multi-step reasoning chain (Blocks A through G).
 
 ═══════════════════════════════════════════════════════
@@ -321,7 +321,7 @@ USER HOUSE RULES & SCORING RULES (_custom.md)
 ${customContent}
 ` : '';
 
-  systemPromptTemplate = `You are career-ops, an AI-powered job search assistant.
+  systemPromptTemplate = `You are project-x, an AI-powered job search assistant.
 You evaluate job offers against the user's CV using a structured A-G scoring system.
 
 ═══════════════════════════════════════════════════════

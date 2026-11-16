@@ -12,7 +12,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/santifer/career-ops/dashboard/internal/ui/screens"
+	"github.com/santifer/project-x/dashboard/internal/ui/screens"
 )
 
 type pdfNodeCapture struct {
@@ -26,10 +26,10 @@ type pdfNodeCapture struct {
 // A copy of this test executable serves as node, so the regression exercises
 // real process arguments/environment without Chromium or a shell fixture.
 func init() {
-	if capture := os.Getenv("CAREER_OPS_TEST_PDF_CAPTURE"); capture != "" {
+	if capture := os.Getenv("PROJECT_X_TEST_PDF_CAPTURE"); capture != "" {
 		cwd, _ := os.Getwd()
 		payload, _ := json.Marshal(pdfNodeCapture{os.Args[1:], cwd,
-			os.Getenv("CAREER_OPS_ROOT"), os.Getenv("CAREER_OPS_TRACKER"), os.Getenv("CAREER_OPS_PDF_INDEX")})
+			os.Getenv("PROJECT_X_ROOT"), os.Getenv("PROJECT_X_TRACKER"), os.Getenv("PROJECT_X_PDF_INDEX")})
 		if err := os.WriteFile(capture, payload, 0o600); err != nil {
 			os.Exit(1)
 		}
@@ -44,7 +44,7 @@ func init() {
 		if len(os.Args) >= 4 {
 			pdfPath := os.Args[3]
 			_ = os.MkdirAll(filepath.Dir(pdfPath), 0o755)
-			if os.Getenv("CAREER_OPS_TEST_PDF_OVERFLOW") == "1" {
+			if os.Getenv("PROJECT_X_TEST_PDF_OVERFLOW") == "1" {
 				draft := strings.TrimSuffix(pdfPath, ".pdf") + ".overflow.pdf"
 				_ = os.WriteFile(draft, []byte("%PDF draft"), 0o644)
 				_, _ = os.Stderr.WriteString("⚠️  CV is 2 pages; the allowed maximum is 1 page. Trim lower-priority bullets, older roles, secondary projects, or the competencies strip, then regenerate. Overflow is warning-only by default; use --strict-pages to reject it.\n")
@@ -75,7 +75,7 @@ func fakeNode(t *testing.T) (opened *string) {
 		t.Fatal(err)
 	}
 	t.Setenv("PATH", binDir+string(os.PathListSeparator)+os.Getenv("PATH"))
-	t.Setenv("CAREER_OPS_TEST_PDF_CAPTURE", filepath.Join(t.TempDir(), "capture.json"))
+	t.Setenv("PROJECT_X_TEST_PDF_CAPTURE", filepath.Join(t.TempDir(), "capture.json"))
 	previous := runOpenCommand
 	t.Cleanup(func() { runOpenCommand = previous })
 	var target string
@@ -91,7 +91,7 @@ func TestRunGeneratePDFOverflowWithPreviousPDFIsNotGenerated(t *testing.T) {
 	// place. Opening it as "generated" would show the old CV as the new one.
 	root := t.TempDir()
 	opened := fakeNode(t)
-	t.Setenv("CAREER_OPS_TEST_PDF_OVERFLOW", "1")
+	t.Setenv("PROJECT_X_TEST_PDF_OVERFLOW", "1")
 	previousPDF := filepath.Join(root, "output", "cv-acme.pdf")
 	if err := os.MkdirAll(filepath.Dir(previousPDF), 0o755); err != nil {
 		t.Fatal(err)
@@ -99,7 +99,7 @@ func TestRunGeneratePDFOverflowWithPreviousPDFIsNotGenerated(t *testing.T) {
 	if err := os.WriteFile(previousPDF, []byte("%PDF previous"), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	msg := runGeneratePDF(screens.PipelineGeneratePDFMsg{CareerOpsPath: root, HTMLPath: "output/cv-acme.html", PDFPath: "output/cv-acme.pdf", ReportNumber: "007"})().(screens.PipelinePDFGeneratedMsg)
+	msg := runGeneratePDF(screens.PipelineGeneratePDFMsg{ProjectXPath: root, HTMLPath: "output/cv-acme.html", PDFPath: "output/cv-acme.pdf", ReportNumber: "007"})().(screens.PipelinePDFGeneratedMsg)
 	if msg.Path != "" || *opened != "" {
 		t.Fatalf("an overflow must not open the previous PDF: %+v (opened %q)", msg, *opened)
 	}
@@ -116,8 +116,8 @@ func TestRunGeneratePDFOverflowWithNoPDFIsNotGenerated(t *testing.T) {
 	// this check the dashboard reported "PDF generated but could not open".
 	root := t.TempDir()
 	opened := fakeNode(t)
-	t.Setenv("CAREER_OPS_TEST_PDF_OVERFLOW", "1")
-	msg := runGeneratePDF(screens.PipelineGeneratePDFMsg{CareerOpsPath: root, HTMLPath: "output/cv-acme.html", PDFPath: "output/cv-acme.pdf", ReportNumber: "007"})().(screens.PipelinePDFGeneratedMsg)
+	t.Setenv("PROJECT_X_TEST_PDF_OVERFLOW", "1")
+	msg := runGeneratePDF(screens.PipelineGeneratePDFMsg{ProjectXPath: root, HTMLPath: "output/cv-acme.html", PDFPath: "output/cv-acme.pdf", ReportNumber: "007"})().(screens.PipelinePDFGeneratedMsg)
 	if msg.Path != "" || *opened != "" {
 		t.Fatalf("nothing to open after an overflow: %+v (opened %q)", msg, *opened)
 	}
@@ -181,10 +181,10 @@ func TestRunGeneratePDFUsesCheckoutWithSelectedDataRoot(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Setenv("PATH", binDir+string(os.PathListSeparator)+os.Getenv("PATH"))
-	t.Setenv("CAREER_OPS_TEST_PDF_CAPTURE", capture)
-	t.Setenv("CAREER_OPS_ROOT", t.TempDir()) // --path must win over an inherited root
-	t.Setenv("CAREER_OPS_TRACKER", "custom/tracker.md")
-	t.Setenv("CAREER_OPS_PDF_INDEX", "custom-index.tsv")
+	t.Setenv("PROJECT_X_TEST_PDF_CAPTURE", capture)
+	t.Setenv("PROJECT_X_ROOT", t.TempDir()) // --path must win over an inherited root
+	t.Setenv("PROJECT_X_TRACKER", "custom/tracker.md")
+	t.Setenv("PROJECT_X_PDF_INDEX", "custom-index.tsv")
 	previous := runOpenCommand
 	t.Cleanup(func() { runOpenCommand = previous })
 	var opened string
@@ -193,7 +193,7 @@ func TestRunGeneratePDFUsesCheckoutWithSelectedDataRoot(t *testing.T) {
 		return nil
 	}
 	request := screens.PipelineGeneratePDFMsg{
-		CareerOpsPath: root, HTMLPath: "output/source CV.html", PDFPath: "output/tailored CV.pdf", Format: "a4", ReportNumber: "007",
+		ProjectXPath: root, HTMLPath: "output/source CV.html", PDFPath: "output/tailored CV.pdf", Format: "a4", ReportNumber: "007",
 	}
 	msg := runGeneratePDF(request)().(screens.PipelinePDFGeneratedMsg)
 	if msg.Err != "" {
@@ -234,8 +234,8 @@ func TestRunGeneratePDFRejectsDataOnlyScript(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Chdir(root)
-	msg := runGeneratePDF(screens.PipelineGeneratePDFMsg{CareerOpsPath: root})().(screens.PipelinePDFGeneratedMsg)
-	if !strings.Contains(msg.Err, "need generate-pdf.mjs in the career-ops checkout") {
+	msg := runGeneratePDF(screens.PipelineGeneratePDFMsg{ProjectXPath: root})().(screens.PipelinePDFGeneratedMsg)
+	if !strings.Contains(msg.Err, "need generate-pdf.mjs in the project-x checkout") {
 		t.Fatalf("data-only script must not run: %+v", msg)
 	}
 }

@@ -2,8 +2,8 @@
 // against the data root when it is not under the working directory (#6620).
 //
 // modes/oferta.md step 1b passes `reports/{###}-….md`, relative to the data
-// root. With the user layer outside the checkout (a .career-ops-data marker or
-// CAREER_OPS_ROOT), keyword-match.mjs looked only under the working directory
+// root. With the user layer outside the checkout (a .project-x-data marker or
+// PROJECT_X_ROOT), keyword-match.mjs looked only under the working directory
 // and stopped with "Report not found".
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
@@ -70,7 +70,7 @@ writeFileSync(join(staleDir, 'reports', '002-only-in-cwd-2026-01-01.md'), [
 const run = (args, cwd = workDir) => spawnSync(NODE, [join(ROOT, 'keyword-match.mjs'), ...args], {
   encoding: 'utf-8',
   cwd,
-  env: { ...process.env, CAREER_OPS_ROOT: dataRoot },
+  env: { ...process.env, PROJECT_X_ROOT: dataRoot },
 });
 
 try {

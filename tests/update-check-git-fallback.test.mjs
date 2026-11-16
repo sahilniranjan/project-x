@@ -55,21 +55,21 @@ function fakeGit(result) {
 const run = (argv, { curl, git, local = '1.33.0' }) =>
   checkStatus(argv, {}, { curlGet: curl.fn, gitRemoteVersion: git.fn, localVersion: () => local, readMarker: () => null });
 
-// ── 1. highestReleaseTag(): only career-ops release tags count ──────────
+// ── 1. highestReleaseTag(): only project-x release tags count ──────────
 {
   const out = [
-    'aaa\trefs/tags/career-ops-v1.9.0',
-    'bbb\trefs/tags/career-ops-v1.25.0',
-    'ccc\trefs/tags/career-ops-v1.25.0^{}',
+    'aaa\trefs/tags/project-x-v1.9.0',
+    'bbb\trefs/tags/project-x-v1.25.0',
+    'ccc\trefs/tags/project-x-v1.25.0^{}',
     'ddd\trefs/tags/web-v99.0.0',
     'eee\trefs/tags/v50.0.0',
-    'fff\trefs/tags/career-ops-v1.30.0-preview-v99.0.0',
-    'ggg\trefs/tags/career-ops-vpreview-v98.0.0',
-    'hhh\trefs/tags/career-ops-v1.24.0\r',
+    'fff\trefs/tags/project-x-v1.30.0-preview-v99.0.0',
+    'ggg\trefs/tags/project-x-vpreview-v98.0.0',
+    'hhh\trefs/tags/project-x-v1.24.0\r',
   ].join('\n');
   const got = highestReleaseTag(out);
   if (got === '1.25.0') {
-    pass('highestReleaseTag picks the semver-highest career-ops release (1.25.0 > 1.9.0, not lexical)');
+    pass('highestReleaseTag picks the semver-highest project-x release (1.25.0 > 1.9.0, not lexical)');
   } else {
     fail(`highestReleaseTag → ${JSON.stringify(got)}, expected "1.25.0"`);
   }
@@ -77,15 +77,15 @@ const run = (argv, { curl, git, local = '1.33.0' }) =>
   const decoys = [
     ['the sibling web-v* component', 'x\trefs/tags/web-v99.0.0'],
     ['a historical bare tag', 'x\trefs/tags/v50.0.0'],
-    ['a prefixed tag with trailing content', 'x\trefs/tags/career-ops-v1.30.0-preview-v99.0.0'],
-    ['a prefixed tag with a non-version body', 'x\trefs/tags/career-ops-vpreview-v98.0.0'],
+    ['a prefixed tag with trailing content', 'x\trefs/tags/project-x-v1.30.0-preview-v99.0.0'],
+    ['a prefixed tag with a non-version body', 'x\trefs/tags/project-x-vpreview-v98.0.0'],
   ];
   for (const [label, line] of decoys) {
-    const res = highestReleaseTag(`a\trefs/tags/career-ops-v1.2.0\n${line}`);
+    const res = highestReleaseTag(`a\trefs/tags/project-x-v1.2.0\n${line}`);
     if (res === '1.2.0') pass(`highestReleaseTag ignores ${label}`);
     else fail(`highestReleaseTag took ${label}: ${JSON.stringify(res)}`);
   }
-  if (highestReleaseTag('a\trefs/tags/career-ops-v1.3.0\r\n') === '1.3.0') pass('highestReleaseTag strips a trailing \\r (CRLF-translated output)');
+  if (highestReleaseTag('a\trefs/tags/project-x-v1.3.0\r\n') === '1.3.0') pass('highestReleaseTag strips a trailing \\r (CRLF-translated output)');
   else fail('highestReleaseTag missed a CRLF-terminated tag');
   if (highestReleaseTag('') === '' && highestReleaseTag(null) === '' && highestReleaseTag('a\trefs/heads/main') === '') {
     pass('highestReleaseTag returns "" on empty, null and tag-less input');
@@ -115,7 +115,7 @@ const run = (argv, { curl, git, local = '1.33.0' }) =>
 // ── 3. git reachable but no release tag → no-remote-version, never offline ──
 {
   const res = await run(MAIN, { curl: fakeCurl(), git: fakeGit({ ok: true, version: '' }) });
-  if (res.status === 'no-remote-version' && /reachable but returned no career-ops release tags/.test(res.detail || '')) {
+  if (res.status === 'no-remote-version' && /reachable but returned no project-x release tags/.test(res.detail || '')) {
     pass('git reachable without a release tag → no-remote-version (the network is fine; the version is missing)');
   } else {
     fail(`git reachable without a release tag → ${JSON.stringify(res)}`);

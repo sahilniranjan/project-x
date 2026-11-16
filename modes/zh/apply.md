@@ -8,9 +8,9 @@
 
 ## Scope
 
-只在本仓库内工作。运行 `node apply-scope.mjs root`，只读取或搜索它输出的目录。这个列表包括本仓库，以及设置了 `CAREER_OPS_ROOT` 或 `CAREER_OPS_DATA_DIR` 时的数据根目录。
+只在本仓库内工作。运行 `node apply-scope.mjs root`，只读取或搜索它输出的目录。这个列表包括本仓库，以及设置了 `PROJECT_X_ROOT` 或 `PROJECT_X_DATA_DIR` 时的数据根目录。
 
-不要搜索用户主目录。不要 grep 或打开另一份 career-ops 安装。
+不要搜索用户主目录。不要 grep 或打开另一份 project-x 安装。
 
 在本项目启动的 Playwright 浏览器中打开表单。运行 `node apply-scope.mjs launch-options`，把输出的对象传给 `chromium.launch`。不要调用 `chromium.connect` 或 `connectOverCDP`。不要读取 `DevToolsActivePort`。不要传入远程调试端口或 Chrome 用户数据目录。
 
@@ -270,7 +270,7 @@
 2. **之前的 Section H / Application Answers**：如果已有草稿或最终回答，以它为基础进一步完善
 3. **"我选择了你"的语气**：与 auto-pipeline 使用同一套框架
 4. **具体**：引用屏幕上 JD 中的某个具体内容
-5. **career-ops 成果佐证**：如果表单有"其他信息"之类的字段，写进去
+5. **project-x 成果佐证**：如果表单有"其他信息"之类的字段，写进去
 6. **招聘方视角的顾虑**：用 `modes/heuristics/recruiter-side.md` 判断这个问题想消除的是哪种疑虑（动机、技术栈匹配、实际安排、薪资、工作许可、到岗时间、级别），并直接回应这种疑虑。
 7. **信息披露的分寸**：被问到实际安排类问题时如实回答，但不要在无关的动机/匹配类回答中主动透露敏感或只该给 HR 的细节。
 
@@ -356,7 +356,7 @@ node application-answers.mjs --report reports/NNN-company-role-date.md --input a
 1. 用规范的 CLI 把状态更新为 Applied：`node set-status.mjs --report <report#> Applied`（绝不手动编辑表格）。如果候选人不是今天提交的，加上 `--on YYYY-MM-DD` 写明实际提交日期：status-log 记录的应该是事情发生的时间，而不是录入的时间。
 2. 生成跟进计划：运行 `node followup-seed.mjs {num} --json`（`{num}` 是 tracker 的行号）。如果候选人不是今天投递的，传入 `--date YYYY-MM-DD` 写明实际提交日期。这个命令是幂等的，重复运行是安全的。（`--on` 和 `--date` 是同一个概念，即实际提交日期，只是两个脚本的参数名不同；两边传同一个值。）如果 `config/profile.yml` 设置了 `follow_ups.enabled: false`，跳过这一步。
 3. 用最终的字段值刷新报告的 `## Application Answers` 部分，并标注 `**State:** submitted`
-4. 建议下一步：运行 `contacto` 模式（支持时用 `/career-ops contacto`）做 LinkedIn 联系。这是第一次联系，不是跟进，所以即使 `follow_ups.enabled` 为 `false` 也要建议。
+4. 建议下一步：运行 `contacto` 模式（支持时用 `/project-x contacto`）做 LinkedIn 联系。这是第一次联系，不是跟进，所以即使 `follow_ups.enabled` 为 `false` 也要建议。
 
 **在某个 ATS 厂商处确认出现了简历被篡改的问题？检查流程中的其他申请（#1870）。** 如果候选人确认 ATS 悄悄丢弃或改动了他提交的简历内容（见下文 SuccessFactors 系列的问题），不要把它当作个例。`data/applications.md` 中的 tracker 行没有规范的 ATS 厂商字段，所以不要在 tracker 文本里 grep 厂商名称，那样会悄悄漏掉很多行。应该根据每一行关联报告的 `**URL:**` 字段判断厂商：
 - 对于特征明显的厂商（Greenhouse、Lever、Ashby、Workday、iCIMS），按 `analyze-patterns.mjs` 中 `detectVendor()` 的方式匹配 URL 的主机名。复用这个函数/规则，而不是自己重新推导，这样两边才能保持一致。
@@ -436,6 +436,6 @@ node application-answers.mjs --report reports/NNN-company-role-date.md --input a
 
 ### SuccessFactors 系列 — 上传的简历可能与系统存储的档案悄悄不一致（#1870）
 
-- **现象：** 有些 ATS 门户（已确认 SuccessFactors 系列，可能还有其他）只在第一次上传时解析并存储简历，之后重新上传或编辑档案时，不一定会重新解析。门户内部的记录可能悄悄偏离候选人以为自己提交的文件，尤其是在最初建档之后才添加的工作经历。没有报错，没有提醒，也不会向候选人显示差异；只有当下游有人（例如在电话中读回已存档案的招聘人员）注意到缺漏时，问题才会暴露。这与 #1560（career-ops 读取招聘页）和 #1741（恢复卡住的 pipeline）不同：这是雇主自己的系统损坏了提交的内容。
+- **现象：** 有些 ATS 门户（已确认 SuccessFactors 系列，可能还有其他）只在第一次上传时解析并存储简历，之后重新上传或编辑档案时，不一定会重新解析。门户内部的记录可能悄悄偏离候选人以为自己提交的文件，尤其是在最初建档之后才添加的工作经历。没有报错，没有提醒，也不会向候选人显示差异；只有当下游有人（例如在电话中读回已存档案的招聘人员）注意到缺漏时，问题才会暴露。这与 #1560（project-x 读取招聘页）和 #1741（恢复卡住的 pipeline）不同：这是雇主自己的系统损坏了提交的内容。
 - **助手：** 通过这类门户提交之后，如果门户提供"预览我的档案"、"查看已提交的简历"或"检查申请"之类的步骤，把它作为**必做的检查**告诉候选人，再结束申请流程；不要只确认上传成功就停下。如果候选人之后确认某个厂商出现了截断或不一致，在报告中标注出来，并提醒他抽查经过同一厂商、仍在进行中的其他申请（见上文步骤 9 的检查方法）：确认了一次，就说明该厂商其他进行中的申请也更可能出现同样的问题。
 - **候选人：** 如果有档案/简历预览步骤，使用它，并与自己实际的工作经历比对，确认无误后再认为申请完成。如果没有预览步骤，目前就无法核实门户实际存储了什么：把这当作一个已知的盲区，而不是认为没有消息就是没问题。

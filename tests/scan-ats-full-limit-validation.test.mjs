@@ -33,7 +33,7 @@ try {
     ok(`${args.join(' ').slice(0, 40)} is refused`, () => {
       const r = spawnSync(NODE, [join(ROOT, 'scan-ats-full.mjs'), ...args], {
         cwd: root, encoding: 'utf-8', timeout: 30000,
-        env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_DATA_DIR: '' },
+        env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_DATA_DIR: '' },
       });
       assert.strictEqual(r.status, 1, `exit ${r.status}: ${r.stderr}`);
       assert.match(r.stderr, /--limit expects a positive whole number of companies/, r.stderr);
@@ -45,7 +45,7 @@ try {
     ok(`${args.join(' ')} is refused`, () => {
       const r = spawnSync(NODE, [join(ROOT, 'scan-ats-full.mjs'), ...args], {
         cwd: root, encoding: 'utf-8', timeout: 30000,
-        env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_DATA_DIR: '' },
+        env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_DATA_DIR: '' },
       });
       assert.strictEqual(r.status, 1, `exit ${r.status}: ${r.stderr}`);
       assert.match(r.stderr, /--limit given 2 times; pass it once/, r.stderr);

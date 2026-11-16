@@ -1,6 +1,6 @@
 import { spawn, type ChildProcess } from "node:child_process";
 import fs from "node:fs";
-import { careerOpsRoot, rootScript } from "@/lib/career-ops";
+import { projectXRoot, rootScript } from "@/lib/project-x";
 import { writeTempPortals, cleanupTempPortals } from "./portals";
 import { ATS_SOURCES, type DiscoveredOffer, type ExploreFilters, type ScanEvent } from "@/lib/explore";
 
@@ -114,8 +114,8 @@ export function runDiscovery(filters: ExploreFilters, onEvent: (e: ScanEvent) =>
     if (useJson) args.push("--json", "--trace");
 
     const child = spawn(process.execPath, args, {
-      cwd: careerOpsRoot(),
-      env: { ...process.env, CAREER_OPS_PORTALS: tempPortals },
+      cwd: projectXRoot(),
+      env: { ...process.env, PROJECT_X_PORTALS: tempPortals },
     });
     opts.onChild?.(child);
 

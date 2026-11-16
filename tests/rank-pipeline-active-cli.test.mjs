@@ -7,7 +7,7 @@ import { execFileSync } from 'node:child_process';
 import { ROOT } from './helpers.mjs';
 import { envWithPathFirst, writeFakeCli } from './helpers/fake-cli.mjs';
 
-test('CAREER_OPS_CLI picks the ranking CLI when several are installed', () => {
+test('PROJECT_X_CLI picks the ranking CLI when several are installed', () => {
   const root = mkdtempSync(join(tmpdir(), 'rank-active-cli-'));
   try {
     mkdirSync(join(root, 'data'));
@@ -19,9 +19,9 @@ test('CAREER_OPS_CLI picks the ranking CLI when several are installed', () => {
         + `console.log('[{"id":0,"score":3,"reason":"Fixture match"}]');\n`);
     }
     const env = envWithPathFirst(join(root, 'bin'), {
-      CAREER_OPS_ROOT: root,
-      CAREER_OPS_CLI: 'opencode',
-      CAREER_OPS_RANK_CLI: '',
+      PROJECT_X_ROOT: root,
+      PROJECT_X_CLI: 'opencode',
+      PROJECT_X_RANK_CLI: '',
       RANK_CALL: join(root, 'call.txt'),
     });
     execFileSync(process.execPath, [join(ROOT, 'rank-pipeline.mjs'), '--dry-run'], { env, cwd: root });

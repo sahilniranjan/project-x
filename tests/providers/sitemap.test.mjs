@@ -196,7 +196,7 @@ try {
   let robotsCalls = 0;
   let robotsErr = null;
   try {
-    await make(async () => ({ allowed: false, code: 'robots_disallowed', reason: 'disallows /sitemap.xml for career-ops' }))
+    await make(async () => ({ allowed: false, code: 'robots_disallowed', reason: 'disallows /sitemap.xml for project-x' }))
       .fetch(ENTRY, { fetchText: async () => { robotsCalls++; return ''; } });
   } catch (err) { robotsErr = err; }
   if (robotsErr?.code === 'robots_disallowed' && /robots\.txt disallows/.test(robotsErr.message) && robotsCalls === 0) {
@@ -251,7 +251,7 @@ try {
   let nestedErr = '';
   const { lines: nestedWarn } = await captureWarnings(() => make(async (url) => (
     url.endsWith('/sitemap-jobs-2.xml')
-      ? { allowed: false, code: 'robots_disallowed', reason: 'disallows /sitemap-jobs-2.xml for career-ops' }
+      ? { allowed: false, code: 'robots_disallowed', reason: 'disallows /sitemap-jobs-2.xml for project-x' }
       : allowAll()
   )).fetch({ ...ENTRY, sitemap: { ...ENTRY.sitemap, index_filter: 'sitemap-jobs' } }, {
     fetchText: async (url) => {

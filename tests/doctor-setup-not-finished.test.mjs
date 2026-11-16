@@ -64,8 +64,8 @@ test('a checkout with every setup file still reads as ready', () => {
 test('a fresh checkout with a skill-entrypoint stub does not claim tools are ready', () => {
   const dir = checkout({ withSetup: false });
   try {
-    mkdirSync(join(dir, '.claude', 'skills', 'career-ops'), { recursive: true });
-    writeFileSync(join(dir, '.claude', 'skills', 'career-ops', 'SKILL.md'), '../../../.agents/skills/career-ops/SKILL.md\n');
+    mkdirSync(join(dir, '.claude', 'skills', 'project-x'), { recursive: true });
+    writeFileSync(join(dir, '.claude', 'skills', 'project-x', 'SKILL.md'), '../../../.agents/skills/project-x/SKILL.md\n');
     const { status, out } = runDoctor(dir);
     assert.equal(status, 1, out);
     assert.match(out, /Setup is not finished \(4 files missing:/);
@@ -150,14 +150,14 @@ test('a missing shell-selected profile exits non-zero', () => {
   try {
     rmSync(join(dir, 'config', 'profile.yml'));
     const named = join(dir, 'config', 'named-profile.yml');
-    const env = { ...process.env, NO_COLOR: '1', CAREER_OPS_ROOT: dir, CAREER_OPS_DATA_DIR: '', CAREER_OPS_PROFILE: named };
+    const env = { ...process.env, NO_COLOR: '1', PROJECT_X_ROOT: dir, PROJECT_X_DATA_DIR: '', PROJECT_X_PROFILE: named };
     const r = spawnSync(process.execPath, ['--import', pathToFileURL(PLAYWRIGHT_STUB).href, DOCTOR], {
       cwd: ROOT, encoding: 'utf-8', timeout: 60_000, env,
     });
     const out = `${r.stdout}${r.stderr}`;
     assert.equal(r.status, 1, out);
-    assert.match(out, /✗ config\/profile\.yml not found \(CAREER_OPS_PROFILE names /);
-    assert.doesNotMatch(out, /⚠ config\/profile\.yml not found \(CAREER_OPS_PROFILE names /);
+    assert.match(out, /✗ config\/profile\.yml not found \(PROJECT_X_PROFILE names /);
+    assert.doesNotMatch(out, /⚠ config\/profile\.yml not found \(PROJECT_X_PROFILE names /);
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
@@ -167,16 +167,16 @@ test('a missing default profile overridden by .env exits non-zero', () => {
   const dir = checkout({ withSetup: true });
   try {
     rmSync(join(dir, 'config', 'profile.yml'));
-    writeFileSync(join(dir, '.env'), 'CAREER_OPS_PROFILE=config/from-env.yml\n');
-    const env = { ...process.env, NO_COLOR: '1', CAREER_OPS_ROOT: dir, CAREER_OPS_DATA_DIR: '' };
-    delete env.CAREER_OPS_PROFILE;
+    writeFileSync(join(dir, '.env'), 'PROJECT_X_PROFILE=config/from-env.yml\n');
+    const env = { ...process.env, NO_COLOR: '1', PROJECT_X_ROOT: dir, PROJECT_X_DATA_DIR: '' };
+    delete env.PROJECT_X_PROFILE;
     const r = spawnSync(process.execPath, ['--import', pathToFileURL(PLAYWRIGHT_STUB).href, DOCTOR], {
       cwd: ROOT, encoding: 'utf-8', timeout: 60_000, env,
     });
     const out = `${r.stdout}${r.stderr}`;
     assert.equal(r.status, 1, out);
-    assert.match(out, /✗ config\/profile\.yml not found \(\.env sets CAREER_OPS_PROFILE=config\/from-env\.yml/);
-    assert.doesNotMatch(out, /⚠ config\/profile\.yml not found \(\.env sets CAREER_OPS_PROFILE=/);
+    assert.match(out, /✗ config\/profile\.yml not found \(\.env sets PROJECT_X_PROFILE=config\/from-env\.yml/);
+    assert.doesNotMatch(out, /⚠ config\/profile\.yml not found \(\.env sets PROJECT_X_PROFILE=/);
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
@@ -184,7 +184,7 @@ test('a missing default profile overridden by .env exits non-zero', () => {
 
 test('the onboard command quotes the script path and a data root that contains a space', () => {
   const parent = mkdtempSync(join(tmpdir(), 'doctor-quote-'));
-  const dir = join(parent, 'career ops $HOME');
+  const dir = join(parent, 'project x $HOME');
   mkdirSync(dir);
   copyFileSync(join(ROOT, 'package.json'), join(dir, 'package.json'));
   assert.equal(linkNodeModules(dir), null);

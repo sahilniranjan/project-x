@@ -6,7 +6,7 @@ on:
   # "skip-github-release": true in release-please-config.json, release-please
   # keeps opening and updating the release PR, but no longer creates tags or
   # releases: once the PR is merged, the maintainer creates each tag on its
-  # merge commit and publishes the release. Publishing a career-ops release is
+  # merge commit and publishes the release. Publishing a project-x release is
   # what publishes the npm scaffolder below. A release published with a
   # person's token triggers this event; one created with GITHUB_TOKEN would not.
   release:
@@ -14,7 +14,7 @@ on:
   # Manual re-publish: when a release was published but the npm publish failed,
   # dispatch this workflow from the release tag to publish the scaffolder at
   # that version without cutting a new release:
-  #   gh workflow run release.yml --ref career-ops-vX.Y.Z
+  #   gh workflow run release.yml --ref project-x-vX.Y.Z
   workflow_dispatch:
 
 permissions:
@@ -47,11 +47,11 @@ jobs:
           manifest-file: .release-please-manifest.json
 
   publish-npm:
-    # The npm scaffolder, once per career-ops release (a web-vX.Y.Z release
+    # The npm scaffolder, once per project-x release (a web-vX.Y.Z release
     # publishes nothing), or on a manual dispatch. It stays in this file: the
     # trusted publisher on npmjs.com is bound to the workflow filename
     # (release.yml). For a release, the checkout is the tagged commit.
-    if: ${{ (github.event_name == 'release' && startsWith(github.event.release.tag_name, 'career-ops-v')) || github.event_name == 'workflow_dispatch' }}
+    if: ${{ (github.event_name == 'release' && startsWith(github.event.release.tag_name, 'project-x-v')) || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -66,7 +66,7 @@ jobs:
           TAG: ${{ github.event.release.tag_name }}
         run: |
           ver=$(jq -r .version scaffolder/package.json)
-          if [ "$TAG" != "career-ops-v${ver}" ]; then
+          if [ "$TAG" != "project-x-v${ver}" ]; then
             echo "::error::release $TAG, but scaffolder/package.json is ${ver}: not publishing"
             exit 1
           fi
@@ -79,7 +79,7 @@ jobs:
       # setup-node ships an older npm, so upgrade before publishing.
       # The version is exact, not @latest: this step runs with id-token: write,
       # so @latest would hand publish rights to whatever npm release came out
-      # that day. 12.2.2 is the npm that published career-ops v1.39.0. Dependabot
+      # that day. 12.2.2 is the npm that published project-x v1.39.0. Dependabot
       # does not update a version inside a `run:` line, so bump it by hand.
       - name: Upgrade npm for trusted publishing
         run: npm install -g npm@12.2.2
@@ -93,8 +93,8 @@ jobs:
     # but one published any other way would become Latest, and
     # update-system.mjs resolves what to install from /releases/latest: it
     # refuses a web-* tag, so every install would stop getting updates until
-    # the next career-ops release. After any web release, re-assert the
-    # career-ops release. Reads the version from the manifest of the tagged
+    # the next project-x release. After any web release, re-assert the
+    # project-x release. Reads the version from the manifest of the tagged
     # commit rather than an event field, so it cannot drift from what was
     # actually released.
     if: ${{ github.event_name == 'release' && startsWith(github.event.release.tag_name, 'web-v') }}
@@ -103,14 +103,14 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - name: Keep the career-ops release marked as Latest
+      - name: Keep the project-x release marked as Latest
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           ver=$(jq -r '."."' .release-please-manifest.json)
           if [ -z "$ver" ] || [ "$ver" = "null" ]; then
-            echo "::error::could not read the career-ops version from .release-please-manifest.json"
+            echo "::error::could not read the project-x version from .release-please-manifest.json"
             exit 1
           fi
-          echo "marking career-ops-v${ver} as Latest"
-          gh release edit "career-ops-v${ver}" --repo "$GITHUB_REPOSITORY" --latest
+          echo "marking project-x-v${ver} as Latest"
+          gh release edit "project-x-v${ver}" --repo "$GITHUB_REPOSITORY" --latest

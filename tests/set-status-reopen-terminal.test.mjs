@@ -10,7 +10,7 @@ import { describeSpawn } from './helpers/describe-spawn.mjs';
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 
 function setStatus(from, to) {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-reopen-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-reopen-'));
   try {
     mkdirSync(join(dir, 'data'));
     writeFileSync(join(dir, 'data', 'applications.md'), [
@@ -22,7 +22,7 @@ function setStatus(from, to) {
     return spawnSync(process.execPath, [join(ROOT, 'set-status.mjs'), '7', to], {
       cwd: ROOT,
       encoding: 'utf-8',
-      env: { ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_TRACKER: join(dir, 'data', 'applications.md') },
+      env: { ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_TRACKER: join(dir, 'data', 'applications.md') },
     });
   } finally {
     rmSync(dir, { recursive: true, force: true });

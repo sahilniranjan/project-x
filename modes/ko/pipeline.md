@@ -1,6 +1,6 @@
 # 모드: pipeline -- URL Inbox (Second Brain)
 
-`data/pipeline.md`에 쌓인 채용 공고 URL을 처리합니다. 후보자는 원할 때 URL을 추가하고, 이후 `/career-ops pipeline`을 실행해 한 번에 처리합니다.
+`data/pipeline.md`에 쌓인 채용 공고 URL을 처리합니다. 후보자는 원할 때 URL을 추가하고, 이후 `/project-x pipeline`을 실행해 한 번에 처리합니다.
 
 ## Liveness sweep
 
@@ -39,9 +39,9 @@ Per-URL loop에 들어가기 전에, 대기 중인 LinkedIn 외 URL을 zero-toke
 
    **CV 출력 선택:** 이 단계는 `modes/auto-pipeline.md` → Step 3이며 별도의 규칙이 아닙니다. `config/profile.yml` → `cv.output_format`을 읽고 그에 따라 분기합니다: `"latex"` → `modes/latex.md`, `"text"` → `modes/text.md`, 그 외(기본값) → `modes/pdf.md`. `latex`와 `text` 경로는 score와 관계없이 HTML이나 PDF를 만들지 않으므로, tracker와 요약 표에 PDF ❌로 표시합니다. 아래 PDF gate는 기본 경로에만 적용되며, 후보자가 설정한 format을 무시하는 수단이 아닙니다.
 
-   **PDF gate (설정 가능, 기본 경로 전용):** `config/profile.yml` → `auto_pdf_score_threshold`를 읽습니다. Key가 없으면 `3.0`(이 모드의 원래 gate)을 기본값으로 씁니다. Evaluation score가 threshold보다 낮으면 PDF 생성을 건너뜁니다. Report는 평소대로 쓰고, header에 `**PDF:** not generated — run /career-ops pdf {company-slug} to create on demand`를 표시하며, tracker에 PDF ❌로 표시합니다. Score가 threshold 이상이면 평소대로 PDF를 생성합니다.
+   **PDF gate (설정 가능, 기본 경로 전용):** `config/profile.yml` → `auto_pdf_score_threshold`를 읽습니다. Key가 없으면 `3.0`(이 모드의 원래 gate)을 기본값으로 씁니다. Evaluation score가 threshold보다 낮으면 PDF 생성을 건너뜁니다. Report는 평소대로 쓰고, header에 `**PDF:** not generated — run /project-x pdf {company-slug} to create on demand`를 표시하며, tracker에 PDF ❌로 표시합니다. Score가 threshold 이상이면 평소대로 PDF를 생성합니다.
 
-   **조정 방법:** Tailored PDF 생성에는 item당 약 30-60초가 걸리고(Playwright 실행 + HTML render), 쓰이지 않는 파일이 생기는 경우가 많습니다. 대부분의 role은 2.x/3.x 점수대에 머물러 지원 단계까지 가지 않습니다. 애매한 공고는 report만 쓰고 PDF는 `/career-ops pdf {slug}`로 필요할 때 만들려면 `auto_pdf_score_threshold`를 올리고(예: `4.0`), 모든 공고에 PDF를 만들려면 `0`으로 설정합니다. 두 경로(Path A `/career-ops pipeline`과 Path B `batch/batch-runner.sh`)가 같은 key를 읽으므로, 어느 경로로 처리해도 동작이 같습니다.
+   **조정 방법:** Tailored PDF 생성에는 item당 약 30-60초가 걸리고(Playwright 실행 + HTML render), 쓰이지 않는 파일이 생기는 경우가 많습니다. 대부분의 role은 2.x/3.x 점수대에 머물러 지원 단계까지 가지 않습니다. 애매한 공고는 report만 쓰고 PDF는 `/project-x pdf {slug}`로 필요할 때 만들려면 `auto_pdf_score_threshold`를 올리고(예: `4.0`), 모든 공고에 PDF를 만들려면 `0`으로 설정합니다. 두 경로(Path A `/project-x pipeline`과 Path B `batch/batch-runner.sh`)가 같은 key를 읽으므로, 어느 경로로 처리해도 동작이 같습니다.
 3. **동시 실행 여부는 추출 tool에 따라 달라집니다.** 남은 URL이 browser-backed Playwright/MCP(`browser_navigate` + `browser_snapshot`)를 쓴다면 **하나씩** 처리합니다. Navigation과 snapshot이 서로 섞여 다른 공고를 평가할 수 있으므로, 여러 worker가 하나의 browser session을 공유하면 절대 안 됩니다. 모든 worker가 격리된 CLI 추출기나 non-browser fallback을 쓰고, **동시에** orchestrator가 독립된 process/session state를 보장할 수 있다면, URL이 3개 이상일 때 `run_in_background`를 쓸 수 있습니다(worker 하나당 URL 하나까지). 각 worker는 **single-pass worker**입니다. URL 하나를 평가하고, 추가 subagent를 띄우거나 다른 skill을 호출하면 **안 됩니다**. 회사/보상 조사는 inline으로 범위를 제한해 진행합니다(`modes/_shared.md` → Subagent delegation 참고). 확실하지 않으면 순차 경로를 씁니다.
 4. **마지막에** 요약 표를 표시합니다.
 

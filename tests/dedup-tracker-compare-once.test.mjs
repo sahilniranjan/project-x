@@ -4,7 +4,7 @@
 // The pair loop used to rebuild both keys on every comparison. A company key
 // is a Unicode normalize, and a posting key parses the URL. On a few thousand
 // rows that share a bucket those two dominate the run, and the answer does
-// not change between pairs. CAREER_OPS_DEDUP_STATS=1 prints the counts so
+// not change between pairs. PROJECT_X_DEDUP_STATS=1 prints the counts so
 // this can fail when a later edit puts the work back inside the loop.
 // The line is absent without that cache, which is the failure this file pins.
 
@@ -41,10 +41,10 @@ function runDedup(rows, reports) {
       encoding: 'utf-8',
       env: {
         ...process.env,
-        CAREER_OPS_ROOT: root,
-        CAREER_OPS_TRACKER: '',
-        CAREER_OPS_DATA_DIR: '',
-        CAREER_OPS_DEDUP_STATS: '1',
+        PROJECT_X_ROOT: root,
+        PROJECT_X_TRACKER: '',
+        PROJECT_X_DATA_DIR: '',
+        PROJECT_X_DEDUP_STATS: '1',
       },
     });
     assert.strictEqual(res.status, 0, `dedup exited ${res.status}: ${res.stderr}`);

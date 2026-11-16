@@ -67,10 +67,10 @@ function run(root, args = []) {
     timeout: 60_000,
     env: {
       ...process.env,
-      CAREER_OPS_ROOT: root,
-      CAREER_OPS_TRACKER: '',
-      CAREER_OPS_DATA_DIR: '',
-      CAREER_OPS_FOLLOWUPS: '',
+      PROJECT_X_ROOT: root,
+      PROJECT_X_TRACKER: '',
+      PROJECT_X_DATA_DIR: '',
+      PROJECT_X_FOLLOWUPS: '',
     },
   });
 }

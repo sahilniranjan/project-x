@@ -52,7 +52,7 @@ globalThis.fetch = async (url) => {
   const env = {
     PATH: process.env.PATH, HOME: dir, USERPROFILE: dir,
     SystemRoot: process.env.SystemRoot, TEMP: dir, TMP: dir,
-    CAREER_OPS_ROOT: dir, CAREER_OPS_DATA_DIR: dir,
+    PROJECT_X_ROOT: dir, PROJECT_X_DATA_DIR: dir,
     OPENAI_API_KEY: 'fixture-key', OLLAMA_NUM_CTX: '32768',
   };
   const args = ['--import', pathToFileURL(hook).href, join(ROOT, `${engine}-eval.mjs`),

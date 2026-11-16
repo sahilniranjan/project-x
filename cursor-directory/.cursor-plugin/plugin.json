@@ -1,14 +1,14 @@
 {
-  "name": "career-ops",
-  "displayName": "career-ops",
+  "name": "project-x",
+  "displayName": "project-x",
   "version": "1.40.0",
   "description": "Open-source AI job search agent: finds openings at the companies you choose, scores each job posting against your CV (1-5, A-H report), tailors your CV and cover letter, preps interviews and tracks applications. Runs locally; you press Submit.",
   "author": {
     "name": "santifer",
-    "email": "hi@career-ops.org"
+    "email": "hi@project-x.org"
   },
-  "homepage": "https://career-ops.org",
-  "repository": "https://github.com/career-ops-hq/career-ops",
+  "homepage": "https://project-x.org",
+  "repository": "https://github.com/project-x-hq/project-x",
   "license": "MIT",
   "keywords": [
     "job-search",

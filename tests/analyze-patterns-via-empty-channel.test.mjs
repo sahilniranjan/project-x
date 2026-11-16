@@ -25,7 +25,7 @@ function analyze(via) {
     writeFileSync(join(root, 'data', 'applications.md'), ['# Applications Tracker', '',
       '| # | Date | Company | Role | Score | Status | PDF | Report | Notes | Via |',
       '|---|---|---|---|---|---|---|---|---|---|', ...rows, ''].join('\n'));
-    const env = { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_TRACKER: '', CAREER_OPS_DATA_DIR: '' };
+    const env = { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_TRACKER: '', PROJECT_X_DATA_DIR: '' };
     const run = (extra) => execFileSync(NODE, [join(ROOT, 'analyze-patterns.mjs'), '--min-threshold', '1', ...extra], { encoding: 'utf-8', env, timeout: 60000 });
     return { json: JSON.parse(run([])).viaChannelAnalysis, summary: run(['--summary']) };
   } finally {

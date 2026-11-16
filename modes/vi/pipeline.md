@@ -1,6 +1,6 @@
 # Mode: pipeline — Hộp thư URL (Second Brain)
 
-Xử lý các URL tin tuyển dụng lưu trong `data/pipeline.md`. Người dùng thêm URL bất cứ lúc nào, sau đó chạy `/career-ops pipeline` để xử lý tất cả.
+Xử lý các URL tin tuyển dụng lưu trong `data/pipeline.md`. Người dùng thêm URL bất cứ lúc nào, sau đó chạy `/project-x pipeline` để xử lý tất cả.
 
 ## Quét liveness (Liveness sweep)
 
@@ -39,9 +39,9 @@ Bước này bổ sung -- không thay thế -- cổng liveness theo từng URL t
 
    **Chọn đầu ra CV:** bước này là `modes/auto-pipeline.md` → Bước 3, không phải một quy tắc thứ hai. Đọc `config/profile.yml` → `cv.output_format` và rẽ theo đó: `"latex"` → `modes/latex.md`, `"text"` → `modes/text.md`, còn lại (mặc định) → `modes/pdf.md`. Hai nhánh `latex` và `text` không bao giờ tạo HTML hay PDF, bất kể điểm -- ghi PDF ❌ trong tracker và bảng tóm tắt. Cổng PDF dưới đây chỉ thu hẹp nhánh mặc định; nó không phải cách ghi đè định dạng ứng viên đã cấu hình.
 
-   **Về cổng PDF (cấu hình được, chỉ nhánh mặc định):** đọc `config/profile.yml` → `auto_pdf_score_threshold`. Nếu key không có, mặc định `3.0`. Nếu điểm đánh giá thấp hơn ngưỡng, bỏ qua tạo PDF: ghi báo cáo bình thường, hiển thị ở header `**PDF:** not generated — run /career-ops pdf {company-slug} to create on demand` và ghi PDF ❌ trong tracker. Nếu điểm ≥ ngưỡng, tạo PDF như thường.
+   **Về cổng PDF (cấu hình được, chỉ nhánh mặc định):** đọc `config/profile.yml` → `auto_pdf_score_threshold`. Nếu key không có, mặc định `3.0`. Nếu điểm đánh giá thấp hơn ngưỡng, bỏ qua tạo PDF: ghi báo cáo bình thường, hiển thị ở header `**PDF:** not generated — run /project-x pdf {company-slug} to create on demand` và ghi PDF ❌ trong tracker. Nếu điểm ≥ ngưỡng, tạo PDF như thường.
 
-   **Tinh chỉnh:** tạo một PDF đã điều chỉnh tốn khoảng 30-60 giây mỗi mục (mở Playwright + render HTML) và tạo ra các file thường không dùng đến -- hầu hết vai trò điểm 2.x/3.x và không bao giờ đến giai đoạn ứng tuyển. Tăng `auto_pdf_score_threshold` (ví dụ `4.0`) để chỉ ghi báo cáo cho các tin cận biên và tạo PDF theo yêu cầu qua `/career-ops pdf {slug}`; đặt `0` để tạo cho mọi tin. Cả hai đường (Path A `/career-ops pipeline` và Path B `batch/batch-runner.sh`) đọc cùng một key, nên hành vi giống nhau bất kể đường nào xử lý tin.
+   **Tinh chỉnh:** tạo một PDF đã điều chỉnh tốn khoảng 30-60 giây mỗi mục (mở Playwright + render HTML) và tạo ra các file thường không dùng đến -- hầu hết vai trò điểm 2.x/3.x và không bao giờ đến giai đoạn ứng tuyển. Tăng `auto_pdf_score_threshold` (ví dụ `4.0`) để chỉ ghi báo cáo cho các tin cận biên và tạo PDF theo yêu cầu qua `/project-x pdf {slug}`; đặt `0` để tạo cho mọi tin. Cả hai đường (Path A `/project-x pipeline` và Path B `batch/batch-runner.sh`) đọc cùng một key, nên hành vi giống nhau bất kể đường nào xử lý tin.
 3. **Đồng thời phụ thuộc công cụ trích.** Nếu các URL còn sống dùng Playwright/MCP chạy trình duyệt (`browser_navigate` + `browser_snapshot`), xử lý **từng cái một**: nhiều worker không bao giờ được dùng chung một phiên trình duyệt, vì điều hướng và snapshot có thể lẫn vào nhau và đánh giá nhầm tin. Nếu mọi worker dùng bộ trích CLI cô lập hoặc phương án không dùng trình duyệt, **và** bên điều phối đảm bảo trạng thái tiến trình/phiên độc lập, 3+ URL có thể dùng `run_in_background`, tối đa một URL cho mỗi worker. Mỗi worker là **worker một lượt**: đánh giá URL của nó và **không** tạo thêm subagent hay gọi skill khác; nghiên cứu công ty/lương của nó nằm trong phiên và có giới hạn (xem `modes/_shared.md` → Subagent delegation). Khi còn phân vân, dùng đường tuần tự.
 4. **Cuối cùng**, hiển thị bảng tóm tắt:
 

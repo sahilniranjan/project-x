@@ -18,7 +18,7 @@ function prepare(url) {
     writeFileSync(join(root, 'config', 'profile.yml'), profile);
     writeFileSync(join(root, 'output', 'cv.pdf'), pdf);
     const result = spawnSync(process.execPath, [script, '--url', url, '--pdf', 'output/cv.pdf'], {
-      env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_DATA_DIR: '', CAREER_OPS_PROFILE: '' },
+      env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_DATA_DIR: '', PROJECT_X_PROFILE: '' },
       encoding: 'utf8', timeout: 10_000,
     });
     assert.equal(result.error, undefined);

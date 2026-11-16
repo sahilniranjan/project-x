@@ -1,13 +1,13 @@
 {
-  "name": "career-ops",
+  "name": "project-x",
   "version": "1.40.0",
   "description": "Open-source AI job search that runs locally in your AI coding CLI: scan job portals, evaluate listings into a structured A-H report with a 1-5 score, tailor your CV, track applications",
   "author": {
     "name": "santifer",
     "url": "https://santifer.io"
   },
-  "homepage": "https://career-ops.org",
-  "repository": "https://github.com/career-ops-hq/career-ops",
+  "homepage": "https://project-x.org",
+  "repository": "https://github.com/project-x-hq/project-x",
   "license": "MIT",
   "keywords": [
     "job-search",

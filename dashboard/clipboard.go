@@ -11,7 +11,7 @@ import (
 
 	tea "github.com/charmbracelet/bubbletea"
 
-	"github.com/santifer/career-ops/dashboard/internal/ui/screens"
+	"github.com/santifer/project-x/dashboard/internal/ui/screens"
 )
 
 // clipboardCommand is one candidate clipboard utility. The text to copy is
@@ -37,7 +37,7 @@ var (
 // a temporary file instead, which Wait does not drain, and stdout is
 // discarded; the file is only read to explain a failure.
 func runClipboardProcess(name string, args []string, stdin string) error {
-	errFile, err := os.CreateTemp("", "career-ops-clipboard-*")
+	errFile, err := os.CreateTemp("", "project-x-clipboard-*")
 	if err != nil {
 		return err
 	}

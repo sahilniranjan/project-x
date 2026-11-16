@@ -5,7 +5,7 @@
 // three ways: mode files that shipped with a route but no row (triage, ats,
 // discover, ...), market sets missing from the language-dir row (nl, sg,
 // zh-TW), and rows naming `job` / `jobs` for oferta / ofertas, which the
-// router does not route: `/career-ops job` falls through to the command menu.
+// router does not route: `/project-x job` falls through to the command menu.
 //
 // Run:  node --test tests/modes-readme-catalog.test.mjs
 
@@ -18,7 +18,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const MODES = join(ROOT, 'modes');
 const README = readFileSync(join(MODES, 'README.md'), 'utf-8').replace(/\r\n/g, '\n');
-const SKILL = readFileSync(join(ROOT, '.agents', 'skills', 'career-ops', 'SKILL.md'), 'utf-8').replace(/\r\n/g, '\n');
+const SKILL = readFileSync(join(ROOT, '.agents', 'skills', 'project-x', 'SKILL.md'), 'utf-8').replace(/\r\n/g, '\n');
 
 const catalog = README.split('## Mode catalog')[1]?.split('\n## ')[0] ?? '';
 /** Catalog rows as [file, mode cell]. */

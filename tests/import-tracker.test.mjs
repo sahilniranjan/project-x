@@ -49,10 +49,10 @@ function makeRoot({ tracker = trackerText(EXISTING), csv = TEAL_CSV, baseDir = t
 }
 
 function run(fx, args = [], { csv = fx.csvPath, cwd, env: extra } = {}) {
-  const env = { ...process.env, CAREER_OPS_ROOT: fx.root, CAREER_OPS_TRACKER: '', CAREER_OPS_DATA_DIR: '', CAREER_OPS_TRACKER_DB: join(fx.root, 'tracker.db') };
-  delete env.CAREER_OPS_ADDITIONS;
-  delete env.CAREER_OPS_REPORTS_DIR;
-  delete env.CAREER_OPS_PDF_INDEX;
+  const env = { ...process.env, PROJECT_X_ROOT: fx.root, PROJECT_X_TRACKER: '', PROJECT_X_DATA_DIR: '', PROJECT_X_TRACKER_DB: join(fx.root, 'tracker.db') };
+  delete env.PROJECT_X_ADDITIONS;
+  delete env.PROJECT_X_REPORTS_DIR;
+  delete env.PROJECT_X_PDF_INDEX;
   Object.assign(env, extra);
   return spawnSync(process.execPath, [SCRIPT, csv, ...args], { encoding: 'utf-8', env, cwd, timeout: 60_000 });
 }
@@ -157,7 +157,7 @@ test('--confirm does not merge or remove a TSV that was already waiting', () => 
     const envDecoy = join(envDir, '901-other-co.tsv');
     writeFileSync(envDecoy, 'env decoy\n');
     try {
-      const inherited = run(fx, ['--confirm'], { env: { CAREER_OPS_ADDITIONS: envDir } });
+      const inherited = run(fx, ['--confirm'], { env: { PROJECT_X_ADDITIONS: envDir } });
       assert.equal(inherited.status, 0, describeSpawn(inherited));
       assert.equal(readFileSync(decoy, 'utf-8'), 'pending decoy\n');
       assert.equal(readFileSync(envDecoy, 'utf-8'), 'env decoy\n');
@@ -270,7 +270,7 @@ const BATCH_HEADER = 'id\turl\tstatus\tstarted_at\tcompleted_at\treport_num\tsco
 function rerunFromElsewhere(fx, retry) {
   writeFileSync(join(fx.root, 'batch', 'batch-state.tsv'), BATCH_HEADER);
   const env = { ...process.env };
-  for (const name of ['CAREER_OPS_ROOT', 'CAREER_OPS_DATA_DIR', 'CAREER_OPS_TRACKER', 'CAREER_OPS_BATCH_STATE', 'CAREER_OPS_ADDITIONS']) delete env[name];
+  for (const name of ['PROJECT_X_ROOT', 'PROJECT_X_DATA_DIR', 'PROJECT_X_TRACKER', 'PROJECT_X_BATCH_STATE', 'PROJECT_X_ADDITIONS']) delete env[name];
   const rerun = spawnSync(getBash(), ['-c', retry], { encoding: 'utf-8', env, cwd: tmpdir(), timeout: 60_000 });
   assert.equal(rerun.status, 0, describeSpawn(rerun));
   assert.ok(rowFor(readFileSync(fx.trackerPath, 'utf-8'), 'Quillfeather Health'), 'the re-run adds the row to the same tracker');
@@ -304,7 +304,7 @@ test('a row merge refuses keeps its file and number and fails the import', () =>
       // import's overrides set: it carries the root and the script's full path.
       const retry = /then run:\n {2}(.+)\n/.exec(result.stderr)?.[1];
       assert.ok(retry, describeSpawn(result));
-      assert.match(retry, new RegExp(`^CAREER_OPS_ROOT=${ARG} CAREER_OPS_ADDITIONS=${ARG} node ${ARG}$`));
+      assert.match(retry, new RegExp(`^PROJECT_X_ROOT=${ARG} PROJECT_X_ADDITIONS=${ARG} node ${ARG}$`));
       assert.match(retry, /merge-tracker\.mjs'?$/);
       rerunFromElsewhere(fx, retry);
     } finally {
@@ -331,7 +331,7 @@ test('the printed re-run makes relative tracker and batch-state overrides absolu
     const result = run(fx, ['--confirm'], {
       cwd: elsewhere,
       // Tracker overrides are codebase-relative; batch-state remains cwd-relative.
-      env: { CAREER_OPS_TRACKER: trackerOverride, CAREER_OPS_BATCH_STATE: relative(elsewhere, join(fx.root, 'batch', 'batch-state.tsv')) },
+      env: { PROJECT_X_TRACKER: trackerOverride, PROJECT_X_BATCH_STATE: relative(elsewhere, join(fx.root, 'batch', 'batch-state.tsv')) },
     });
     assert.equal(result.status, 1, describeSpawn(result));
     assert.equal(readFileSync(decoy, 'utf-8'), decoyText, 'initial import leaves cwd-relative decoy untouched');
@@ -341,8 +341,8 @@ test('the printed re-run makes relative tracker and batch-state overrides absolu
     try {
       const retry = /then run:\n {2}(.+)\n/.exec(result.stderr)?.[1];
       assert.ok(retry, describeSpawn(result));
-      assert.doesNotMatch(retry, /CAREER_OPS_(TRACKER|BATCH_STATE)='?(data|batch)\b/);
-      const trackerArgument = new RegExp(`CAREER_OPS_TRACKER=(${ARG}) `).exec(retry)?.[1];
+      assert.doesNotMatch(retry, /PROJECT_X_(TRACKER|BATCH_STATE)='?(data|batch)\b/);
+      const trackerArgument = new RegExp(`PROJECT_X_TRACKER=(${ARG}) `).exec(retry)?.[1];
       assert.ok([fx.trackerPath, `'${fx.trackerPath}'`].includes(trackerArgument), 'retry pins the codebase-relative tracker to its absolute path');
       assert.ok(retry.includes(join(fx.root, 'batch', 'batch-state.tsv')), 'retry pins the cwd-relative batch state');
       rerunFromElsewhere(fx, retry);

@@ -66,11 +66,11 @@ try {
   const env = {
     ...process.env,
     TZ: 'UTC',
-    CAREER_OPS_ROOT: dir,
-    CAREER_OPS_TRACKER: join(dir, 'data', 'applications.md'),
-    CAREER_OPS_FOLLOWUPS: join(dir, 'data', 'follow-ups.md'),
-    CAREER_OPS_FOLLOWUPS_LOCK: join(dir, 'followups.lock'),
-    CAREER_OPS_PROFILE: DEFAULT_CADENCE_PROFILE,
+    PROJECT_X_ROOT: dir,
+    PROJECT_X_TRACKER: join(dir, 'data', 'applications.md'),
+    PROJECT_X_FOLLOWUPS: join(dir, 'data', 'follow-ups.md'),
+    PROJECT_X_FOLLOWUPS_LOCK: join(dir, 'followups.lock'),
+    PROJECT_X_PROFILE: DEFAULT_CADENCE_PROFILE,
   };
   const out = execFileSync(process.execPath,
     ['--import', pathToFileURL(freeze).href, join(ROOT, 'followup-cadence.mjs'), '--json'],

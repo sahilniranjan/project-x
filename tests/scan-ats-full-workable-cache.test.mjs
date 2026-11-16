@@ -59,7 +59,7 @@ async function load(cache) {
 const http429 = (retryAfter) => Object.assign(new Error('HTTP 429'), { status: 429, retryAfter });
 const files = (d) => readdirSync(d).sort().join(',');
 
-const dir = mkdtempSync(join(tmpdir(), 'career-ops-workable-cache-'));
+const dir = mkdtempSync(join(tmpdir(), 'project-x-workable-cache-'));
 try {
   // 1. A first run downloads the feed; the copy and its Last-Modified are kept after commit().
   const first = network({ text: feed(job('QA Engineer', 'A1'), job('QA Lead', 'A2')) });
@@ -109,7 +109,7 @@ try {
   check(!noDate.calls[0]['if-modified-since'] && existsSync(join(dir, 'workable.meta.json')), 'without its date file the copy is downloaded again, and the date is written back');
 
   // 8. No copy at all and a 429: the error says when to try again.
-  const empty = mkdtempSync(join(tmpdir(), 'career-ops-workable-cache-empty-'));
+  const empty = mkdtempSync(join(tmpdir(), 'project-x-workable-cache-empty-'));
   try {
     const at = Date.parse('2026-11-10T03:00:00Z');
     let err8 = null;
@@ -131,7 +131,7 @@ try {
   };
 
   // 9. The copy cannot be kept (a directory sits where the copy goes): the feed read still counts.
-  const blocked = mkdtempSync(join(tmpdir(), 'career-ops-workable-cache-blocked-'));
+  const blocked = mkdtempSync(join(tmpdir(), 'project-x-workable-cache-blocked-'));
   try {
     mkdirSync(join(blocked, 'workable.xml.gz'));
     const { result, warnings } = await quiet(() => load(workableFeedCache({ cacheDir: blocked, fetchStream: network({ text: feed(job('QA Engineer', 'K1')) }) })));
@@ -142,7 +142,7 @@ try {
   }
 
   // 10. The copy file fails while gzip waits for room: the read goes on and does not stall.
-  const badFile = mkdtempSync(join(tmpdir(), 'career-ops-workable-cache-badfile-'));
+  const badFile = mkdtempSync(join(tmpdir(), 'project-x-workable-cache-badfile-'));
   try {
     mkdirSync(join(badFile, `workable.xml.gz.tmp-${process.pid}`));
     const big = feed(...Array.from({ length: 300 }, (_, i) => job(`QA Engineer ${i}`, `L${i}`).replace('</title>', `</title><description>${cdata(randomBytes(4096).toString('hex'))}</description>`)));

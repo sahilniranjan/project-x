@@ -9,13 +9,13 @@
  * and runs the same status hooks set-status.mjs runs (lib/status-hooks.mjs).
  * Merges notes.
  *
- * Run: node career-ops/dedup-tracker.mjs [--dry-run]
+ * Run: node project-x/dedup-tracker.mjs [--dry-run]
  */
 
 import { readFileSync, copyFileSync, existsSync, mkdirSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
-import { getCareerOpsRoot, resolveTrackerPath } from './path-resolver.mjs';
+import { getProjectXRoot, resolveTrackerPath } from './path-resolver.mjs';
 import { relatePostingLanguageKeys, postingLanguageKey, normalizeUrl } from './url-key.mjs';
 import {
   openTrackerTransaction, rebuildRow, normalizeCompany, corporateFormTokensMatch,
@@ -26,11 +26,11 @@ import {
 import { resolveColumns, parseTrackerRow, isUnsetUrlCell, normalizeVia, extractReqNumber, parseScore, normalizeTextKey } from './tracker-parse.mjs';
 import { validateFlags } from './lib/cli-flags.mjs';
 
-const CAREER_OPS = getCareerOpsRoot();
+const PROJECT_X = getProjectXRoot();
 // Support both layouts: data/applications.md (boilerplate) and applications.md
-// (original). CAREER_OPS_TRACKER lets tests point the script at an isolated
+// (original). PROJECT_X_TRACKER lets tests point the script at an isolated
 // fixture so the real user tracker is never touched.
-const APPS_FILE = resolveTrackerPath(CAREER_OPS);
+const APPS_FILE = resolveTrackerPath(PROJECT_X);
 // Report links resolve against the same root merge-tracker.mjs uses, so the
 // two tools read the same report for the same cell.
 const REPORTS_ROOT = resolveWorkspaceRoot(APPS_FILE);
@@ -723,6 +723,6 @@ try {
 // Off unless a test asks. The counts are how many times the keys were built,
 // so a pair loop that recomputes them fails the bound instead of only looking
 // slower. Quiet on a normal run: stderr stays what callers already parse.
-if (process.env.CAREER_OPS_DEDUP_STATS === '1') {
+if (process.env.PROJECT_X_DEDUP_STATS === '1') {
   console.error(`dedup-stats normalizes=${compareStats.normalizes} urlKeys=${compareStats.urlKeys} pairs=${compareStats.pairs}`);
 }

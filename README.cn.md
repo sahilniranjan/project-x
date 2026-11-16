@@ -1,4 +1,4 @@
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/wordmark-dark.svg"><img src="docs/wordmark-light.svg" alt="career-ops" width="250" height="56"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/wordmark-dark.svg"><img src="docs/wordmark-light.svg" alt="project-x" width="250" height="56"></picture></p>
 
 <p align="center">开源的 AI 求职智能体。</p>
 
@@ -24,11 +24,11 @@
   <a href="README.id.md">Bahasa Indonesia</a>
 </p>
 
-<p align="center"><a href="https://career-ops.org/zh/docs?utm_source=readme&utm_content=zh">开源 AI 求职智能体 · 完整中文文档</a></p>
+<p align="center"><a href="https://project-x.org/zh/docs?utm_source=readme&utm_content=zh">开源 AI 求职智能体 · 完整中文文档</a></p>
 
 <!-- The non-breaking spaces (&nbsp;) and word joiners (&#8288;) below decide where each line wraps on a phone. Keep them when editing. -->
 
-<p align="center"><a href="https://github.com/santifer"><img src="docs/avatar-santifer.png" width="48" height="48" align="middle" alt="Santiago Fernández de Valderrama Aparicio"></a>&nbsp;&nbsp;由 <a href="https://github.com/santifer"><strong>@santifer</strong></a> 创建，&nbsp;&nbsp;<a href="https://github.com/career-ops-hq/career-ops/blob/main/README.cn.md#builders"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/builders-stack-dark.svg"><img src="docs/builders-stack-light.svg" alt="" height="32" align="middle"></picture></a>&nbsp;&nbsp;<a href="https://github.com/career-ops-hq/career-ops/blob/main/README.cn.md#builders">800+ 位贡献者</a>参与</p>
+<p align="center"><a href="https://github.com/santifer"><img src="docs/avatar-santifer.png" width="48" height="48" align="middle" alt="Santiago Fernández de Valderrama Aparicio"></a>&nbsp;&nbsp;由 <a href="https://github.com/santifer"><strong>@santifer</strong></a> 创建，&nbsp;&nbsp;<a href="https://github.com/project-x-hq/project-x/blob/main/README.cn.md#builders"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/builders-stack-dark.svg"><img src="docs/builders-stack-light.svg" alt="" height="32" align="middle"></picture></a>&nbsp;&nbsp;<a href="https://github.com/project-x-hq/project-x/blob/main/README.cn.md#builders">800+ 位贡献者</a>参与</p>
 
 <p align="center">
 <strong>几个月投出的简历，全都石&#8288;沉&#8288;大&#8288;海。</strong><br>
@@ -46,7 +46,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/demo.gif" alt="作者本人在 career-ops 仪表板里的求职：打过分的职位列表、标为“不要投”的职位的红色计数，然后是一份完整的评估报告" width="800">
+  <img src="docs/demo.gif" alt="作者本人在 project-x 仪表板里的求职：打过分的职位列表、标为“不要投”的职位的红色计数，然后是一份完整的评估报告" width="800">
 </p>
 
 <p align="center"><sub>我自己的求职，进行到一半，界面是西&#8288;班&#8288;牙&#8288;语。</sub></p>
@@ -58,15 +58,15 @@
 
 <p align="center">
   六个月后，<strong>我离开了那份工作。</strong><br>
-  现在我们打造&nbsp;career-ops，让&#8288;你&#8288;也&#8288;能&#8288;上&#8288;岸。
+  现在我们打造&nbsp;project-x，让&#8288;你&#8288;也&#8288;能&#8288;上&#8288;岸。
 </p>
 
-<p align="center"><a href="#轮到你了">拿一个职位试试&nbsp;↓</a> · <a href="https://santifer.io/career-ops-system">阅读完整故事&nbsp;→</a></p>
-<p align="center"><sub>不想用终端？ <a href="https://career-ops.org/zh/waitlist?ref=readme-cn">加入网页版的候补名单&nbsp;→</a></sub></p>
+<p align="center"><a href="#轮到你了">拿一个职位试试&nbsp;↓</a> · <a href="https://santifer.io/project-x-system">阅读完整故事&nbsp;→</a></p>
+<p align="center"><sub>不想用终端？ <a href="https://project-x.org/zh/waitlist?ref=readme-cn">加入网页版的候补名单&nbsp;→</a></sub></p>
 
 <br>
 
-<p align="center"><a href="HIRED.md"><img src="docs/hired-badge.svg" alt="Hired with career-ops: public stories on the record"></a></p>
+<p align="center"><a href="HIRED.md"><img src="docs/hired-badge.svg" alt="Hired with project-x: public stories on the record"></a></p>
 
 <p align="center">在我之后来的人，写下了他们是怎么拿到 offer 的。</p>
 
@@ -74,9 +74,9 @@
   <a href="HIRED.md"><img src="docs/hired-wall.svg" alt="可以打开阅读的录用故事" width="800"></a>
 </p>
 
-<p align="center"><sub>每张卡片都是一个可以打开的公开 issue。你也上岸了？<a href="https://github.com/career-ops-hq/career-ops/issues/new?template=i-got-hired.yml">留下你的卡片 →</a></sub></p>
+<p align="center"><sub>每张卡片都是一个可以打开的公开 issue。你也上岸了？<a href="https://github.com/project-x-hq/project-x/issues/new?template=i-got-hired.yml">留下你的卡片 →</a></sub></p>
 
-<p align="center">⭐ <strong>如果&nbsp;career-ops&nbsp;帮到了你，一&#8288;颗&#8288;星就&#8288;能帮&#8288;下&#8288;一&#8288;个&#8288;人找&#8288;到&#8288;它。</strong></p>
+<p align="center">⭐ <strong>如果&nbsp;project-x&nbsp;帮到了你，一&#8288;颗&#8288;星就&#8288;能帮&#8288;下&#8288;一&#8288;个&#8288;人找&#8288;到&#8288;它。</strong></p>
 
 <br>
 
@@ -101,7 +101,7 @@
 把你今晚本来打算投的一个职位粘贴进来。如果返回的是<em>不要投</em>，你刚刚把这个晚上赢回来了。如果返回的是一份计划，你就知道下一步该做什么。
 
 ```bash
-npx @santifer/career-ops init
+npx @santifer/project-x init
 ```
 
 <p align="center"><sub>开源。本地运行。就在你已经在用的 AI CLI 里。<a href="docs/RUNNING_ON_A_BUDGET.md">包含免费模型和本地模型。</a></sub></p>
@@ -113,15 +113,15 @@ npx @santifer/career-ops init
 
 > 投得更少，投得更好。信号胜过数量。证据胜过关键词。由人来决定。本地优先。桌子两边都有尊严。
 
-<p align="center"><a href="https://career-ops.org/manifesto?utm_source=readme"><img src="https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcareer-ops-hq%2Fcareer-ops%2Fmain%2FSIGNATURES.md&search=n%3A(%5Cd%2B)%5Cs*%24&replace=%241%20signatories&label=THE%20CAREEROPS%20MANIFESTO&color=DD7627&style=for-the-badge&labelColor=2b3137" alt="CareerOps 宣言：实时签署人数"></a></p>
+<p align="center"><a href="https://project-x.org/manifesto?utm_source=readme"><img src="https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fproject-x-hq%2Fproject-x%2Fmain%2FSIGNATURES.md&search=n%3A(%5Cd%2B)%5Cs*%24&replace=%241%20signatories&label=THE%20PROJECTX%20MANIFESTO&color=DD7627&style=for-the-badge&labelColor=2b3137" alt="ProjectX 宣言：实时签署人数"></a></p>
 
 <p align="center">其中几位，用他们自己的话。</p>
 
 <p align="center">
-  <a href="https://career-ops.org/manifesto?utm_source=readme"><img src="docs/manifesto-wall.svg" alt="CareerOps 宣言的三个签名，用他们自己的话" width="800"></a>
+  <a href="https://project-x.org/manifesto?utm_source=readme"><img src="docs/manifesto-wall.svg" alt="ProjectX 宣言的三个签名，用他们自己的话" width="800"></a>
 </p>
 
-<p align="center"><sub>每一个签名都是一次可审计的提交。<a href="https://career-ops.org/manifesto?utm_source=readme">读完全部，或加上你的 →</a></sub></p>
+<p align="center"><sub>每一个签名都是一次可审计的提交。<a href="https://project-x.org/manifesto?utm_source=readme">读完全部，或加上你的 →</a></sub></p>
 
 <br>
 
@@ -133,21 +133,21 @@ npx @santifer/career-ops init
 
 [修复就是在这里写出来的](CONTRIBUTING.md)。是房间，不是俱乐部。**一起来建。**
 
-<p align="center"><a href="https://discord.gg/8pRpHETxa4"><img src="docs/discord-badge.svg" alt="Discord：career-ops 服务器的实时成员数"></a></p>
+<p align="center"><a href="https://discord.gg/8pRpHETxa4"><img src="docs/discord-badge.svg" alt="Discord：project-x 服务器的实时成员数"></a></p>
 
 ## 赞助商
 
-career-ops 对求职者永久免费。这些公司赞助了本项目：
+project-x 对求职者永久免费。这些公司赞助了本项目：
 
 <p align="center">
-  <a href="https://serpapi.com/career-ops-org" title="SerpApi"><img src="docs/sponsors/serpapi.svg" alt="SerpApi" height="48"></a>
+  <a href="https://serpapi.com/project-x-org" title="SerpApi"><img src="docs/sponsors/serpapi.svg" alt="SerpApi" height="48"></a>
 </p>
 
 <p align="center"><strong>SerpApi</strong> · Build a portfolio project with live search data. SerpApi gives developers structured JSON/Markdown from Google Search, Maps, Shopping, and other engines through a simple API call.</p>
 
 > 赞助买到的是清楚标注的曝光，绝不是影响力：再多的钱也改变不了路线图，也放不进产品里任何东西。赞助商绝不会出现在评估、排名或推荐中。
 
-## career-ops 为你做什么
+## project-x 为你做什么
 
 粘贴一个职位。它告诉你这个晚上值不值得。
 
@@ -162,7 +162,7 @@ career-ops 对求职者永久免费。这些公司赞助了本项目：
 
 第一次启动时，它会在聊天里把这些都问一遍。没有任何需要手动配置的东西。
 
-## career-ops 不做的事
+## project-x 不做的事
 
 - **自动提交申请。** 它为每个字段起草答案；你审阅，然后点击提交。脚本从不发出 POST（`prepare-application.mjs`）。
 - **发送邮件。** 只写草稿。整个代码库里没有任何邮件发送模块。
@@ -178,7 +178,7 @@ career-ops 对求职者永久免费。这些公司赞助了本项目：
 | **A-H 评估**             | 职位摘要、简历匹配（标注每条要求在这个职位里有多重要，以及权重来自职位描述的措辞、结构还是估算，逐条标注；估算永远不能进入最高档）、级别策略、薪酬调研、个性化、面试准备（STAR+R），再加上区块 G 的职位可信度检查（是否仍在招、是否为重复发布：只陈述观察，不下定论），以及一个工作许可信号（把明确不提供签证担保的职位描述标记为硬性阻碍） |
 | **Human-in-the-Loop**    | AI 评估并推荐，你决定并行动。系统从不提交申请：最终决定始终在你手中 <!-- hitl: absolute guarantee. Do not add "automatically", "by itself", "without your permission" or any other hedge when translating this row. -->               |
 | **ATS PDF 生成**         | ATS 可读的简历，基于你自己的经历、针对每份职位描述定制，采用 Space Grotesk + DM Sans 设计                                                  |
-| **求职信生成器**         | 基于调研的求职信：关键词呼应、四个交互式角度提问（为什么/问题/方法/语气）、在聊天中审批草稿，以及通过与简历相同的 HTML + Playwright 流水线生成 A4 PDF。每次评估自动起草；用 `/career-ops cover` 按需完成并生成 |
+| **求职信生成器**         | 基于调研的求职信：关键词呼应、四个交互式角度提问（为什么/问题/方法/语气）、在聊天中审批草稿，以及通过与简历相同的 HTML + Playwright 流水线生成 A4 PDF。每次评估自动起草；用 `/project-x cover` 按需完成并生成 |
 | **简历之外**             | 公司调研（[`deep`](modes/deep.md)）揭示 AI 战略、近期动向、工程文化，以及你的简历应该采取的角度。联系人发现（[`contacto`](modes/contacto.md)）找出值得联系的招聘经理、招聘人员或团队成员，并起草一条不超过 300 字符、针对联系人类型调整过的 LinkedIn 消息。正式申请邮件草稿（[`email`](modes/email.md)）把已评估的报告或粘贴的职位描述变成主题、正文和附件清单，不发送、不提交、不点击任何内容。申请让你排进队伍，调研让你获得对话。 |
 | **模式分析**             | 拒信模式和各 ATS 渠道的推进率（`analyze-patterns.mjs`）、整个求职周期的漏斗统计（`stats.mjs`）、重复发布检测，重复发布可能是幽灵职位的迹象（`detect-reposts.mjs`） |
 
@@ -190,7 +190,7 @@ career-ops 对求职者永久免费。这些公司赞助了本项目：
 | **自动流水线**           | 粘贴一个 URL，获得完整评估 + PDF + 追踪记录                                                                                               |
 | **面试故事库**           | 跨评估积累 STAR+反思故事：5 到 10 个主故事，可以针对你遇到的行为面试问题灵活改编                                                                         |
 | **谈判话术**             | 薪资谈判框架、应对地域折价、利用竞争 offer 作为筹码                                                                                       |
-| **申请邮件草稿**         | 从报告或粘贴的职位描述生成给招聘人员、内推或冷申请的正式邮件，包含主题、附件清单、有据可查的匹配点和来自你个人资料的联系信息块。仅限草稿：career-ops 从不发送、提交或点击任何内容。 |
+| **申请邮件草稿**         | 从报告或粘贴的职位描述生成给招聘人员、内推或冷申请的正式邮件，包含主题、附件清单、有据可查的匹配点和来自你个人资料的联系信息块。仅限草稿：project-x 从不发送、提交或点击任何内容。 |
 | **招聘平台扫描器**       | 预配置 100+ 家公司（Anthropic、OpenAI、ElevenLabs、Retool、n8n…）+ 跨 Ashby、Greenhouse、Lever、Wellfound 的自定义网页搜索查询             |
 | **已融资公司发现**       | 以审阅为先的 `company:funded` 命令从结构化的公开数据源中列出近期获得融资的公司和来源诊断，不改动你的数据                                    |
 | **批量处理**             | 用无头 CLI worker（`claude -p` / `opencode run`）并行评估                                                                                  |
@@ -212,28 +212,28 @@ career-ops 对求职者永久免费。这些公司赞助了本项目：
 **最快的方式，一条命令：**
 
 ```bash
-npx @santifer/career-ops init
+npx @santifer/project-x init
 ```
 
 > 💡 `npx` 随 [Node.js](https://nodejs.org) 一起提供：它只运行一次安装程序，
 > 不会全局安装任何东西。还没有 Node？先安装它。
 > （已经在用 Claude Code / Codex CLI？那你已经有了。）
 
-这会把最新版本克隆到 `./career-ops` 并安装依赖。然后：
+这会把最新版本克隆到 `./project-x` 并安装依赖。然后：
 
 ```bash
-cd career-ops
+cd project-x
 claude   # or codex / qwen / opencode / agy / grok — open your AI CLI here
 ```
 
-**首次启动时，career-ops 会通过对话引导你完成设置（你的简历、个人资料和目标职位）。不需要手动编辑任何东西。**
+**首次启动时，project-x 会通过对话引导你完成设置（你的简历、个人资料和目标职位）。不需要手动编辑任何东西。**
 
 <details>
 <summary><b>想手动设置？（git clone）</b></summary>
 
 ```bash
-git clone https://github.com/career-ops-hq/career-ops.git
-cd career-ops && npm install
+git clone https://github.com/project-x-hq/project-x.git
+cd project-x && npm install
 npx playwright install chromium   # only needed for PDF generation
 # On a non-Debian/Ubuntu Linux distro (Fedora, Arch, ...), Chromium's system
 # libraries aren't installed by the line above — install them yourself with
@@ -260,14 +260,14 @@ claude   # or codex / opencode / qwen / agy / grok
 ### 全局安装
 
 ```bash
-npm i -g @santifer/career-ops
+npm i -g @santifer/project-x
 ```
 
-这会全局安装 `career-ops` 二进制文件，让你不用 `npx` 就能运行 `career-ops init [folder]`。`init` 是它唯一的命令：它只负责搭建工作区，之后的一切都在你的 AI 编码 CLI 里进行（见下方“用法”），而不是通过这个二进制文件。
+这会全局安装 `project-x` 二进制文件，让你不用 `npx` 就能运行 `project-x init [folder]`。`init` 是它唯一的命令：它只负责搭建工作区，之后的一切都在你的 AI 编码 CLI 里进行（见下方“用法”），而不是通过这个二进制文件。
 
 **该用哪个？**
-- `npx @santifer/career-ops init`：最适合首次使用；会创建一个专用的项目文件夹。
-- `npm i -g @santifer/career-ops`：如果你更想输入 `career-ops init` 而不是 `npx` 的写法。它不会增加其他命令。
+- `npx @santifer/project-x init`：最适合首次使用；会创建一个专用的项目文件夹。
+- `npm i -g @santifer/project-x`：如果你更想输入 `project-x init` 而不是 `npx` 的写法。它不会增加其他命令。
 
 ### 其他运行方式
 
@@ -276,23 +276,23 @@ npm i -g @santifer/career-ops
 
 > **这个系统就是设计成由你的 AI 编码 CLI 自己来定制的。** 模式、原型、评分权重、谈判话术：直接让它改就行。它读取的正是它自己使用的文件，所以它清楚该改哪里。
 
-完整安装指南见 [docs/SETUP.md](docs/SETUP.md)；用自定义或本地模型低成本运行 career-ops 的方法见 [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md)（在 Antigravity CLI 免费层零成本运行见 [docs/FREE_TIER.md](docs/FREE_TIER.md)）；定时扫描和零 token 的"初筛到短名单"配方见 [docs/AUTOMATION.md](docs/AUTOMATION.md)；ATS 自动填表流程的细节见 [docs/APPLY_AUTOFILL.md](docs/APPLY_AUTOFILL.md)；把 LinkedIn 联系人导出与漏斗中的公司交叉比对见 [docs/LINKEDIN_JOIN.md](docs/LINKEDIN_JOIN.md)；常见设置问题的解答见 [docs/FAQ.md](docs/FAQ.md)，包括[故事溯源如何防止编造数字](docs/FAQ.md#why-does-career-ops-refuse-to-use-a-number-from-my-story-bank)。设计原则在 [ARCHITECTURE.md](ARCHITECTURE.md)；运行时流程在 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)。
+完整安装指南见 [docs/SETUP.md](docs/SETUP.md)；用自定义或本地模型低成本运行 project-x 的方法见 [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md)（在 Antigravity CLI 免费层零成本运行见 [docs/FREE_TIER.md](docs/FREE_TIER.md)）；定时扫描和零 token 的"初筛到短名单"配方见 [docs/AUTOMATION.md](docs/AUTOMATION.md)；ATS 自动填表流程的细节见 [docs/APPLY_AUTOFILL.md](docs/APPLY_AUTOFILL.md)；把 LinkedIn 联系人导出与漏斗中的公司交叉比对见 [docs/LINKEDIN_JOIN.md](docs/LINKEDIN_JOIN.md)；常见设置问题的解答见 [docs/FAQ.md](docs/FAQ.md)，包括[故事溯源如何防止编造数字](docs/FAQ.md#why-does-project-x-refuse-to-use-a-number-from-my-story-bank)。设计原则在 [ARCHITECTURE.md](ARCHITECTURE.md)；运行时流程在 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)。
 
 ## 用法
 
-把职位链接或职位描述粘贴到你的 AI CLI 中。career-ops 会检查带链接的职位是否仍在招（粘贴的文本没有可检查的链接），对照你的简历打分，撰写报告，定制你的简历（默认生成 PDF），并在你的追踪表中新增一行。大多数日子里这就够了。其余一切都是按名称调用的模式。如果无法读取某个职位，流水线会停下并请你粘贴文本。
+把职位链接或职位描述粘贴到你的 AI CLI 中。project-x 会检查带链接的职位是否仍在招（粘贴的文本没有可检查的链接），对照你的简历打分，撰写报告，定制你的简历（默认生成 PDF），并在你的追踪表中新增一行。大多数日子里这就够了。其余一切都是按名称调用的模式。如果无法读取某个职位，流水线会停下并请你粘贴文本。
 
 ### 如何调用模式
 
 | CLI | 如何调用 `scan` |
 | --- | --- |
-| Claude Code, OpenCode, Antigravity CLI (`agy`), Grok Build CLI | `/career-ops scan` |
-| Pi | `/skill:career-ops scan` |
-| Codex、Qwen、Cursor 或任何其他受支持的 CLI | 自然语言：“Run the career-ops scan mode” |
+| Claude Code, OpenCode, Antigravity CLI (`agy`), Grok Build CLI | `/project-x scan` |
+| Pi | `/skill:project-x scan` |
+| Codex、Qwen、Cursor 或任何其他受支持的 CLI | 自然语言：“Run the project-x scan mode” |
 
-单独输入 `/career-ops` 会显示命令菜单（在使用它的 CLI 中）。自然语言在所有受支持的 CLI 中都能用。作为 Claude Code 插件使用时，命令是 `/career-ops:career-ops`。
+单独输入 `/project-x` 会显示命令菜单（在使用它的 CLI 中）。自然语言在所有受支持的 CLI 中都能用。作为 Claude Code 插件使用时，命令是 `/project-x:project-x`。
 
-它们共用同一个路由器 `.agents/skills/career-ops/SKILL.md` 和同一批 `modes/*.md` 文件，所以每个 CLI 都以相同方式路由请求（依赖浏览器的模式还需要 Playwright 工具）。Codex 不保证支持斜杠命令：请用自然语言提出请求，或用 `codex exec "Evaluate this JD with career-ops auto-pipeline: https://company.com/jobs/123"` 以无头方式运行一条提示词（[docs/CODEX.md](docs/CODEX.md)）。如何在每个受支持的 CLI 中运行、带有无头命令的 CLI 的对应命令，以及 各 CLI 的设置说明，都在 [docs/SUPPORTED_CLIS.md](docs/SUPPORTED_CLIS.md) 中。
+它们共用同一个路由器 `.agents/skills/project-x/SKILL.md` 和同一批 `modes/*.md` 文件，所以每个 CLI 都以相同方式路由请求（依赖浏览器的模式还需要 Playwright 工具）。Codex 不保证支持斜杠命令：请用自然语言提出请求，或用 `codex exec "Evaluate this JD with project-x auto-pipeline: https://company.com/jobs/123"` 以无头方式运行一条提示词（[docs/CODEX.md](docs/CODEX.md)）。如何在每个受支持的 CLI 中运行、带有无头命令的 CLI 的对应命令，以及 各 CLI 的设置说明，都在 [docs/SUPPORTED_CLIS.md](docs/SUPPORTED_CLIS.md) 中。
 
 ### 日常命令
 
@@ -391,7 +391,7 @@ npm i -g @santifer/career-ops
 | 命令 | 作用 |
 | --- | --- |
 | [`agent-inbox`](modes/agent-inbox.md) | 把请求排入下一次会话的队列，并在那时处理（`data/agent-inbox.md`）。`inbox` 同样可用 |
-| [`update`](modes/update.md) | 更新 career-ops 系统文件，附带 diff 预览和兼容性检查 |
+| [`update`](modes/update.md) | 更新 project-x 系统文件，附带 diff 预览和兼容性检查 |
 
 </details>
 
@@ -434,7 +434,7 @@ npm run build:dashboard   # optional: build the standalone binary
 ## 项目结构
 
 ```
-career-ops/
+project-x/
 ├── AGENTS.md                    # Canonical agent instructions (all CLIs)
 ├── CLAUDE.md                    # Claude Code wrapper (imports AGENTS.md)
 ├── CODEX.md                     # Codex wrapper (imports AGENTS.md)
@@ -475,20 +475,20 @@ career-ops/
 
 为了把个人数据和代码分开（更方便切换分支、拉取更新或测试多个个人资料），你可以按以下优先级配置一个外部数据目录：
 
-1. **环境变量：** 设置 `CAREER_OPS_ROOT` 或 `CAREER_OPS_DATA_DIR` 环境变量：
+1. **环境变量：** 设置 `PROJECT_X_ROOT` 或 `PROJECT_X_DATA_DIR` 环境变量：
    ```bash
-   export CAREER_OPS_ROOT=~/my-career-data
+   export PROJECT_X_ROOT=~/my-career-data
    ```
-2. **标记文件：** 在仓库根目录创建一个 `.career-ops-data` 文件，内容是你的数据目录路径。
+2. **标记文件：** 在仓库根目录创建一个 `.project-x-data` 文件，内容是你的数据目录路径。
 3. **默认：** 使用仓库根目录。
 
 解析完成后，所有用户文件都相对于该文件夹解析和写入，而提示词文件和脚本仍然相对于仓库解析。
 
-- **覆盖追踪文件：** 你也可以设置 `CAREER_OPS_TRACKER` 直接覆盖申请追踪文件的路径。
+- **覆盖追踪文件：** 你也可以设置 `PROJECT_X_TRACKER` 直接覆盖申请追踪文件的路径。
 - **写入：** 所有写入操作（如合并）都以 `{DATA_ROOT}/data/applications.md` 为规范目标。
 - **扫描器配置：** `portals.yml` 在 `{DATA_ROOT}/portals.yml` 读取和校验，所以 `node validate-portals.mjs` 检查的正是 `scan.mjs` 读取的那个文件。
-- **生成的文档：** 定制简历和求职信写入 `{DATA_ROOT}/output/`，把它们关联到报告的 PDF 清单位于 `{DATA_ROOT}/data/pdf-index.tsv`。在未设置 `CAREER_OPS_TRACKER` 时，限定这些写入范围的追踪工作区是数据根目录，而不是代码检出目录。
-- **追踪文件覆盖下的 PDF：** `generate-pdf.mjs` 会先解析 `CAREER_OPS_TRACKER`，再推导工作区，所以设置了覆盖时，工作区就是存放该追踪文件的文件夹（如果追踪文件位于 `data/` 文件夹中，则是它的上一级文件夹）。这时简历的 HTML 和每个 PDF 都必须位于该工作区内，清单也会移到它的 `data/pdf-index.tsv`。求职信仍以 `{DATA_ROOT}/output/` 为目标，所以当该文件夹不在追踪文件的工作区内时，求职信会被拒绝写入。
+- **生成的文档：** 定制简历和求职信写入 `{DATA_ROOT}/output/`，把它们关联到报告的 PDF 清单位于 `{DATA_ROOT}/data/pdf-index.tsv`。在未设置 `PROJECT_X_TRACKER` 时，限定这些写入范围的追踪工作区是数据根目录，而不是代码检出目录。
+- **追踪文件覆盖下的 PDF：** `generate-pdf.mjs` 会先解析 `PROJECT_X_TRACKER`，再推导工作区，所以设置了覆盖时，工作区就是存放该追踪文件的文件夹（如果追踪文件位于 `data/` 文件夹中，则是它的上一级文件夹）。这时简历的 HTML 和每个 PDF 都必须位于该工作区内，清单也会移到它的 `data/pdf-index.tsv`。求职信仍以 `{DATA_ROOT}/output/` 为目标，所以当该文件夹不在追踪文件的工作区内时，求职信会被拒绝写入。
 - **代码层保持不动：** `node_modules/`、`providers/`、`modes/` 以及脚本本身始终相对于仓库解析，从不相对于数据根目录。
 
 Go 版仪表板 TUI、Node.js 脚本和 AI 代理模式都会自动遵循这一解析层级。
@@ -510,7 +510,7 @@ Go 版仪表板 TUI、Node.js 脚本和 AI 代理模式都会自动遵循这一�
 - **数据**：Markdown 表格 + YAML 配置 + TSV 批处理文件
 
 <p align="center">
-  <a href="https://github.com/career-ops-hq/career-ops/releases/latest"><img src="docs/npm-badge.svg" alt="Latest release"></a>
+  <a href="https://github.com/project-x-hq/project-x/releases/latest"><img src="docs/npm-badge.svg" alt="Latest release"></a>
 </p>
 
 <p align="center">
@@ -543,43 +543,43 @@ Go 版仪表板 TUI、Node.js 脚本和 AI 代理模式都会自动遵循这一�
 
 ## 常见问题（FAQ）
 
-**career-ops 是什么？**
-career-ops（[career-ops.org](https://career-ops.org)，也称 **careerops**） 是一个开源的 AI 求职工具，在你的 AI 编码 CLI（Claude Code、Codex、OpenCode 等）里本地运行，把每一个决定都留给你。它根据你的简历评估职位，生成适配 ATS 的 PDF，找到合适的联系人，并在一个地方追踪所有进展：最终决定始终在你手中。它是 [CareerOps 宣言](https://career-ops.org/manifesto)的首个参考实现。
+**project-x 是什么？**
+project-x（[project-x.org](https://project-x.org)，也称 **projectx**） 是一个开源的 AI 求职工具，在你的 AI 编码 CLI（Claude Code、Codex、OpenCode 等）里本地运行，把每一个决定都留给你。它根据你的简历评估职位，生成适配 ATS 的 PDF，找到合适的联系人，并在一个地方追踪所有进展：最终决定始终在你手中。它是 [ProjectX 宣言](https://project-x.org/manifesto)的首个参考实现。
 
 **定制简历会编造内容吗？**
-不应该，提示词里也这么写：只改写，绝不编造。`generate-pdf` 会拦下数字或事实在你的资料来源中找不到的简历，除非你传入 `--skip-fact-check`。`pdf` 模式还会运行 `cv-title-check.mjs`：它按公司和日期，把定制简历中的每个职位名称与 cv.md 中同一份工作的职位名称对比，有不同就请你决定保留还是改回。它只提醒、不拦截，因为调整职位名称的写法有时是你自己的选择。目前还没有任何检查评判改写：[#1411](https://github.com/career-ops-hq/career-ops/issues/1411)（不通过即阻止的真实性检查）在跟进这一点。在此之前，每份简历发出前都请自己读一遍。[法律声明](LEGAL_DISCLAIMER.md) 用更长的篇幅说了同样的话。
+不应该，提示词里也这么写：只改写，绝不编造。`generate-pdf` 会拦下数字或事实在你的资料来源中找不到的简历，除非你传入 `--skip-fact-check`。`pdf` 模式还会运行 `cv-title-check.mjs`：它按公司和日期，把定制简历中的每个职位名称与 cv.md 中同一份工作的职位名称对比，有不同就请你决定保留还是改回。它只提醒、不拦截，因为调整职位名称的写法有时是你自己的选择。目前还没有任何检查评判改写：[#1411](https://github.com/project-x-hq/project-x/issues/1411)（不通过即阻止的真实性检查）在跟进这一点。在此之前，每份简历发出前都请自己读一遍。[法律声明](LEGAL_DISCLAIMER.md) 用更长的篇幅说了同样的话。
 
-**我可以免费运行 career-ops，或使用更便宜的本地模型吗？**
-可以。career-ops 不受特定 CLI 限制，可以用免费和本地模型运行（OpenRouter 免费模型、Ollama 或任何兼容 OpenAI 的端点），因此你不必绑定付费订阅。完整设置见 [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md)。
+**我可以免费运行 project-x，或使用更便宜的本地模型吗？**
+可以。project-x 不受特定 CLI 限制，可以用免费和本地模型运行（OpenRouter 免费模型、Ollama 或任何兼容 OpenAI 的端点），因此你不必绑定付费订阅。完整设置见 [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md)。
 
-**我付了 Claude Pro/Max，但 career-ops 在消耗 API 额度。为什么？**
+**我付了 Claude Pro/Max，但 project-x 在消耗 API 额度。为什么？**
 因为环境里的 `ANTHROPIC_API_KEY` 优先于你已登录的订阅：CLI 会使用这个密钥并按 token 计费。运行 `echo $ANTHROPIC_API_KEY`，如果有输出，就把它从 shell 配置里删掉，重启终端并运行 `/login`。批量模式是例外，因为 `claude -p` worker 不使用交互式登录：运行一次 `claude setup-token`，把结果导出为 `CLAUDE_CODE_OAUTH_TOKEN`。完整步骤见 [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md#2b-already-paying-for-a-subscription-make-sure-you-are-using-it)。
 
-**career-ops 支持哪些 AI CLI？**
-career-ops 通过开放的 Agent Skill Standard 运行在任何主流 AI 编码 CLI 上（Claude Code、Codex、Gemini / Antigravity、OpenCode、Grok、Qwen 等），所以永远不会被单一厂商锁定。用你已经有的 CLI 就行。
+**project-x 支持哪些 AI CLI？**
+project-x 通过开放的 Agent Skill Standard 运行在任何主流 AI 编码 CLI 上（Claude Code、Codex、Gemini / Antigravity、OpenCode、Grok、Qwen 等），所以永远不会被单一厂商锁定。用你已经有的 CLI 就行。
 
-**如何在 Windows 上安装 career-ops？**
-career-ops 可以在 Windows 上运行。平台相关的设置和已知的坑（Git Bash 检测、行尾符、任务计划程序）在 [docs/WINDOWS.md](docs/WINDOWS.md)。如果安装时因符号链接错误导致 skills 无法加载，解决方法在 [docs/FAQ.md](docs/FAQ.md)。完整步骤见 [docs/SETUP.md](docs/SETUP.md)。
+**如何在 Windows 上安装 project-x？**
+project-x 可以在 Windows 上运行。平台相关的设置和已知的坑（Git Bash 检测、行尾符、任务计划程序）在 [docs/WINDOWS.md](docs/WINDOWS.md)。如果安装时因符号链接错误导致 skills 无法加载，解决方法在 [docs/FAQ.md](docs/FAQ.md)。完整步骤见 [docs/SETUP.md](docs/SETUP.md)。
 
-**career-ops 会替我自动申请职位吗？**
-不会。career-ops 是一个过滤器，不是海投的自动申请器。AI 负责评估、排序和起草；你负责审阅与决定。它起草、填写，但从不提交。由你点击提交。这种保留人工决策的设计正是重点所在。
+**project-x 会替我自动申请职位吗？**
+不会。project-x 是一个过滤器，不是海投的自动申请器。AI 负责评估、排序和起草；你负责审阅与决定。它起草、填写，但从不提交。由你点击提交。这种保留人工决策的设计正是重点所在。
 
-**career-ops 是免费开源软件吗？**
-是。career-ops 是免费开源软件，而且对求职者会一直如此。它是 [CareerOps 宣言](https://career-ops.org/manifesto)的首个参考实现。读一读，如果它说出了你的想法，就签名。
+**project-x 是免费开源软件吗？**
+是。project-x 是免费开源软件，而且对求职者会一直如此。它是 [ProjectX 宣言](https://project-x.org/manifesto)的首个参考实现。读一读，如果它说出了你的想法，就签名。
 
 ## 关于作者
 
-我是 [Santiago Fernández de Valderrama Aparicio](https://santifer.io/about)（santifer），曾经是创业者：我创办并卖掉了一家至今仍以我的名字运营的公司。我打造 career-ops 是为了管理自己的求职，它奏效了：它帮我拿到了一个 Head of Applied AI 的职位。六个月后，我离开了那个职位，全职投入 career-ops 的开发。
+我是 [Santiago Fernández de Valderrama Aparicio](https://santifer.io/about)（santifer），曾经是创业者：我创办并卖掉了一家至今仍以我的名字运营的公司。我打造 project-x 是为了管理自己的求职，它奏效了：它帮我拿到了一个 Head of Applied AI 的职位。六个月后，我离开了那个职位，全职投入 project-x 的开发。
 
-想知道这么大的仓库，是怎样由一支 AI 代理团队维护、每次合并都由人来决定的？读一读 [Agentic maintenance: how career-ops is run by a fleet of AI agents](https://santifer.io/ai-agent-fleet)。
+想知道这么大的仓库，是怎样由一支 AI 代理团队维护、每次合并都由人来决定的？读一读 [Agentic maintenance: how project-x is run by a fleet of AI agents](https://santifer.io/ai-agent-fleet)。
 
 我的作品集和其他开源项目 → [santifer.io](https://santifer.io)
 
-Wikidata：[Santiago Fernández de Valderrama Aparicio](https://www.wikidata.org/wiki/Q138710224) · [career-ops](https://www.wikidata.org/wiki/Q139007988)。
+Wikidata：[Santiago Fernández de Valderrama Aparicio](https://www.wikidata.org/wiki/Q138710224) · [project-x](https://www.wikidata.org/wiki/Q139007988)。
 
 ## 免责声明
 
-**career-ops 是一个本地运行的开源工具，不是托管服务。** 使用本软件即表示你确认：
+**project-x 是一个本地运行的开源工具，不是托管服务。** 使用本软件即表示你确认：
 
 1. **你掌控自己的数据。** 你的简历、联系方式和个人数据留在你的机器上，直接发送给你选择的 AI 提供商（Anthropic、OpenAI 等）。我们不收集、不存储、也无法访问你的任何数据。
 2. **你掌控 AI。** 默认提示词指示 AI 不要自动提交申请，但 AI 模型可能出现不可预测的行为。如果你修改了提示词或使用其他模型，风险自负。**提交前务必检查 AI 生成内容的准确性。**
@@ -590,19 +590,19 @@ Wikidata：[Santiago Fernández de Valderrama Aparicio](https://www.wikidata.org
 
 ## 贡献者
 
-<a href="https://github.com/career-ops-hq/career-ops/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=career-ops-hq/career-ops&v=2" />
+<a href="https://github.com/project-x-hq/project-x/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=project-x-hq/project-x&v=2" />
 </a>
 
 每一位贡献过代码、文档、翻译或测试的人都列在
 [CONTRIBUTORS.md](CONTRIBUTORS.md) 里，包括上面的图表无法展示的
 非代码贡献。
 
-用 career-ops 找到工作了？[分享你的故事！](https://github.com/career-ops-hq/career-ops/issues/new?template=i-got-hired.yml)
+用 project-x 找到工作了？[分享你的故事！](https://github.com/project-x-hq/project-x/issues/new?template=i-got-hired.yml)
 
 ## 许可证与商标
 
-代码以 [MIT](LICENSE) 许可证发布。"career-ops" 的名称和
+代码以 [MIT](LICENSE) 许可证发布。"project-x" 的名称和
 品牌受[商标政策](TRADEMARK.md)约束：对社区使用宽松，
 对商业产品命名和背书保留权利。
 
@@ -614,7 +614,7 @@ Wikidata：[Santiago Fernández de Valderrama Aparicio](https://www.wikidata.org
   <a href="https://warpchart.dev/hq">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://warpchart.dev/api/chart?theme=dark&v=3">
-      <img alt="Live star telemetry of career-ops-hq/career-ops" src="https://warpchart.dev/api/chart?theme=light&v=3" loading="lazy">
+      <img alt="Live star telemetry of project-x-hq/project-x" src="https://warpchart.dev/api/chart?theme=light&v=3" loading="lazy">
     </picture>
   </a>
 </p>

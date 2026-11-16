@@ -27,11 +27,11 @@ const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
  * time, so the environment has to be in place first.
  */
 async function loadRunner(dataRoot) {
-  const names = ['CAREER_OPS_ROOT', 'CAREER_OPS_DATA_DIR', 'CAREER_OPS_MODEL', 'OPENROUTER_API_KEY'];
+  const names = ['PROJECT_X_ROOT', 'PROJECT_X_DATA_DIR', 'PROJECT_X_MODEL', 'OPENROUTER_API_KEY'];
   const previous = Object.fromEntries(names.map((n) => [n, process.env[n]]));
-  process.env.CAREER_OPS_ROOT = dataRoot;
-  delete process.env.CAREER_OPS_DATA_DIR;
-  delete process.env.CAREER_OPS_MODEL;
+  process.env.PROJECT_X_ROOT = dataRoot;
+  delete process.env.PROJECT_X_DATA_DIR;
+  delete process.env.PROJECT_X_MODEL;
   process.env.OPENROUTER_API_KEY = 'test-key';
   try {
     const url = `${pathToFileURL(join(ROOT, 'openrouter-runner.mjs')).href}?model-timeout`;
@@ -45,16 +45,16 @@ async function loadRunner(dataRoot) {
 }
 
 test('a single model call is aborted after 120 s, not 15 s', async () => {
-  const dataRoot = mkdtempSync(join(tmpdir(), 'career-ops-timeout-'));
+  const dataRoot = mkdtempSync(join(tmpdir(), 'project-x-timeout-'));
   try {
     const runner = await loadRunner(dataRoot);
-    const saved = { ops: process.env.CAREER_OPS_TIMEOUT_MS, or: process.env.OPENROUTER_TIMEOUT_MS };
-    delete process.env.CAREER_OPS_TIMEOUT_MS;
+    const saved = { ops: process.env.PROJECT_X_TIMEOUT_MS, or: process.env.OPENROUTER_TIMEOUT_MS };
+    delete process.env.PROJECT_X_TIMEOUT_MS;
     delete process.env.OPENROUTER_TIMEOUT_MS;
     try {
       assert.equal(runner.getModelTimeoutMs(), 120_000);
     } finally {
-      if (saved.ops !== undefined) process.env.CAREER_OPS_TIMEOUT_MS = saved.ops;
+      if (saved.ops !== undefined) process.env.PROJECT_X_TIMEOUT_MS = saved.ops;
       if (saved.or !== undefined) process.env.OPENROUTER_TIMEOUT_MS = saved.or;
     }
   } finally {

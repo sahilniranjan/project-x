@@ -1,4 +1,4 @@
-module github.com/santifer/career-ops/dashboard
+module github.com/santifer/project-x/dashboard
 
 go 1.26.0
 

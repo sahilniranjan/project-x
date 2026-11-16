@@ -28,10 +28,10 @@ Expected transcript filename convention (from #956):
 Check: does `interview-prep/sessions/` contain at least **1** eligible session file? `README.md` is not a session, and a file with `source: practice` or `source: mock` in its front matter is not eligible (Step 1).
 
 If there are no session files at all:
-> "No session transcripts found yet. Run `/career-ops interview/debrief` on a role after your next interview to generate a debrief, then come back to check for red flags."
+> "No session transcripts found yet. Run `/project-x interview/debrief` on a role after your next interview to generate a debrief, then come back to check for red flags."
 
 If session files exist but every one is a practice or mock session:
-> "Only practice or mock sessions found. Red flags come from how a real interviewer at the company behaved, and practice or mock sessions don't show that: in a practice session the AI asks the questions. Run `/career-ops interview/debrief` after your next real interview to generate a debrief, then come back to check for red flags."
+> "Only practice or mock sessions found. Red flags come from how a real interviewer at the company behaved, and practice or mock sessions don't show that: in a practice session the AI asks the questions. Run `/project-x interview/debrief` after your next real interview to generate a debrief, then come back to check for red flags."
 
 In that case, run the stale red-flag file check (Step 1) before exiting.
 
@@ -46,11 +46,11 @@ List all `.md` files in `interview-prep/sessions/` except `README.md`, and read 
 **Stale red-flag file check.** Earlier versions of this mode counted practice sessions, so an existing `interview-prep/{company-slug}-redflags.md` may rest on them, and the evaluation report's Risk Summary (`modes/oferta.md`) shows its warning level unless the file carries the unverified marker below. A company with at least one eligible session gets that file rewritten in Step 5 from eligible sessions only. Start from the files: for each existing `interview-prep/*-redflags.md`, take its `{company-slug}`. If no eligible session belongs to that company but at least one skipped file does (its front matter `company`, slugified, equals the slug; for a file without that field, its filename starts with `{company-slug}-`), tell the user that red-flag file may have been built from practice sessions and offer to delete it. Delete it only on the user's explicit yes. Otherwise keep it, add this note on the line below its `# Red-Flag Analysis` heading, which is the file's first line (`# Red-Flag Analysis — {Company}`), so the note starts on line 2 (once; skip it if the note is already there, and if the note is there without the marker comment, add only the marker comment above it), and say so in the summary:
 
 ```markdown
-<!-- career-ops:redflags-unverified -->
+<!-- project-x:redflags-unverified -->
 > [Render in {language.output}: "Unverified: this analysis may rest on practice or mock sessions, which this mode no longer counts, and no real-interview session for this company is on file. Do not treat its warning level as evidence about how the company interviews."]
 ```
 
-The first line is a fixed marker: write `<!-- career-ops:redflags-unverified -->` exactly as shown, never translated. The Risk Summary (`modes/oferta.md`, `batch/batch-prompt.md`) looks for this marker, not for the sentence, so it finds the note in any output language and shows the row as not evaluated instead of the file's warning level.
+The first line is a fixed marker: write `<!-- project-x:redflags-unverified -->` exactly as shown, never translated. The Risk Summary (`modes/oferta.md`, `batch/batch-prompt.md`) looks for this marker, not for the sentence, so it finds the note in any output language and shows the row as not evaluated instead of the file's warning level.
 
 A later run that finds an eligible session for the company rewrites the file in Step 5, which drops the note and its marker.
 
@@ -152,7 +152,7 @@ Compute a **red-flag score**:
 
 ## Step 5 — Generate Output
 
-**Output routing:** Red-flag analysis is company-wide (signals aggregate across rounds regardless of role). Write to a single company-level file: `interview-prep/{company-slug}-redflags.md`. Create it if absent, and replace it if present. If sessions span multiple role slugs, note all roles in the header. Do not append to per-role intel files — those are role-specific, this is company-specific. This file is cross-referenced by the evaluation report's `## Risk Summary` block (see `modes/oferta.md`), which surfaces its warning level plus a relative link — keep the `**Warning level:**` line intact. A file written here never carries the `<!-- career-ops:redflags-unverified -->` marker (Step 1); the rewrite drops it, so the Risk Summary shows the new warning level.
+**Output routing:** Red-flag analysis is company-wide (signals aggregate across rounds regardless of role). Write to a single company-level file: `interview-prep/{company-slug}-redflags.md`. Create it if absent, and replace it if present. If sessions span multiple role slugs, note all roles in the header. Do not append to per-role intel files — those are role-specific, this is company-specific. This file is cross-referenced by the evaluation report's `## Risk Summary` block (see `modes/oferta.md`), which surfaces its warning level plus a relative link — keep the `**Warning level:**` line intact. A file written here never carries the `<!-- project-x:redflags-unverified -->` marker (Step 1); the rewrite drops it, so the Risk Summary shows the new warning level.
 
 Write the following structure:
 

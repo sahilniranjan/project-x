@@ -50,7 +50,7 @@ function importClosure(entries) {
 const ASSETS = [...importClosure(['reply-watch.mjs', 'set-status.mjs']), 'tracker-aliases.json', 'templates/states.yml'];
 
 function fixture(t) {
-  const dir = realpathSync(mkdtempSync(join(tmpdir(), 'career-ops-proposals-')));
+  const dir = realpathSync(mkdtempSync(join(tmpdir(), 'project-x-proposals-')));
   t.after(() => rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 100 }));
   const f = { dir };
   for (const name of ['code', 'data', 'other', 'cwd']) {
@@ -109,7 +109,7 @@ function read(f) {
 function envFor(f, env = {}) {
   return {
     ...process.env,
-    CAREER_OPS_ROOT: f.data, CAREER_OPS_DATA_DIR: '', CAREER_OPS_TRACKER: '', CAREER_OPS_REPLY_CANDIDATES: '',
+    PROJECT_X_ROOT: f.data, PROJECT_X_DATA_DIR: '', PROJECT_X_TRACKER: '', PROJECT_X_REPLY_CANDIDATES: '',
     ...env,
   };
 }
@@ -392,12 +392,12 @@ test('foreign trackers, changed identities, ambiguous row IDs and stale states a
 });
 
 const ROOT_CONFIGS = [
-  ['repository default', f => ({ CAREER_OPS_ROOT: '' }), 'code'],
-  ['absolute root', f => ({ CAREER_OPS_ROOT: f.data }), 'data'],
-  ['relative root', f => ({ CAREER_OPS_ROOT: relative(f.code, f.data) }), 'data'],
-  ['data-dir alias', f => ({ CAREER_OPS_ROOT: '', CAREER_OPS_DATA_DIR: f.data }), 'data'],
-  ['relative marker', f => { writeFileSync(join(f.code, '.career-ops-data'), relative(f.code, f.data)); return { CAREER_OPS_ROOT: '' }; }, 'data'],
-  ['environment over marker', f => { writeFileSync(join(f.code, '.career-ops-data'), f.other); return { CAREER_OPS_ROOT: f.data }; }, 'data'],
+  ['repository default', f => ({ PROJECT_X_ROOT: '' }), 'code'],
+  ['absolute root', f => ({ PROJECT_X_ROOT: f.data }), 'data'],
+  ['relative root', f => ({ PROJECT_X_ROOT: relative(f.code, f.data) }), 'data'],
+  ['data-dir alias', f => ({ PROJECT_X_ROOT: '', PROJECT_X_DATA_DIR: f.data }), 'data'],
+  ['relative marker', f => { writeFileSync(join(f.code, '.project-x-data'), relative(f.code, f.data)); return { PROJECT_X_ROOT: '' }; }, 'data'],
+  ['environment over marker', f => { writeFileSync(join(f.code, '.project-x-data'), f.other); return { PROJECT_X_ROOT: f.data }; }, 'data'],
 ];
 
 for (const [name, setup, selectedRoot] of ROOT_CONFIGS) {
@@ -428,7 +428,7 @@ test('explicit tracker override still scans only the chosen data root and demand
   drop(f, proposal(f, ROWS[1], { tracker_path: target }), 'override.json');
   // A valid proposal next to the overridden tracker must not be read.
   drop(f, proposal(f, ROWS[0], { tracker_path: target }), 'foreign-root.json', f.other);
-  const result = run(f, 'y\n', { CAREER_OPS_TRACKER: target });
+  const result = run(f, 'y\n', { PROJECT_X_TRACKER: target });
   assert.match(result.stderr, /foreign or noncanonical tracker path/);
   assert.doesNotMatch(result.stdout, /Proposal for #7/);
   assert.match(readFileSync(target, 'utf8'), /\| 12 \|.+\| Interview \|/);

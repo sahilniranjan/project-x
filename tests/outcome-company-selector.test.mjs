@@ -43,7 +43,7 @@ function outcome(...args) {
     const r = spawnSync(process.execPath, [join(ROOT, 'outcome.mjs'), ...args, '--json'], {
       cwd: root,
       encoding: 'utf-8',
-      env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_TRACKER: tracker, CAREER_OPS_DATA_DIR: '' },
+      env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_TRACKER: tracker, PROJECT_X_DATA_DIR: '' },
     });
     let json = null;
     try { json = JSON.parse(r.stdout); } catch { /* asserted by the caller */ }

@@ -42,7 +42,7 @@ function holder(lockDir, { nested = false } = {}) {
     process.stdin.destroy(); // the only handle left, so the child ends here
   `;
   const child = spawn(process.execPath, ['--input-type=module', '-e', script], {
-    env: { ...process.env, CAREER_OPS_TEST_QUEUE: '', CAREER_OPS_TEST_QUEUE_LOCK: lockDir },
+    env: { ...process.env, PROJECT_X_TEST_QUEUE: '', PROJECT_X_TEST_QUEUE_LOCK: lockDir },
   });
   let out = '';
   const watchers = [];
@@ -82,7 +82,7 @@ const span = (out) => ({
 });
 
 function scratch(t) {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-test-queue-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-test-queue-'));
   t.after(() => rmSync(dir, { recursive: true, force: true }));
   return join(dir, 'queue.lock');
 }
@@ -120,9 +120,9 @@ test('a killed holder does not wedge the queue', async (t) => {
   assert.ok(Date.now() - startedAt < 20_000, 'the dead holder was reclaimed, not waited out');
 });
 
-test('CAREER_OPS_TEST_QUEUE=0 runs without the queue', async (t) => {
+test('PROJECT_X_TEST_QUEUE=0 runs without the queue', async (t) => {
   const lockDir = scratch(t);
-  const env = { CAREER_OPS_TEST_QUEUE: '0', CAREER_OPS_TEST_QUEUE_LOCK: lockDir };
+  const env = { PROJECT_X_TEST_QUEUE: '0', PROJECT_X_TEST_QUEUE_LOCK: lockDir };
   assert.equal(await holdTestQueue({ env }), null);
   assert.equal(existsSync(lockDir), false);
 });
@@ -142,10 +142,10 @@ test('the holder turns the queue off for what it starts, so a nested test-all do
   assert.match(a.out, /NESTED null\s+NESTED-EXIT 0/, a.out);
   assert.doesNotMatch(a.out, /holds the queue/);
 
-  const env = { CAREER_OPS_TEST_QUEUE_LOCK: join(dirname(lockDir), 'own.lock') };
+  const env = { PROJECT_X_TEST_QUEUE_LOCK: join(dirname(lockDir), 'own.lock') };
   const held = await holdTestQueue({ env });
   assert.ok(held);
-  assert.equal(env.CAREER_OPS_TEST_QUEUE, '0');
+  assert.equal(env.PROJECT_X_TEST_QUEUE, '0');
 });
 
 test('a holder that never lets go ends the wait with a message naming it', async (t) => {
@@ -156,14 +156,14 @@ test('a holder that never lets go ends the wait with a message naming it', async
   const lines = [];
   await assert.rejects(
     holdTestQueue({
-      env: { CAREER_OPS_TEST_QUEUE_LOCK: lockDir },
+      env: { PROJECT_X_TEST_QUEUE_LOCK: lockDir },
       log: (l) => lines.push(l),
       holderTimeoutMs: 300,
       retryMs: 20,
     }),
     (err) => /gave up after \d+ min waiting for the test queue/.test(err.message)
       && err.message.includes(`pid ${first.child.pid}`)
-      && err.message.includes('CAREER_OPS_TEST_QUEUE=0'),
+      && err.message.includes('PROJECT_X_TEST_QUEUE=0'),
   );
   assert.equal(lines.length, 1);
 });
@@ -172,7 +172,7 @@ test('a lock left by a run that no longer exists is taken over at once', async (
   const lockDir = scratch(t);
   mkdirSync(lockDir);
   writeFileSync(join(lockDir, 'owner.json'), JSON.stringify({ pid: 2 ** 30, started_at: new Date(0).toISOString() }));
-  const env = { CAREER_OPS_TEST_QUEUE_LOCK: lockDir };
+  const env = { PROJECT_X_TEST_QUEUE_LOCK: lockDir };
   const held = await holdTestQueue({ env, log: () => {} });
   assert.ok(held);
   const owner = JSON.parse(readFileSync(join(lockDir, 'owner.json'), 'utf-8'));

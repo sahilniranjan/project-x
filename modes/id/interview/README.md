@@ -18,7 +18,7 @@ Sekumpulan skill yang dapat dipakai ulang untuk persiapan wawancara dari awal hi
 
 ## Konvensi File
 
-Skill ini mengasumsikan file berikut tersedia (default career-ops):
+Skill ini mengasumsikan file berikut tersedia (default project-x):
 
 | File | Fungsi |
 |---|---|

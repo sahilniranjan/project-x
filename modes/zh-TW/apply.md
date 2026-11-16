@@ -124,7 +124,7 @@ Follow the Scope section in `modes/apply.md`. Run `node apply-scope.mjs root` an
 當求職者確認已經成功按下「送出應徵／投遞」後，執行以下收尾與建檔工作：
 1. 使用規範的 CLI 將該職缺狀態更新為 `Applied`：`node set-status.mjs --report <report#> Applied`（不要手動編輯 `data/applications.md` 表格）。
 2. 將最終實際送出的表單回答寫入該報告的 `## Application Answers` 區段，並標註 `**State:** submitted`（格式見 `modes/apply.md` → Step 8），方便後續面試對照。維度 H 保留為評估時的草稿，不做修改。
-3. 建議下一步行動：引導求職者使用 `/career-ops contacto` 指令，產生直達 LinkedIn 招募負責人的開發話術。
+3. 建議下一步行動：引導求職者使用 `/project-x contacto` 指令，產生直達 LinkedIn 招募負責人的開發話術。
 
 ---
 

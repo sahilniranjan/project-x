@@ -36,16 +36,16 @@ function merge(env, { score = '4.4/5', notes = 'referred by a former colleague' 
   writeFileSync(join(env.addDir, '11.tsv'), `${TSV_HEAD}\n11\t2026-10-02\tAcme\tSolutions Engineer\tEvaluated\t${score}\t❌\t[11](reports/${file})\t${notes}\n`);
   const childEnv = {
     ...process.env,
-    CAREER_OPS_ROOT: env.base,
-    CAREER_OPS_TRACKER: env.tracker,
-    CAREER_OPS_ADDITIONS: env.addDir,
-    CAREER_OPS_BATCH_STATE: isolatedBatchStatePath(env.addDir),
-    CAREER_OPS_FOLLOWUPS: '',
-    CAREER_OPS_REPORTS_DIR: '',
-    CAREER_OPS_PDF_INDEX: '',
+    PROJECT_X_ROOT: env.base,
+    PROJECT_X_TRACKER: env.tracker,
+    PROJECT_X_ADDITIONS: env.addDir,
+    PROJECT_X_BATCH_STATE: isolatedBatchStatePath(env.addDir),
+    PROJECT_X_FOLLOWUPS: '',
+    PROJECT_X_REPORTS_DIR: '',
+    PROJECT_X_PDF_INDEX: '',
   };
-  delete childEnv.CAREER_OPS_DATA_DIR;
-  delete childEnv.CAREER_OPS_CODE_ROOT;
+  delete childEnv.PROJECT_X_DATA_DIR;
+  delete childEnv.PROJECT_X_CODE_ROOT;
   const run = spawnSync('node', [MERGE], { encoding: 'utf-8', env: childEnv });
   assert.equal(run.status, 0, describeSpawn(run));
   return `${run.stdout}${run.stderr}`;

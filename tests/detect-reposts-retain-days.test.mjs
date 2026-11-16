@@ -187,7 +187,7 @@ function runCli(args, extraEnv = {}) {
     timeout: 30_000,
     // Pin every lane variable. A developer whose shell exports one would
     // otherwise point the run at their own files, and a prune writes there.
-    env: { ...process.env, CAREER_OPS_ROOT: sandbox, CAREER_OPS_DATA_DIR: '', CAREER_OPS_SCAN_HISTORY: '', ...extraEnv },
+    env: { ...process.env, PROJECT_X_ROOT: sandbox, PROJECT_X_DATA_DIR: '', PROJECT_X_SCAN_HISTORY: '', ...extraEnv },
   });
   return { ...result, output: `${result.stdout || ''}${result.stderr || ''}` };
 }
@@ -231,14 +231,14 @@ try {
   check('--retain-days with no operand is refused before the read',
     noOperand.status === 1 && /--retain-days/.test(noOperand.output));
 
-  // A lane's history is selected by CAREER_OPS_SCAN_HISTORY (docs/SCRIPTS.md),
+  // A lane's history is selected by PROJECT_X_SCAN_HISTORY (docs/SCRIPTS.md),
   // and scan.mjs writes that file. Retention has to follow the same selection:
   // ignoring it would delete rows from the default lane and leave the selected
   // lane untouched, which is the opposite of what the caller asked for.
   const lanePath = join(sandbox, 'data', 'scan-history.bridge.tsv');
   writeFileSync(lanePath, `${cliRows.join('\n')}\n`, 'utf-8');
   const defaultBeforeLane = readFileSync(historyPath);
-  const laneRun = runCli(['--retain-days', '30'], { CAREER_OPS_SCAN_HISTORY: 'data/scan-history.bridge.tsv' });
+  const laneRun = runCli(['--retain-days', '30'], { PROJECT_X_SCAN_HISTORY: 'data/scan-history.bridge.tsv' });
   const laneAfter = readFileSync(lanePath, 'utf-8');
   let laneJson = null;
   try { laneJson = JSON.parse(laneRun.stdout); } catch { /* asserted below */ }

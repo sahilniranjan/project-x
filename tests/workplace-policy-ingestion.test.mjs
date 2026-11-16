@@ -79,8 +79,8 @@ test('a real offline scanner run writes only policy-compatible jobs to Inbox and
     fs.mkdirSync(path.join(temp, 'data'));
     fs.writeFileSync(path.join(temp, 'portals.yml'), yaml.dump(CONFIG));
     const env = { ...process.env };
-    for (const key of Object.keys(env)) if (key.startsWith('CAREER_OPS_')) delete env[key];
-    const result = spawnSync(process.execPath, [path.join(ROOT, 'scan.mjs'), '--quiet'], { cwd: ROOT, env: { ...env, CAREER_OPS_ROOT: temp }, encoding: 'utf8', timeout: 20_000 });
+    for (const key of Object.keys(env)) if (key.startsWith('PROJECT_X_')) delete env[key];
+    const result = spawnSync(process.execPath, [path.join(ROOT, 'scan.mjs'), '--quiet'], { cwd: ROOT, env: { ...env, PROJECT_X_ROOT: temp }, encoding: 'utf8', timeout: 20_000 });
     assert.equal(result.status, 0, result.stderr + result.stdout);
     const pipeline = fs.readFileSync(path.join(temp, 'data/pipeline.md'), 'utf8');
     assert.match(pipeline, /workplace\/barcelona/);

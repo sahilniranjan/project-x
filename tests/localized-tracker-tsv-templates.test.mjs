@@ -319,7 +319,7 @@ for (const rel of [...seen].sort()) {
     try {
       out = execFileSync(NODE, [join(ROOT, 'merge-tracker.mjs')], {
         encoding: 'utf-8', timeout: 30000, stdio: ['ignore', 'pipe', 'pipe'],
-        env: { ...process.env, CAREER_OPS_TRACKER: tracker, CAREER_OPS_ADDITIONS: adds, CAREER_OPS_BATCH_STATE: isolatedBatchStatePath(adds) },
+        env: { ...process.env, PROJECT_X_TRACKER: tracker, PROJECT_X_ADDITIONS: adds, PROJECT_X_BATCH_STATE: isolatedBatchStatePath(adds) },
       });
     } catch (e) { out = String(e.stdout ?? '') + String(e.stderr ?? ''); }
 

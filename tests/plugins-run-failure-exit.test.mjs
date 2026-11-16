@@ -93,7 +93,7 @@ function run(checkout, root) {
     cwd: checkout,
     encoding: 'utf8',
     timeout: 20000,
-    env: { ...process.env, CAREER_OPS_ROOT: root, NO_COLOR: '1' },
+    env: { ...process.env, PROJECT_X_ROOT: root, NO_COLOR: '1' },
   });
 }
 

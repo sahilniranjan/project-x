@@ -58,7 +58,7 @@ function outcome(rows, captures, num) {
     ].join('\n'));
     const r = spawnSync(NODE, ['--import', pathToFileURL(preload).href, join(ROOT, 'outcome.mjs'), String(num), 'rejected', '--json'], {
       cwd: root, encoding: 'utf-8', timeout: 60000,
-      env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_TRACKER: tracker, CAREER_OPS_DATA_DIR: '', ARCHIVE_CALLS: calls },
+      env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_TRACKER: tracker, PROJECT_X_DATA_DIR: '', ARCHIVE_CALLS: calls },
     });
     assert.strictEqual(r.status, 0, `outcome exited ${r.status}: ${r.stdout}${r.stderr}`);
     const json = JSON.parse(r.stdout);

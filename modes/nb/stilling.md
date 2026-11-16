@@ -42,7 +42,7 @@ Research om virksomhet, lønn og ansettelsessignaler er ett oppslag, ikke en åp
 - ikke kall `deep-research`, `deep` eller andre research-skills, og ikke start subagents
 - når taket er nådd, oppsummer det som ble funnet, og merk manglende data som utilgjengelig
 
-Er dypere research nyttig, anbefal å kjøre `/career-ops deep` separat etter evalueringen.
+Er dypere research nyttig, anbefal å kjøre `/project-x deep` separat etter evalueringen.
 
 ## Trinn 0 -- Arketypegjenkjenning
 

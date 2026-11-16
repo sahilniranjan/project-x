@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import fs from "node:fs";
-import { rootScript } from "@/lib/career-ops";
+import { rootScript } from "@/lib/project-x";
 import { activeScanJob, cancelScanJob, getScanJob, startScanJob } from "@/lib/core/explore-jobs";
 import { companyIndexAvailable } from "@/lib/core/company-index";
 import { parseExplorePatch, DEFAULT_FILTERS } from "@/lib/explore";

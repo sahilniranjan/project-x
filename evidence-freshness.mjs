@@ -41,7 +41,7 @@ import { spawnSync } from 'child_process';
 import { existsSync, readFileSync, readdirSync, statSync } from 'fs';
 import { join } from 'path';
 import { loadYaml } from './lib/yaml-document.mjs';
-import { getCareerOpsRoot, getProfilePath, hasProfileOverride } from './path-resolver.mjs';
+import { getProjectXRoot, getProfilePath, hasProfileOverride } from './path-resolver.mjs';
 import { localToday } from './lib/local-today.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
 import { validateFlags } from './lib/cli-flags.mjs';
@@ -261,7 +261,7 @@ export function judge({ lastScan, daysSince, newMergedPrs, truncated, thresholds
  * @returns {number} Always 0: this check informs an evaluation, it never stops one.
  */
 export function runCli({
-  dataRoot = getCareerOpsRoot(), runGh = defaultGhRunner,
+  dataRoot = getProjectXRoot(), runGh = defaultGhRunner,
   profilePath = hasProfileOverride() ? getProfilePath() : getProfilePath(dataRoot),
   now = new Date(), stdout = (s) => process.stdout.write(s), stderr = (s) => process.stderr.write(s),
 } = {}) {

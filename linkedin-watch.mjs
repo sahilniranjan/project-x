@@ -6,7 +6,7 @@ import { flagValue, hasFlag, validateFlags } from './lib/cli-flags.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
 import { LINKEDIN_DROP_DIR } from './lib/linkedin-auto.mjs';
 import { importMailDrop } from './lib/linkedin-mail-drop.mjs';
-import { getCareerOpsRoot } from './path-resolver.mjs';
+import { getProjectXRoot } from './path-resolver.mjs';
 
 const USAGE = `Add LinkedIn job alerts from saved email. No Google account.
 
@@ -25,7 +25,7 @@ async function main() {
     valueFlags: ['--dir'],
     requireOperand: true,
   });
-  const root = getCareerOpsRoot();
+  const root = getProjectXRoot();
   const dir = flagValue(args, '--dir') || join(root, LINKEDIN_DROP_DIR);
   const dryRun = hasFlag(args, '--dry-run');
   const json = hasFlag(args, '--json');

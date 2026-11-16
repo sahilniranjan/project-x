@@ -1,10 +1,10 @@
-// tests/scaffolder-release-tag.test.mjs — `npx @santifer/career-ops init` says which ref it installs
+// tests/scaffolder-release-tag.test.mjs — `npx @santifer/project-x init` says which ref it installs
 //
 // The scaffolder clones the tag /releases/latest names, and falls back to
 // main when it gets none. That fallback used to be silent: the only trace was
 // a missing " @ tag" in the "Cloning" line. resolveReleaseTag() now returns a
 // reason for every fallback so cli.mjs can print it, and refuses a tag that is
-// not a career-ops release (the sibling `web-vX.Y.Z` component).
+// not a project-x release (the sibling `web-vX.Y.Z` component).
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import { pass, fail, ROOT } from './helpers.mjs';
@@ -32,9 +32,9 @@ async function check(name, fetchImpl, expect) {
   else fail(`${name}: expected no tag and a reason matching ${expect.reason}, got ${JSON.stringify(got)}`);
 }
 
-// 1. A career-ops release is used as-is.
-await check('a career-ops-vX.Y.Z release tag is cloned',
-  respond({ body: { tag_name: 'career-ops-v1.37.0' } }), { tag: 'career-ops-v1.37.0' });
+// 1. A project-x release is used as-is.
+await check('a project-x-vX.Y.Z release tag is cloned',
+  respond({ body: { tag_name: 'project-x-v1.37.0' } }), { tag: 'project-x-v1.37.0' });
 
 // 2. Every fallback to main carries a reason the CLI prints.
 await check('network failure falls back with a reason',
@@ -50,20 +50,20 @@ await check('a release with no tag falls back',
 await check('an unreadable body falls back',
   respond({ body: 'not json' }), { reason: /no release tag/ });
 
-// 3. A tag that is not a career-ops release is refused, not cloned.
+// 3. A tag that is not a project-x release is refused, not cloned.
 await check('the sibling web-vX.Y.Z release is not cloned',
-  respond({ body: { tag_name: 'web-v0.15.0' } }), { reason: /"web-v0\.15\.0", not a career-ops-vX\.Y\.Z release/ });
-await check('a malformed career-ops tag is not cloned',
-  respond({ body: { tag_name: 'career-ops-vpreview-v1.32.0' } }), { reason: /not a career-ops-vX\.Y\.Z release/ });
+  respond({ body: { tag_name: 'web-v0.15.0' } }), { reason: /"web-v0\.15\.0", not a project-x-vX\.Y\.Z release/ });
+await check('a malformed project-x tag is not cloned',
+  respond({ body: { tag_name: 'project-x-vpreview-v1.32.0' } }), { reason: /not a project-x-vX\.Y\.Z release/ });
 
 // 4. The scaffolder and the updater agree on what a release tag is. The
 //    scaffolder cannot import update-system.mjs (the npm package ships only
 //    scaffolder/bin), so the rule is duplicated and this keeps the copies equal.
-for (const t of ['career-ops-v1.37.0', 'career-ops-v10.0.12', 'web-v0.15.0', 'v1.37.0', 'career-ops-v1.37', 'career-ops-vpreview-v1.32.0', 'career-ops-v1.37.0-rc.1', '']) {
+for (const t of ['project-x-v1.37.0', 'project-x-v10.0.12', 'web-v0.15.0', 'v1.37.0', 'project-x-v1.37', 'project-x-vpreview-v1.32.0', 'project-x-v1.37.0-rc.1', '']) {
   if (RELEASE_TAG_RE.test(t) === UPDATER_RELEASE_TAG_RE.test(t)) pass(`scaffolder and updater agree on ${JSON.stringify(t)}`);
   else fail(`scaffolder and updater disagree on whether ${JSON.stringify(t)} is a release tag`);
 }
-if (/\/releases\/latest$/.test(LATEST_RELEASE) && LATEST_RELEASE.includes('/repos/career-ops-hq/career-ops/')) pass('scaffolder reads /releases/latest of career-ops-hq/career-ops');
+if (/\/releases\/latest$/.test(LATEST_RELEASE) && LATEST_RELEASE.includes('/repos/project-x-hq/project-x/')) pass('scaffolder reads /releases/latest of project-x-hq/project-x');
 else fail(`unexpected release endpoint ${LATEST_RELEASE}`);
 
 // 5. cli.mjs prints the reason and names main on the fallback path, rather

@@ -54,10 +54,10 @@ function runScan(args) {
   writeFileSync(join(dir, 'config', 'profile.yml'), '{}\n');
   writeFileSync(join(dir, 'portals.yml'), PORTALS);
   const env = { ...process.env };
-  for (const name of Object.keys(env)) if (name.toUpperCase().startsWith('CAREER_OPS_')) delete env[name];
+  for (const name of Object.keys(env)) if (name.toUpperCase().startsWith('PROJECT_X_')) delete env[name];
   const result = spawnSync(process.execPath, [SCAN, '--dry-run', '--quiet', ...args], {
     cwd: dir,
-    env: { ...env, CAREER_OPS_ROOT: dir, CAREER_OPS_PORTALS: join(dir, 'portals.yml') },
+    env: { ...env, PROJECT_X_ROOT: dir, PROJECT_X_PORTALS: join(dir, 'portals.yml') },
     encoding: 'utf-8',
     timeout: 20000,
   });

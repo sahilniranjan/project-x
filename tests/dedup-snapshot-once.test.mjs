@@ -25,7 +25,7 @@ const HEADER = [
 const fold = (name) => String(name ?? '').trim().toLowerCase();
 
 function snapshotOf(historyText) {
-  const root = mkdtempSync(join(tmpdir(), 'career-ops-dedup-once-'));
+  const root = mkdtempSync(join(tmpdir(), 'project-x-dedup-once-'));
   const history = join(root, 'scan-history.tsv');
   const pipeline = join(root, 'pipeline.md');
   const apps = join(root, 'applications.md');

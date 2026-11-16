@@ -80,7 +80,7 @@ Construeer voor elke vraag het antwoord volgens dit diagram:
 2. **Vorige `## Application Answers` / blok H**: Als er een verzonden antwoord of een concept bestaat (verzonden antwoord eerst), neem dit dan als basis en verfijn het
 3. **“Ik kies jou”-toon**: hetzelfde raamwerk als in de automatische pipeline: zelfverzekerd, niet smekend
 4. **Specificiteit**: citeer iets concreets uit de zichtbare vacaturetekst of uit het gevalideerde rapport. Als geen van beide de benodigde informatie bevat, vraag dan eerst om de vacaturetekst; verzin nooit details
-5. **career-ops proof point**: vermeld dit in 'Aanvullende informatie' als dat veld bestaat, maar alleen wanneer het afkomstig is uit het gevalideerde rapport, `cv.md`, `config/profile.yml` of de huidige conversatie. Laat de kandidaat het bevestigen voordat je het presenteert en gebruik geen onbewezen claims of metrics
+5. **project-x proof point**: vermeld dit in 'Aanvullende informatie' als dat veld bestaat, maar alleen wanneer het afkomstig is uit het gevalideerde rapport, `cv.md`, `config/profile.yml` of de huidige conversatie. Laat de kandidaat het bevestigen voordat je het presenteert en gebruik geen onbewezen claims of metrics
 
 **Velden die vaak voorkomen in Nederlandse en Belgische formulieren:**
 - **Salarisverwachtingen (jaarlijks bruto)** -> Bereik uit `config/profile.yml` of de huidige conversatie, in EUR, met vermelding "bespreekbaar volgens het totaalpakket". Laat de kandidaat het bedrag bevestigen voordat je het gebruikt
@@ -121,7 +121,7 @@ Controleer voordat je iets opslaat, en opnieuw vlak voor elke schrijfstap hieron
 Als de kandidaat bevestigt dat de sollicitatie is verzonden:
 1. Update de status naar "Applied" via de canonieke CLI: `node set-status.mjs --report <report#> Applied` (bewerk de tabel `applications.md` niet met de hand)
 2. Update de sectie `## Application Answers` van het rapport met de definitieve antwoorden en `**State:** submitted` (formaat in `modes/apply.md` -> Step 8; blok H blijft het concept van de evaluatie en wordt niet gewijzigd)
-3. Stel de volgende stap voor: `/career-ops contacto` voor LinkedIn-contact met de rekruteringsmanager
+3. Stel de volgende stap voor: `/project-x contacto` voor LinkedIn-contact met de rekruteringsmanager
 
 ## Scrollbeheer
 

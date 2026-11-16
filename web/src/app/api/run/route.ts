@@ -8,7 +8,7 @@ import path from "node:path";
 import { resolveCli } from "@/lib/clis";
 import { accumulateTokens, hasNewCompletedReport, isFatalGenericStderr, killMsForKind, timeoutMessage } from "@/lib/run-cli-support.mjs";
 import { spawnHeadlessCli } from "@/lib/spawn-cli.mjs";
-import { careerOpsRoot, readMemory, findReportFile, readInbox, readScanDates, readLanguageConfig } from "@/lib/career-ops";
+import { projectXRoot, readMemory, findReportFile, readInbox, readScanDates, readLanguageConfig } from "@/lib/project-x";
 import { resolvePdfPaths, type PdfPaths } from "@/lib/pdf-paths.mjs";
 import { renderAndMarkPdf, writeCvHtml, pdfRunOutcome } from "@/lib/pdf-render.mjs";
 import { createCvEnvelopeFilter, type CvEnvelope } from "@/lib/cv-envelope.mjs";
@@ -48,15 +48,15 @@ export async function POST(req: Request) {
   const lang = readLanguageConfig();
   const needsScript: Record<string, string> = { evaluate: lang.evalModeFile, "fix-portal": "verify-portals.mjs", pdf: "generate-pdf.mjs" };
   const required = needsScript[kind];
-  // CAREER_OPS_ROOT is runtime user data, not a build input. Tracing this
+  // PROJECT_X_ROOT is runtime user data, not a build input. Tracing this
   // dynamic path would copy the whole web project into every server bundle.
   const requiredPath = required
-    ? path.join(/* turbopackIgnore: true */ careerOpsRoot(), required)
+    ? path.join(/* turbopackIgnore: true */ projectXRoot(), required)
     : "";
   if (required && !fs.existsSync(/* turbopackIgnore: true */ requiredPath)) {
     return new Response(
       JSON.stringify({
-        error: `This needs a complete career-ops checkout (${required}). CAREER_OPS_ROOT has data only — point it at a full checkout.`,
+        error: `This needs a complete project-x checkout (${required}). PROJECT_X_ROOT has data only — point it at a full checkout.`,
       }),
       { status: 400, headers: { "Content-Type": "application/json" } },
     );
@@ -75,7 +75,7 @@ export async function POST(req: Request) {
 
   // An A–F score is meaningless without a CV to score against — the CLI would
   // hallucinate a fit narrative and still emit a VERDICT. Require cv.md first.
-  if ((kind === "evaluate" || kind === "pdf") && !fs.existsSync(path.join(careerOpsRoot(), "cv.md"))) {
+  if ((kind === "evaluate" || kind === "pdf") && !fs.existsSync(path.join(projectXRoot(), "cv.md"))) {
     return new Response(
       JSON.stringify({ error: "Add your CV first so I can score this against you — drop it on the home page." }),
       { status: 400, headers: { "Content-Type": "application/json" } },
@@ -91,7 +91,7 @@ export async function POST(req: Request) {
   // no longer told these paths, so a stale file cannot survive into a render.
   let pdfPaths: PdfPaths | undefined;
   if (kind === "pdf") {
-    const pathsResult = resolvePdfPaths(input, today, careerOpsRoot(), findReportFile);
+    const pathsResult = resolvePdfPaths(input, today, projectXRoot(), findReportFile);
     if (!pathsResult.ok) {
       return new Response(JSON.stringify({ error: pathsResult.error }), {
         status: 400,
@@ -134,7 +134,7 @@ export async function POST(req: Request) {
   // Names, not a count: reserving a number writes reports/NNN-RESERVED.md and the
   // final report REPLACES it, so the `.md` count is unchanged and a count-delta
   // gate reported "didn't save a report" for an evaluation that saved fine (#2085).
-  const reportsDir = path.join(careerOpsRoot(), "reports");
+  const reportsDir = path.join(projectXRoot(), "reports");
   const reportEntries = () => {
     try {
       return fs.readdirSync(reportsDir);
@@ -156,7 +156,7 @@ export async function POST(req: Request) {
   // every CLI-invoking route (assistant, explore/ai, cv/ingest, the apply planners),
   // which had the identical bug, and puts it behind one tested helper so it cannot
   // drift back in on any single call site.
-  const child = spawnHeadlessCli(binPath, args, { cwd: careerOpsRoot(), env: process.env });
+  const child = spawnHeadlessCli(binPath, args, { cwd: projectXRoot(), env: process.env });
   // Decode once on the stream, not per chunk. Buffer#toString() decodes each chunk
   // independently, so a chunk boundary falling inside a multi-byte UTF-8 sequence
   // yields a replacement character and mis-decodes the bytes after it. Those bytes
@@ -381,7 +381,7 @@ export async function POST(req: Request) {
           const result = await renderAndMarkPdf({
             spawnFn: spawn,
             execPath: process.execPath,
-            root: careerOpsRoot(),
+            root: projectXRoot(),
             pdfPaths: paths,
             format,
             reportNum: input,
@@ -443,7 +443,7 @@ export async function POST(req: Request) {
             const detail = stderrErrorSnippet ? ` (${stderrErrorSnippet})` : "";
             return `The CLI exited with an error — is it installed and authenticated?${detail}`;
           }
-          if (!emittedText && !sawError) return "The CLI produced no output — is it installed and authenticated? (career-ops is best on Claude Code.)";
+          if (!emittedText && !sawError) return "The CLI produced no output — is it installed and authenticated? (project-x is best on Claude Code.)";
           return null;
         };
 

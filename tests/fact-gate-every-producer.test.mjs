@@ -100,7 +100,7 @@ const tex = (company, bullet) => String.raw`\documentclass{article}
 `;
 
 function workspace({ withCv = true } = {}) {
-  const root = mkdtempSync(join(tmpdir(), 'career-ops-latex-gate-'));
+  const root = mkdtempSync(join(tmpdir(), 'project-x-latex-gate-'));
   mkdirSync(join(root, 'output'));
   if (withCv) writeFileSync(join(root, 'cv.md'), CV);
   return root;
@@ -120,7 +120,7 @@ function runLatex(root, ...args) {
     // No engine on PATH: the gate must decide before compilation is attempted.
     // A repo-local tectonic (node install-latex-engine.mjs) is still found,
     // since resolveLatexEngine() tries it before PATH.
-    env: { ...envWithoutPath(), CAREER_OPS_ROOT: root, CAREER_OPS_DATA_DIR: '', PATH: dirname(process.execPath) },
+    env: { ...envWithoutPath(), PROJECT_X_ROOT: root, PROJECT_X_DATA_DIR: '', PATH: dirname(process.execPath) },
   });
   let report = null;
   try { report = JSON.parse(result.stdout); } catch { /* asserted by the caller */ }

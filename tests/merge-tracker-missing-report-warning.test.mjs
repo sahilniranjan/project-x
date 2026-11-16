@@ -17,7 +17,7 @@ const HEADER = [
 ].join('\n');
 
 function makeRoot() {
-  const root = mkdtempSync(join(tmpdir(), 'career-ops-missing-report-'));
+  const root = mkdtempSync(join(tmpdir(), 'project-x-missing-report-'));
   mkdirSync(join(root, 'data'), { recursive: true });
   mkdirSync(join(root, 'reports'), { recursive: true });
   mkdirSync(join(root, 'batch', 'tracker-additions'), { recursive: true });
@@ -30,13 +30,13 @@ function addTsv(root, report) {
     `num\tdate\tcompany\trole\tstatus\tscore\tpdf\treport\tnotes\n1\t2026-07-15\tAcme Widgets\tCoordinator\tApplied\t3.2/5\t❌\t${report}\tsynthetic\n`,
   );
 }
-function run(root, args = [], envExtra = { CAREER_OPS_ROOT: root }) {
+function run(root, args = [], envExtra = { PROJECT_X_ROOT: root }) {
   const env = { ...process.env, ...envExtra };
-  for (const k of ['CAREER_OPS_DATA_DIR', 'CAREER_OPS_TRACKER', 'CAREER_OPS_ADDITIONS', 'CAREER_OPS_BATCH_STATE']) delete env[k];
-  if (!('CAREER_OPS_ROOT' in envExtra)) delete env.CAREER_OPS_ROOT;
+  for (const k of ['PROJECT_X_DATA_DIR', 'PROJECT_X_TRACKER', 'PROJECT_X_ADDITIONS', 'PROJECT_X_BATCH_STATE']) delete env[k];
+  if (!('PROJECT_X_ROOT' in envExtra)) delete env.PROJECT_X_ROOT;
   // The default batch-state.tsv is the checkout's, so a developer's own batch
   // history could decide whether a fixture row merges. Name the fixture's.
-  env.CAREER_OPS_BATCH_STATE = join(root, 'batch', 'batch-state.tsv');
+  env.PROJECT_X_BATCH_STATE = join(root, 'batch', 'batch-state.tsv');
   const r = spawnSync(process.execPath, [join(CODE_ROOT, 'merge-tracker.mjs'), ...args], { cwd: CODE_ROOT, env, encoding: 'utf-8', timeout: 30_000 });
   assert.equal(r.error, undefined);
   return { status: r.status, out: `${r.stdout ?? ''}${r.stderr ?? ''}` };
@@ -93,8 +93,8 @@ test('a link to a directory is not a report: merge-tracker warns and verify-pipe
   assert.equal(merged.status, 0, merged.out);
   assert.match(merged.out, WARN);
 
-  const env = { ...process.env, CAREER_OPS_ROOT: root };
-  for (const k of ['CAREER_OPS_DATA_DIR', 'CAREER_OPS_TRACKER']) delete env[k];
+  const env = { ...process.env, PROJECT_X_ROOT: root };
+  for (const k of ['PROJECT_X_DATA_DIR', 'PROJECT_X_TRACKER']) delete env[k];
   const v = spawnSync(process.execPath, [join(CODE_ROOT, 'verify-pipeline.mjs')], { cwd: CODE_ROOT, env, encoding: 'utf-8', timeout: 30_000 });
   assert.equal(v.error, undefined);
   assert.match(`${v.stdout}${v.stderr}`, /Report not found: (?:\.\.\/)?reports\//, 'verify-pipeline must agree with the merge-time warning');

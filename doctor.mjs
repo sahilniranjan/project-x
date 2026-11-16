@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * doctor.mjs — Setup validation for career-ops
+ * doctor.mjs — Setup validation for project-x
  * Checks all prerequisites and prints a pass/fail checklist.
  */
 
@@ -13,7 +13,7 @@ import { fileURLToPath } from 'url';
 import { findTitleFilterConflicts } from './lib/title-filter-conflicts.mjs';
 import { sectionState, scanHeadings, SECTIONS } from './lib/personalization.mjs';
 import { discoverPlugins, pluginRoots, pluginStatus, resolveSuccessorIds } from './plugins/_engine.mjs';
-import { getCareerOpsRoot, getProfilePath, hasProfileOverride, isPluginInstallCopy } from './path-resolver.mjs';
+import { getProjectXRoot, getProfilePath, hasProfileOverride, isPluginInstallCopy } from './path-resolver.mjs';
 import { parseConfigByExtension } from './jsonc-parse.mjs';
 import { validateFlags, flagValue } from './lib/cli-flags.mjs';
 import { geminiNodeFloor } from './lib/gemini-node-floor.mjs';
@@ -32,9 +32,9 @@ const codeRoot = explicitTarget ? resolve(explicitTarget) : __dirname;
 // and some modules loaded below resolve the root as they load. Ask once, first,
 // so the refusal reaches the user as a report instead of a stack trace.
 try {
-  getCareerOpsRoot();
+  getProjectXRoot();
 } catch (err) {
-  if (err?.code !== 'CAREER_OPS_UNSAFE_DATA_ROOT') throw err;
+  if (err?.code !== 'PROJECT_X_UNSAFE_DATA_ROOT') throw err;
   if (argv.includes('--json')) {
     // Same keys as a normal --json run, so an agent reading `warnings` sees it;
     // onboardingNeeded stays true so nothing proceeds on this root.
@@ -49,7 +49,7 @@ try {
       dataRootError: { code: err.code, source: err.source, root: err.root },
     }));
   } else {
-    console.log(`\ncareer-ops doctor\n================\n\n✗ ${err.message}\n`);
+    console.log(`\nproject-x doctor\n================\n\n✗ ${err.message}\n`);
   }
   process.exit(1);
 }
@@ -87,7 +87,7 @@ try {
   const name = /Cannot find package '((?:@[^/'\\:]+\/)?[^/'\\:]+)'/.exec(err?.message)?.[1];
   if (name && !missing.includes(name)) missing.unshift(name);
   if (err?.code !== 'ERR_MODULE_NOT_FOUND' || missing.length === 0) throw err;
-  console.error(`career-ops dependencies are not installed in ${__dirname} (missing: ${missing.join(', ')}), so doctor cannot run its checks.\nFix: run \`npm install\` in ${__dirname}, then run doctor again.`);
+  console.error(`project-x dependencies are not installed in ${__dirname} (missing: ${missing.join(', ')}), so doctor cannot run its checks.\nFix: run \`npm install\` in ${__dirname}, then run doctor again.`);
   process.exit(1);
 }
 
@@ -110,7 +110,7 @@ const USAGE = `Usage:
   node doctor.mjs --json             # read-only machine-readable onboarding state
   node doctor.mjs --json --init-templates # create missing personalization files for onboarding
   node doctor.mjs --strict           # also probe portals.yml entries (network)
-  node doctor.mjs --target <path>    # diagnose another career-ops checkout
+  node doctor.mjs --target <path>    # diagnose another project-x checkout
   node doctor.mjs --cli <name>       # check a specific CLI's integration
   node doctor.mjs --help             # show this message
 
@@ -124,11 +124,11 @@ CLIs: ${AGENT_CLIS.join(', ')}`;
 // shared message.
 validateFlags(argv, KNOWN_FLAGS, USAGE, { valueFlags: VALUE_FLAGS, requireOperand: true });
 
-const projectRoot = explicitTarget ? resolve(explicitTarget) : getCareerOpsRoot();
+const projectRoot = explicitTarget ? resolve(explicitTarget) : getProjectXRoot();
 // --target diagnoses a whole other checkout, so that checkout's profile is the
-// one that counts; otherwise CAREER_OPS_PROFILE applies as it does everywhere.
+// one that counts; otherwise PROJECT_X_PROFILE applies as it does everywhere.
 // With no override the path is the root the doctor started from: the human run
-// loads the root's whole .env later, and a CAREER_OPS_ROOT in it must not move
+// loads the root's whole .env later, and a PROJECT_X_ROOT in it must not move
 // this one check to another root.
 const profilePathFor = (root) => (explicitTarget || !hasProfileOverride() ? getProfilePath(root) : getProfilePath());
 // Only scan.mjs, the evaluators, openai-tailor.mjs and openrouter-runner load a .env; most readers
@@ -137,16 +137,16 @@ const profilePathFor = (root) => (explicitTarget || !hasProfileOverride() ? getP
 // but never counted as a found profile.
 const profileFromEnvFile = (root) => {
   try {
-    const value = dotenv.parse(readFileSync(join(root, '.env'))).CAREER_OPS_PROFILE;
+    const value = dotenv.parse(readFileSync(join(root, '.env'))).PROJECT_X_PROFILE;
     return value?.trim() ? value.trim() : null;
   } catch {
     return null; // no .env, or unreadable
   }
 };
 // node_modules and .git belong to the CODE checkout, not the resolved data
-// root — under a split checkout (CAREER_OPS_ROOT/CAREER_OPS_DATA_DIR or the
-// .career-ops-data marker) those are two different directories, and neither
-// ever holds the other's artifacts (career-ops#3867 finding 6). --target is
+// root — under a split checkout (PROJECT_X_ROOT/PROJECT_X_DATA_DIR or the
+// .project-x-data marker) those are two different directories, and neither
+// ever holds the other's artifacts (project-x#3867 finding 6). --target is
 // the one case that means "diagnose this whole other checkout" — code layer
 // included — so it keeps pointing both roots at the same place, matching how
 // tests/doctor-tracked-bak-files.test.mjs already exercises it.
@@ -252,7 +252,7 @@ function checkDependencies() {
     return {
       pass: false,
       label: `Dependencies could not be checked: package.json unreadable (${err.message})`,
-      fix: 'Run doctor from a career-ops checkout, or pass --target <checkout>',
+      fix: 'Run doctor from a project-x checkout, or pass --target <checkout>',
     };
   }
   if (missing.length === 0) {
@@ -276,7 +276,7 @@ function checkPluginInstall(root) {
     return {
       pass: false,
       label: `Data root ${root} is inside the Claude Code plugin install, which is replaced on every plugin update`,
-      fix: 'Set CAREER_OPS_ROOT to an absolute path outside ~/.claude/plugins, or unset it to use ~/career-ops-data',
+      fix: 'Set PROJECT_X_ROOT to an absolute path outside ~/.claude/plugins, or unset it to use ~/project-x-data',
     };
   }
   return { pass: true, label: `Claude Code plugin install: your files live in ${root}` };
@@ -305,7 +305,7 @@ function checkWebDependencies() {
 // when a checkout write failed. #2857 stops that for NEW installs, but an
 // install that already `git add`ed one is stuck: nothing in the update path
 // untracks a path git already has, so the .bak files persist forever and the
-// next update looks like it silently did nothing (career-ops#2881) — nothing
+// next update looks like it silently did nothing (project-x#2881) — nothing
 // points at .bak unless something checks for it. Kept to a single cheap
 // `git ls-files` call so it costs nothing on the common case of zero matches.
 function checkTrackedBakFiles(root) {
@@ -361,10 +361,10 @@ function checkTrackedBakFiles(root) {
 // A checkout made without symlink support (Windows without Developer Mode,
 // core.symlinks=false) writes each per-CLI skill entrypoint as a regular file
 // holding only the symlink target text, so that CLI loads a ~43-byte skill with
-// no router in it (career-ops#4589). update-system.mjs apply repairs these via
+// no router in it (project-x#4589). update-system.mjs apply repairs these via
 // ensureSkillEntrypoints, but apply returns early on an install that is already
 // up to date, so a fresh clone never reaches it and nothing else says why
-// /career-ops does nothing. Read-only on purpose (doctor must not write): it
+// /project-x does nothing. Read-only on purpose (doctor must not write): it
 // names the stubs and the one command that materializes them.
 // One script for every shell, deliberately free of quote characters so each
 // shell can wrap it in its own: backticks for the one string, and both paths
@@ -434,7 +434,7 @@ function checkSkillEntrypoints(root) {
   }
   return {
     warn: true,
-    label: `${stubs.length} CLI skill entrypoint${stubs.length === 1 ? ' is' : 's are'} a symlink-target stub, not the skill — this checkout has no symlink support, so that CLI loads an empty /career-ops`,
+    label: `${stubs.length} CLI skill entrypoint${stubs.length === 1 ? ' is' : 's are'} a symlink-target stub, not the skill — this checkout has no symlink support, so that CLI loads an empty /project-x`,
     // Materializing first: it is the repair that works on the clone this
     // warning is most likely for, one that is already up to date, where apply
     // returns before reaching ensureSkillEntrypoints. Both are built from the
@@ -453,7 +453,7 @@ function checkSkillEntrypoints(root) {
 // instead, and is the only fix that works there.
 function playwrightInstallFix() {
   if (existsSync('/etc/NIXOS')) {
-    return 'On NixOS, run career-ops inside the flake dev shell (`nix develop`, or `direnv allow`) and re-enter it after `npm install`. Do not run `npx playwright install`: NixOS cannot run the browsers it downloads. See docs/NIXOS.md.';
+    return 'On NixOS, run project-x inside the flake dev shell (`nix develop`, or `direnv allow`) and re-enter it after `npm install`. Do not run `npx playwright install`: NixOS cannot run the browsers it downloads. See docs/NIXOS.md.';
   }
   return 'Run: npx playwright install chromium';
 }
@@ -534,14 +534,14 @@ async function checkPlaywright(browserProcessEnv) {
     // the binary is present and failed to start, so the advice follows the
     // error Playwright reported instead of repeating a no-op install.
     const cause = classifyChromiumLaunchError(err);
-    // Either cause can be sidestepped by pointing career-ops at a
+    // Either cause can be sidestepped by pointing project-x at a
     // Chromium-family browser the machine already has.
     const overrideHint = override
-      ? ` The browser it tried is the one configured for career-ops (${override.path}); clear that setting to fall back to the bundled Chromium.`
+      ? ` The browser it tried is the one configured for project-x (${override.path}); clear that setting to fall back to the bundled Chromium.`
       : ' Or, to use a browser this machine already has instead of the bundled'
         + ' Chromium (e.g. on an OS too old for it), set'
         + ' PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/path/to/browser, or'
-        + ' CAREER_OPS_BROWSER_AUTODETECT=true to detect an installed'
+        + ' PROJECT_X_BROWSER_AUTODETECT=true to detect an installed'
         + ' Brave/Chrome/Edge, in your shell or the data-root .env.';
     if (cause.kind === 'missing-executable') {
       return {
@@ -1014,7 +1014,7 @@ function isPlaywrightMcpConfigured(root, activeCli) {
     && (isPlaywrightMcpFromClaudeJson(root) || isPlaywrightMcpFromPlugin(root));
 }
 
-// CLI resolution: --cli flag > $CAREER_OPS_CLI > .env (CAREER_OPS_CLI=...) >
+// CLI resolution: --cli flag > $PROJECT_X_CLI > .env (PROJECT_X_CLI=...) >
 // runtime marker (OPENCODE=1 → opencode) > checkout hint (an opencode.json
 // with no Claude MCP config beside it) > one other CLI executable on PATH >
 // several other CLIs on PATH (unset, so the user picks) > default ('claude').
@@ -1085,23 +1085,23 @@ function resolveActiveCli() {
     }
     return { cli: cliFlag, source: 'flag' };
   }
-  if (process.env.CAREER_OPS_CLI) {
-    if (!AGENT_CLIS.includes(process.env.CAREER_OPS_CLI)) {
-      return { cli: 'unknown', source: 'env', warning: `CAREER_OPS_CLI="${process.env.CAREER_OPS_CLI}" is not a recognized CLI. Valid: ${AGENT_CLIS.join(', ')}.` };
+  if (process.env.PROJECT_X_CLI) {
+    if (!AGENT_CLIS.includes(process.env.PROJECT_X_CLI)) {
+      return { cli: 'unknown', source: 'env', warning: `PROJECT_X_CLI="${process.env.PROJECT_X_CLI}" is not a recognized CLI. Valid: ${AGENT_CLIS.join(', ')}.` };
     }
-    return { cli: process.env.CAREER_OPS_CLI, source: 'env' };
+    return { cli: process.env.PROJECT_X_CLI, source: 'env' };
   }
   // .env is best-effort: missing file → fall through to default. dotenv does
   // not throw on a missing path when `quiet: true`, so no try/catch is needed.
-  // The load must not make a .env-only CAREER_OPS_PROFILE look like a shell one.
+  // The load must not make a .env-only PROJECT_X_PROFILE look like a shell one.
   const hadProfileOverride = hasProfileOverride();
   dotenv.config({ path: join(projectRoot, '.env'), quiet: true });
-  if (!hadProfileOverride) delete process.env.CAREER_OPS_PROFILE;
-  if (process.env.CAREER_OPS_CLI) {
-    if (!AGENT_CLIS.includes(process.env.CAREER_OPS_CLI)) {
-      return { cli: 'unknown', source: '.env', warning: `CAREER_OPS_CLI in .env is not a recognized CLI. Valid: ${AGENT_CLIS.join(', ')}.` };
+  if (!hadProfileOverride) delete process.env.PROJECT_X_PROFILE;
+  if (process.env.PROJECT_X_CLI) {
+    if (!AGENT_CLIS.includes(process.env.PROJECT_X_CLI)) {
+      return { cli: 'unknown', source: '.env', warning: `PROJECT_X_CLI in .env is not a recognized CLI. Valid: ${AGENT_CLIS.join(', ')}.` };
     }
-    return { cli: process.env.CAREER_OPS_CLI, source: '.env' };
+    return { cli: process.env.PROJECT_X_CLI, source: '.env' };
   }
   // Runtime marker: OpenCode stamps OPENCODE=1 on every process it runs.
   // Without this, doctor started from inside OpenCode falls through to the
@@ -1228,7 +1228,7 @@ const USER_LAYER_PREREQS = [
   },
   {
     path: 'portals.yml',
-    env: 'CAREER_OPS_PORTALS',
+    env: 'PROJECT_X_PORTALS',
     emptyImpact: 'scans have no companies or filters',
     fix: [
       'Run: cp templates/portals.example.yml portals.yml',
@@ -1239,7 +1239,7 @@ const USER_LAYER_PREREQS = [
 
 const CLI_NAMES = 'claude, codex, opencode, qwen, agy or grok';
 
-// The lane variables (CAREER_OPS_PORTALS, CAREER_OPS_PIPELINE) move one file
+// The lane variables (PROJECT_X_PORTALS, PROJECT_X_PIPELINE) move one file
 // out of the data root, and the scanner reads them (path-resolver.mjs), so
 // doctor has to look where a scan would.
 const PORTALS_PREREQ = USER_LAYER_PREREQS.find(({ path }) => path === 'portals.yml');
@@ -1267,7 +1267,7 @@ function emptyYamlPrereqs(root) {
 }
 
 // The root's .env names a profile. scan.mjs, the evaluators, openai-tailor.mjs and
-// openrouter-runner.mjs load a .env, and all four follow CAREER_OPS_PROFILE once
+// openrouter-runner.mjs load a .env, and all four follow PROJECT_X_PROFILE once
 // it is loaded (scan.mjs from the data root, the evaluators and openai-tailor.mjs
 // from a working-directory config(), openrouter-runner.mjs from the code root).
 // The other readers load none. That is a split whether or not a data-root profile exists, so it is
@@ -1277,8 +1277,8 @@ function checkEnvFileProfile(root) {
   if (!fromEnvFile) return null;
   return {
     warn: true,
-    label: `.env sets CAREER_OPS_PROFILE=${fromEnvFile}, but of the profile readers, only scan.mjs, the evaluators, openai-tailor.mjs and openrouter-runner.mjs load .env; cv-sync-check, generate-pdf, upskill and the other readers use ${profilePathFor(root)}`,
-    fix: [`Export CAREER_OPS_PROFILE=${fromEnvFile} in your shell so every command reads the same file, or remove it from .env`],
+    label: `.env sets PROJECT_X_PROFILE=${fromEnvFile}, but of the profile readers, only scan.mjs, the evaluators, openai-tailor.mjs and openrouter-runner.mjs load .env; cv-sync-check, generate-pdf, upskill and the other readers use ${profilePathFor(root)}`,
+    fix: [`Export PROJECT_X_PROFILE=${fromEnvFile} in your shell so every command reads the same file, or remove it from .env`],
   };
 }
 
@@ -1294,16 +1294,16 @@ function checkPrereq(prereq) {
     const named = profilePathFor(projectRoot);
     return {
       pass: false,
-      label: `${path} not found (CAREER_OPS_PROFILE names ${named})`,
-      fix: [`Create ${named}, or unset CAREER_OPS_PROFILE to use the profile in the data root`],
+      label: `${path} not found (PROJECT_X_PROFILE names ${named})`,
+      fix: [`Create ${named}, or unset PROJECT_X_PROFILE to use the profile in the data root`],
     };
   }
   const fromEnvFile = path === 'config/profile.yml' && !explicitTarget ? profileFromEnvFile(projectRoot) : null;
   if (fromEnvFile) {
     return {
       pass: false,
-      label: `${path} not found (.env sets CAREER_OPS_PROFILE=${fromEnvFile}, but most commands never load .env)`,
-      fix: [`Export CAREER_OPS_PROFILE=${fromEnvFile} in your shell so every command sees it, or remove it from .env and put the profile at ${profilePathFor(projectRoot)}`],
+      label: `${path} not found (.env sets PROJECT_X_PROFILE=${fromEnvFile}, but most commands never load .env)`,
+      fix: [`Export PROJECT_X_PROFILE=${fromEnvFile} in your shell so every command sees it, or remove it from .env and put the profile at ${profilePathFor(projectRoot)}`],
     };
   }
   // cv.md and config/profile.yml are the files a run cannot score without.
@@ -1416,7 +1416,7 @@ async function checkPortalSlugs(root) {
 
 const PIPELINE_SKELETON = `# Pipeline — Pending URLs
 
-Paste job URLs below as \`- [ ] {url}\` then run \`/career-ops pipeline\`.
+Paste job URLs below as \`- [ ] {url}\` then run \`/project-x pipeline\`.
 
 ## Pending
 
@@ -1424,8 +1424,8 @@ Paste job URLs below as \`- [ ] {url}\` then run \`/career-ops pipeline\`.
 `;
 
 function checkPipelineFile() {
-  const filePath = process.env.CAREER_OPS_PIPELINE || join(projectRoot, 'data', 'pipeline.md');
-  const shown = process.env.CAREER_OPS_PIPELINE ? filePath : 'data/pipeline.md';
+  const filePath = process.env.PROJECT_X_PIPELINE || join(projectRoot, 'data', 'pipeline.md');
+  const shown = process.env.PROJECT_X_PIPELINE ? filePath : 'data/pipeline.md';
   if (existsSync(filePath)) {
     return { pass: true, label: `${shown} ready` };
   }
@@ -1437,8 +1437,8 @@ function checkPipelineFile() {
     return {
       pass: false,
       label: `${shown} could not be created`,
-      fix: process.env.CAREER_OPS_PIPELINE
-        ? `Run: mkdir -p "$(dirname "$CAREER_OPS_PIPELINE")" && touch "$CAREER_OPS_PIPELINE"`
+      fix: process.env.PROJECT_X_PIPELINE
+        ? `Run: mkdir -p "$(dirname "$PROJECT_X_PIPELINE")" && touch "$PROJECT_X_PIPELINE"`
         : 'Run: mkdir -p data && touch data/pipeline.md',
     };
   }
@@ -1465,7 +1465,7 @@ function readPluginConfigSync(root) {
 // Plugin layer health: list discovered plugins + whether each enabled one's keys
 // are present. WARN-not-FAIL so a half-configured plugin never blocks setup.
 // plugins.mjs loads the data root .env before it checks plugin keys. Doctor
-// skips that load when --cli or CAREER_OPS_CLI picks the CLI, so the file is
+// skips that load when --cli or PROJECT_X_CLI picks the CLI, so the file is
 // read here without touching process.env.
 function pluginState(manifest, cfg) {
   const s = pluginStatus(manifest, cfg);
@@ -1528,7 +1528,7 @@ function checkPlugins(root) {
 // whose Experience section they cannot find makes both run against nothing.
 // They do say so per run, but only once a tailored CV is already being built;
 // this says it at setup time. A warning, never a failure: cv.md is the user's
-// file and career-ops still works with it.
+// file and project-x still works with it.
 function checkCvShape(root) {
   const cvPath = join(root, 'cv.md');
   if (!existsSync(cvPath)) return null;   // the prereq check owns "absent"
@@ -1591,8 +1591,8 @@ function checkProfileShape(root) {
   const profilePath = profilePathFor(root);
   if (!existsSync(profilePath)) return null;   // the prereq check owns "absent"
   // Name the file actually read. With --target that is the target's
-  // profile, not the CAREER_OPS_PROFILE path the default label comes from.
-  // A CAREER_OPS_PROFILE outside the root keeps its absolute path, since a
+  // profile, not the PROJECT_X_PROFILE path the default label comes from.
+  // A PROJECT_X_PROFILE outside the root keeps its absolute path, since a
   // ../../ path says less than the one the user exported.
   const rel = relative(root, profilePath);
   const label = rel && rel !== '..' && !rel.startsWith(`..${sep}`) && !isAbsolute(rel) ? rel.split(sep).join('/') : profilePath;
@@ -1622,7 +1622,7 @@ function checkProfileShape(root) {
 }
 
 async function main() {
-  console.log('\ncareer-ops doctor');
+  console.log('\nproject-x doctor');
   console.log('================\n');
 
   const browserProcessEnv = snapshotBrowserProcessEnv();
@@ -1700,7 +1700,7 @@ async function main() {
     ? `Setup is not finished (${setupMissing.length} file${setupMissing.length === 1 ? '' : 's'} missing: ${setupMissing.map(({ path }) => path).join(', ')})`
     : null;
   // --target forces codeRoot and projectRoot to the same path, so equality
-  // alone would drop --target and let onboard-write follow getCareerOpsRoot().
+  // alone would drop --target and let onboard-write follow getProjectXRoot().
   const quoteOnboard = process.platform === 'win32' ? quotePowerShell : quoteSh;
   const onboardCmd = !explicitTarget && projectRoot === codeRoot
     ? 'node onboard-write.mjs --answers <answers.json>'
@@ -1709,7 +1709,7 @@ async function main() {
   // gets its own step instead of a command that would not create it.
   const setupSteps = [];
   if (setupMissing.some(({ path }) => path === 'config/profile.yml' || path === 'portals.yml')) {
-    setupSteps.push(`Run \`${onboardCmd}\` from the career-ops checkout.`);
+    setupSteps.push(`Run \`${onboardCmd}\` from the project-x checkout.`);
   }
   if (setupMissing.some(({ path }) => path === 'cv.md')) {
     setupSteps.push(`Add your CV as cv.md in ${projectRoot} (examples/cv-example.md shows the format).`);
@@ -1980,7 +1980,7 @@ function onboardingState(root) {
     data_root: root,
     project_root: codeRoot,
     missing,
-    // Non-blocking by design: career-ops is meant to work out of the box, so an
+    // Non-blocking by design: project-x is meant to work out of the box, so an
     // unedited personalization file must not gate the whole system. It DOES have
     // to be visible — surfaced as its own field the agent can branch on rather
     // than a string it has to pattern-match out of `warnings`.

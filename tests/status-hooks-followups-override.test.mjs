@@ -1,8 +1,8 @@
 // tests/status-hooks-followups-override.test.mjs — a follow-up pin seeded when
-// a row becomes Applied goes where CAREER_OPS_FOLLOWUPS says.
+// a row becomes Applied goes where PROJECT_X_FOLLOWUPS says.
 //
 // followup-seed.mjs and followup-cadence.mjs (the reader that decides what is
-// due) both resolve the follow-ups file as CAREER_OPS_FOLLOWUPS first. The
+// due) both resolve the follow-ups file as PROJECT_X_FOLLOWUPS first. The
 // status hook that set-status, dedup-tracker and outcome call on a move to
 // Applied passed followup-seed an explicit path derived from the tracker's
 // directory instead, and an explicit path beats the environment. So with the
@@ -31,10 +31,10 @@ function applyRowOne(withOverride) {
       '',
     ].join('\n'));
     const override = join(dir, 'elsewhere', 'follow-ups.md');
-    const { CAREER_OPS_FOLLOWUPS: _unset, ...env } = process.env;
+    const { PROJECT_X_FOLLOWUPS: _unset, ...env } = process.env;
     const r = spawnSync(NODE, [join(ROOT, 'set-status.mjs'), '1', 'Applied'], {
       cwd: dir, encoding: 'utf-8', timeout: 30000,
-      env: { ...env, CAREER_OPS_ROOT: dir, CAREER_OPS_TRACKER: tracker, CAREER_OPS_DATA_DIR: '', ...(withOverride ? { CAREER_OPS_FOLLOWUPS: override } : {}) },
+      env: { ...env, PROJECT_X_ROOT: dir, PROJECT_X_TRACKER: tracker, PROJECT_X_DATA_DIR: '', ...(withOverride ? { PROJECT_X_FOLLOWUPS: override } : {}) },
     });
     assert.strictEqual(r.status, 0, `set-status exited ${r.status}: ${r.stdout}${r.stderr}`);
     const read = (p) => (existsSync(p) ? readFileSync(p, 'utf-8') : null);
@@ -44,9 +44,9 @@ function applyRowOne(withOverride) {
   }
 }
 
-console.log('\nstatus hooks — the Applied follow-up pin honours CAREER_OPS_FOLLOWUPS');
+console.log('\nstatus hooks — the Applied follow-up pin honours PROJECT_X_FOLLOWUPS');
 
-ok('with CAREER_OPS_FOLLOWUPS set, the pin lands in that file', () => {
+ok('with PROJECT_X_FOLLOWUPS set, the pin lands in that file', () => {
   const { besideTracker, override } = applyRowOne(true);
   assert.match(override ?? '', /next #1 \d{4}-\d{2}-\d{2}/, `override file: ${JSON.stringify(override)}`);
   assert.strictEqual(besideTracker, null, 'nothing may be written beside the tracker');

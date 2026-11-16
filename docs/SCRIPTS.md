@@ -27,7 +27,7 @@ All scripts live in the project root as `.mjs` modules. Most are exposed via
 | `npm run calibrate` | `calibrate.mjs` | Compare your evaluation scores with recorded outcomes (read-only) |
 | `npm run career-profile` | `career-profile.mjs` | Import CV facts into `data/career-profile.yml` (preview by default; `--review` to save) |
 | `npm run upskill` | `upskill.mjs` | Aggregate skill-gap map from tracked reports (or `--url-text <url\|file>` for a single-JD targeted gap analysis) |
-| `npm run add` | `add-entry.mjs` | Dedup + insert a `/career-ops add` entry into cv.md / article-digest.md |
+| `npm run add` | `add-entry.mjs` | Dedup + insert a `/project-x add` entry into cv.md / article-digest.md |
 | `node clean-markers.mjs` | `clean-markers.mjs` | Audit or strip invisible Unicode from generated text files (see [CLEAN_MARKERS.md](CLEAN_MARKERS.md)) |
 | `node backup.mjs --dest <dir>` | `backup.mjs` | Copy your User Layer (the updater's `USER_PATHS`) to a folder you choose, or a cloud drive with `--provider` (never deletes at the destination; the contact files `data/Connections.csv`, `data/contacts.tsv`, `data/reply-candidates.json` and `output/contacts.vcf` (and any other `.vcf` file) only with `--include-contacts`, never with `--provider` or a `--dest` inside a provider folder at its default location; a synced folder moved elsewhere is not detected, so keep contact exports out of any synced folder; `--include-claude-memory` also copies Claude Code's auto-memory for the checkout into `claude-memory/`, or from a folder you name with `--claude-memory-dir <dir>`) |
 | `npm run update:check` | `update-system.mjs check` | Check for a newer published release |
@@ -281,7 +281,7 @@ node fix-slugs.mjs --apply                    # alias for --fix
 node fix-slugs.mjs --file templates/portals.example.yml
 ```
 
-The default path is `portals.yml`, overridable with `--file` or the `CAREER_OPS_PORTALS` environment variable. A missing portals file is reported and treated as nothing to do, not as an error.
+The default path is `portals.yml`, overridable with `--file` or the `PROJECT_X_PORTALS` environment variable. A missing portals file is reported and treated as nothing to do, not as an error.
 
 **Exit codes:** `0` on every normal run, `1` only if the run itself fails. Unlike `check-table-freshness`, pending fixes in a dry run do **not** fail the run, so this is a maintenance tool rather than a CI gate.
 
@@ -370,7 +370,7 @@ node build-cv-latex.mjs --test
 
 ## sync-check
 
-Validates that the career-ops setup is internally consistent: `cv.md` exists and is not too short, `config/profile.yml` exists with required fields, no hardcoded metrics in `modes/_shared.md` or `batch/batch-prompt.md`, and `article-digest.md` freshness (warns if older than 30 days).
+Validates that the project-x setup is internally consistent: `cv.md` exists and is not too short, `config/profile.yml` exists with required fields, no hardcoded metrics in `modes/_shared.md` or `batch/batch-prompt.md`, and `article-digest.md` freshness (warns if older than 30 days).
 
 ```bash
 npm run sync-check
@@ -617,7 +617,7 @@ Default silence window: `templates/benchmarks.yml` `days_first_response.range_da
 
 ## contacts
 
-Your job-search phonebook, exportable to your phone. Reads `data/contacts.tsv` (one contact per line — the schema is the vCard fields, nothing more) and emits vCard 3.0 (`VERSION:3.0` for iOS/Android import compatibility) with CRLF line endings, byte-safe 75-octet line folding, and a stable deterministic UID `careerops-{uidPart(name)}--{uidPart(company)}` (double-dash boundary between the two parts). Each `uidPart` starts from the value with letter case, whitespace and Unicode composition (NFC vs NFD) folded and accents kept; the part is that value's lowercase slug (non-alphanumeric runs collapsed to single dashes, ends trimmed) suffixed with an 8-hex sha1 of the same folded value — e.g. `jane-doe-bc225ac5`; when the slug is empty — a fully non-ASCII value such as a CJK name — the part is the bare 8-hex hash. Hashing the folded value (not the lossy slug) keeps distinct inputs that slug identically — e.g. `José` and `Josè` both slug to `jos` (the accented char drops out), and `Acme Inc` and `Acme, Inc.` both to `acme-inc` — from colliding into one UID. Re-importing updates existing entries instead of duplicating them on platforms that honor vCard UID (iOS fallback: assign imports to a group, delete the group to bulk-remove). Exports made before composition was folded into the slug gave an NFD spelling (an `e` plus a combining accent rather than `é`) a different UID, so the first re-import after updating can add a second card for that contact; remove or merge the old card by hand. `--caller-id` renders the display name as `Jane Doe (Acme recruiter)` so the lock screen tells you which recruiter is calling — useful when a phone number is known (often it isn't). Malformed rows are reported in a `quality` block, never dropped silently.
+Your job-search phonebook, exportable to your phone. Reads `data/contacts.tsv` (one contact per line — the schema is the vCard fields, nothing more) and emits vCard 3.0 (`VERSION:3.0` for iOS/Android import compatibility) with CRLF line endings, byte-safe 75-octet line folding, and a stable deterministic UID `projectx-{uidPart(name)}--{uidPart(company)}` (double-dash boundary between the two parts). Each `uidPart` starts from the value with letter case, whitespace and Unicode composition (NFC vs NFD) folded and accents kept; the part is that value's lowercase slug (non-alphanumeric runs collapsed to single dashes, ends trimmed) suffixed with an 8-hex sha1 of the same folded value — e.g. `jane-doe-bc225ac5`; when the slug is empty — a fully non-ASCII value such as a CJK name — the part is the bare 8-hex hash. Hashing the folded value (not the lossy slug) keeps distinct inputs that slug identically — e.g. `José` and `Josè` both slug to `jos` (the accented char drops out), and `Acme Inc` and `Acme, Inc.` both to `acme-inc` — from colliding into one UID. Re-importing updates existing entries instead of duplicating them on platforms that honor vCard UID (iOS fallback: assign imports to a group, delete the group to bulk-remove). Exports made before composition was folded into the slug gave an NFD spelling (an `e` plus a combining accent rather than `é`) a different UID, so the first re-import after updating can add a second card for that contact; remove or merge the old card by hand. `--caller-id` renders the display name as `Jane Doe (Acme recruiter)` so the lock screen tells you which recruiter is calling — useful when a phone number is known (often it isn't). Malformed rows are reported in a `quality` block, never dropped silently.
 
 ```bash
 node contacts.mjs                    # JSON (contacts + quality + total)
@@ -633,7 +633,7 @@ Contact line format (TSV, one per line, `#`-prefixed lines are comments):
 {name}\t{company}\t{type}\t{title}\t{phone}\t{email}\t{linkedin}\t{tracker#|-}\t{notes}
 ```
 
-`type`: recruiter | hiring-manager | peer | interviewer | internal-referral | other — optional; when present it must be one of the enum, else it is flagged in `quality`. `internal-referral` (#4691) is distinct from `peer`: `peer` assumes no prior relationship (do not ask for a job), `internal-referral` exists only because a real one already does (a past interviewer, or a contact saved from an earlier application at the same company) — see `contact-lookup.mjs` below and `modes/contacto.md`. Only name + company are required (>= 4 cells); all channels are optional; `-` for the tracker number when the contact precedes an application. Lines are updated in place when a contact's details change — unlike the append-only salary log. If two lines resolve to the same generated UID (`careerops-{uidPart(name)}--{uidPart(company)}` — normally rows with the same name + company), the LAST one wins the `--vcf` export (JSON keeps all rows and reports the clash in `quality.duplicates`). Import: send the `.vcf` to your phone (AirDrop/email/messaging) and open it — iOS Contacts offers "Add All Contacts", Android imports via Contacts → Fix & manage → Import.
+`type`: recruiter | hiring-manager | peer | interviewer | internal-referral | other — optional; when present it must be one of the enum, else it is flagged in `quality`. `internal-referral` (#4691) is distinct from `peer`: `peer` assumes no prior relationship (do not ask for a job), `internal-referral` exists only because a real one already does (a past interviewer, or a contact saved from an earlier application at the same company) — see `contact-lookup.mjs` below and `modes/contacto.md`. Only name + company are required (>= 4 cells); all channels are optional; `-` for the tracker number when the contact precedes an application. Lines are updated in place when a contact's details change — unlike the append-only salary log. If two lines resolve to the same generated UID (`projectx-{uidPart(name)}--{uidPart(company)}` — normally rows with the same name + company), the LAST one wins the `--vcf` export (JSON keeps all rows and reports the clash in `quality.duplicates`). Import: send the `.vcf` to your phone (AirDrop/email/messaging) and open it — iOS Contacts offers "Add All Contacts", Android imports via Contacts → Fix & manage → Import.
 
 **Exit codes:** `0` always (an empty/missing store prints an explanatory message and writes no file), `1` self-test failure or a `--vcf` path escaping the project directory.
 
@@ -959,7 +959,7 @@ node close-stale.mjs --confirm             # write
 node close-stale.mjs --today 2026-10-17    # deterministic runs/tests
 ```
 
-Paths follow `CAREER_OPS_ROOT` / `CAREER_OPS_DATA_DIR` / `CAREER_OPS_TRACKER`. Dates are compared as `YYYY-MM-DD` strings at UTC midnight, so the result does not depend on the host timezone.
+Paths follow `PROJECT_X_ROOT` / `PROJECT_X_DATA_DIR` / `PROJECT_X_TRACKER`. Dates are compared as `YYYY-MM-DD` strings at UTC midnight, so the result does not depend on the host timezone.
 
 **Exit codes:** `0` on a report, `1` unrecognized flag, `2` invalid `--days` / `--today` / `--status` value or a tracker with no Notes column, `4` tracker lock timeout (nothing written).
 
@@ -978,7 +978,7 @@ Columns are matched by header name, so their order does not matter. The file nee
 | to import | a new application, added with the `N/A` score, `—` report and `❌` PDF that a hand-added row carries |
 | already in the tracker | same posting URL as a row, or the same company and role when either side has no URL. The tracked row is never changed. Use `set-status.mjs` to move it |
 | repeated in this file | the same posting appears on an earlier row |
-| not applied yet | `Bookmarked`, `Wishlist`, `Saved`, `Applying` and similar. In career-ops these postings go in the pipeline, where they get evaluated |
+| not applied yet | `Bookmarked`, `Wishlist`, `Saved`, `Applying` and similar. In project-x these postings go in the pipeline, where they get evaluated |
 | unknown stage | a stage neither table knows. Rename it in the file to a tracker state and run again |
 | missing company or role | the row is left out |
 
@@ -992,7 +992,7 @@ node import-tracker.mjs teal-export.csv --confirm    # add the rows
 node import-tracker.mjs sheet.csv --day-first        # 03/04/2026 is 3 April
 ```
 
-Paths follow `CAREER_OPS_ROOT` / `CAREER_OPS_DATA_DIR` / `CAREER_OPS_TRACKER`.
+Paths follow `PROJECT_X_ROOT` / `PROJECT_X_DATA_DIR` / `PROJECT_X_TRACKER`.
 
 **Exit codes:** `0` on a preview or a completed import, `1` for a usage error, an unreadable file, a file with no company or role column, or a date column that mixes both orders. Under `--confirm` the exit code is `merge-tracker.mjs`'s, or `1` when the tracker has no `URL` column and the file has links, or when merge left a row unapplied.
 
@@ -1000,7 +1000,7 @@ Paths follow `CAREER_OPS_ROOT` / `CAREER_OPS_DATA_DIR` / `CAREER_OPS_TRACKER`.
 
 ## reeval-candidates
 
-Lists tracker rows that were scored against older candidate evidence. A row's score is fixed when the role is evaluated, while the primary sources the evaluation read keep changing (`expand` adds proof points, `add` adds a project, the profile gains a target). This script compares each row's last evaluation date with the last change to `cv.md`, `article-digest.md`, `config/profile.yml` (through `getProfilePath()`, so `CAREER_OPS_PROFILE` is honored) and `modes/_profile.md`, all under the data root, and lists the rows that predate it, oldest evaluation first, with the source(s) that changed after each one.
+Lists tracker rows that were scored against older candidate evidence. A row's score is fixed when the role is evaluated, while the primary sources the evaluation read keep changing (`expand` adds proof points, `add` adds a project, the profile gains a target). This script compares each row's last evaluation date with the last change to `cv.md`, `article-digest.md`, `config/profile.yml` (through `getProfilePath()`, so `PROJECT_X_PROFILE` is honored) and `modes/_profile.md`, all under the data root, and lists the rows that predate it, oldest evaluation first, with the source(s) that changed after each one.
 
 - **When a source last changed:** the committer date of the last commit that touched it, when the file is tracked in the git repository that contains it and has no uncommitted changes. Otherwise (no git, an untracked or gitignored file, which is the default layout, or uncommitted edits) the file's mtime, labelled `mtime` because it is approximate: a copy, sync, restore or checkout moves it without changing the content.
 - **When a row was last evaluated:** the latest of the Date column (which `merge-tracker.mjs` rewrites on a re-evaluation), every `Re-eval YYYY-MM-DD` marker in Notes, and the header date of each linked report (the first bold header field holding an ISO date, in any label language), falling back to the date in the report filename. The latest wins because a re-evaluation writes its score through to the row. A report link to a missing file is flagged and the row is still dated from the tracker; a row with no readable date at all is listed under `undated`.
@@ -1022,7 +1022,7 @@ node reeval-candidates.mjs --tracker path/to/applications.md
 
 ## update:check
 
-Checks whether a newer career-ops release is published. Changes merged to `main` between releases never report an update: `update` installs the release, not `main`. Outputs JSON to stdout:
+Checks whether a newer project-x release is published. Changes merged to `main` between releases never report an update: `update` installs the release, not `main`. Outputs JSON to stdout:
 
 ```bash
 npm run update:check
@@ -1036,7 +1036,7 @@ Possible JSON responses:
 | `update-available` | Newer version exists (includes `local`, `remote`, `changelog`) |
 | `dismissed` | User said no to this release (`update-system.mjs dismiss --version X.Y.Z`); a newer release reports again |
 | `offline` | Could not reach GitHub (carries `detail`: what failed and why). With `--channel main`, both curl sources and a `git ls-remote` fallback failed |
-| `no-remote-version` | GitHub answered without a usable `career-ops-vX.Y.Z` release (with `--channel main`, may carry `detail` when the git fallback reached upstream but found no release tag) |
+| `no-remote-version` | GitHub answered without a usable `project-x-vX.Y.Z` release (with `--channel main`, may carry `detail` when the git fallback reached upstream but found no release tag) |
 | `worktree-without-main` | Run from a linked git worktree while no checkout has `main` checked out (see **update** below) |
 
 `check --force` ignores a dismissal. `check --channel main` keeps the previous behaviour for installs that follow `main`: main's `VERSION` plus system-file drift (`reason: system-files-changed`).
@@ -1058,13 +1058,13 @@ node update-system.mjs status
 Example output:
 
 ```
-career-ops v1.32.0 (ae919b6f)
+project-x v1.32.0 (ae919b6f)
 ```
 
 On a tarball install with no git metadata the short SHA is omitted:
 
 ```
-career-ops v1.32.0
+project-x v1.32.0
 ```
 
 **Exit codes:** `0` always.
@@ -1081,7 +1081,7 @@ A system file this install has changed is not replaced. `update` lists it, tries
 npm run update
 ```
 
-**From a linked git worktree** (the default session layout of agents such as Claude Code), `check`, `update`, `rollback` and `dismiss` re-run themselves in the checkout that has `main` checked out, so the update is committed to `main` rather than the worktree's throwaway branch. Afterwards, `git merge main` inside the worktree picks it up. If no checkout has `main`, or that checkout has uncommitted changes to tracked files, `update` and `rollback` refuse without changing anything. Set `CAREER_OPS_UPDATE_IN_WORKTREE=1` to update the worktree's own branch instead.
+**From a linked git worktree** (the default session layout of agents such as Claude Code), `check`, `update`, `rollback` and `dismiss` re-run themselves in the checkout that has `main` checked out, so the update is committed to `main` rather than the worktree's throwaway branch. Afterwards, `git merge main` inside the worktree picks it up. If no checkout has `main`, or that checkout has uncommitted changes to tracked files, `update` and `rollback` refuse without changing anything. Set `PROJECT_X_UPDATE_IN_WORKTREE=1` to update the worktree's own branch instead.
 
 **Exit codes:** `0` success, `1` lock conflict or safety violation, `3` the update was applied but `npm install` failed (run `npm install`). An installed updater from before this exit code existed reports that last case as `1`, after its own "self-reexec failed" lines.
 
@@ -1134,7 +1134,7 @@ npm run liveness -- --no-record https://a.com/job/1     # check without writing 
 
 Each URL gets a verdict: `active`, `expired`, or `uncertain` with a reason.
 
-The headed retry on an anti-bot wall runs only when the site's `robots.txt` permits the path (`robots-check.mjs`, #5776). It is read once per host per run, as `career-ops`, and it fails closed: only a policy that allows the path, a 404/410 or an empty file lets the retry run, while a 401/403, 5xx, timeout, unresolvable or private host, or a 200 that is not a robots.txt skips it. A skipped retry keeps the headless `uncertain` verdict, with `(headed retry skipped: robots.txt …)` added to its reason, so it never turns a posting into `expired`. The first, headless request is not gated. `scan --verify --headed-fallback` applies the same gate.
+The headed retry on an anti-bot wall runs only when the site's `robots.txt` permits the path (`robots-check.mjs`, #5776). It is read once per host per run, as `project-x`, and it fails closed: only a policy that allows the path, a 404/410 or an empty file lets the retry run, while a 401/403, 5xx, timeout, unresolvable or private host, or a 200 that is not a robots.txt skips it. A skipped retry keeps the headless `uncertain` verdict, with `(headed retry skipped: robots.txt …)` added to its reason, so it never turns a posting into `expired`. The first, headless request is not gated. `scan --verify --headed-fallback` applies the same gate.
 
 An `expired` verdict is also written to `data/scan-history.tsv` as a `skipped_expired` row, so a posting confirmed dead stops resurfacing in the web "new matches this week" feed. Only URLs the history already knows get a row, and each gets one until it is relisted. An `uncertain` verdict writes nothing. That includes a short page with no closure notice, no 404/410 and no apply control (`insufficient_content`): it is usually a posting that has not rendered yet, so it reads `uncertain`, not `expired`. `--no-record` makes the run leave no trace.
 
@@ -1190,19 +1190,19 @@ node scan.mjs --include-blacklisted   # audit: let blacklisted companies through
 
 | Variable | Default |
 |---|---|
-| `CAREER_OPS_PORTALS` | `portals.yml` |
-| `CAREER_OPS_PROFILE` | `config/profile.yml` |
-| `CAREER_OPS_PIPELINE` | `data/pipeline.md` |
-| `CAREER_OPS_SCAN_HISTORY` | `data/scan-history.tsv` |
+| `PROJECT_X_PORTALS` | `portals.yml` |
+| `PROJECT_X_PROFILE` | `config/profile.yml` |
+| `PROJECT_X_PIPELINE` | `data/pipeline.md` |
+| `PROJECT_X_SCAN_HISTORY` | `data/scan-history.tsv` |
 
 ```bash
-CAREER_OPS_PORTALS=portals.bridge.yml \
-CAREER_OPS_PIPELINE=data/pipeline.bridge.md \
-CAREER_OPS_SCAN_HISTORY=data/scan-history.bridge.tsv \
+PROJECT_X_PORTALS=portals.bridge.yml \
+PROJECT_X_PIPELINE=data/pipeline.bridge.md \
+PROJECT_X_SCAN_HISTORY=data/scan-history.bridge.tsv \
   node scan.mjs
 ```
 
-Give a lane its own `CAREER_OPS_SCAN_HISTORY`, not just its own pipeline. That file is the dedup source, so lanes sharing it silently suppress each other: a posting surfaced in one lane counts as a duplicate in the other and never appears there, with only the `Duplicates: skipped` counter to show for it.
+Give a lane its own `PROJECT_X_SCAN_HISTORY`, not just its own pipeline. That file is the dedup source, so lanes sharing it silently suppress each other: a posting surfaced in one lane counts as a duplicate in the other and never appears there, with only the `Duplicates: skipped` counter to show for it.
 
 Defaults are unchanged, so a single-lane setup needs none of this. Note that the remaining outputs (`data/scan-runs.tsv`, `data/portal-health.tsv`, `data/applications.md`) are still shared across lanes, so `stats.mjs` and the other analytics scripts pool lanes together.
 
@@ -1320,9 +1320,9 @@ How many upstream queries that becomes depends on the OS resolver: `dns.lookup()
 Cache hits and lookups that coalesce onto an in-flight one are free, so only uncached, non-coalesced lookup keys count against the ceiling — a hostname not in the cache, or a cached one requested with different resolver options (the cache key is hostname plus `family`/`all`/`hints`/`verbatim`).
 
 ```bash
-CAREER_OPS_DNS_LOOKUPS_PER_MIN=800 npm run scan:full   # raise the ceiling
-CAREER_OPS_DNS_LOOKUPS_PER_MIN=0 npm run scan:full     # no pacing (pre-#2229 behaviour)
-CAREER_OPS_NO_DNS_CACHE=1 npm run scan:full            # no DNS cache AND no pacing
+PROJECT_X_DNS_LOOKUPS_PER_MIN=800 npm run scan:full   # raise the ceiling
+PROJECT_X_DNS_LOOKUPS_PER_MIN=0 npm run scan:full     # no pacing (pre-#2229 behaviour)
+PROJECT_X_NO_DNS_CACHE=1 npm run scan:full            # no DNS cache AND no pacing
 ```
 
 The cost is real: a full Workday + iCIMS + BambooHR sweep becomes DNS-bound at roughly 63 minutes (25,205 hostnames ÷ 400/min default pacing). Raise the ceiling if your resolver has the budget — but if you see `fetch failed` in bulk from one ATS section, suspect the resolver before the boards.
@@ -1435,7 +1435,7 @@ node tracker.mjs delete --num 42          # remove row 42 from applications.md (
 
 **The round-trip carries the layout, not only the values (#3703).** `sync` maps columns by header NAME, so a customized tracker (a `Location`, `Via` or `URL` column, or one of your own) indexes correctly — but `export` used to write nine fixed columns in a fixed order under a fixed `# Applications Tracker` title, so adopting its output cost you those columns with no warning, right after `sync` reported a clean index. Losing the `URL` column in particular disables `merge-tracker.mjs`'s deterministic dedup pass, which is not visible in the file either. `export` now replays the header row it read, puts unmapped cells back in their own columns, and keeps the lines before and after the table (your own title, a legend, a trailing note) plus the file's line endings. The schema itself is still the canonical nine fields — extra columns ride along by position, so they are preserved by `export` but not queryable via `query`.
 
-**What "lossless" covers, exactly.** The guarantee is about *structure*, not bytes: `export` preserves the layout and every value it does not deliberately repair. Concretely it keeps the title, preamble and trailing lines *with their own whitespace* (they are copied, not re-rendered), the header and separator, the column set and every row's position in it, and CRLF vs LF. Enforced by `tests/tracker-columns.test.mjs`, including localized headers career-ops cannot name, unknown user columns, indented tables and indented prose.
+**What "lossless" covers, exactly.** The guarantee is about *structure*, not bytes: `export` preserves the layout and every value it does not deliberately repair. Concretely it keeps the title, preamble and trailing lines *with their own whitespace* (they are copied, not re-rendered), the header and separator, the column set and every row's position in it, and CRLF vs LF. Enforced by `tests/tracker-columns.test.mjs`, including localized headers project-x cannot name, unknown user columns, indented tables and indented prose.
 
 The round-trip `md → db → md` is **byte-identical** only for a one-table file that is already in canonical form and where `export` reports no losses. Three things change bytes without being losses, because each is either the point of the tool or cosmetic:
 
@@ -1694,7 +1694,7 @@ MCP tools, `codex exec --sandbox read-only`, `pi --no-tools`,
 matches no tool or server, so neither built-in nor MCP tools are offered, and opencode with
 `OPENCODE_CONFIG_CONTENT` denying every permission). The prompt asks for scores from
 the listed company, title and URL text, without opening the postings.
-A call times out after 180 s; set `CAREER_OPS_RANK_TIMEOUT_MS` to change that.
+A call times out after 180 s; set `PROJECT_X_RANK_TIMEOUT_MS` to change that.
 Every row left unranked is listed with the reason, and a run where every call
 fails or returns no usable JSON exits 1, `--dry-run` included.
 
@@ -1814,7 +1814,7 @@ npm run serve:dashboard    # or run the TUI directly without building
 
 ## manifesto
 
-Prints the opening couplet of [MANIFESTO.md](../MANIFESTO.md) and opens the public signing page (`https://career-ops.org/manifesto`) in the system browser. It does not change any file. If no browser opener is available, the URL is still printed.
+Prints the opening couplet of [MANIFESTO.md](../MANIFESTO.md) and opens the public signing page (`https://project-x.org/manifesto`) in the system browser. It does not change any file. If no browser opener is available, the URL is still printed.
 
 ```bash
 npm run manifesto
@@ -1841,7 +1841,7 @@ These have no `npm run` binding — modes and agents call them with
 | `node agent-inbox.mjs add "..."` | Append a request to the queue the agent drains at the next session start |
 | `node agent-inbox.mjs list [--all]` | List pending (or all) queued items by stable number — gaps mean already resolved |
 | `node agent-inbox.mjs resolve <n> [--expect "..."] [--result "..."]` | Tick item `n` and stamp a one-line result; `--expect` aborts unless the item contains that substring |
-| `node generate-latex.mjs <input.tex> [output.pdf] [--compile-only] [--source <path>] [--skip-fact-check] [--help]` | Fact-check, validate and compile a generated `.tex` CV via tectonic or pdflatex. The CV fact gate runs first whenever the data root has a `cv.md`, and a blocked document is not compiled; `--source` adds an evidence file (repeatable; `latex-tex` passes the user's own `.tex`). `--compile-only` skips career-ops template validation so a user-owned `.tex` compiles as-is (`latex-tex` mode) |
+| `node generate-latex.mjs <input.tex> [output.pdf] [--compile-only] [--source <path>] [--skip-fact-check] [--help]` | Fact-check, validate and compile a generated `.tex` CV via tectonic or pdflatex. The CV fact gate runs first whenever the data root has a `cv.md`, and a blocked document is not compiled; `--source` adds an evidence file (repeatable; `latex-tex` passes the user's own `.tex`). `--compile-only` skips project-x template validation so a user-owned `.tex` compiles as-is (`latex-tex` mode) |
 | `node install-latex-engine.mjs [--check] [--force] [--json] [--help]` | Opt-in local LaTeX engine: downloads a pinned tectonic release for this platform, verifies its SHA-256 before extracting, and places it in the repo root (gitignored) where `generate-latex.mjs` looks first. Downloads are bounded by a timeout and a size cap. No-op when tectonic is already available (a pdflatex-only host still gets tectonic, which the CJK template needs); `--check` never downloads |
 | `node classify-tier.mjs` | Classify a job title into intern / entry / mid / senior |
 | `node ats-payload.mjs <payload.json> [--summary]` | ATS payload transform: folds `competencies[]` into `skills[]` (one safe, idempotent transform) and reports three judgement calls it deliberately does not apply. Payload on stdout, findings on stderr |
@@ -2115,29 +2115,29 @@ Exit status: `0` success, `1` invalid option or write error, `2` missing tracker
 
 ## backup.mjs
 
-Copies the User Layer to a backup folder. The file list is `USER_PATHS` in `update-system.mjs` (the updater's own list of what is yours: CV, profile, `portals.yml`, everything under `data/`, `reports/`, `output/`, `jds/`, `interview-prep/`, `documents/`, `writing-samples/`, the web app's `.career-ops-web/` stores and more), plus any paths a fork declares in `config/local-paths.txt`, plus the files under `templates/` that are yours (generated per-application CVs and cover letters, and the template variant `config/profile.yml` selects; the shipped templates are not copied). It reads `CAREER_OPS_ROOT` / `.career-ops-data` like every other script. Files are copied whole, and nothing is ever deleted at the destination. Unchanged files (same size and modification time) are skipped, so a repeat run is cheap.
+Copies the User Layer to a backup folder. The file list is `USER_PATHS` in `update-system.mjs` (the updater's own list of what is yours: CV, profile, `portals.yml`, everything under `data/`, `reports/`, `output/`, `jds/`, `interview-prep/`, `documents/`, `writing-samples/`, the web app's `.project-x-web/` stores and more), plus any paths a fork declares in `config/local-paths.txt`, plus the files under `templates/` that are yours (generated per-application CVs and cover letters, and the template variant `config/profile.yml` selects; the shipped templates are not copied). It reads `PROJECT_X_ROOT` / `.project-x-data` like every other script. Files are copied whole, and nothing is ever deleted at the destination. Unchanged files (same size and modification time) are skipped, so a repeat run is cheap.
 
 Never copied: `.env` files, `data/cache/`, lock and temp files (except `plugins.lock`, which is yours), editor swap and autosave files of any file (vim `.name.swp`/`.swo`/`.swn`, emacs `#name#` and `.#name`, and `name~`), `.git/` and `node_modules/` folders inside nested checkouts, symlinks and anything under a symlinked folder, and anything outside the User Layer. `data/Connections.csv` (a LinkedIn export), `data/contacts.tsv` and `data/reply-candidates.json` and `output/contacts.vcf` (and any other `.vcf` file) and their `.bak`/`.orig`/`.old`/`.save` copies such as `contacts.tsv.bak` (other people's contact details), are copied only with `--include-contacts` (their editor swap, autosave and lock files stay excluded even then), which cannot be combined with `--provider` or with a `--dest` inside a provider folder at its default location. A synced folder moved elsewhere is not detected, so keep contact exports out of any synced folder.
 
 Claude Code's auto-memory for the checkout is outside the data root, in `<config dir>/projects/<slug>/memory/`: the config dir is `CLAUDE_CONFIG_DIR` or `~/.claude`, and the slug is the checkout path with every non-alphanumeric character replaced by `-`. `--include-claude-memory` copies it to `claude-memory/` at the destination by the same rules as every other file (unchanged files skipped, nothing deleted, `.env` files, editor leftovers and symlinks left out). It works with `--provider` and with a synced `--dest`. Memory files are compared byte for byte before being skipped as unchanged (the size and time check alone is not enough for them). When the folder does not exist the run says so and carries on; a folder that exists but cannot be read is a failure. An empty `--claude-memory-dir` value is a usage error (exit `2`). From a linked git worktree the main checkout's folder is used, because Claude Code shares one memory folder per repository. If Claude Code keeps the memory somewhere else (a session started in another folder, a plugin install, or a Claude Code setting that moves it), name the folder with `--claude-memory-dir <dir>`: it implies the copy, and a folder that does not exist is then a failure (exit `1`). A destination that holds the memory folder, or sits inside it, is refused. If a fork declares its own `claude-memory` path in `config/local-paths.txt`, that path is backed up as usual and the memory copy is reported as failed instead of writing over it. The `--json` result reports the number of memory files as `claudeMemory`; they do not count towards the "nothing to back up" check on the data root.
 
-Nothing is chosen for you: pass `--dest` or `--provider`, or set `CAREER_OPS_BACKUP_DIR`.
+Nothing is chosen for you: pass `--dest` or `--provider`, or set `PROJECT_X_BACKUP_DIR`.
 
 ```bash
-node backup.mjs --dest ~/Backups/career-ops
-node backup.mjs --provider google-drive    # <Google Drive>/Backups/career-ops; also dropbox | onedrive | icloud
+node backup.mjs --dest ~/Backups/project-x
+node backup.mjs --provider google-drive    # <Google Drive>/Backups/project-x; also dropbox | onedrive | icloud
 node backup.mjs --provider google-drive --account work@example.com   # when several accounts are signed in
-node backup.mjs --provider dropbox --folder Work/career-ops       # folder under the drive (default Backups/career-ops)
-node backup.mjs --dest ~/Backups/career-ops --include-contacts # also copy the four contact files
-node backup.mjs --dest ~/Backups/career-ops --include-claude-memory  # also copy Claude Code's auto-memory into claude-memory/
-node backup.mjs --dest ~/Backups/career-ops --claude-memory-dir ~/notes/claude-memory  # the same, from a memory folder you name
-node backup.mjs --dest ~/Backups/career-ops --dry-run             # print the counts and bytes that would be copied, copy nothing
-node backup.mjs --dest ~/Backups/career-ops --json                # machine-readable result
+node backup.mjs --provider dropbox --folder Work/project-x       # folder under the drive (default Backups/project-x)
+node backup.mjs --dest ~/Backups/project-x --include-contacts # also copy the four contact files
+node backup.mjs --dest ~/Backups/project-x --include-claude-memory  # also copy Claude Code's auto-memory into claude-memory/
+node backup.mjs --dest ~/Backups/project-x --claude-memory-dir ~/notes/claude-memory  # the same, from a memory folder you name
+node backup.mjs --dest ~/Backups/project-x --dry-run             # print the counts and bytes that would be copied, copy nothing
+node backup.mjs --dest ~/Backups/project-x --json                # machine-readable result
 ```
 
-Where it goes, first match wins: `--dest`, then `CAREER_OPS_BACKUP_DIR`, then the drive folder `--provider` names. With more than one drive found it stops and asks for `--account` or `--dest` instead of guessing. The destination's parent folder must already exist (so an unmounted drive never gets a stray local folder; for `--provider` that is the drive folder itself, and `Backups/career-ops` is created under it). Agent-tool settings (`.claude/`, `opencode.json`, `plugins.local/`) are left out when the destination is in a recognized sync folder, and the run says so, and a destination inside your career-ops files is refused.
+Where it goes, first match wins: `--dest`, then `PROJECT_X_BACKUP_DIR`, then the drive folder `--provider` names. With more than one drive found it stops and asks for `--account` or `--dest` instead of guessing. The destination's parent folder must already exist (so an unmounted drive never gets a stray local folder; for `--provider` that is the drive folder itself, and `Backups/project-x` is created under it). Agent-tool settings (`.claude/`, `opencode.json`, `plugins.local/`) are left out when the destination is in a recognized sync folder, and the run says so, and a destination inside your project-x files is refused.
 
-A file that cannot be read or copied is listed and the run carries on with the rest. A run that finds no files at all (a mistyped `CAREER_OPS_ROOT`, say) says so and exits `1` instead of reporting success.
+A file that cannot be read or copied is listed and the run carries on with the rest. A run that finds no files at all (a mistyped `PROJECT_X_ROOT`, say) says so and exits `1` instead of reporting success.
 
 Exit status: `0` success, `1` one or more files failed to copy or nothing was found to copy, `2` no usable destination, invalid option or an unsafe data root (an unreadable one is a failed file, exit `1`).
 
@@ -2191,13 +2191,13 @@ Runs:       — no data (data/scan-runs.tsv missing; created by the next scan)
 
 ## community-asks.mjs
 
-The one-time community asks. career-ops never phones home, so it asks for support in words, rarely, and at the right moment: a GitHub star after the first saved evaluation report, then the manifesto after five reports and at least seven days after the star. The star ask comes with a small drawing in a fenced block of its own, which the agent copies exactly, and names the user's evaluation count from five reports on. The Hired Wall ask lives in `hired-share.mjs`. Each ask is shown at most once, never two in one run, and never in CI, batch workers (`CAREER_OPS_HEADLESS`, `CAREER_OPS_BATCH_STATE`) or headless Claude Code (`sdk-*` entrypoints).
+The one-time community asks. project-x never phones home, so it asks for support in words, rarely, and at the right moment: a GitHub star after the first saved evaluation report, then the manifesto after five reports and at least seven days after the star. The star ask comes with a small drawing in a fenced block of its own, which the agent copies exactly, and names the user's evaluation count from five reports on. The Hired Wall ask lives in `hired-share.mjs`. Each ask is shown at most once, never two in one run, and never in CI, batch workers (`PROJECT_X_HEADLESS`, `PROJECT_X_BATCH_STATE`) or headless Claude Code (`sdk-*` entrypoints).
 
 ```bash
 node community-asks.mjs next            # prints the one ask that is due, or nothing; always exits 0
 node community-asks.mjs open star       # opens the page after the user said yes (or: open manifesto)
 node community-asks.mjs status          # the state as JSON
-node community-asks.mjs off             # never ask again; CAREER_OPS_NO_ASKS=1 does the same without writing
+node community-asks.mjs off             # never ask again; PROJECT_X_NO_ASKS=1 does the same without writing
 ```
 
 `next` claims `data/.community-asks/<ask>` with an exclusive create before it prints, so an ask comes once even with two sessions open, and a data folder it cannot write means no ask at all. The script makes no request of its own: `open` hands one fixed URL to the system's browser opener, and starring or signing is always the user's own click.

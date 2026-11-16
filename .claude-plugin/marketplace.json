@@ -1,5 +1,5 @@
 {
-  "name": "career-ops",
+  "name": "project-x",
   "metadata": {
     "description": "Open-source AI job search that runs locally in your AI coding CLI: scan job portals, evaluate listings into a structured A-H report with a 1-5 score, tailor your CV, track applications",
     "version": "1.40.0"
@@ -10,7 +10,7 @@
   },
   "plugins": [
     {
-      "name": "career-ops",
+      "name": "project-x",
       "source": "./",
       "description": "Open-source AI job search that runs locally in your AI coding CLI: scan job portals, evaluate listings into a structured A-H report with a 1-5 score, tailor your CV, track applications",
       "category": "productivity",

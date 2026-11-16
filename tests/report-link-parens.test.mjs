@@ -26,7 +26,7 @@ const HEADER = [
 const row = (report) => `| 1 | 2026-10-01 | Acme (Berlin) | Engineer | 4.2/5 | Evaluated | ❌ | ${report} | note |`;
 
 function fixture(t, { report = LINK, withFile = true } = {}) {
-  const root = mkdtempSync(join(tmpdir(), 'career-ops-link-parens-'));
+  const root = mkdtempSync(join(tmpdir(), 'project-x-link-parens-'));
   t.after(() => rmSync(root, { recursive: true, force: true, maxRetries: 10 }));
   mkdirSync(join(root, 'data'));
   mkdirSync(join(root, 'reports'));
@@ -38,8 +38,8 @@ function fixture(t, { report = LINK, withFile = true } = {}) {
 
 function run(f, script, args = []) {
   const env = { ...process.env };
-  for (const k of ['CAREER_OPS_ROOT', 'CAREER_OPS_DATA_DIR', 'CAREER_OPS_TRACKER', 'CAREER_OPS_TRACKER_LOCK']) delete env[k];
-  env.CAREER_OPS_ROOT = f.root;
+  for (const k of ['PROJECT_X_ROOT', 'PROJECT_X_DATA_DIR', 'PROJECT_X_TRACKER', 'PROJECT_X_TRACKER_LOCK']) delete env[k];
+  env.PROJECT_X_ROOT = f.root;
   const r = spawnSync(process.execPath, [join(CODE_ROOT, script), ...args], { cwd: CODE_ROOT, env, encoding: 'utf-8', timeout: 30_000 });
   assert.equal(r.error, undefined);
   return { ...r, out: `${r.stdout ?? ''}${r.stderr ?? ''}` };

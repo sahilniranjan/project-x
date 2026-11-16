@@ -180,7 +180,7 @@ export async function renderBody(text, repo, token, fetchImpl = fetch) {
       authorization: `Bearer ${token}`,
       accept: 'application/vnd.github+json',
       'content-type': 'application/json',
-      'user-agent': 'career-ops-depends-on',
+      'user-agent': 'project-x-depends-on',
     },
     body: JSON.stringify({ text, mode: 'gfm', context: repo }),
   });
@@ -217,7 +217,7 @@ const api = async (path) => {
     headers: {
       authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
       accept: 'application/vnd.github+json',
-      'user-agent': 'career-ops-depends-on',
+      'user-agent': 'project-x-depends-on',
     },
   });
   if (!res.ok) throw new Error(`GitHub API ${res.status} on ${path}`);

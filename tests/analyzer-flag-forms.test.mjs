@@ -53,7 +53,7 @@ try {
   const run = (script, ...args) => {
     const r = spawnSync(NODE, [join(ROOT, script), ...args], {
       cwd: dir, encoding: 'utf-8', timeout: 30000,
-      env: { ...process.env, CAREER_OPS_ROOT: empty, CAREER_OPS_TRACKER: '', CAREER_OPS_DATA_DIR: '' },
+      env: { ...process.env, PROJECT_X_ROOT: empty, PROJECT_X_TRACKER: '', PROJECT_X_DATA_DIR: '' },
     });
     return { status: r.status, out: r.stdout, err: r.stderr };
   };

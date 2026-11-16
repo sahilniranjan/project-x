@@ -283,8 +283,8 @@ tracked_companies:
     const scan = () => execFileSync(NODE, [join(ROOT, 'scan.mjs')], {
       cwd: dir,
       // The sandbox is the lane's data root: scan's output defaults are
-      // anchored to CAREER_OPS_ROOT, not to the child's cwd.
-      env: { ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_PORTALS: portals },
+      // anchored to PROJECT_X_ROOT, not to the child's cwd.
+      env: { ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_PORTALS: portals },
       encoding: 'utf-8',
       stdio: ['ignore', 'pipe', 'pipe'],
     });

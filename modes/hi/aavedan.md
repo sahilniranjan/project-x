@@ -79,7 +79,7 @@ Follow the Scope section in `modes/apply.md`. Run `node apply-scope.mjs root` an
 2. **Previous `## Application Answers` / Block H**: यदि submitted response या draft मौजूद हो (submitted पहले), उसे base लें और refine करें
 3. **"I choose you" tone**: Auto-pipeline जैसा framework — confident, गिड़गिड़ाहट नहीं
 4. **Specificity**: Screen पर visible offer से कुछ concrete cite करें
-5. **Career-ops proof point**: "Additional information" जैसा field हो तो include करें
+5. **Project-x proof point**: "Additional information" जैसा field हो तो include करें
 
 **India-specific form fields के लिए guidance:**
 
@@ -123,7 +123,7 @@ Notes:
 यदि candidate confirm करे कि application submit हो गई:
 1. Status को "Evaluated" से "Applied" में update करें: `node set-status.mjs --report <report#> Applied` (`applications.md` table को हाथ से edit न करें)
 2. Report के `## Application Answers` section को final responses और `**State:** submitted` के साथ update करें (format `modes/apply.md` → Step 8 में)। Block H evaluation का draft है और नहीं बदलता
-3. अगला step suggest करें: hiring manager के लिए LinkedIn outreach के लिए `/career-ops contacto`
+3. अगला step suggest करें: hiring manager के लिए LinkedIn outreach के लिए `/project-x contacto`
 
 ## Scrolling Handle करें
 

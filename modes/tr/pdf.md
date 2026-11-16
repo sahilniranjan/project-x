@@ -203,7 +203,7 @@ CV PDF oluşturuldu: output/{path}
 
 Bu rol için bir ön yazı (cover letter) da ister misiniz?
 - Hemen bir tane oluşturmak için "yes" (evet) veya "cover letter" (ön yazı) deyin
-- Ya da daha sonra `/career-ops cover {slug}` çalıştırın
+- Ya da daha sonra `/project-x cover {slug}` çalıştırın
 ```
 
 Ön yazıya `voice-dna.md` (eğer varsa) uygula — tam bariyer koruması (guardrail) ve sohbete dayalı (conversational) ses (Seviye 1 + Seviye 2) dahildir. CV PDF'sinin kendisi yalnızca Seviye 1 (formal ATS dili - register) kalır. Bkz. `_writing.md` → Voice DNA.

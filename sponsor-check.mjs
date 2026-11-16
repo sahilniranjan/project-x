@@ -83,10 +83,10 @@ import { companyTokens, matchCompany, parseCsv } from './linkedin-join.mjs';
 import { resolveColumns, parseTrackerRow } from './tracker-parse.mjs';
 import { flagValue, hasFlag, safeIntFlag, validateFlags } from './lib/cli-flags.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
-import { getCareerOpsRoot, resolveTrackerPath } from './path-resolver.mjs';
+import { getProjectXRoot, resolveTrackerPath } from './path-resolver.mjs';
 import { DEFAULT_USER_AGENT } from './user-agent.mjs';
 
-const DATA_ROOT = getCareerOpsRoot();
+const DATA_ROOT = getProjectXRoot();
 const TRACKER_PATH = resolveTrackerPath(DATA_ROOT);
 const PIPELINE_PATH = join(DATA_ROOT, 'data/pipeline.md');
 const CACHE_DIR = join(DATA_ROOT, 'data/cache/sponsor-register');

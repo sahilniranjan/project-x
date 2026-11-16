@@ -31,7 +31,7 @@ test('an npm-installed claude is run once per selected job, with the prompt as o
     cwd: root,
     encoding: 'utf8',
     timeout: 60_000,
-    env: envWithPathFirst(join(root, 'bin'), { CAREER_OPS_ROOT: root, CAREER_OPS_BATCH_STATE: state }),
+    env: envWithPathFirst(join(root, 'bin'), { PROJECT_X_ROOT: root, PROJECT_X_BATCH_STATE: state }),
   });
   assert.ifError(result.error);
   assert.equal(result.status, 0, result.stdout + result.stderr);

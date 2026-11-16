@@ -23,7 +23,7 @@
 import { readFileSync, existsSync } from 'fs';
 import { isMainModule } from './lib/is-main-module.mjs';
 import { join } from 'path';
-import { getCareerOpsRoot } from './path-resolver.mjs';
+import { getProjectXRoot } from './path-resolver.mjs';
 import { parseStories, splitStoryBlocks, isValidStory } from './lib/story-bank.mjs';
 import { parseStoryBlocks, classifyEntries } from './story-provenance-check.mjs';
 import { flagValue, safeIntFlag, validateFlags } from './lib/cli-flags.mjs';
@@ -34,8 +34,8 @@ import { flagValue, safeIntFlag, validateFlags } from './lib/cli-flags.mjs';
 // update-system.mjs, and a bare relative path resolves against wherever the
 // process was started — so this read the checkout's story bank (usually absent)
 // for anyone whose data lives elsewhere.
-const STORY_BANK_PATH = join(getCareerOpsRoot(), 'interview-prep', 'story-bank.md');
-const CV_PATH = join(getCareerOpsRoot(), 'cv.md');
+const STORY_BANK_PATH = join(getProjectXRoot(), 'interview-prep', 'story-bank.md');
+const CV_PATH = join(getProjectXRoot(), 'cv.md');
 
 const UNCONFIRMED = '[unconfirmed figure]';
 
@@ -230,7 +230,7 @@ validateFlags(args, KNOWN_FLAGS, USAGE, { valueFlags: VALUE_FLAGS, requireOperan
 
 if (!existsSync(STORY_BANK_PATH)) {
   console.error(`Error: ${STORY_BANK_PATH} not found.`);
-  console.error('Run /career-ops interview-prep on a role first to populate your story bank.');
+  console.error('Run /project-x interview-prep on a role first to populate your story bank.');
   process.exit(1);
 }
 
@@ -256,7 +256,7 @@ if (tableRows.length || invalid.length) {
 
 if (stories.length === 0) {
   console.error('No stories found in story-bank.md yet.');
-  console.error('Run /career-ops interview-prep on a role to add your first stories.');
+  console.error('Run /project-x interview-prep on a role to add your first stories.');
   process.exit(1);
 }
 

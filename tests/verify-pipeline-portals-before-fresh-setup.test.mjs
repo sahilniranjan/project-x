@@ -11,8 +11,8 @@ import { fileURLToPath } from 'node:url';
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 
 function run(dataRoot) {
-  const env = Object.fromEntries(Object.entries(process.env).filter(([key]) => !key.startsWith('CAREER_OPS_')));
-  env.CAREER_OPS_ROOT = dataRoot;
+  const env = Object.fromEntries(Object.entries(process.env).filter(([key]) => !key.startsWith('PROJECT_X_')));
+  env.PROJECT_X_ROOT = dataRoot;
   return spawnSync(process.execPath, [join(ROOT, 'verify-pipeline.mjs')], {
     cwd: ROOT,
     encoding: 'utf-8',

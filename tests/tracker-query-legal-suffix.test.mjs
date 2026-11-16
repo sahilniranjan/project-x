@@ -28,9 +28,9 @@ function trackerRoot(t) {
 
 function query(root, company) {
   const env = { ...process.env };
-  for (const name of Object.keys(env)) if (name.toUpperCase().startsWith('CAREER_OPS_')) delete env[name];
+  for (const name of Object.keys(env)) if (name.toUpperCase().startsWith('PROJECT_X_')) delete env[name];
   return spawnSync(process.execPath, [join(ROOT, 'tracker.mjs'), 'query', '--json', '--company', company], {
-    env: { ...env, CAREER_OPS_ROOT: root },
+    env: { ...env, PROJECT_X_ROOT: root },
     encoding: 'utf8',
     timeout: 20000,
   });

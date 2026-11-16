@@ -240,7 +240,7 @@ await test('headed fallback stays lazy and cleans up both browsers after a chall
     loadPlaywright: harness.loadPlaywright,
     // The robots.txt gate (#5776) is on by default; answer it here so the test
     // never reaches the network.
-    robotsGate: async () => ({ allowed: true, code: 'robots_allowed', reason: 'permits /jobs/challenge for career-ops' }),
+    robotsGate: async () => ({ allowed: true, code: 'robots_allowed', reason: 'permits /jobs/challenge for project-x' }),
   });
   assert.deepEqual(result.verified, [item]);
   assert.deepEqual(harness.state.launches, [true, false]);
@@ -257,7 +257,7 @@ await test('a robots.txt that does not permit the path skips the headed retry an
     loadPlaywright: harness.loadPlaywright,
     robotsGate: async (url) => {
       gated.push(url);
-      return { allowed: false, code: 'robots_disallowed', reason: 'disallows /jobs/challenge for career-ops' };
+      return { allowed: false, code: 'robots_disallowed', reason: 'disallows /jobs/challenge for project-x' };
     },
   });
   assert.deepEqual(gated, [item.url], 'the gate is asked once, for the challenged URL');

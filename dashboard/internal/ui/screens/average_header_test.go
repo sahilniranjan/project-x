@@ -5,8 +5,8 @@ import (
 	"testing"
 
 	"github.com/charmbracelet/x/ansi"
-	"github.com/santifer/career-ops/dashboard/internal/model"
-	"github.com/santifer/career-ops/dashboard/internal/theme"
+	"github.com/santifer/project-x/dashboard/internal/model"
+	"github.com/santifer/project-x/dashboard/internal/theme"
 )
 
 // With no scored row there is no average. Both headers printed AvgScore as-is,

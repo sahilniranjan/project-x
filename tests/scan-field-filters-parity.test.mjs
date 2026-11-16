@@ -40,7 +40,7 @@ function judge(portalsBody) {
     writeFileSync(portals, portalsBody);
     const scan = exec([join(ROOT, 'scan.mjs'), '--dry-run'], {
       cwd: dir,
-      env: { ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_PORTALS: portals },
+      env: { ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_PORTALS: portals },
     });
     const validator = exec(['validate-portals.mjs', '--file', portals], { cwd: ROOT });
     return { scan, validator };

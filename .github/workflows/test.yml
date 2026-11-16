@@ -137,12 +137,12 @@ jobs:
         with:
           persist-credentials: false
       - name: Build the canonical CV rendering environment
-        run: docker build --platform linux/amd64 --tag career-ops-cv-visual tests/cv-visual
+        run: docker build --platform linux/amd64 --tag project-x-cv-visual tests/cv-visual
       - name: Check every CV template and PDF page
         run: |
           docker run --rm --init --ipc=host --platform linux/amd64 \
             --volume "$PWD:/work" --volume /work/node_modules \
-            career-ops-cv-visual \
+            project-x-cv-visual \
             sh -c 'npm install --ignore-scripts --package-lock=false && npm run test:cv-visual'
       - name: Upload CV visual diffs and rendered previews
         if: always()
@@ -175,12 +175,12 @@ jobs:
         with:
           persist-credentials: false
       - name: Build the canonical CV rendering environment
-        run: docker build --platform linux/amd64 --tag career-ops-cv-visual tests/cv-visual
+        run: docker build --platform linux/amd64 --tag project-x-cv-visual tests/cv-visual
       - name: Run the suites that need Chromium or a TeX engine
         run: |
           docker run --rm --init --ipc=host --platform linux/amd64 \
             --volume "$PWD:/work" --volume /work/node_modules \
-            career-ops-cv-visual \
+            project-x-cv-visual \
             sh -c 'npm install --ignore-scripts --package-lock=false && node install-latex-engine.mjs && node test-all.mjs --needs browser,latex'
   upgrade-gate:
     name: Upgrade regression gate

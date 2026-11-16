@@ -1,5 +1,5 @@
 /**
- * utils/privacy-filter.mjs — opt-in contact-detail redaction for career-ops
+ * utils/privacy-filter.mjs — opt-in contact-detail redaction for project-x
  *
  * Keeps the candidate's name and contact details (email, phone, LinkedIn,
  * GitHub, portfolio, socials) out of the prompts that gemini-eval,

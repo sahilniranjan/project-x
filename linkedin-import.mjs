@@ -5,7 +5,7 @@ import { dirname, join } from 'path';
 import { flagValue, hasFlag, validateFlags } from './lib/cli-flags.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
 import { linkedInOffers, planLinkedInImport } from './lib/linkedin-import.mjs';
-import { getCareerOpsRoot, resolveTrackerPath } from './path-resolver.mjs';
+import { getProjectXRoot, resolveTrackerPath } from './path-resolver.mjs';
 
 const USAGE = `Paste a LinkedIn job alert into your pipeline. No Google account.
 
@@ -59,8 +59,8 @@ async function main() {
     }
   }
 
-  const root = getCareerOpsRoot();
-  const pipelinePath = process.env.CAREER_OPS_PIPELINE?.trim() || join(root, 'data', 'pipeline.md');
+  const root = getProjectXRoot();
+  const pipelinePath = process.env.PROJECT_X_PIPELINE?.trim() || join(root, 'data', 'pipeline.md');
   const applicationsPath = resolveTrackerPath(root);
   const plan = planLinkedInImport(text, `${readIf(pipelinePath)}\n${readIf(applicationsPath)}`, { dryRun });
 

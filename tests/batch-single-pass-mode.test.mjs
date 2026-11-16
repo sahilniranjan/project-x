@@ -212,16 +212,16 @@ try {
 const mockWork = mkdtempSync(join(tmpdir(), 'cops-jdarchive-'));
 const oldReports = PATHS.reports;
 const oldAdditions = PATHS.trackerAdditions;
-const oldReportsEnv = process.env.CAREER_OPS_REPORTS_DIR;
-const oldBatchStateEnv = process.env.CAREER_OPS_BATCH_STATE;
-const oldTrackerEnv = process.env.CAREER_OPS_TRACKER;
+const oldReportsEnv = process.env.PROJECT_X_REPORTS_DIR;
+const oldBatchStateEnv = process.env.PROJECT_X_BATCH_STATE;
+const oldTrackerEnv = process.env.PROJECT_X_TRACKER;
 try {
   PATHS.reports = join(mockWork, 'reports');
   PATHS.trackerAdditions = join(mockWork, 'tracker-additions');
   mkdirSync(PATHS.reports, { recursive: true });
-  process.env.CAREER_OPS_REPORTS_DIR = PATHS.reports;
-  process.env.CAREER_OPS_BATCH_STATE = join(mockWork, 'batch-state.tsv');
-  process.env.CAREER_OPS_TRACKER = join(mockWork, 'applications.md');
+  process.env.PROJECT_X_REPORTS_DIR = PATHS.reports;
+  process.env.PROJECT_X_BATCH_STATE = join(mockWork, 'batch-state.tsv');
+  process.env.PROJECT_X_TRACKER = join(mockWork, 'applications.md');
   // Run this report through match mode, which writes no PDF.
   writeFileSync(join(mockWork, 'cv.md'), '# Jane Doe\n', 'utf-8');
   writeFileSync(join(mockWork, '_profile.md'), '# Archetypes\n', 'utf-8');
@@ -284,12 +284,12 @@ LEGITIMACY: High Confidence
   PATHS.profile = originalProfile;
   PATHS.profileYml = originalProfileYml;
   PATHS.custom = originalCustom;
-  if (oldReportsEnv === undefined) delete process.env.CAREER_OPS_REPORTS_DIR;
-  else process.env.CAREER_OPS_REPORTS_DIR = oldReportsEnv;
-  if (oldBatchStateEnv === undefined) delete process.env.CAREER_OPS_BATCH_STATE;
-  else process.env.CAREER_OPS_BATCH_STATE = oldBatchStateEnv;
-  if (oldTrackerEnv === undefined) delete process.env.CAREER_OPS_TRACKER;
-  else process.env.CAREER_OPS_TRACKER = oldTrackerEnv;
+  if (oldReportsEnv === undefined) delete process.env.PROJECT_X_REPORTS_DIR;
+  else process.env.PROJECT_X_REPORTS_DIR = oldReportsEnv;
+  if (oldBatchStateEnv === undefined) delete process.env.PROJECT_X_BATCH_STATE;
+  else process.env.PROJECT_X_BATCH_STATE = oldBatchStateEnv;
+  if (oldTrackerEnv === undefined) delete process.env.PROJECT_X_TRACKER;
+  else process.env.PROJECT_X_TRACKER = oldTrackerEnv;
   rmSync(mockWork, { recursive: true, force: true });
 }
 
@@ -405,7 +405,7 @@ try {
     ].join('\n'), { mode: 0o755 });
     writeFileSync(join(binDir, 'curl'), '#!/usr/bin/env bash\nexit 1\n', { mode: 0o755 });
     const env = { ...process.env, PATH: `${binDir}${delimiter}${process.env.PATH}`, CAPTURE_FILE: capture };
-    for (const key of ['CAREER_OPS_ROOT', 'CAREER_OPS_DATA_DIR', 'CAREER_OPS_PROFILE', 'CAREER_OPS_REPORTS_DIR', 'CAREER_OPS_BATCH_STATE', 'CAREER_OPS_TRACKER']) delete env[key];
+    for (const key of ['PROJECT_X_ROOT', 'PROJECT_X_DATA_DIR', 'PROJECT_X_PROFILE', 'PROJECT_X_REPORTS_DIR', 'PROJECT_X_BATCH_STATE', 'PROJECT_X_TRACKER']) delete env[key];
     try {
       execFileSync(getBash(), [toBashPath(join(dir, 'batch', 'batch-runner.sh')), ...modeArgs, '--parallel', '1', '--max-retries', '0', '--rate-limit-sleep', '0'], {
         cwd: dir, env, encoding: 'utf-8', stdio: ['ignore', 'pipe', 'pipe'], timeout: 120_000,

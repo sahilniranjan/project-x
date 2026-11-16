@@ -79,7 +79,7 @@ Untuk tiap pertanyaan, susun jawaban mengikuti skema ini:
 2. **`## Application Answers` / Blok H sebelumnya**: Jika ada jawaban terkirim atau draft (jawaban terkirim lebih dulu), jadikan dasar lalu perhalus
 3. **Nada "Saya memilih Anda"**: kerangka yang sama seperti di auto-pipeline -- percaya diri, tidak memohon
 4. **Spesifisitas**: kutip sesuatu yang konkret dari lowongan yang terlihat di layar
-5. **Proof point career-ops**: sertakan di "Informasi tambahan" jika ada kolom semacam itu
+5. **Proof point project-x**: sertakan di "Informasi tambahan" jika ada kolom semacam itu
 
 **Kolom khas formulir Indonesia yang umum:**
 - **Ekspektasi gaji (bulanan/tahunan)** -> Rentang dari `profile.yml`, dalam IDR, dengan catatan "dapat dinegosiasikan sesuai paket keseluruhan"; perjelas apakah angkanya gross atau nett
@@ -120,7 +120,7 @@ Sebelum menyimpan apa pun, dan sekali lagi tepat sebelum setiap penulisan di baw
 Jika kandidat mengonfirmasi lamaran sudah dikirim:
 1. Perbarui status dari "Evaluated" menjadi "Applied" dengan `node set-status.mjs --report <report#> Applied` (jangan mengedit tabel `applications.md` secara manual)
 2. Perbarui bagian `## Application Answers` di report dengan jawaban final dan `**State:** submitted` (format di `modes/apply.md` -> Step 8). Blok H tetap draft dari evaluasi dan tidak diubah
-3. Sarankan langkah berikutnya: `/career-ops contacto` untuk outreach LinkedIn ke hiring manager
+3. Sarankan langkah berikutnya: `/project-x contacto` untuk outreach LinkedIn ke hiring manager
 
 ## Penanganan scroll
 

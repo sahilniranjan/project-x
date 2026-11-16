@@ -4,7 +4,7 @@
  *
  * generate-pdf reads cv.md, for the section-order and locked-section guards
  * and to decide whether the fact gate runs, from its workspace root, which
- * follows CAREER_OPS_TRACKER outside the data root (#2471, #3169). The gate
+ * follows PROJECT_X_TRACKER outside the data root (#2471, #3169). The gate
  * itself, called with no sourcePaths, read verify-cv-facts' defaults: the DATA
  * root's cv.md. With the tracker in an external workspace, a CV claiming 40
  * engineers, against a workspace cv.md that says 4, passed the gate on the
@@ -24,7 +24,7 @@ const outputRoot = join(SANDBOX_DATA_ROOT, 'output');
 mkdirSync(outputRoot, { recursive: true });
 const base = realpathSync(mkdtempSync(join(outputRoot, 'fact-gate-workspace-test-')));
 const code = join(base, 'code');       // the checkout, and the data root
-const workspace = join(base, 'ext');   // where CAREER_OPS_TRACKER points
+const workspace = join(base, 'ext');   // where PROJECT_X_TRACKER points
 mkdirSync(code, { recursive: true });
 const script = join(code, 'generate-pdf.mjs');
 for (const file of [
@@ -74,7 +74,7 @@ function render(input) {
     cwd: code,
     encoding: 'utf-8',
     timeout: 30_000,
-    env: { ...process.env, CAREER_OPS_ROOT: code, CAREER_OPS_DATA_DIR: '', CAREER_OPS_TRACKER: join(workspace, 'data', 'applications.md') },
+    env: { ...process.env, PROJECT_X_ROOT: code, PROJECT_X_DATA_DIR: '', PROJECT_X_TRACKER: join(workspace, 'data', 'applications.md') },
   });
   return { status: result.status, output: `${result.stdout || ''}${result.stderr || ''}`, rendered: existsSync(output) };
 }

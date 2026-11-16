@@ -105,4 +105,4 @@ Follow the Scope section in `modes/apply.md`. Run `node apply-scope.mjs root` an
 Если кандидат подтвердил отправку:
 1. Обновить статус на "Applied" через канонический CLI: `node set-status.mjs --report <report#> Applied` (не редактировать таблицу `data/applications.md` вручную)
 2. Записать финальные ответы в секцию `## Application Answers` отчёта со `**State:** submitted`: `node application-answers.mjs --report reports/NNN-company-role-date.md --input answers.json --state submitted` (поля JSON перечисляет `node application-answers.mjs --help`). Блок G (легитимность вакансии) и блок H (черновики оценки) не менять.
-3. Предложить: `/career-ops contacto` для LinkedIn outreach
+3. Предложить: `/project-x contacto` для LinkedIn outreach

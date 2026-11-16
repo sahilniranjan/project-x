@@ -3,7 +3,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
-import { careerOpsRoot, rootScript } from "@/lib/career-ops";
+import { projectXRoot, rootScript } from "@/lib/project-x";
 import type { CompanyFilter, CompanyStats, IndexJobState } from "@/lib/explore";
 
 /**
@@ -19,12 +19,12 @@ export function companyIndexAvailable(): boolean {
 }
 
 function tempFile(tag: string): string {
-  return path.join(os.tmpdir(), `career-ops-${tag}-${randomUUID()}.json`);
+  return path.join(os.tmpdir(), `project-x-${tag}-${randomUUID()}.json`);
 }
 
 function removeTemp(file: string) {
   try {
-    if (file.startsWith(os.tmpdir()) && file.includes("career-ops-")) fs.unlinkSync(file);
+    if (file.startsWith(os.tmpdir()) && file.includes("project-x-")) fs.unlinkSync(file);
   } catch {
     /* best-effort */
   }
@@ -33,7 +33,7 @@ function removeTemp(file: string) {
 /** Run one JSON-printing company-index.mjs subcommand. */
 function runJson<T>(args: string[], timeoutMs = 60_000): Promise<T> {
   return new Promise((resolve, reject) => {
-    const child = spawn(process.execPath, [rootScript("company-index"), ...args], { cwd: careerOpsRoot(), env: process.env });
+    const child = spawn(process.execPath, [rootScript("company-index"), ...args], { cwd: projectXRoot(), env: process.env });
     let out = "";
     let err = "";
     const timer = setTimeout(() => child.kill("SIGTERM"), timeoutMs);
@@ -117,7 +117,7 @@ export function startIndexBuild(opts: { ats: string[]; staleDays?: number }): In
   if (r.state.running) return r.state;
   const args = [rootScript("company-index"), "build", "--ats", opts.ats.join(",")];
   if (opts.staleDays && opts.staleDays > 0) args.push("--stale-days", String(opts.staleDays));
-  const child = spawn(process.execPath, args, { cwd: careerOpsRoot(), env: process.env });
+  const child = spawn(process.execPath, args, { cwd: projectXRoot(), env: process.env });
   r.child = child;
   r.log = [];
   r.state = { running: true, startedAt: new Date().toISOString(), phase: "plan", done: 0, total: 0, ok: 0, failed: 0 };

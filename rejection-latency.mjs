@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * rejection-latency.mjs — Post-Interview Response-Latency Signal for career-ops
+ * rejection-latency.mjs — Post-Interview Response-Latency Signal for project-x
  *
  * Cross-references data/active-interviews.md (interview round dates) with
  * data/applications.md (tracker status) and flags companies whose
@@ -42,7 +42,7 @@
  *      node rejection-latency.mjs --tracker path/to/applications.md
  *      node rejection-latency.mjs --self-test
  *
- * Issue #2013 — github.com/career-ops-hq/career-ops
+ * Issue #2013 — github.com/project-x-hq/project-x
  */
 
 import { readFileSync, existsSync } from 'fs';
@@ -59,10 +59,10 @@ import { flagValue, hasFlag, validateFlags } from './lib/cli-flags.mjs';
 import { localToday } from './lib/local-today.mjs';
 import { parseDate } from './lib/parse-date.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
-import { getCareerOpsRoot, getProfilePath, resolveTrackerPath } from './path-resolver.mjs';
+import { getProjectXRoot, getProfilePath, resolveTrackerPath } from './path-resolver.mjs';
 
-const CAREER_OPS = dirname(fileURLToPath(import.meta.url));
-const DATA_ROOT = getCareerOpsRoot();
+const PROJECT_X = dirname(fileURLToPath(import.meta.url));
+const DATA_ROOT = getProjectXRoot();
 const DEFAULT_ACTIVE_INTERVIEWS_PATH = existsSync(join(DATA_ROOT, 'data/active-interviews.md'))
   ? join(DATA_ROOT, 'data/active-interviews.md')
   : join(DATA_ROOT, 'active-interviews.md');
@@ -168,7 +168,7 @@ function isoDay(date) {
 //
 // So two distinct Hindi employers differing only in vowel signs keyed the same,
 // and one employer spelled identically on both sides could key differently from
-// itself. career-ops ships modes/hi and modes/ar as supported markets.
+// itself. project-x ships modes/hi and modes/ar as supported markets.
 //
 // normalizeTextKey is the version that has been paid for. It keeps \p{M}, and
 // it strips the U+0307 that lowercasing a Turkish dotted İ leaves behind
@@ -470,7 +470,7 @@ function readNormalized(path) {
 // --- Summary mode ---
 function printSummary(result, meta) {
   console.log(`\n${'='.repeat(78)}`);
-  console.log('  Rejection Latency — career-ops');
+  console.log('  Rejection Latency — project-x');
   console.log(`  as of: ${meta.today} | courtesy: ${meta.courtesyDays}d`);
   console.log(`${'='.repeat(78)}\n`);
 

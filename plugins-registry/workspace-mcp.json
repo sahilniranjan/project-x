@@ -1,7 +1,7 @@
 {
-  "name": "career-ops-plugin-workspace-mcp",
+  "name": "project-x-plugin-workspace-mcp",
   "id": "workspace-mcp",
-  "repo": "https://github.com/theridgerugby/career-ops-plugin-workspace-mcp",
+  "repo": "https://github.com/theridgerugby/project-x-plugin-workspace-mcp",
   "author": "theridgerugby",
   "hooks": [
     "export"
@@ -13,6 +13,6 @@
   "license": "MIT",
   "version": "0.1.2",
   "sha": "69262526764850e110c1d4b0c30fbd0f8146be36",
-  "registrationIssue": "https://github.com/career-ops-hq/career-ops/issues/5097",
+  "registrationIssue": "https://github.com/project-x-hq/project-x/issues/5097",
   "addedAt": "2026-10-12"
 }

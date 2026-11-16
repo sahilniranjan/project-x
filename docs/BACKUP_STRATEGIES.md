@@ -1,7 +1,7 @@
-# Backing up your career-ops data
+# Backing up your project-x data
 
 Your CV, tracker, reports, generated PDFs and `portals.yml` live only on the machine
-you run career-ops on. They are git-ignored on purpose, so pushing the project does not
+you run project-x on. They are git-ignored on purpose, so pushing the project does not
 save them, and `node update-system.mjs` does not either. If the laptop dies, or a
 [web session's VM expires](SETUP.md#browser-only--claude-code-on-the-web), they are gone.
 
@@ -15,7 +15,7 @@ start from the same step: put your data in its own folder.
 
 ## Step 0: move your data into its own folder (data root)
 
-By default your files sit inside the checkout, mixed in with code. career-ops can read
+By default your files sit inside the checkout, mixed in with code. project-x can read
 and write all of them from a separate folder instead (see
 [External Data Directory](../README.md#external-data-directory-optional) and
 [`DATA_CONTRACT.md`](../DATA_CONTRACT.md#custom-data-directory)). Code, `modes/` and
@@ -34,7 +34,7 @@ below have to know which files under the checkout are yours.
 Use a folder **outside** the checkout, for example `~/career-data`:
 
 ```bash
-cd ~/career-ops
+cd ~/project-x
 dest="$HOME/career-data"
 
 (
@@ -58,14 +58,14 @@ dest="$HOME/career-data"
   # Those are system files; put them back in the checkout.
   git ls-files --deleted -z | xargs -0 git checkout --
 
-  # Only now point career-ops at the new folder (the marker file is git-ignored).
-  echo "$dest" > .career-ops-data
+  # Only now point project-x at the new folder (the marker file is git-ignored).
+  echo "$dest" > .project-x-data
   node doctor.mjs
   git status
 }
 ```
 
-If the block stops, career-ops still reads from the checkout, because the marker file was
+If the block stops, project-x still reads from the checkout, because the marker file was
 not written. Move back anything it already moved into `~/career-data`, fix the cause, and
 run it again.
 
@@ -73,8 +73,8 @@ run it again.
 checkout or was never created. `git status` should be clean: your files are no longer
 in the checkout, and the scaffolds are back where they were.
 
-You can use `export CAREER_OPS_ROOT=~/career-data` instead of the marker file
-(`CAREER_OPS_DATA_DIR` is an alias for it). Either variable takes precedence over the
+You can use `export PROJECT_X_ROOT=~/career-data` instead of the marker file
+(`PROJECT_X_DATA_DIR` is an alias for it). Either variable takes precedence over the
 marker. The marker works without editing your shell profile, and every script and agent
 mode picks it up.
 
@@ -82,15 +82,15 @@ mode picks it up.
 
 ## The built-in script: `node backup.mjs`
 
-For a plain copy to a folder, career-ops ships a script. You choose where it goes: any
+For a plain copy to a folder, project-x ships a script. You choose where it goes: any
 folder with `--dest`, or a cloud drive with `--provider` (Google Drive, Dropbox, OneDrive or
-iCloud Drive; it copies into `Backups/career-ops` underneath the drive folder). It skips
+iCloud Drive; it copies into `Backups/project-x` underneath the drive folder). It skips
 unchanged files and never deletes anything in the backup:
 
 ```bash
-node backup.mjs --dest ~/Backups/career-ops --dry-run   # print counts and bytes that would be copied (no file list)
-node backup.mjs --dest ~/Backups/career-ops             # run it
-node backup.mjs --provider google-drive                 # or a signed-in cloud drive (creates Backups/career-ops in it)
+node backup.mjs --dest ~/Backups/project-x --dry-run   # print counts and bytes that would be copied (no file list)
+node backup.mjs --dest ~/Backups/project-x             # run it
+node backup.mjs --provider google-drive                 # or a signed-in cloud drive (creates Backups/project-x in it)
 ```
 
 It copies what the updater treats as yours (`USER_PATHS` in `update-system.mjs`). The files that hold other people's contact details (`data/Connections.csv`, `data/contacts.tsv`, `data/reply-candidates.json`, `output/contacts.vcf` (and any other `.vcf` file)) are
@@ -117,12 +117,12 @@ git init -b main
 git add -A
 # Check what you staged for API keys and tokens. No output means nothing was found.
 git grep --cached -nE 'sk-[A-Za-z0-9_-]{20,}|gh[pousr]_[A-Za-z0-9]{30,}|AKIA[0-9A-Z]{16}|PRIVATE KEY-----'
-git commit -m "career-ops data"
+git commit -m "project-x data"
 gh repo create career-data --private --source . --push
 gh repo view career-data --json visibility -q .visibility   # must print PRIVATE
 ```
 
-The data folder is its own repository, so career-ops's `.gitignore` does not apply to it
+The data folder is its own repository, so project-x's `.gitignore` does not apply to it
 and `git add -A` picks up everything. That is the reason for Step 0: if you instead make a
 second repository over the checkout, the project's `.gitignore` silently skips `cv.md`,
 `data/` and `reports/`, and the backup looks fine but holds none of your data.
@@ -144,10 +144,10 @@ it as `\%`:
 **On a new machine** (or at the start of a cloud session):
 
 ```bash
-git clone https://github.com/career-ops-hq/career-ops.git ~/career-ops
+git clone https://github.com/project-x-hq/project-x.git ~/project-x
 gh repo clone career-data ~/career-data
-cd ~/career-ops && npm install && npx playwright install chromium
-echo "$HOME/career-data" > .career-ops-data
+cd ~/project-x && npm install && npx playwright install chromium
+echo "$HOME/career-data" > .project-x-data
 node doctor.mjs
 ```
 
@@ -158,7 +158,7 @@ In a [web session](SETUP.md#browser-only--claude-code-on-the-web), the VM starts
 every time, so clone the data repository at the start and push before you finish. The
 session's GitHub access must include the data repository.
 
-Keep secrets out of it: API keys belong in `.env` / `.career-ops.env` in the checkout,
+Keep secrets out of it: API keys belong in `.env` / `.project-x.env` in the checkout,
 not in the data folder. The `git grep --cached` line in the first block checks what you
 staged before anything is committed or pushed. Run it again after `git add -A` whenever
 you add files you did not write yourself.
@@ -209,8 +209,8 @@ the backup cannot be read.
 ## What to check, whichever pattern you use
 
 - **Restore once before you rely on it.** Restore into a scratch folder, point
-  `CAREER_OPS_ROOT` at it, and run `node doctor.mjs`.
-- **Nothing personal in the checkout.** After Step 0, `git status` in `~/career-ops`
+  `PROJECT_X_ROOT` at it, and run `node doctor.mjs`.
+- **Nothing personal in the checkout.** After Step 0, `git status` in `~/project-x`
   should show no personal files, and nothing you push from the checkout contains them.
 - **Updates are unaffected.** `node update-system.mjs` only touches the System Layer in the
   checkout. Your data root is outside it.

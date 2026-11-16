@@ -1,6 +1,6 @@
 // User Layer paths in batch-tailor.mjs, cv-templates.mjs and openrouter-runner.mjs
-// must follow the data root (getCareerOpsRoot(): CAREER_OPS_ROOT /
-// CAREER_OPS_DATA_DIR > .career-ops-data marker > repo root), while System
+// must follow the data root (getProjectXRoot(): PROJECT_X_ROOT /
+// PROJECT_X_DATA_DIR > .project-x-data marker > repo root), while System
 // Layer paths (batch/, templates/) stay on the code checkout.
 //
 // Each script used to resolve reports/, config/profile.yml or
@@ -34,16 +34,16 @@ const NODE_MODULES = (() => {
   const pkg = createRequire(join(ROOT, 'package.json')).resolve('js-yaml/package.json');
   return pkg.slice(0, pkg.lastIndexOf(`${sep}node_modules${sep}`) + `${sep}node_modules`.length);
 })();
-const MODES = ['CAREER_OPS_ROOT', 'CAREER_OPS_DATA_DIR', 'marker'];
+const MODES = ['PROJECT_X_ROOT', 'PROJECT_X_DATA_DIR', 'marker'];
 // Anything that could point a child at the developer's real files, or change
 // the code path under test, is cleared before the per-case env is applied.
 const CLEARED_ENV = [
-  'CAREER_OPS_ROOT', 'CAREER_OPS_DATA_DIR', 'CAREER_OPS_TRACKER', 'CAREER_OPS_PROFILE',
-  'CAREER_OPS_BATCH_STATE', 'CAREER_OPS_MODEL', 'OPENROUTER_API_KEY',
+  'PROJECT_X_ROOT', 'PROJECT_X_DATA_DIR', 'PROJECT_X_TRACKER', 'PROJECT_X_PROFILE',
+  'PROJECT_X_BATCH_STATE', 'PROJECT_X_MODEL', 'OPENROUTER_API_KEY',
   // merge-tracker.mjs moves the TSVs it merges out of the additions directory,
   // and reserve-report-num.mjs writes a sentinel into the reports directory.
-  'CAREER_OPS_ADDITIONS', 'CAREER_OPS_REPORTS_DIR', 'CAREER_OPS_FOLLOWUPS',
-  'CAREER_OPS_PDF_INDEX', 'CAREER_OPS_TRACKER_LOCK',
+  'PROJECT_X_ADDITIONS', 'PROJECT_X_REPORTS_DIR', 'PROJECT_X_FOLLOWUPS',
+  'PROJECT_X_PDF_INDEX', 'PROJECT_X_TRACKER_LOCK',
 ];
 
 /** Relative-import closure of `entry` (static and literal dynamic imports). */
@@ -69,7 +69,7 @@ function importClosure(entry) {
  * packages); the data root starts empty.
  */
 function fixture(t, entry, { nodeModules = false, assets = [] } = {}) {
-  const dir = realpathSync(mkdtempSync(join(tmpdir(), 'career-ops-ul-root-')));
+  const dir = realpathSync(mkdtempSync(join(tmpdir(), 'project-x-ul-root-')));
   const code = join(dir, 'code');
   const data = join(dir, 'data-root');
   mkdirSync(code);
@@ -99,7 +99,7 @@ function write(path, content) {
 function envFor(mode, { code, data }, extra = {}) {
   const env = { ...process.env };
   for (const key of CLEARED_ENV) delete env[key];
-  if (mode === 'marker') writeFileSync(join(code, '.career-ops-data'), data);
+  if (mode === 'marker') writeFileSync(join(code, '.project-x-data'), data);
   else env[mode] = data;
   return { ...env, ...extra };
 }
@@ -170,12 +170,12 @@ for (const mode of MODES) {
   });
 }
 
-test('cv-templates.mjs: CAREER_OPS_PROFILE still overrides the data-root profile', (t) => {
+test('cv-templates.mjs: PROJECT_X_PROFILE still overrides the data-root profile', (t) => {
   const f = cvTemplatesFixture(t);
   const override = join(f.dir, 'override-profile.yml');
   write(override, 'cv:\n  template: bold\n');
   const result = run(f, 'cv-templates.mjs', ['resolve', 'cv'],
-    envFor('CAREER_OPS_ROOT', f, { CAREER_OPS_PROFILE: override }));
+    envFor('PROJECT_X_ROOT', f, { PROJECT_X_PROFILE: override }));
   assert.equal(result.status, 0, describeSpawn(result));
   assert.equal(result.stdout.trim(), join(f.code, 'templates', 'cv-template.bold.html'));
 });
@@ -195,7 +195,7 @@ for (const mode of MODES) {
     write(join(f.data, 'reports', '009-fabrikam-2026-01-01.md'), '# Fabrikam\n\n**Score:** 2.0/5\n');
 
     const result = run(f, 'openrouter-runner.mjs', ['apply', '9'],
-      envFor(mode, f, { CAREER_OPS_MODEL: 'test/pinned:free' }), 'no\n');
+      envFor(mode, f, { PROJECT_X_MODEL: 'test/pinned:free' }), 'no\n');
     assert.equal(result.status, 0, describeSpawn(result));
     assert.doesNotMatch(result.output, /Report not found/, `apply looked for reports/ off the code root:\n${result.output}`);
     assert.match(result.output, /scored 2\.0\/5/, result.output);
@@ -266,7 +266,7 @@ for (const mode of MODES) {
 
 test('merge-tracker.mjs reads the data root batch-state.tsv when the code root has none', (t) => {
   const f = mergeFixture(t, 'data');
-  assertRefused(f, run(f, 'merge-tracker.mjs', [], envFor('CAREER_OPS_ROOT', f)));
+  assertRefused(f, run(f, 'merge-tracker.mjs', [], envFor('PROJECT_X_ROOT', f)));
 });
 
 for (const mode of MODES) {
@@ -286,14 +286,14 @@ for (const mode of MODES) {
 test('merge-tracker.mjs still refuses a number the data root batch-state.tsv recorded as failed', (t) => {
   const f = mergeFixture(t, 'data');
   write(join(f.code, 'batch', 'batch-state.tsv'), BATCH_STATE_HEADER + completedRow('003'));
-  assertRefused(f, run(f, 'merge-tracker.mjs', [], envFor('CAREER_OPS_ROOT', f)));
+  assertRefused(f, run(f, 'merge-tracker.mjs', [], envFor('PROJECT_X_ROOT', f)));
 });
 
 test('reserve-report-num.mjs skips a number the data root batch-state.tsv recorded as failed', (t) => {
   const f = fixture(t, 'reserve-report-num.mjs', { nodeModules: true, assets: ['tracker-aliases.json'] });
   write(join(f.data, 'batch', 'batch-state.tsv'), BATCH_STATE_HEADER + failedRow('001'));
   write(join(f.code, 'batch', 'batch-state.tsv'), BATCH_STATE_HEADER + completedRow('-'));
-  const result = run(f, 'reserve-report-num.mjs', [], envFor('CAREER_OPS_ROOT', f));
+  const result = run(f, 'reserve-report-num.mjs', [], envFor('PROJECT_X_ROOT', f));
   assert.equal(result.status, 0, describeSpawn(result));
   assert.equal(result.stdout.trim(), '002', `001 is recorded as failed in the data root and must not be handed out:\n${result.output}`);
 });

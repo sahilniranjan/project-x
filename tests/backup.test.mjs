@@ -10,8 +10,8 @@ import assert from 'node:assert/strict';
 console.log('\nbackup.mjs — back up the User Layer to a drive or folder');
 const tmp = realpathSync(mkdtempSync(join(tmpdir(), 'co-backup-')));
 // An ambient override would change which template variants count as yours.
-const ambientProfile = process.env.CAREER_OPS_PROFILE;
-delete process.env.CAREER_OPS_PROFILE;
+const ambientProfile = process.env.PROJECT_X_PROFILE;
+delete process.env.PROJECT_X_PROFILE;
 try {
   const b = await import(pathToFileURL(join(ROOT, 'backup.mjs')).href);
   const put = (base, rel, text = 'x') => {
@@ -67,7 +67,7 @@ try {
 
   // The file list is the updater's USER_PATHS, not a second copy.
   const listed = b.backupPaths(tmp);
-  for (const p of ['cv.md', 'data', 'reports', '.career-ops-web', 'config/profile.yml', 'config/local-paths.txt']) {
+  for (const p of ['cv.md', 'data', 'reports', '.project-x-web', 'config/profile.yml', 'config/local-paths.txt']) {
     assert.ok(listed.includes(p), `backs up ${p}`);
   }
   assert.ok(!listed.some((p) => p.endsWith('/')), 'no trailing slashes');
@@ -83,7 +83,7 @@ try {
 
   mkdirSync(join(cloud, 'GoogleDrive-me@example.com', 'My Drive'), { recursive: true });
   const one = b.resolveDestination(opts);
-  assert.equal(one.dest, join(cloud, 'GoogleDrive-me@example.com', 'My Drive', 'Backups', 'career-ops'));
+  assert.equal(one.dest, join(cloud, 'GoogleDrive-me@example.com', 'My Drive', 'Backups', 'project-x'));
   assert.equal(b.resolveDestination({ ...opts, folder: 'Work/co' }).dest.endsWith(join('My Drive', 'Work', 'co')), true);
   assert.throws(() => b.resolveDestination({ ...opts, folder: '../x' }), /relative path/);
 
@@ -95,11 +95,11 @@ try {
   pass('no default drive, --provider google-drive, --account for several drives, no guessing');
 
   mkdirSync(join(home, 'Dropbox'), { recursive: true });
-  assert.equal(b.resolveDestination({ ...opts, provider: 'dropbox' }).dest, join(home, 'Dropbox', 'Backups', 'career-ops'));
-  const flag = b.resolveDestination({ ...opts, dest: join(tmp, 'flag'), env: { CAREER_OPS_BACKUP_DIR: join(tmp, 'env') } });
+  assert.equal(b.resolveDestination({ ...opts, provider: 'dropbox' }).dest, join(home, 'Dropbox', 'Backups', 'project-x'));
+  const flag = b.resolveDestination({ ...opts, dest: join(tmp, 'flag'), env: { PROJECT_X_BACKUP_DIR: join(tmp, 'env') } });
   assert.equal(flag.dest, join(tmp, 'flag'));
-  assert.equal(b.resolveDestination({ ...opts, env: { CAREER_OPS_BACKUP_DIR: join(tmp, 'env') } }).dest, join(tmp, 'env'));
-  pass('--dest beats CAREER_OPS_BACKUP_DIR beats drive discovery; other providers work');
+  assert.equal(b.resolveDestination({ ...opts, env: { PROJECT_X_BACKUP_DIR: join(tmp, 'env') } }).dest, join(tmp, 'env'));
+  pass('--dest beats PROJECT_X_BACKUP_DIR beats drive discovery; other providers work');
 
   // Refuses a destination inside the data it backs up.
   const root = join(tmp, 'root');
@@ -117,7 +117,7 @@ try {
   // Copy: whole files, exclusions honoured, unchanged skipped, nothing deleted.
   put(root, 'cv.md', 'cv');
   const sourceCv = join(root, 'cv.md');
-  const destCv = join(tmp, 'backup', 'career-ops', 'cv.md');
+  const destCv = join(tmp, 'backup', 'project-x', 'cv.md');
   const originalMtime = new Date('2026-01-01T00:00:00.000Z');
   utimesSync(sourceCv, originalMtime, originalMtime);
   put(root, 'data/applications.md', 'tracker');
@@ -125,14 +125,14 @@ try {
   put(root, 'data/Connections.csv', 'connections');
   put(root, 'data/contacts.tsv', 'contacts');
   put(root, 'data/reply-candidates.json', '[]');
-  put(root, '.career-ops-web/chats.json', '{}');
+  put(root, '.project-x-web/chats.json', '{}');
   put(root, 'data/cache/http/h', 'cache');
   put(root, 'reports/001-a-2026-01-01.md', 'report');
   put(root, 'node_modules/x/index.js', 'not user data');
   put(root, '.claude/settings.json', '{"env":{"TOKEN":"x"}}');
   put(root, 'opencode.json', '{}');
   put(root, 'modes/_shared.md', 'system file');
-  const dest = join(tmp, 'backup', 'career-ops');
+  const dest = join(tmp, 'backup', 'project-x');
   mkdirSync(join(tmp, 'backup'));
 
   // The exported API refuses contact files bound for a synced folder too, not only the CLI.
@@ -143,7 +143,7 @@ try {
   process.env.HOME = apiHome;
   process.env.USERPROFILE = apiHome;
   try {
-    const syncedDest = join(apiHome, 'Dropbox', 'Backups', 'career-ops');
+    const syncedDest = join(apiHome, 'Dropbox', 'Backups', 'project-x');
     assert.throws(() => b.runBackup({ dataRoot: root, dest: syncedDest, includeContacts: true }), /inside dropbox/);
     assert.equal(existsSync(syncedDest), false);
     assert.doesNotThrow(() => b.runBackup({ dataRoot: root, dest: syncedDest, dryRun: true }));
@@ -171,7 +171,7 @@ try {
   assert.equal(existsSync(join(dest, 'data/Connections.csv')), false, 'LinkedIn export is opt-in');
   assert.equal(existsSync(join(dest, 'data/contacts.tsv')), false, 'contacts are opt-in');
   assert.equal(existsSync(join(dest, 'data/reply-candidates.json')), false, 'reply candidates are opt-in');
-  assert.equal(readFileSync(join(dest, '.career-ops-web/chats.json'), 'utf8'), '{}');
+  assert.equal(readFileSync(join(dest, '.project-x-web/chats.json'), 'utf8'), '{}');
   assert.equal(JSON.parse(readFileSync(join(dest, b.MANIFEST_NAME), 'utf8')).copied, 6);
 
   const second = b.runBackup({ dataRoot: root, dest });
@@ -327,15 +327,15 @@ try {
   process.env.HOME = warnHome;
   process.env.USERPROFILE = warnHome;
   try {
-    const syncedRun = b.runBackup({ dataRoot: warnRoot, dest: join(warnHome, 'Dropbox', 'Backups', 'career-ops') });
+    const syncedRun = b.runBackup({ dataRoot: warnRoot, dest: join(warnHome, 'Dropbox', 'Backups', 'project-x') });
     // Agent-tool settings are kept out of a synced destination, and the run says so.
     assert.equal(syncedRun.warnings.some((w) => /agent-tool settings.*not copied.*dropbox/.test(w)), true);
-    assert.equal(existsSync(join(warnHome, 'Dropbox', 'Backups', 'career-ops', '.claude', 'settings.json')), false);
-    assert.equal(existsSync(join(warnHome, 'Dropbox', 'Backups', 'career-ops', 'cv.md')), true);
+    assert.equal(existsSync(join(warnHome, 'Dropbox', 'Backups', 'project-x', '.claude', 'settings.json')), false);
+    assert.equal(existsSync(join(warnHome, 'Dropbox', 'Backups', 'project-x', 'cv.md')), true);
     // No warning when nothing was skipped: shipped .claude/skills/ is not a settings file.
     const skillsRoot = join(tmp, 'skills-root');
     put(skillsRoot, 'cv.md', 'cv');
-    put(skillsRoot, '.claude/skills/career-ops/SKILL.md', 'shipped');
+    put(skillsRoot, '.claude/skills/project-x/SKILL.md', 'shipped');
     const skillsRun = b.runBackup({ dataRoot: skillsRoot, dest: join(warnHome, 'Dropbox', 'Backups', 'skills') });
     assert.equal(skillsRun.warnings.some((w) => /agent-tool settings/.test(w)), false);
     // A declared settings file is counted and left out too.
@@ -357,7 +357,7 @@ try {
   }
 
   // A missing first component directly under a root must keep its full name.
-  assert.equal(b.canonical(join(process.platform === 'win32' ? process.cwd().slice(0, 3) : '/', 'career-ops-no-such-dir', 'x')).endsWith(join('career-ops-no-such-dir', 'x')), true);
+  assert.equal(b.canonical(join(process.platform === 'win32' ? process.cwd().slice(0, 3) : '/', 'project-x-no-such-dir', 'x')).endsWith(join('project-x-no-such-dir', 'x')), true);
 
   // templates/ holds shipped files and yours: only generated CVs/covers and the
   // configured variant are backed up.
@@ -383,7 +383,7 @@ try {
   );
   assert.equal(tplRun.failed.length, 0);
 
-  // A variant selected only by the CAREER_OPS_PROFILE override is yours too.
+  // A variant selected only by the PROJECT_X_PROFILE override is yours too.
   const ovRoot = join(tmp, 'ov-root');
   put(ovRoot, 'cv.md', 'cv');
   put(ovRoot, 'config/profile.yml', 'cv:\n  template: standard\n');
@@ -391,15 +391,15 @@ try {
   put(ovRoot, 'templates/cv-template.other.html', 'unselected');
   const overrideProfile = join(tmp, 'override-profile.yml');
   writeFileSync(overrideProfile, 'cv:\n  template: mine\n');
-  const savedOverride = process.env.CAREER_OPS_PROFILE;
-  process.env.CAREER_OPS_PROFILE = overrideProfile;
+  const savedOverride = process.env.PROJECT_X_PROFILE;
+  process.env.PROJECT_X_PROFILE = overrideProfile;
   try {
     const ovRun = b.runBackup({ dataRoot: ovRoot, dest: join(tmp, 'backup', 'ov') });
     // The active profile lives outside the data root, so the run says it was not copied.
-    assert.ok(ovRun.warnings.some((w) => w.includes('CAREER_OPS_PROFILE') && w.includes('not copied')));
+    assert.ok(ovRun.warnings.some((w) => w.includes('PROJECT_X_PROFILE') && w.includes('not copied')));
   } finally {
-    if (savedOverride === undefined) delete process.env.CAREER_OPS_PROFILE;
-    else process.env.CAREER_OPS_PROFILE = savedOverride;
+    if (savedOverride === undefined) delete process.env.PROJECT_X_PROFILE;
+    else process.env.PROJECT_X_PROFILE = savedOverride;
   }
   // Without an override, a profile elsewhere (the process-wide data root) is not consulted,
   // even when that profile selects the variant.
@@ -408,13 +408,13 @@ try {
   put(noOvRoot, 'templates/cv-template.mine.html', 'not selected here');
   const globalRoot = join(tmp, 'global-root');
   put(globalRoot, 'config/profile.yml', 'cv:\n  template: mine\n');
-  const savedEnv = { profile: process.env.CAREER_OPS_PROFILE, root: process.env.CAREER_OPS_ROOT };
-  delete process.env.CAREER_OPS_PROFILE;
-  process.env.CAREER_OPS_ROOT = globalRoot;
+  const savedEnv = { profile: process.env.PROJECT_X_PROFILE, root: process.env.PROJECT_X_ROOT };
+  delete process.env.PROJECT_X_PROFILE;
+  process.env.PROJECT_X_ROOT = globalRoot;
   try {
     b.runBackup({ dataRoot: noOvRoot, dest: join(tmp, 'backup', 'no-ov') });
   } finally {
-    for (const [key, value] of [['CAREER_OPS_PROFILE', savedEnv.profile], ['CAREER_OPS_ROOT', savedEnv.root]]) {
+    for (const [key, value] of [['PROJECT_X_PROFILE', savedEnv.profile], ['PROJECT_X_ROOT', savedEnv.root]]) {
       if (value === undefined) delete process.env[key];
       else process.env[key] = value;
     }
@@ -452,12 +452,12 @@ try {
   pass('an unparseable local-paths.txt is a failure and still backs up the built-in paths');
 
   // CLI: JSON result and exit codes, against the fixture root.
-  const env = { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_BACKUP_DIR: '' };
+  const env = { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_BACKUP_DIR: '' };
   const cli = (...args) => spawnSync(NODE, ['backup.mjs', ...args], { cwd: ROOT, env, encoding: 'utf8' });
   const ok = cli('--dest', join(tmp, 'backup', 'cli'), '--json');
   assert.equal(ok.status, 0);
   assert.equal(JSON.parse(ok.stdout).ok, true);
-  const noParent = cli('--dest', join(tmp, 'missing-drive', 'career-ops'), '--json');
+  const noParent = cli('--dest', join(tmp, 'missing-drive', 'project-x'), '--json');
   assert.equal(noParent.status, 2);
   assert.equal(existsSync(join(tmp, 'missing-drive')), false);
   assert.equal(cli('--dest', join(root, 'bk'), '--quiet').status, 2);
@@ -474,7 +474,7 @@ try {
   assert.equal(JSON.parse(blocked.stdout).ok, false);
   // An empty data root is exit 1 with a message.
   const emptyRun = spawnSync(NODE, ['backup.mjs', '--dest', join(tmp, 'backup', 'e2')], {
-    cwd: ROOT, env: { ...env, CAREER_OPS_ROOT: empty }, encoding: 'utf8',
+    cwd: ROOT, env: { ...env, PROJECT_X_ROOT: empty }, encoding: 'utf8',
   });
   assert.equal(emptyRun.status, 1);
   assert.match(emptyRun.stderr, /found nothing to back up/);
@@ -485,12 +485,12 @@ try {
   const fakeHome = join(tmp, 'home');
   mkdirSync(join(fakeHome, 'Dropbox', 'Backups'), { recursive: true });
   const homeEnv = { ...env, HOME: fakeHome, USERPROFILE: fakeHome };
-  const syncedDest = join(fakeHome, 'Dropbox', 'Backups', 'career-ops');
+  const syncedDest = join(fakeHome, 'Dropbox', 'Backups', 'project-x');
   const synced = spawnSync(NODE, ['backup.mjs', '--dest', syncedDest, '--include-contacts', '--json'], { cwd: ROOT, env: homeEnv, encoding: 'utf8' });
   assert.equal(synced.status, 2);
   assert.match(JSON.parse(synced.stdout).error, /inside dropbox/);
   assert.equal(existsSync(syncedDest), false);
-  const mixedCase = spawnSync(NODE, ['backup.mjs', '--dest', join(fakeHome, 'dropbox', 'Backups', 'career-ops'), '--include-contacts', '--json'], { cwd: ROOT, env: homeEnv, encoding: 'utf8' });
+  const mixedCase = spawnSync(NODE, ['backup.mjs', '--dest', join(fakeHome, 'dropbox', 'Backups', 'project-x'), '--include-contacts', '--json'], { cwd: ROOT, env: homeEnv, encoding: 'utf8' });
   assert.equal(mixedCase.status, 2);
   assert.match(JSON.parse(mixedCase.stdout).error, /inside dropbox/);
   // Without the flag the same destination is fine, and a non-synced one is fine with it.
@@ -503,15 +503,15 @@ try {
   mkdirSync(join(freshHome, 'Dropbox'), { recursive: true });
   const fresh = spawnSync(NODE, ['backup.mjs', '--provider', 'dropbox', '--json'], { cwd: ROOT, env: { ...env, HOME: freshHome, USERPROFILE: freshHome }, encoding: 'utf8' });
   assert.equal(fresh.status, 0, fresh.stdout + fresh.stderr);
-  assert.equal(existsSync(join(freshHome, 'Dropbox', 'Backups', 'career-ops', 'cv.md')), true);
+  assert.equal(existsSync(join(freshHome, 'Dropbox', 'Backups', 'project-x', 'cv.md')), true);
   pass('CLI exits 0 on success, 1 for a failed or empty run, 2 for a bad destination or option');
 
   // --include-claude-memory: Claude Code's auto-memory lives outside the data root.
   // The slug is the resolved checkout path (a drive letter on Windows) with every non-alphanumeric character as "-".
   const slugOf = (p) => resolve(p).replace(/[^a-zA-Z0-9]/g, '-');
-  const slugRoot = join(tmp, 'slug', 'career_ops.v2');
+  const slugRoot = join(tmp, 'slug', 'project_x.v2');
   mkdirSync(slugRoot, { recursive: true });
-  assert.match(slugOf(slugRoot), /career-ops-v2$/);
+  assert.match(slugOf(slugRoot), /project-x-v2$/);
   assert.equal(/^[a-zA-Z0-9-]+$/.test(slugOf(slugRoot)), true);
   assert.equal(
     b.claudeMemoryDir({ codeRoot: slugRoot, home: join(tmp, 'h'), env: {} }),
@@ -663,7 +663,7 @@ try {
   assert.equal(existsSync(join(tmp, 'backup', 'blank')), false);
   // Memory files do not hide an empty data root.
   const emptyWithMem = spawnSync(NODE, ['backup.mjs', '--dest', join(tmp, 'backup', 'e3'), '--include-claude-memory', '--json'], {
-    cwd: ROOT, env: { ...memEnv, CAREER_OPS_ROOT: empty }, encoding: 'utf8',
+    cwd: ROOT, env: { ...memEnv, PROJECT_X_ROOT: empty }, encoding: 'utf8',
   });
   assert.equal(emptyWithMem.status, 1);
   assert.equal(JSON.parse(emptyWithMem.stdout).ok, false);
@@ -675,7 +675,7 @@ try {
 } catch (e) {
   fail(`backup.mjs: ${e.message}`);
 } finally {
-  if (ambientProfile === undefined) delete process.env.CAREER_OPS_PROFILE;
-  else process.env.CAREER_OPS_PROFILE = ambientProfile;
+  if (ambientProfile === undefined) delete process.env.PROJECT_X_PROFILE;
+  else process.env.PROJECT_X_PROFILE = ambientProfile;
   rmSync(tmp, { recursive: true, force: true });
 }

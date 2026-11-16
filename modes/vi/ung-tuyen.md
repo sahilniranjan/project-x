@@ -185,7 +185,7 @@ Với mỗi câu hỏi, tạo câu trả lời theo:
 2. **Block H / Application Answers trước đó**: nếu đã có bản nháp hoặc bản cuối, dùng làm nền rồi tinh chỉnh
 3. **Giọng "Tôi chọn Anh/Chị"**: cùng khung với auto-pipeline -- tự tin, không van xin
 4. **Cụ thể**: nhắc một chi tiết cụ thể của JD đang hiển thị trên màn hình
-5. **Proof point career-ops**: thêm vào ô "Thông tin bổ sung" nếu có
+5. **Proof point project-x**: thêm vào ô "Thông tin bổ sung" nếu có
 6. **Bản đồ rủi ro phía nhà tuyển dụng**: dùng `modes/heuristics/recruiter-side.md` để nhận ra câu hỏi đang cố giải tỏa nghi ngờ nào (động lực, độ khớp stack, hậu cần, lương, quyền làm việc, thời gian sẵn sàng, seniority) và trả lời thẳng nghi ngờ đó.
 7. **Kỷ luật công bố**: trả lời câu hỏi hậu cần trung thực khi được hỏi, nhưng không tự nêu chi tiết nhạy cảm hay chỉ dành cho HR trong các câu trả lời động lực/độ khớp không liên quan.
 
@@ -261,7 +261,7 @@ Nếu ứng viên xác nhận đã nộp đơn, mọi bước dưới đây áp 
 1. Cập nhật trạng thái sang Applied bằng CLI chuẩn: `node set-status.mjs --report <report#> Applied` (không bao giờ sửa tay bảng). Nếu ứng viên nộp vào ngày khác hôm nay, thêm `--on YYYY-MM-DD` với ngày nộp thực tế.
 2. Gieo lịch follow-up: chạy `node followup-seed.mjs {num} --json` (`{num}` là số dòng tracker). Nếu ứng viên nộp vào ngày khác hôm nay, truyền `--date YYYY-MM-DD` với ngày nộp thực tế. Lệnh idempotent, chạy lại an toàn.
 3. Làm mới mục `## Application Answers` của báo cáo với giá trị trường cuối cùng và `**State:** submitted`
-4. Gợi ý bước tiếp theo: chạy mode `contacto` (`/career-ops contacto` nếu có) để nhắn LinkedIn cho hiring manager
+4. Gợi ý bước tiếp theo: chạy mode `contacto` (`/project-x contacto` nếu có) để nhắn LinkedIn cho hiring manager
 
 **Xác nhận lỗi xác minh CV tại cùng nhà cung cấp ATS (#1870):** nếu ứng viên xác nhận ATS đã âm thầm bỏ hoặc sửa nội dung CV đã nộp, đừng coi là sự cố đơn lẻ; làm theo quy trình trong `modes/apply.md` → Step 9 để rà các đơn đang chạy khác qua cùng nhà cung cấp.
 

@@ -26,7 +26,7 @@ function run(args) {
   return spawnSync(NODE, ['--import', SIMULATE_PLAYWRIGHT_NOT_INSTALLED, join(ROOT, 'archive-posting.mjs'), ...args], {
     encoding: 'utf-8',
     timeout: 20000,
-    env: { ...process.env, FORCE_COLOR: '0', CAREER_OPS_ROOT: emptyRoot, CAREER_OPS_TRACKER: '' },
+    env: { ...process.env, FORCE_COLOR: '0', PROJECT_X_ROOT: emptyRoot, PROJECT_X_TRACKER: '' },
   });
 }
 

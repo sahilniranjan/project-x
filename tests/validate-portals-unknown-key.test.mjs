@@ -12,7 +12,7 @@ const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const dir = mkdtempSync(join(tmpdir(), 'co-portal-unknown-key-'));
 
 function run(file) {
-  const env = Object.fromEntries(Object.entries(process.env).filter(([key]) => !key.startsWith('CAREER_OPS_')));
+  const env = Object.fromEntries(Object.entries(process.env).filter(([key]) => !key.startsWith('PROJECT_X_')));
   return spawnSync(process.execPath, [join(ROOT, 'validate-portals.mjs'), '--file', file], {
     cwd: ROOT,
     encoding: 'utf-8',

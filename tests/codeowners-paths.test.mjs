@@ -8,7 +8,7 @@
 // third-party code users install — was routed to no owner, while the line read
 // as if the trust root were covered. The skill router had the same gap from the
 // other side: all seven CLI skill directories symlink to
-// .agents/skills/career-ops/SKILL.md, a path no owner entry or label glob named.
+// .agents/skills/project-x/SKILL.md, a path no owner entry or label glob named.
 import { pass, fail, ROOT } from './helpers.mjs';
 import assert from 'node:assert';
 import { existsSync, readFileSync, readdirSync, lstatSync, readlinkSync } from 'node:fs';
@@ -68,7 +68,7 @@ ok('the plugin registry directory is owned, not the deleted single file', () => 
 // updated with `update-system.mjs apply` on such a system holds each entrypoint
 // as a regular file with the router's full content instead (#2259, #2272), so
 // a file whose content equals the router's counts as linking to it.
-const ROUTER = join(ROOT, '.agents', 'skills', 'career-ops', 'SKILL.md');
+const ROUTER = join(ROOT, '.agents', 'skills', 'project-x', 'SKILL.md');
 const routerText = existsSync(ROUTER) ? readFileSync(ROUTER, 'utf-8') : null;
 function linkTarget(p) {
   const abs = join(ROOT, p);
@@ -80,14 +80,14 @@ function linkTarget(p) {
   return null;
 }
 const skillLinks = readdirSync(ROOT)
-  .map(d => join(d, 'skills', 'career-ops', 'SKILL.md'))
+  .map(d => join(d, 'skills', 'project-x', 'SKILL.md'))
   .filter(p => linkTarget(p) !== null);
 const routers = new Set(skillLinks.map(p =>
   relative(ROOT, resolve(join(ROOT, dirname(p)), linkTarget(p))).split(sep).join('/')));
 
 ok('the skill router every CLI entrypoint links to has a code owner', () => {
   assert.ok(skillLinks.length >= 2, 'CLI skill symlinks found');
-  assert.deepEqual([...routers], ['.agents/skills/career-ops/SKILL.md'], 'one router');
+  assert.deepEqual([...routers], ['.agents/skills/project-x/SKILL.md'], 'one router');
   for (const router of routers) assert.ok(patterns.includes(`/${router}`), `/${router} is not in CODEOWNERS`);
 });
 

@@ -93,7 +93,7 @@ function cleanUrl(value) {
  * salary bracket " [... €]" is stripped. When no " @ " is present there is no
  * identifiable employer, so the caller drops the row rather than attributing
  * it to the board or the portal entry name (phase 1 of the
- * [source policy](https://github.com/career-ops-hq/career-ops/blob/main/CONTRIBUTING.md#source-indexing-policy)
+ * [source policy](https://github.com/project-x-hq/project-x/blob/main/CONTRIBUTING.md#source-indexing-policy)
  * asks for listings attributed to an identifiable employer).
  *
  * @param {string} rawTitle

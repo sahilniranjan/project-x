@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/santifer/career-ops/dashboard/internal/i18n"
+	"github.com/santifer/project-x/dashboard/internal/i18n"
 )
 
 func TestFormatTimeAgo(t *testing.T) {

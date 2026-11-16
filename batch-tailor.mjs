@@ -5,22 +5,22 @@ import { resolve, join } from 'path';
 import { flagValue, hasFlag, validateFlags } from './lib/cli-flags.mjs';
 import { spawnSync } from 'child_process';
 import { fileURLToPath } from 'url';
-import { getCareerOpsRoot } from './path-resolver.mjs';
+import { getProjectXRoot } from './path-resolver.mjs';
 import { resolveCliLaunch } from './lib/agent-launch.mjs';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
-// CAREER_OPS_BATCH_STATE overrides the batch-state.tsv path — the same override
+// PROJECT_X_BATCH_STATE overrides the batch-state.tsv path — the same override
 // merge-tracker.mjs already honours, so tests can drive this script against a
 // sandbox instead of the developer's real batch run.
-const batchStateFile = process.env.CAREER_OPS_BATCH_STATE
-  ? resolve(process.env.CAREER_OPS_BATCH_STATE)
+const batchStateFile = process.env.PROJECT_X_BATCH_STATE
+  ? resolve(process.env.PROJECT_X_BATCH_STATE)
   : join(__dirname, 'batch', 'batch-state.tsv');
 // reports/ is User Layer (DATA_CONTRACT.md), so it follows the data root —
-// CAREER_OPS_ROOT / CAREER_OPS_DATA_DIR / .career-ops-data — not the code
+// PROJECT_X_ROOT / PROJECT_X_DATA_DIR / .project-x-data — not the code
 // checkout. batch/ and modes/ are System Layer and stay on __dirname.
-const reportsDir = join(getCareerOpsRoot(), 'reports');
+const reportsDir = join(getProjectXRoot(), 'reports');
 
-const USAGE = `career-ops batch tailor — bulk generate tailored CVs for high-scoring batch jobs
+const USAGE = `project-x batch tailor — bulk generate tailored CVs for high-scoring batch jobs
 
 Usage:
   node batch-tailor.mjs [--min-score N]
@@ -68,7 +68,7 @@ if (!existsSync(batchStateFile)) {
 
 // existsSync() is true for a directory and says nothing about permissions, so
 // reading can still throw (EISDIR, EACCES) — an uncaught stack trace where a
-// usage error belongs. Name the RESOLVED path: with CAREER_OPS_BATCH_STATE set,
+// usage error belongs. Name the RESOLVED path: with PROJECT_X_BATCH_STATE set,
 // the value that failed is not the one written in the source.
 let stateContent;
 try {

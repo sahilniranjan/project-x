@@ -32,7 +32,7 @@ In short:
   applications disqualifies it.
 - **One source per provider (rule 5).** A provider reads its own source.
   A meta-aggregator that republishes other boards' postings is not a source
-  career-ops indexes — cross-source aggregation lives in core.
+  project-x indexes — cross-source aggregation lives in core.
 - **Complete inventory, no paid placement (rule 3).** The provider must
   traverse the source's full inventory, not a promoted or default-filtered
   view.
@@ -40,7 +40,7 @@ In short:
   sees without signing in, with a bounded number of requests per host,
   honouring a `Crawl-delay` the source states. A login, a user account or a
   CAPTCHA in the way is a stop, and so is a source whose operator has asked
-  career-ops not to read it. `robots.txt` is not a gate: it is written for
+  project-x not to read it. `robots.txt` is not a gate: it is written for
   crawlers, and a provider reads for one person who may apply there.
 
 If such a source is operator-run, or its eligibility is not obvious, open a

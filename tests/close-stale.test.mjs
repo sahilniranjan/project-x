@@ -43,7 +43,7 @@ function makeRoot(rows, extra = {}) {
 }
 
 function run(root, args = [], env = {}) {
-  const cleanEnv = { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_TRACKER: '', CAREER_OPS_DATA_DIR: '', CAREER_OPS_FOLLOWUPS: '', ...env };
+  const cleanEnv = { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_TRACKER: '', PROJECT_X_DATA_DIR: '', PROJECT_X_FOLLOWUPS: '', ...env };
   const r = spawnSync(process.execPath, [SCRIPT, ...(args.includes('--today') ? [] : ['--today', TODAY]), ...args], { encoding: 'utf-8', env: cleanEnv });
   let json = null;
   try { json = JSON.parse(r.stdout); } catch { /* summary mode or error */ }
@@ -218,7 +218,7 @@ test('re-running --confirm changes nothing (idempotent)', () => {
     assert.equal(readFileSync(log, 'utf-8'), logAfterFirst);
     // A day later, still nothing: the note tag is not stacked.
     const later = spawnSync(process.execPath, [SCRIPT, '--today', '2026-10-25', '--confirm'], {
-      encoding: 'utf-8', env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_TRACKER: '' },
+      encoding: 'utf-8', env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_TRACKER: '' },
     });
     assert.equal(later.status, 0, describeSpawn(later));
     assert.equal(readFileSync(tracker, 'utf-8'), trackerAfterFirst);
@@ -281,7 +281,7 @@ test('a held tracker lock blocks --confirm and leaves the tracker untouched', as
   const tx = await openTrackerTransaction(fx.tracker);
   try {
     const before = readFileSync(fx.tracker, 'utf-8');
-    const r = run(fx.root, ['--confirm'], { CAREER_OPS_TRACKER_LOCK_TIMEOUT_MS: '300', CAREER_OPS_TRACKER_LOCK_RETRY_MS: '25' });
+    const r = run(fx.root, ['--confirm'], { PROJECT_X_TRACKER_LOCK_TIMEOUT_MS: '300', PROJECT_X_TRACKER_LOCK_RETRY_MS: '25' });
     assert.equal(r.status, 4, describeSpawn(r, `expected the lock-timeout exit code, got ${r.status}`));
     assert.equal(readFileSync(fx.tracker, 'utf-8'), before);
     assert.equal(existsSync(fx.log), false);
@@ -343,7 +343,7 @@ test('a tracker that cannot be read fails cleanly and releases the lock', async 
     // Replace the tracker file with a directory: it exists, but reading it fails.
     rmSync(fx.tracker);
     mkdirSync(fx.tracker);
-    const r = run(fx.root, ['--confirm'], { CAREER_OPS_TRACKER_LOCK_TIMEOUT_MS: '500' });
+    const r = run(fx.root, ['--confirm'], { PROJECT_X_TRACKER_LOCK_TIMEOUT_MS: '500' });
     assert.equal(r.status, 2, describeSpawn(r));
     assert.equal(existsSync(fx.log), false);
     const tx = await openTrackerTransaction(fx.tracker, { timeoutMs: 500 });

@@ -9,7 +9,7 @@
 // root with one manifest, skills with a name and a description, no hooks, MCP
 // servers, apps or screenshots, square PNG icons, listing text within its
 // limits and a brand color legible on white. Like claude-directory/, this is
-// the thin plugin: the router SKILL.md, a README that says what career-ops
+// the thin plugin: the router SKILL.md, a README that says what project-x
 // runs, sends and fetches, the license and the icon.
 //
 // The copies must not drift from their sources, and every version in the
@@ -46,8 +46,8 @@ const contrast = (a, b) => {
 };
 
 test('the skill and the license are byte-identical copies of the canonical ones', () => {
-  assert.equal(read('openai-directory/skills/career-ops/SKILL.md'), read('.agents/skills/career-ops/SKILL.md'),
-    'openai-directory/skills/career-ops/SKILL.md diverged: copy .agents/skills/career-ops/SKILL.md over it');
+  assert.equal(read('openai-directory/skills/project-x/SKILL.md'), read('.agents/skills/project-x/SKILL.md'),
+    'openai-directory/skills/project-x/SKILL.md diverged: copy .agents/skills/project-x/SKILL.md over it');
   assert.equal(read('openai-directory/LICENSE'), read('LICENSE'), 'openai-directory/LICENSE diverged: copy LICENSE over it');
 });
 
@@ -80,7 +80,7 @@ test('the manifest names the project, its license and the release version', () =
 });
 
 test('the listing text stays inside the directory limits', () => {
-  assert.equal(ui.displayName, 'career-ops');
+  assert.equal(ui.displayName, 'project-x');
   assert.ok(ui.displayName.length <= 30, 'displayName over 30 characters');
   assert.ok(ui.shortDescription && ui.shortDescription.length <= 30, 'shortDescription missing or over 30 characters');
   assert.ok(ui.longDescription && ui.longDescription.length <= 4000, 'longDescription missing or over 4,000 characters');
@@ -130,21 +130,21 @@ test('no hooks, MCP servers, apps or screenshots', () => {
   }
 });
 
-test('every package launcher in the files the plugin runs is pinned, and career-ops to this release', () => {
+test('every package launcher in the files the plugin runs is pinned, and project-x to this release', () => {
   // The listing text in plugin.json names the command without a version on purpose:
   // it describes the flow to a reader; the skill is what runs it.
   const launcher = /\b(?:npx|bunx|uvx|pnpm dlx|yarn dlx|pipx run)\s+(?:-{1,2}[\w-]+(?:=\S+)?\s+)*([^\s`'"]+)/g;
-  let careerOps = 0;
+  let projectX = 0;
   for (const { path, rel } of files.filter(({ rel }) => rel.endsWith('.md'))) {
     for (const [, pkg] of readFileSync(path, 'utf8').matchAll(launcher)) {
       assert.match(pkg, /^(?:@[\w.-]+\/)?[\w.-]+(?:@|==)\d+\.\d+\.\d+$/, `${rel}: "${pkg}" is not pinned to an exact version`);
-      if (pkg.startsWith('@santifer/career-ops@')) {
-        careerOps++;
-        assert.equal(pkg, `@santifer/career-ops@${version}`, `${rel}: the init command must pin the current release`);
+      if (pkg.startsWith('@santifer/project-x@')) {
+        projectX++;
+        assert.equal(pkg, `@santifer/project-x@${version}`, `${rel}: the init command must pin the current release`);
       }
     }
   }
-  assert.ok(careerOps >= 3, 'the skill (twice) and the README name the pinned init command');
+  assert.ok(projectX >= 3, 'the skill (twice) and the README name the pinned init command');
 });
 
 test('every line that carries the release version is marked for release-please', () => {
@@ -153,7 +153,7 @@ test('every line that carries the release version is marked for release-please',
   const generic = extra.filter((f) => f.type === 'generic').map((f) => f.path);
   assert.ok(extra.some((f) => f.path === 'openai-directory/plugin.json' && f.jsonpath === '$.version'),
     'release-please-config.json does not bump openai-directory/plugin.json');
-  for (const rel of ['openai-directory/skills/career-ops/SKILL.md', 'openai-directory/README.md']) {
+  for (const rel of ['openai-directory/skills/project-x/SKILL.md', 'openai-directory/README.md']) {
     assert.ok(generic.includes(rel), `release-please-config.json does not bump ${rel}`);
     for (const line of read(rel).split('\n').filter((l) => l.includes(version))) {
       assert.match(line, /x-release-please-version/, `${rel}: a line with ${version} has no x-release-please-version marker`);
@@ -165,7 +165,7 @@ test('the README is long enough and says what the plugin runs, sends and fetches
   const readme = read('openai-directory/README.md');
   const prose = readme.replace(/```[\s\S]*?```/g, '').replaceAll('<!-- x-release-please-version -->', '');
   assert.ok(prose.split(/\s+/).filter(Boolean).length >= 40, 'the README is under 40 words outside code blocks');
-  for (const fact of ['npm registry', 'GitHub API', 'npm install', 'Chromium', 'portals.yml', 'ChatGPT or Codex', 'https://career-ops.org/privacy']) {
+  for (const fact of ['npm registry', 'GitHub API', 'npm install', 'Chromium', 'portals.yml', 'ChatGPT or Codex', 'https://project-x.org/privacy']) {
     assert.ok(readme.includes(fact), `README no longer mentions ${fact}`);
   }
   assert.doesNotMatch(readme, /\/plugin (?:install|marketplace)/, 'Claude /plugin instructions do not belong in the OpenAI README');

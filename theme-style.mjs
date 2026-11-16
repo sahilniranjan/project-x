@@ -249,7 +249,7 @@ export function buildThemeStyleBlock(tokens) {
     .map(([cssVar, v]) => `${cssVar}: ${v.trim()};`)
     .join(' ');
   if (!decls) return '';
-  return `<style id="career-ops-dynamic-theme">:root { ${decls} }</style>`;
+  return `<style id="project-x-dynamic-theme">:root { ${decls} }</style>`;
 }
 
 /**

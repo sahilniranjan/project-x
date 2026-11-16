@@ -74,7 +74,7 @@ Per ogni domanda, costruire la risposta seguendo questo schema:
 2. **`## Application Answers` / Blocco H precedenti:** se esiste una risposta inviata o una bozza (prima la risposta inviata), usarla come base e affinarla.
 3. **Tono "Vi scelgo":** sicuro e professionale, non implorante né puramente descrittivo.
 4. **Specificità:** citare qualcosa di concreto dell'annuncio visibile a schermo.
-5. **career-ops proof point:** includerlo nel campo "Informazioni aggiuntive" se presente nel modulo.
+5. **project-x proof point:** includerlo nel campo "Informazioni aggiuntive" se presente nel modulo.
 
 **Campi specifici per i moduli di candidatura italiani:**
 - **Retribuzione desiderata (RAL):** fascia definita in `profile.yml` in euro, con l'aggiunta "negoziabile in base al pacchetto complessivo di benefit e welfare".
@@ -115,7 +115,7 @@ Prima di salvare qualsiasi cosa, e di nuovo subito prima di ogni scrittura qui s
 Se il candidato conferma di aver inviato il modulo:
 1. Aggiornare lo stato ad "Applied" con la CLI canonica: `node set-status.mjs --report <report#> Applied` (non modificare la tabella di `applications.md` a mano).
 2. Aggiornare la sezione `## Application Answers` del report con le risposte effettivamente inviate e `**State:** submitted` (formato in `modes/apply.md` -> Step 8). Il Blocco H resta la bozza della valutazione e non va modificato.
-3. Suggerire il passo successivo: `/career-ops contacto` per avviare il contatto su LinkedIn con il responsabile della selezione.
+3. Suggerire il passo successivo: `/project-x contacto` per avviare il contatto su LinkedIn con il responsabile della selezione.
 
 ## Gestione dello scorrimento
 

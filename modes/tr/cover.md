@@ -2,8 +2,8 @@
 
 Herhangi bir aday için iş tanımından (JD) yola çıkarak kişiselleştirilmiş (tailored) bir ön yazı (cover letter) oluşturur.
 İki modda çalışır:
-- **Slug modu:** `/career-ops cover {slug}` — başlangıç noktası olarak mevcut değerlendirme raporundaki taslağı (draft) yükler
-- **Yapıştırma (Paste) modu:** `/career-ops cover` veya doğrudan JD'nin yapıştırılması — sıfırdan başlar
+- **Slug modu:** `/project-x cover {slug}` — başlangıç noktası olarak mevcut değerlendirme raporundaki taslağı (draft) yükler
+- **Yapıştırma (Paste) modu:** `/project-x cover` veya doğrudan JD'nin yapıştırılması — sıfırdan başlar
 
 ---
 
@@ -336,7 +336,7 @@ PDF onaylandıktan sonra kısa bir not ekle:
 
 ## Slug modu özellikleri
 
-`/career-ops cover {slug}` olarak çağrıldığında:
+`/project-x cover {slug}` olarak çağrıldığında:
 
 1. `reports/` dizininde slug'a göre eşleşen raporu bul
 2. `## Cover Letter Draft` bölümünü çıkar — bunu taslak (draft) için önceden doldurulmuş (pre-populated) bir başlangıç noktası olarak kullan

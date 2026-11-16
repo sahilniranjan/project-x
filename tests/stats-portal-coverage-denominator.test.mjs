@@ -70,7 +70,7 @@ try {
     'https://jobs.lever.co/delta/3\t2026-10-01\tlever\tEngineer\tDelta\tadded',
   ].join('\n') + '\n');
   const out = run(NODE, [join(ROOT, 'stats.mjs'), '--summary'], {
-    env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_DATA_DIR: '' },
+    env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_DATA_DIR: '' },
   });
   const line = (out || '').split('\n').find((l) => l.startsWith('Portals:')) || '';
   if (line.includes('5 companies + 1 boards configured') && line.includes('2 of 3 enabled have produced a match (66.7%)')) {

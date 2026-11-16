@@ -1,4 +1,4 @@
-# Reviewing career-ops PRs — the one-pager
+# Reviewing project-x PRs — the one-pager
 
 For reviewers on the [contributor ladder](../GOVERNANCE.md#contributor-ladder). Merges still go through a maintainer; your review is what makes them fast and safe.
 

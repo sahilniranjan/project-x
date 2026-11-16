@@ -4,7 +4,7 @@
 // or .bat file through execFile/spawn without a shell: since the fix for
 // CVE-2024-27980 (Node 18.20.2 / 20.12.2 / 21.7.3) it throws
 // `spawnSync npm.cmd EINVAL`. So `execFileSync("npm.cmd", ["install"])` failed
-// on every current Node, and `npx @santifer/career-ops init` left every Windows
+// on every current Node, and `npx @santifer/project-x init` left every Windows
 // user with a clone and no dependencies.
 //
 // `shell: true` would work but concatenates args unescaped (DEP0190), so this

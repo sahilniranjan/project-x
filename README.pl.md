@@ -1,4 +1,4 @@
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/wordmark-dark.svg"><img src="docs/wordmark-light.svg" alt="career-ops" width="250" height="56"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/wordmark-dark.svg"><img src="docs/wordmark-light.svg" alt="project-x" width="250" height="56"></picture></p>
 
 <p align="center">Open source'owy agent AI do szukania pracy.</p>
 
@@ -26,7 +26,7 @@
 
 <!-- The non-breaking spaces (&nbsp;) and word joiners (&#8288;) below decide where each line wraps on a phone. Keep them when editing. -->
 
-<p align="center"><a href="https://github.com/santifer"><img src="docs/avatar-santifer.png" width="48" height="48" align="middle" alt="Santiago Fernández de Valderrama Aparicio"></a>&nbsp;&nbsp;Stworzone przez <a href="https://github.com/santifer"><strong>@santifer</strong></a>, z udziałem&nbsp;&nbsp;<a href="https://github.com/career-ops-hq/career-ops/blob/main/README.pl.md#builders"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/builders-stack-dark.svg"><img src="docs/builders-stack-light.svg" alt="" height="32" align="middle"></picture></a>&nbsp;&nbsp;<a href="https://github.com/career-ops-hq/career-ops/blob/main/README.pl.md#builders">800+ kontrybutorów</a></p>
+<p align="center"><a href="https://github.com/santifer"><img src="docs/avatar-santifer.png" width="48" height="48" align="middle" alt="Santiago Fernández de Valderrama Aparicio"></a>&nbsp;&nbsp;Stworzone przez <a href="https://github.com/santifer"><strong>@santifer</strong></a>, z udziałem&nbsp;&nbsp;<a href="https://github.com/project-x-hq/project-x/blob/main/README.pl.md#builders"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/builders-stack-dark.svg"><img src="docs/builders-stack-light.svg" alt="" height="32" align="middle"></picture></a>&nbsp;&nbsp;<a href="https://github.com/project-x-hq/project-x/blob/main/README.pl.md#builders">800+ kontrybutorów</a></p>
 
 <p align="center">
 <strong>Miesiące wysyłania CV w&nbsp;ciszę.</strong><br>
@@ -44,7 +44,7 @@ Dopasowuje twoje CV i pisze szkice twoich&nbsp;odpowiedzi. <strong>Ty&nbsp;klika
 </p>
 
 <p align="center">
-  <img src="docs/demo.gif" alt="Własne poszukiwania autora w dashboardzie career-ops: ocenione ogłoszenia, czerwony licznik tych oznaczonych „nie aplikuj”, a potem pełny raport z oceny" width="800">
+  <img src="docs/demo.gif" alt="Własne poszukiwania autora w dashboardzie project-x: ocenione ogłoszenia, czerwony licznik tych oznaczonych „nie aplikuj”, a potem pełny raport z oceny" width="800">
 </p>
 
 <p align="center"><sub>Moje własne poszukiwania, w&nbsp;trakcie, z&nbsp;interfejsem&nbsp;po&nbsp;hiszpańsku.</sub></p>
@@ -56,15 +56,15 @@ Dopasowuje twoje CV i pisze szkice twoich&nbsp;odpowiedzi. <strong>Ty&nbsp;klika
 
 <p align="center">
   Pół roku później <strong>odszedłem z&nbsp;tej pracy.</strong><br>
-  Teraz budujemy career-ops, żebyś&nbsp;mógł&nbsp;zdobyć&nbsp;swoją.
+  Teraz budujemy project-x, żebyś&nbsp;mógł&nbsp;zdobyć&nbsp;swoją.
 </p>
 
-<p align="center"><a href="#twoja-kolej">Wypróbuj na jednej&nbsp;ofercie&nbsp;↓</a> · <a href="https://santifer.io/career-ops-system">Przeczytaj całą&nbsp;historię&nbsp;→</a></p>
-<p align="center"><sub>Wolisz nie używać terminala? <a href="https://career-ops.org/waitlist?ref=readme-pl">Zapisz się na listę oczekujących na wersję webową&nbsp;→</a></sub></p>
+<p align="center"><a href="#twoja-kolej">Wypróbuj na jednej&nbsp;ofercie&nbsp;↓</a> · <a href="https://santifer.io/project-x-system">Przeczytaj całą&nbsp;historię&nbsp;→</a></p>
+<p align="center"><sub>Wolisz nie używać terminala? <a href="https://project-x.org/waitlist?ref=readme-pl">Zapisz się na listę oczekujących na wersję webową&nbsp;→</a></sub></p>
 
 <br>
 
-<p align="center"><a href="HIRED.md"><img src="docs/hired-badge.svg" alt="Hired with career-ops: public stories on the record"></a></p>
+<p align="center"><a href="HIRED.md"><img src="docs/hired-badge.svg" alt="Hired with project-x: public stories on the record"></a></p>
 
 <p align="center">Ludzie, którzy przyszli po mnie, spisali, jak zostali zatrudnieni.</p>
 
@@ -72,9 +72,9 @@ Dopasowuje twoje CV i pisze szkice twoich&nbsp;odpowiedzi. <strong>Ty&nbsp;klika
   <a href="HIRED.md"><img src="docs/hired-wall.svg" alt="Historie zatrudnienia, które możesz otworzyć i przeczytać" width="800"></a>
 </p>
 
-<p align="center"><sub>Każda karta to publiczne issue, które możesz otworzyć. Dostałeś swoją pracę? <a href="https://github.com/career-ops-hq/career-ops/issues/new?template=i-got-hired.yml">Zostaw swoją kartę →</a></sub></p>
+<p align="center"><sub>Każda karta to publiczne issue, które możesz otworzyć. Dostałeś swoją pracę? <a href="https://github.com/project-x-hq/project-x/issues/new?template=i-got-hired.yml">Zostaw swoją kartę →</a></sub></p>
 
-<p align="center">⭐ <strong>Jeśli career-ops ci pomógł, gwiazdka pomoże następnej osobie go&nbsp;znaleźć.</strong></p>
+<p align="center">⭐ <strong>Jeśli project-x ci pomógł, gwiazdka pomoże następnej osobie go&nbsp;znaleźć.</strong></p>
 
 <br>
 
@@ -99,7 +99,7 @@ Dopasowuje twoje CV i pisze szkice twoich&nbsp;odpowiedzi. <strong>Ty&nbsp;klika
 Wklej jedną ofertę, na którą miałeś dziś wieczorem aplikować. Jeśli wróci jako <em>nie aplikuj</em>, właśnie odzyskałeś wieczór. Jeśli wróci z planem, wiesz, co robić dalej.
 
 ```bash
-npx @santifer/career-ops init
+npx @santifer/project-x init
 ```
 
 <p align="center"><sub>Open source. Lokalnie. W CLI AI, którego już używasz. <a href="docs/RUNNING_ON_A_BUDGET.md">Darmowe i lokalne modele w zestawie.</a></sub></p>
@@ -111,15 +111,15 @@ Cisza po kliknięciu „wyślij” nie mówi nic o tobie. Dość ludzi zobaczył
 
 > Aplikuj lepiej, na mniej ofert. Sygnał zamiast masy. Dowody zamiast słów kluczowych. Decyduje człowiek. Najpierw lokalnie. Godność po obu stronach stołu.
 
-<p align="center"><a href="https://career-ops.org/manifesto?utm_source=readme"><img src="https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcareer-ops-hq%2Fcareer-ops%2Fmain%2FSIGNATURES.md&search=n%3A(%5Cd%2B)%5Cs*%24&replace=%241%20signatories&label=THE%20CAREEROPS%20MANIFESTO&color=DD7627&style=for-the-badge&labelColor=2b3137" alt="Manifest CareerOps: liczba sygnatariuszy na żywo"></a></p>
+<p align="center"><a href="https://project-x.org/manifesto?utm_source=readme"><img src="https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fproject-x-hq%2Fproject-x%2Fmain%2FSIGNATURES.md&search=n%3A(%5Cd%2B)%5Cs*%24&replace=%241%20signatories&label=THE%20PROJECTX%20MANIFESTO&color=DD7627&style=for-the-badge&labelColor=2b3137" alt="Manifest ProjectX: liczba sygnatariuszy na żywo"></a></p>
 
 <p align="center">Kilkoro z nich, ich własnymi słowami.</p>
 
 <p align="center">
-  <a href="https://career-ops.org/manifesto?utm_source=readme"><img src="docs/manifesto-wall.svg" alt="Trzy podpisy pod manifestem CareerOps, ich własnymi słowami" width="800"></a>
+  <a href="https://project-x.org/manifesto?utm_source=readme"><img src="docs/manifesto-wall.svg" alt="Trzy podpisy pod manifestem ProjectX, ich własnymi słowami" width="800"></a>
 </p>
 
-<p align="center"><sub>Każdy podpis to commit, który możesz sprawdzić. <a href="https://career-ops.org/manifesto?utm_source=readme">Przeczytaj wszystkie albo dodaj swój →</a></sub></p>
+<p align="center"><sub>Każdy podpis to commit, który możesz sprawdzić. <a href="https://project-x.org/manifesto?utm_source=readme">Przeczytaj wszystkie albo dodaj swój →</a></sub></p>
 
 <br>
 
@@ -131,21 +131,21 @@ Rekrutacja sama się nie naprawi. Ludzie, którzy przez nią przechodzą, mogą,
 
 [Tu pisze się poprawkę](CONTRIBUTING.md). Pokój, nie klub. **Budujmy razem.**
 
-<p align="center"><a href="https://discord.gg/8pRpHETxa4"><img src="docs/discord-badge.svg" alt="Discord: liczba członków serwera career-ops na żywo"></a></p>
+<p align="center"><a href="https://discord.gg/8pRpHETxa4"><img src="docs/discord-badge.svg" alt="Discord: liczba członków serwera project-x na żywo"></a></p>
 
 ## Sponsorzy
 
-career-ops jest darmowy dla kandydatów, na zawsze. Te firmy sponsorują projekt:
+project-x jest darmowy dla kandydatów, na zawsze. Te firmy sponsorują projekt:
 
 <p align="center">
-  <a href="https://serpapi.com/career-ops-org" title="SerpApi"><img src="docs/sponsors/serpapi.svg" alt="SerpApi" height="48"></a>
+  <a href="https://serpapi.com/project-x-org" title="SerpApi"><img src="docs/sponsors/serpapi.svg" alt="SerpApi" height="48"></a>
 </p>
 
 <p align="center"><strong>SerpApi</strong> · Build a portfolio project with live search data. SerpApi gives developers structured JSON/Markdown from Google Search, Maps, Shopping, and other engines through a simple API call.</p>
 
 > Sponsoring kupuje wyraźnie oznaczoną widoczność, nigdy wpływ: żadna kwota nie zmienia planu rozwoju ani nie umieszcza niczego w produkcie. Sponsorzy nigdy nie pojawiają się w ocenach, rankingach ani rekomendacjach.
 
-## Co career-ops robi dla ciebie
+## Co project-x robi dla ciebie
 
 Wklej ofertę. Powie ci, czy ten wieczór jest tego wart.
 
@@ -160,7 +160,7 @@ Pierwsze uruchomienia są szorstkie. Jeszcze cię nie zna. Porozmawiaj z nim: tw
 
 Przy pierwszym uruchomieniu pyta o to wszystko na czacie. Nic do ręcznej konfiguracji.
 
-## Czego career-ops nie robi
+## Czego project-x nie robi
 
 - **Automatycznie wysyłać aplikacji.** Przygotowuje szkic odpowiedzi do każdego pola; ty sprawdzasz i klikasz Wyślij. Skrypt nigdy nie wykonuje POST (`prepare-application.mjs`).
 - **Nie wysyła maili.** Tylko szkice. W całym kodzie nie ma żadnego transportu poczty.
@@ -176,7 +176,7 @@ Przeredagowuje twoje CV; nigdy nie wolno mu go zmyślać. Kontrola w kodzie zatr
 | **Ocena A-H**            | Podsumowanie roli, dopasowanie CV (z wagą każdego wymagania dla tego ogłoszenia i informacją, czy waga pochodzi z treści opisu, jego struktury czy z szacunku, oznaczone per wymaganie; szacunek nigdy nie może być w najwyższym paśmie), strategia poziomu, research wynagrodzeń, personalizacja, przygotowanie do rozmowy (STAR+R), plus kontrola wiarygodności ogłoszenia w bloku G (czy jest wciąż aktualne, czy to ponowna publikacja: obserwacje, nie werdykty) oraz sygnał pozwolenia na pracę, który oznacza opis z wyraźnym brakiem sponsoringu wizy jako twardy bloker |
 | **Human-in-the-Loop**    | AI ocenia i rekomenduje, ty decydujesz i działasz. System nigdy nie wysyła aplikacji: ostatnie słowo zawsze należy do ciebie <!-- hitl: absolute guarantee. Do not add "automatically", "by itself", "without your permission" or any other hedge when translating this row. -->               |
 | **Generowanie PDF pod ATS** | CV czytelne dla ATS, dopasowane do każdego opisu oferty na podstawie twojego własnego doświadczenia, w designie Space Grotesk + DM Sans |
-| **Generator listów motywacyjnych** | Listy oparte na researchu z odbiciem słów kluczowych, czterema interaktywnymi pytaniami o kąt (dlaczego/problemy/podejście/ton), zatwierdzaniem szkicu w czacie i PDF A4 przez ten sam pipeline HTML + Playwright co CV. Tworzy szkic przy każdej ocenie; dokończ i wygeneruj na żądanie przez `/career-ops cover` |
+| **Generator listów motywacyjnych** | Listy oparte na researchu z odbiciem słów kluczowych, czterema interaktywnymi pytaniami o kąt (dlaczego/problemy/podejście/ton), zatwierdzaniem szkicu w czacie i PDF A4 przez ten sam pipeline HTML + Playwright co CV. Tworzy szkic przy każdej ocenie; dokończ i wygeneruj na żądanie przez `/project-x cover` |
 | **Poza CV**              | Research firmy ([`deep`](modes/deep.md)) odsłania strategię AI, ostatnie ruchy, kulturę inżynierską i kąt, jaki powinien przyjąć twój profil. Wyszukiwanie kontaktów ([`contacto`](modes/contacto.md)) wskazuje hiring managera, rekrutera lub członka zespołu, do którego warto napisać, i tworzy szkic wiadomości na LinkedIn do 300 znaków dopasowanej do typu kontaktu. Szkice formalnych maili aplikacyjnych ([`email`](modes/email.md)) zamieniają oceniony raport lub wklejony opis w temat, treść i checklistę załączników bez wysyłania, składania ani klikania czegokolwiek. Aplikacja ustawia cię w kolejce; research daje ci rozmowę. |
 | **Analiza wzorców**      | Wzorce odrzuceń i wskaźniki przejścia per kanał ATS (`analyze-patterns.mjs`), statystyki lejka z całego poszukiwania (`stats.mjs`), wykrywanie ponownych publikacji, które mogą wskazywać na ofertę-widmo (`detect-reposts.mjs`) |
 
@@ -188,7 +188,7 @@ Przeredagowuje twoje CV; nigdy nie wolno mu go zmyślać. Kontrola w kodzie zatr
 | **Auto-Pipeline**        | Wklej URL, dostań pełną ocenę + PDF + wpis w trackerze                                                                                   |
 | **Bank historii na rozmowy** | Gromadzi historie STAR+Refleksja między ocenami: 5-10 głównych historii, które możesz dopasować do pytań behawioralnych, jakie dostaniesz |
 | **Skrypty negocjacyjne** | Frameworki negocjacji wynagrodzenia, odpowiedź na obniżkę geograficzną, wykorzystanie konkurencyjnych ofert                              |
-| **Szkice maili aplikacyjnych** | Formalne maile do rekrutera, z polecenia lub na zimno z raportu albo wklejonego opisu, z tematem, checklistą załączników, udokumentowanymi punktami dopasowania i blokiem kontaktowym z profilu. Tylko szkice: career-ops nigdy nie wysyła, nie składa i nie klika niczego. |
+| **Szkice maili aplikacyjnych** | Formalne maile do rekrutera, z polecenia lub na zimno z raportu albo wklejonego opisu, z tematem, checklistą załączników, udokumentowanymi punktami dopasowania i blokiem kontaktowym z profilu. Tylko szkice: project-x nigdy nie wysyła, nie składa i nie klika niczego. |
 | **Skaner portali**       | 100+ wstępnie skonfigurowanych firm (Anthropic, OpenAI, ElevenLabs, Retool, n8n...) + własne zapytania wyszukiwania w sieci po Ashby, Greenhouse, Lever, Wellfound |
 | **Odkrywanie firm po finansowaniu** | Komenda `company:funded` (najpierw przegląd) pokazuje firmy z niedawnym finansowaniem i diagnostykę źródeł z ustrukturyzowanych publicznych feedów, bez edytowania twoich danych |
 | **Przetwarzanie wsadowe** | Równoległa ocena przez headless workery CLI (`claude -p` / `opencode run`)                                                             |
@@ -210,28 +210,28 @@ Przeredagowuje twoje CV; nigdy nie wolno mu go zmyślać. Kontrola w kodzie zatr
 **Najszybsza droga, jedna komenda:**
 
 ```bash
-npx @santifer/career-ops init
+npx @santifer/project-x init
 ```
 
 > 💡 `npx` jest dostarczany z [Node.js](https://nodejs.org): uruchamia instalator raz,
 > nie instalując niczego globalnie. Nie masz jeszcze Node? Zainstaluj go najpierw.
 > (Używasz już CLI Claude Code / Codex? To już go masz.)
 
-To klonuje najnowsze wydanie do `./career-ops` i instaluje zależności. Potem:
+To klonuje najnowsze wydanie do `./project-x` i instaluje zależności. Potem:
 
 ```bash
-cd career-ops
+cd project-x
 claude   # or codex / qwen / opencode / agy / grok — open your AI CLI here
 ```
 
-**Przy pierwszym uruchomieniu career-ops przeprowadza cię przez konfigurację (twoje CV, profil i docelowe role) po prostu w rozmowie. Nic do edytowania ręcznie.**
+**Przy pierwszym uruchomieniu project-x przeprowadza cię przez konfigurację (twoje CV, profil i docelowe role) po prostu w rozmowie. Nic do edytowania ręcznie.**
 
 <details>
 <summary><b>Wolisz skonfigurować ręcznie? (git clone)</b></summary>
 
 ```bash
-git clone https://github.com/career-ops-hq/career-ops.git
-cd career-ops && npm install
+git clone https://github.com/project-x-hq/project-x.git
+cd project-x && npm install
 npx playwright install chromium   # only needed for PDF generation
 # On a non-Debian/Ubuntu Linux distro (Fedora, Arch, ...), Chromium's system
 # libraries aren't installed by the line above — install them yourself with
@@ -258,14 +258,14 @@ claude   # or codex / opencode / qwen / agy / grok
 ### Instalacja globalna
 
 ```bash
-npm i -g @santifer/career-ops
+npm i -g @santifer/project-x
 ```
 
-To instaluje binarkę `career-ops` globalnie, więc możesz uruchamiać `career-ops init [folder]` bez `npx`. `init` to jej jedyna komenda: tworzy przestrzeń roboczą, a wszystko dalej dzieje się w twoim AI CLI (zobacz Użycie poniżej), nie przez tę binarkę.
+To instaluje binarkę `project-x` globalnie, więc możesz uruchamiać `project-x init [folder]` bez `npx`. `init` to jej jedyna komenda: tworzy przestrzeń roboczą, a wszystko dalej dzieje się w twoim AI CLI (zobacz Użycie poniżej), nie przez tę binarkę.
 
 **Której użyć?**
-- `npx @santifer/career-ops init`: najlepsza na pierwszy raz; tworzy dedykowany folder projektu.
-- `npm i -g @santifer/career-ops`: jeśli wolisz wpisywać `career-ops init` zamiast formy z `npx`. Nie dodaje żadnych innych komend.
+- `npx @santifer/project-x init`: najlepsza na pierwszy raz; tworzy dedykowany folder projektu.
+- `npm i -g @santifer/project-x`: jeśli wolisz wpisywać `project-x init` zamiast formy z `npx`. Nie dodaje żadnych innych komend.
 
 ### Inne sposoby uruchomienia
 
@@ -274,23 +274,23 @@ To instaluje binarkę `career-ops` globalnie, więc możesz uruchamiać `career-
 
 > **System jest zaprojektowany tak, by dostosowywało go samo twoje AI CLI.** Tryby, archetypy, wagi oceny, skrypty negocjacyjne: po prostu poproś, żeby je zmieniło. Czyta te same pliki, których używa, więc wie dokładnie, co edytować.
 
-Zobacz [docs/SETUP.md](docs/SETUP.md) po pełny przewodnik konfiguracji, [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md) po instrukcje taniego uruchamiania career-ops na własnych lub lokalnych modelach (i [docs/FREE_TIER.md](docs/FREE_TIER.md), by uruchomić go za darmo na darmowym planie Antigravity CLI), [docs/AUTOMATION.md](docs/AUTOMATION.md) po harmonogram cyklicznych skanów i przepis na selekcję do shortlisty bez tokenów, [docs/APPLY_AUTOFILL.md](docs/APPLY_AUTOFILL.md) po szczegóły autouzupełniania formularzy ATS, [docs/LINKEDIN_JOIN.md](docs/LINKEDIN_JOIN.md) po porównanie eksportu kontaktów z LinkedIn z firmami w twoim lejku, oraz [docs/FAQ.md](docs/FAQ.md) po odpowiedzi na częste pytania o konfigurację, w tym [jak pochodzenie historii zapobiega zmyślonym liczbom](docs/FAQ.md#why-does-career-ops-refuse-to-use-a-number-from-my-story-bank). Zasady projektowe są w [ARCHITECTURE.md](ARCHITECTURE.md); przepływy runtime w [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+Zobacz [docs/SETUP.md](docs/SETUP.md) po pełny przewodnik konfiguracji, [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md) po instrukcje taniego uruchamiania project-x na własnych lub lokalnych modelach (i [docs/FREE_TIER.md](docs/FREE_TIER.md), by uruchomić go za darmo na darmowym planie Antigravity CLI), [docs/AUTOMATION.md](docs/AUTOMATION.md) po harmonogram cyklicznych skanów i przepis na selekcję do shortlisty bez tokenów, [docs/APPLY_AUTOFILL.md](docs/APPLY_AUTOFILL.md) po szczegóły autouzupełniania formularzy ATS, [docs/LINKEDIN_JOIN.md](docs/LINKEDIN_JOIN.md) po porównanie eksportu kontaktów z LinkedIn z firmami w twoim lejku, oraz [docs/FAQ.md](docs/FAQ.md) po odpowiedzi na częste pytania o konfigurację, w tym [jak pochodzenie historii zapobiega zmyślonym liczbom](docs/FAQ.md#why-does-project-x-refuse-to-use-a-number-from-my-story-bank). Zasady projektowe są w [ARCHITECTURE.md](ARCHITECTURE.md); przepływy runtime w [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## Użycie
 
-Wklej adres URL lub opis oferty do swojego CLI z AI. career-ops sprawdza, czy oferta z linkiem jest nadal aktualna (wklejony tekst nie ma linku do sprawdzenia), ocenia ją względem Twojego CV, pisze raport, dopasowuje Twoje CV (domyślnie jako PDF) i dodaje wiersz do trackera. To pokrywa większość dni. Wszystko inne to tryb, o który prosisz po nazwie. Jeśli nie da się odczytać oferty, pipeline zatrzymuje się i prosi o wklejenie tekstu.
+Wklej adres URL lub opis oferty do swojego CLI z AI. project-x sprawdza, czy oferta z linkiem jest nadal aktualna (wklejony tekst nie ma linku do sprawdzenia), ocenia ją względem Twojego CV, pisze raport, dopasowuje Twoje CV (domyślnie jako PDF) i dodaje wiersz do trackera. To pokrywa większość dni. Wszystko inne to tryb, o który prosisz po nazwie. Jeśli nie da się odczytać oferty, pipeline zatrzymuje się i prosi o wklejenie tekstu.
 
 ### Jak poprosić o tryb
 
 | CLI | Jak prosisz o `scan` |
 | --- | --- |
-| Claude Code, OpenCode, Antigravity CLI (`agy`), Grok Build CLI | `/career-ops scan` |
-| Pi | `/skill:career-ops scan` |
-| Codex, Qwen, Cursor lub dowolne inne obsługiwane CLI | Zwykły język: "Run the career-ops scan mode" |
+| Claude Code, OpenCode, Antigravity CLI (`agy`), Grok Build CLI | `/project-x scan` |
+| Pi | `/skill:project-x scan` |
+| Codex, Qwen, Cursor lub dowolne inne obsługiwane CLI | Zwykły język: "Run the project-x scan mode" |
 
-`/career-ops` bez niczego po nim pokazuje menu komend w CLI, które go używają. Zwykły język działa w każdym obsługiwanym CLI. Jako wtyczka Claude Code komenda to `/career-ops:career-ops`.
+`/project-x` bez niczego po nim pokazuje menu komend w CLI, które go używają. Zwykły język działa w każdym obsługiwanym CLI. Jako wtyczka Claude Code komenda to `/project-x:project-x`.
 
-Wszystkie korzystają z jednego routera, `.agents/skills/career-ops/SKILL.md`, i tych samych plików `modes/*.md`, więc każdy CLI kieruje żądanie tak samo (tryby intensywnie korzystające z przeglądarki potrzebują też narzędzi Playwright). Komendy slash nie są gwarantowane w Codex: poproś zwykłym językiem albo uruchom jeden prompt w trybie headless przez `codex exec "Evaluate this JD with career-ops auto-pipeline: https://company.com/jobs/123"` ([docs/CODEX.md](docs/CODEX.md)). Jak uruchomić career-ops w każdym obsługiwanym CLI, komendy headless tam, gdzie CLI je ma, oraz uwagi konfiguracyjne dla poszczególnych CLI są w [docs/SUPPORTED_CLIS.md](docs/SUPPORTED_CLIS.md).
+Wszystkie korzystają z jednego routera, `.agents/skills/project-x/SKILL.md`, i tych samych plików `modes/*.md`, więc każdy CLI kieruje żądanie tak samo (tryby intensywnie korzystające z przeglądarki potrzebują też narzędzi Playwright). Komendy slash nie są gwarantowane w Codex: poproś zwykłym językiem albo uruchom jeden prompt w trybie headless przez `codex exec "Evaluate this JD with project-x auto-pipeline: https://company.com/jobs/123"` ([docs/CODEX.md](docs/CODEX.md)). Jak uruchomić project-x w każdym obsługiwanym CLI, komendy headless tam, gdzie CLI je ma, oraz uwagi konfiguracyjne dla poszczególnych CLI są w [docs/SUPPORTED_CLIS.md](docs/SUPPORTED_CLIS.md).
 
 ### Codzienne komendy
 
@@ -389,7 +389,7 @@ Wszystkie korzystają z jednego routera, `.agents/skills/career-ops/SKILL.md`, i
 | Komenda | Co robi |
 | --- | --- |
 | [`agent-inbox`](modes/agent-inbox.md) | Kolejkuje prośby na następną sesję i realizuje je wtedy (`data/agent-inbox.md`). `inbox` też działa |
-| [`update`](modes/update.md) | Aktualizuje pliki systemowe career-ops, z podglądem diffa i sprawdzeniem zgodności |
+| [`update`](modes/update.md) | Aktualizuje pliki systemowe project-x, z podglądem diffa i sprawdzeniem zgodności |
 
 </details>
 
@@ -418,7 +418,7 @@ Weryfikacja jest sekwencyjna i dotyczy tylko nowych ofert (po deduplikacji), wi�
 
 ### 🇵🇱 Polskie portale z ofertami pracy
 
-career-ops obsługuje główne polskie portale IT. Dwa z nich — JustJoin.it i NoFluffJobs — mają publiczne API i mogą być zintegrowane jako źródła Level 0 (zero tokenów, brak WebSearch, świeże dane w czasie skanowania). Pozostałe portale wymagają weryfikacji ręcznej lub przez Playwright.
+project-x obsługuje główne polskie portale IT. Dwa z nich — JustJoin.it i NoFluffJobs — mają publiczne API i mogą być zintegrowane jako źródła Level 0 (zero tokenów, brak WebSearch, świeże dane w czasie skanowania). Pozostałe portale wymagają weryfikacji ręcznej lub przez Playwright.
 
 | Portal              | URL                                          | API        | Uwagi                                                                 |
 | ------------------- | -------------------------------------------- | ---------- | --------------------------------------------------------------------- |
@@ -432,7 +432,7 @@ career-ops obsługuje główne polskie portale IT. Dwa z nich — JustJoin.it i 
 
 #### Polskie realia rynku pracy w ocenach
 
-career-ops uwzględnia specyfikę polskiego rynku pracy przy ocenianiu ofert:
+project-x uwzględnia specyfikę polskiego rynku pracy przy ocenianiu ofert:
 
 - **Forma zatrudnienia**: UoP (Umowa o pracę) vs B2B (Faktura VAT) vs UZ (Umowa zlecenie) — różnice w kwocie netto, bezpieczeństwie, urlopie i ZUS mają wpływ na ocenę stabilności
 - **Wynagrodzenie**: brutto (przed podatkiem i ZUS) kontra netto (na rękę). Różnica bywa znaczna — system uwzględnia ją przy porównywaniu ofert
@@ -457,7 +457,7 @@ Jest też **eksperymentalny interfejs webowy** (alpha i opt-in: nic nie działa,
 ## Struktura projektu
 
 ```
-career-ops/
+project-x/
 ├── AGENTS.md                    # Canonical agent instructions (all CLIs)
 ├── CLAUDE.md                    # Claude Code wrapper (imports AGENTS.md)
 ├── CODEX.md                     # Codex wrapper (imports AGENTS.md)
@@ -498,20 +498,20 @@ Domyślnie dane warstwy użytkownika (takie jak `cv.md`, `portals.yml` oraz fold
 
 Aby oddzielić dane osobiste od kodu (łatwiej przełączać gałęzie, pobierać aktualizacje lub testować kilka profili), możesz skonfigurować zewnętrzny katalog danych według następującego pierwszeństwa:
 
-1. **Zmienne środowiskowe:** ustaw zmienną `CAREER_OPS_ROOT` lub `CAREER_OPS_DATA_DIR`:
+1. **Zmienne środowiskowe:** ustaw zmienną `PROJECT_X_ROOT` lub `PROJECT_X_DATA_DIR`:
    ```bash
-   export CAREER_OPS_ROOT=~/my-career-data
+   export PROJECT_X_ROOT=~/my-career-data
    ```
-2. **Plik znacznika:** utwórz plik `.career-ops-data` w katalogu głównym repozytorium ze ścieżką do katalogu danych.
+2. **Plik znacznika:** utwórz plik `.project-x-data` w katalogu głównym repozytorium ze ścieżką do katalogu danych.
 3. **Domyślnie:** katalog główny repozytorium.
 
 Po rozwiązaniu wszystkie pliki użytkownika są rozwiązywane i zapisywane względem tego folderu, a pliki promptów i skrypty nadal względem repozytorium.
 
-- **Nadpisanie trackera:** możesz też ustawić `CAREER_OPS_TRACKER`, by bezpośrednio wskazać ścieżkę pliku trackera aplikacji.
+- **Nadpisanie trackera:** możesz też ustawić `PROJECT_X_TRACKER`, by bezpośrednio wskazać ścieżkę pliku trackera aplikacji.
 - **Zapisy:** wszystkie operacje zapisu (np. scalanie) kanonicznie trafiają do `{DATA_ROOT}/data/applications.md`.
 - **Konfiguracja skanera:** `portals.yml` jest czytany i walidowany w `{DATA_ROOT}/portals.yml`, więc `node validate-portals.mjs` sprawdza ten sam plik, który czyta `scan.mjs`.
-- **Generowane dokumenty:** dopasowane CV i listy motywacyjne są zapisywane w `{DATA_ROOT}/output/`, a manifest PDF, który łączy je z raportem, znajduje się w `{DATA_ROOT}/data/pdf-index.tsv`. Dopóki `CAREER_OPS_TRACKER` nie jest ustawiony, przestrzenią roboczą trackera, która ogranicza te zapisy, jest katalog danych, a nie checkout.
-- **PDF-y przy nadpisanym trackerze:** `generate-pdf.mjs` rozwiązuje `CAREER_OPS_TRACKER`, zanim wyznaczy przestrzeń roboczą, więc przy ustawionym nadpisaniu przestrzenią roboczą jest folder, w którym leży ten tracker (albo folder nad nim, gdy tracker leży w folderze `data/`). HTML CV i każdy PDF muszą wtedy znajdować się w tej przestrzeni roboczej, a manifest przenosi się do jej `data/pdf-index.tsv`. Listy motywacyjne nadal trafiają do `{DATA_ROOT}/output/`, więc są odrzucane, gdy ten folder wypada poza przestrzeń roboczą trackera.
+- **Generowane dokumenty:** dopasowane CV i listy motywacyjne są zapisywane w `{DATA_ROOT}/output/`, a manifest PDF, który łączy je z raportem, znajduje się w `{DATA_ROOT}/data/pdf-index.tsv`. Dopóki `PROJECT_X_TRACKER` nie jest ustawiony, przestrzenią roboczą trackera, która ogranicza te zapisy, jest katalog danych, a nie checkout.
+- **PDF-y przy nadpisanym trackerze:** `generate-pdf.mjs` rozwiązuje `PROJECT_X_TRACKER`, zanim wyznaczy przestrzeń roboczą, więc przy ustawionym nadpisaniu przestrzenią roboczą jest folder, w którym leży ten tracker (albo folder nad nim, gdy tracker leży w folderze `data/`). HTML CV i każdy PDF muszą wtedy znajdować się w tej przestrzeni roboczej, a manifest przenosi się do jej `data/pdf-index.tsv`. Listy motywacyjne nadal trafiają do `{DATA_ROOT}/output/`, więc są odrzucane, gdy ten folder wypada poza przestrzeń roboczą trackera.
 - **Warstwa kodu zostaje na miejscu:** `node_modules/`, `providers/`, `modes/` i same skrypty zawsze są rozwiązywane względem repozytorium, nigdy względem katalogu danych.
 
 Dashboard TUI w Go, skrypty Node.js i tryby agenta AI automatycznie respektują tę hierarchię.
@@ -533,7 +533,7 @@ Dashboard TUI w Go, skrypty Node.js i tryby agenta AI automatycznie respektują 
 - **Dane**: tabele Markdown + konfiguracja YAML + pliki wsadowe TSV
 
 <p align="center">
-  <a href="https://github.com/career-ops-hq/career-ops/releases/latest"><img src="docs/npm-badge.svg" alt="Latest release"></a>
+  <a href="https://github.com/project-x-hq/project-x/releases/latest"><img src="docs/npm-badge.svg" alt="Latest release"></a>
 </p>
 
 <p align="center">
@@ -566,43 +566,43 @@ Dashboard TUI w Go, skrypty Node.js i tryby agenta AI automatycznie respektują 
 
 ## FAQ
 
-**Czym jest career-ops?**
-career-ops ([career-ops.org](https://career-ops.org), znany też jako **careerops**) to open source'owe wyszukiwanie pracy z AI, które działa lokalnie w twoim AI CLI (Claude Code, Codex, OpenCode i inne) i zostawia każdą decyzję tobie. Ocenia oferty względem twojego CV, generuje PDF-y dopasowane pod ATS, znajduje właściwą osobę do kontaktu i śledzi wszystko w jednym miejscu: ostatnie słowo zawsze należy do ciebie. To pierwsza referencyjna implementacja [Manifestu CareerOps](https://career-ops.org/manifesto).
+**Czym jest project-x?**
+project-x ([project-x.org](https://project-x.org), znany też jako **projectx**) to open source'owe wyszukiwanie pracy z AI, które działa lokalnie w twoim AI CLI (Claude Code, Codex, OpenCode i inne) i zostawia każdą decyzję tobie. Ocenia oferty względem twojego CV, generuje PDF-y dopasowane pod ATS, znajduje właściwą osobę do kontaktu i śledzi wszystko w jednym miejscu: ostatnie słowo zawsze należy do ciebie. To pierwsza referencyjna implementacja [Manifestu ProjectX](https://project-x.org/manifesto).
 
 **Czy dopasowane CV może coś zmyślić?**
-Nie wolno mu, i prompty to mówią: przeredagować, nigdy nie zmyślać. `generate-pdf` blokuje CV z liczbami lub faktami, których nie ma w twoich źródłach, chyba że przekażesz `--skip-fact-check`. Tryb `pdf` uruchamia też `cv-title-check.mjs`, który porównuje każdą nazwę stanowiska w dopasowanym CV z nazwą, jaką cv.md podaje dla tej samej pracy (dopasowanie po firmie i datach), i pyta, czy zachować, czy cofnąć każdą, która się różni. Tylko ostrzega, nie blokuje, bo przeredagowanie nazwy stanowiska bywa twoją decyzją. Nic jeszcze nie ocenia przeformułowań: śledzi to [#1411](https://github.com/career-ops-hq/career-ops/issues/1411) (kontrola wierności blokująca przy niezgodności). Do tego czasu czytaj każde CV przed wysłaniem. [Zastrzeżenie prawne](LEGAL_DISCLAIMER.md) mówi to samo dłużej.
+Nie wolno mu, i prompty to mówią: przeredagować, nigdy nie zmyślać. `generate-pdf` blokuje CV z liczbami lub faktami, których nie ma w twoich źródłach, chyba że przekażesz `--skip-fact-check`. Tryb `pdf` uruchamia też `cv-title-check.mjs`, który porównuje każdą nazwę stanowiska w dopasowanym CV z nazwą, jaką cv.md podaje dla tej samej pracy (dopasowanie po firmie i datach), i pyta, czy zachować, czy cofnąć każdą, która się różni. Tylko ostrzega, nie blokuje, bo przeredagowanie nazwy stanowiska bywa twoją decyzją. Nic jeszcze nie ocenia przeformułowań: śledzi to [#1411](https://github.com/project-x-hq/project-x/issues/1411) (kontrola wierności blokująca przy niezgodności). Do tego czasu czytaj każde CV przed wysłaniem. [Zastrzeżenie prawne](LEGAL_DISCLAIMER.md) mówi to samo dłużej.
 
-**Czy mogę uruchamiać career-ops za darmo albo na tańszym / lokalnym modelu?**
-Tak. career-ops jest niezależny od CLI i działa na darmowych i lokalnych modelach (darmowe modele OpenRouter, Ollama lub dowolny endpoint zgodny z OpenAI), więc nie jesteś przywiązany do płatnej subskrypcji. Pełna konfiguracja: [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md).
+**Czy mogę uruchamiać project-x za darmo albo na tańszym / lokalnym modelu?**
+Tak. project-x jest niezależny od CLI i działa na darmowych i lokalnych modelach (darmowe modele OpenRouter, Ollama lub dowolny endpoint zgodny z OpenAI), więc nie jesteś przywiązany do płatnej subskrypcji. Pełna konfiguracja: [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md).
 
-**Płacę za Claude Pro/Max, ale career-ops zużywa kredyty API. Dlaczego?**
+**Płacę za Claude Pro/Max, ale project-x zużywa kredyty API. Dlaczego?**
 Bo `ANTHROPIC_API_KEY` w twoim środowisku ma pierwszeństwo przed zalogowaną subskrypcją: CLI używa klucza i rozlicza per token. Uruchom `echo $ANTHROPIC_API_KEY`, a jeśli coś wypisze, usuń go z profilu powłoki, zrestartuj terminal i uruchom `/login`. Tryb wsadowy jest wyjątkiem, bo workery `claude -p` nie używają interaktywnego logowania: uruchom raz `claude setup-token` i wyeksportuj wynik jako `CLAUDE_CODE_OAUTH_TOKEN`. Pełna instrukcja w [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md#2b-already-paying-for-a-subscription-make-sure-you-are-using-it).
 
-**Z jakimi AI CLI działa career-ops?**
-career-ops działa z każdym głównym AI CLI do kodowania (Claude Code, Codex, Gemini / Antigravity, OpenCode, Grok, Qwen i inne) przez otwarty Agent Skill Standard, więc nigdy nie jest przywiązany do jednego dostawcy. Użyj CLI, które już masz.
+**Z jakimi AI CLI działa project-x?**
+project-x działa z każdym głównym AI CLI do kodowania (Claude Code, Codex, Gemini / Antigravity, OpenCode, Grok, Qwen i inne) przez otwarty Agent Skill Standard, więc nigdy nie jest przywiązany do jednego dostawcy. Użyj CLI, które już masz.
 
-**Jak zainstalować career-ops na Windows?**
-career-ops działa na Windows. Konfiguracja specyficzna dla platformy i znane pułapki (wykrywanie Git Bash, końce linii, Harmonogram zadań) są w [docs/WINDOWS.md](docs/WINDOWS.md). Jeśli skille nie ładują się z błędem symlinka podczas instalacji, rozwiązanie jest w [docs/FAQ.md](docs/FAQ.md). Pełne kroki w [docs/SETUP.md](docs/SETUP.md).
+**Jak zainstalować project-x na Windows?**
+project-x działa na Windows. Konfiguracja specyficzna dla platformy i znane pułapki (wykrywanie Git Bash, końce linii, Harmonogram zadań) są w [docs/WINDOWS.md](docs/WINDOWS.md). Jeśli skille nie ładują się z błędem symlinka podczas instalacji, rozwiązanie jest w [docs/FAQ.md](docs/FAQ.md). Pełne kroki w [docs/SETUP.md](docs/SETUP.md).
 
-**Czy career-ops aplikuje na oferty za mnie?**
-Nie. career-ops to filtr, a nie narzędzie do masowego automatycznego aplikowania. AI ocenia, szereguje i pisze szkice; ty sprawdzasz i decydujesz. Pisze szkice i wypełnia pola; nigdy nie składa aplikacji. Ty klikasz Wyślij. Właśnie o to chodzi w projekcie z człowiekiem w pętli.
+**Czy project-x aplikuje na oferty za mnie?**
+Nie. project-x to filtr, a nie narzędzie do masowego automatycznego aplikowania. AI ocenia, szereguje i pisze szkice; ty sprawdzasz i decydujesz. Pisze szkice i wypełnia pola; nigdy nie składa aplikacji. Ty klikasz Wyślij. Właśnie o to chodzi w projekcie z człowiekiem w pętli.
 
-**Czy career-ops jest darmowy i open source?**
-Tak. career-ops jest darmowy i open source, i dla kandydata zawsze taki będzie. To pierwsza referencyjna implementacja [Manifestu CareerOps](https://career-ops.org/manifesto). Przeczytaj go, a jeśli mówi to, w co wierzysz, podpisz.
+**Czy project-x jest darmowy i open source?**
+Tak. project-x jest darmowy i open source, i dla kandydata zawsze taki będzie. To pierwsza referencyjna implementacja [Manifestu ProjectX](https://project-x.org/manifesto). Przeczytaj go, a jeśli mówi to, w co wierzysz, podpisz.
 
 ## O autorze
 
-Jestem [Santiago Fernández de Valderrama Aparicio](https://santifer.io/about) (santifer), były założyciel: zbudowałem i sprzedałem firmę, która nadal działa pod moim nazwiskiem. Zbudowałem career-ops, żeby zarządzać własnym poszukiwaniem pracy, i zadziałało: dzięki niemu dostałem stanowisko Head of Applied AI. Pół roku później odszedłem z tego stanowiska, żeby skupić się na budowaniu career-ops na pełen etat.
+Jestem [Santiago Fernández de Valderrama Aparicio](https://santifer.io/about) (santifer), były założyciel: zbudowałem i sprzedałem firmę, która nadal działa pod moim nazwiskiem. Zbudowałem project-x, żeby zarządzać własnym poszukiwaniem pracy, i zadziałało: dzięki niemu dostałem stanowisko Head of Applied AI. Pół roku później odszedłem z tego stanowiska, żeby skupić się na budowaniu project-x na pełen etat.
 
-Ciekawi cię, jak repozytorium tej wielkości jest utrzymywane przez flotę agentów AI i człowieka, który decyduje o każdym merge'u? Przeczytaj [Agentic maintenance: how career-ops is run by a fleet of AI agents](https://santifer.io/ai-agent-fleet).
+Ciekawi cię, jak repozytorium tej wielkości jest utrzymywane przez flotę agentów AI i człowieka, który decyduje o każdym merge'u? Przeczytaj [Agentic maintenance: how project-x is run by a fleet of AI agents](https://santifer.io/ai-agent-fleet).
 
 Moje portfolio i inne projekty open source → [santifer.io](https://santifer.io)
 
-Wikidata: [Santiago Fernández de Valderrama Aparicio](https://www.wikidata.org/wiki/Q138710224) · [career-ops](https://www.wikidata.org/wiki/Q139007988).
+Wikidata: [Santiago Fernández de Valderrama Aparicio](https://www.wikidata.org/wiki/Q138710224) · [project-x](https://www.wikidata.org/wiki/Q139007988).
 
 ## Zastrzeżenie prawne
 
-**career-ops to lokalne narzędzie open source, NIE usługa hostowana.** Używając tego oprogramowania, przyjmujesz do wiadomości, że:
+**project-x to lokalne narzędzie open source, NIE usługa hostowana.** Używając tego oprogramowania, przyjmujesz do wiadomości, że:
 
 1. **Ty kontrolujesz swoje dane.** Twoje CV, dane kontaktowe i dane osobowe zostają na twojej maszynie i są wysyłane bezpośrednio do wybranego przez ciebie dostawcy AI (Anthropic, OpenAI itd.). Nie zbieramy, nie przechowujemy ani nie mamy dostępu do żadnych twoich danych.
 2. **Ty kontrolujesz AI.** Domyślne prompty instruują AI, by nie wysyłało aplikacji automatycznie, ale modele AI mogą zachowywać się nieprzewidywalnie. Jeśli modyfikujesz prompty lub używasz innych modeli, robisz to na własne ryzyko. **Zawsze sprawdzaj poprawność treści wygenerowanych przez AI przed wysłaniem.**
@@ -613,20 +613,20 @@ Zobacz [LEGAL_DISCLAIMER.md](LEGAL_DISCLAIMER.md) po pełne szczegóły. To opro
 
 ## Współtwórcy
 
-<a href="https://github.com/career-ops-hq/career-ops/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=career-ops-hq/career-ops&v=2" />
+<a href="https://github.com/project-x-hq/project-x/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=project-x-hq/project-x&v=2" />
 </a>
 
 Każda osoba, która dostarczyła kod, dokumentację, tłumaczenia lub testy, jest wymieniona w
 [CONTRIBUTORS.md](CONTRIBUTORS.md), łącznie z wkładem niekodowym, którego
 powyższy graf nie może pokazać.
 
-Dostałeś pracę dzięki career-ops? [Podziel się swoją historią!](https://github.com/career-ops-hq/career-ops/issues/new?template=i-got-hired.yml)
+Dostałeś pracę dzięki project-x? [Podziel się swoją historią!](https://github.com/project-x-hq/project-x/issues/new?template=i-got-hired.yml)
 
 ## Licencja i znak towarowy
 
 Kod jest na licencji [MIT](LICENSE). Nazwa i marka
-„career-ops" podlegają [Polityce znaku towarowego](TRADEMARK.md): liberalnej
+„project-x" podlegają [Polityce znaku towarowego](TRADEMARK.md): liberalnej
 dla użytku społeczności, zastrzeżonej dla nazewnictwa produktów komercyjnych
 i rekomendacji.
 
@@ -638,7 +638,7 @@ Kod jest na licencji MIT; dane w [`employers/`](employers/) są na licencji [CC 
   <a href="https://warpchart.dev/hq">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://warpchart.dev/api/chart?theme=dark&v=3">
-      <img alt="Live star telemetry of career-ops-hq/career-ops" src="https://warpchart.dev/api/chart?theme=light&v=3" loading="lazy">
+      <img alt="Live star telemetry of project-x-hq/project-x" src="https://warpchart.dev/api/chart?theme=light&v=3" loading="lazy">
     </picture>
   </a>
 </p>

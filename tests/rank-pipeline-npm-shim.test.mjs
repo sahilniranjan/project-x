@@ -62,12 +62,12 @@ function sandbox(t, bin) {
 // leave which one the child reads up to chance.
 function rank(root, args) {
   const env = Object.fromEntries(Object.entries(process.env).filter(([k]) =>
-    !/^path$/i.test(k) && !/^CAREER_OPS_(CLI|RANK_CLI|DATA_DIR)$/.test(k)));
+    !/^path$/i.test(k) && !/^PROJECT_X_(CLI|RANK_CLI|DATA_DIR)$/.test(k)));
   const result = spawnSync(process.execPath, [join(ROOT, 'rank-pipeline.mjs'), '--dry-run', ...args], {
     cwd: root,
     encoding: 'utf8',
     timeout: 60_000,
-    env: { ...env, CAREER_OPS_ROOT: root, PATH: join(root, 'npm') },
+    env: { ...env, PROJECT_X_ROOT: root, PATH: join(root, 'npm') },
   });
   assert.ifError(result.error);
   return result;

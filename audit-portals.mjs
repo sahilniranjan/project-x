@@ -63,7 +63,7 @@ import { makeHttpCtx } from './providers/_http.mjs';
 import { loadProviders, resolveProvider } from './providers/_registry.mjs';
 import { mergeProviderPlugins } from './plugins/_engine.mjs';
 import { flagValue, hasFlag, validateFlags } from './lib/cli-flags.mjs';
-import { getCareerOpsRoot } from './path-resolver.mjs';
+import { getProjectXRoot } from './path-resolver.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
 import { applyEntryResponseCap } from './lib/entry-response-cap.mjs';
 import { applyEntryTimeout } from './lib/entry-timeout.mjs';
@@ -77,15 +77,15 @@ import { DEFAULT_SMALL_THRESHOLD, isSmallBoard, smallBoardDetail } from './lib/s
 //
 // The two anchors are different roots and must stay that way (#4171).
 // `portals.yml` is user layer and follows the DATA root, which is wherever
-// CAREER_OPS_ROOT / CAREER_OPS_DATA_DIR or the `.career-ops-data` marker
+// PROJECT_X_ROOT / PROJECT_X_DATA_DIR or the `.project-x-data` marker
 // points. `providers/` is system layer: it ships with the checkout and never
 // travels to a user's data root. Anchoring it to the data root reproduced the
 // exact failure the paragraph above describes — loadProviders() reads a
 // directory that does not exist, returns an empty registry, and the audit
 // reports `0 audited` and exits 0. scan.mjs already splits the two this way.
-const ROOT = getCareerOpsRoot();
+const ROOT = getProjectXRoot();
 const CODE_ROOT = dirname(fileURLToPath(import.meta.url));
-const DEFAULT_PORTALS_PATH = process.env.CAREER_OPS_PORTALS || join(ROOT, 'portals.yml');
+const DEFAULT_PORTALS_PATH = process.env.PROJECT_X_PORTALS || join(ROOT, 'portals.yml');
 export const PROVIDERS_DIR = join(CODE_ROOT, 'providers');
 
 // Shared with discover-ats.mjs so the two tools agree on what a small board is.

@@ -14,7 +14,7 @@ import { fixtureStateFor } from '../upgrade-tests.mjs';
 const FIXTURES = join(dirname(fileURLToPath(import.meta.url)), '..', 'test-fixtures', 'upgrade');
 
 test('a tag at or past v1.18.0 seeds state-v1.18, which exists', () => {
-  for (const tag of ['career-ops-v1.18.0', 'career-ops-v1.39.0', 'career-ops-v2.0.0']) {
+  for (const tag of ['project-x-v1.18.0', 'project-x-v1.39.0', 'project-x-v2.0.0']) {
     assert.equal(fixtureStateFor(tag), 'state-v1.18', tag);
   }
   assert.ok(existsSync(join(FIXTURES, 'state-v1.18', 'expected.json')));
@@ -22,7 +22,7 @@ test('a tag at or past v1.18.0 seeds state-v1.18, which exists', () => {
 
 test('a tag before v1.18.0 has no fixture state and throws', () => {
   // v0.18.0 shares the minor number but sits before the boundary.
-  for (const tag of ['career-ops-v1.16.0', 'career-ops-v1.17.9', 'career-ops-v0.18.0']) {
+  for (const tag of ['project-x-v1.16.0', 'project-x-v1.17.9', 'project-x-v0.18.0']) {
     assert.throws(() => fixtureStateFor(tag), new RegExp(`no upgrade fixture state for ${tag.replaceAll('.', '\\.')}`), tag);
   }
   assert.equal(existsSync(join(FIXTURES, 'state-v1.16')), false);

@@ -28,7 +28,7 @@ The helper reads the ATS's anonymous public API. If the host cannot pass argumen
 
 Do not continue to Block A until this gate is resolved. The snapshot captured here is reused by Block G's freshness signals.
 
-**Session title:** apply the router's **Session Title** rule (`SKILL.md`, #5303) in an interactive session when the host allows it: `Career-ops eval (fetching)` while the JD is read, `{Role}, {Company} (evaluating)` once a real JD gives the role and employer, and plain `{Role}, {Company}` when the evaluation is done. A gate that stops the run (liveness, blacklist, dealbreaker, agency) ends it on `(on hold)`. On an `auto-pipeline` handoff, `auto-pipeline` owns the title, so leave it. An undisclosed-employer agency posting is titled `{Role}, via {Agency}` only after the **Agency confirmation handoff** resolves.
+**Session title:** apply the router's **Session Title** rule (`SKILL.md`, #5303) in an interactive session when the host allows it: `Project-x eval (fetching)` while the JD is read, `{Role}, {Company} (evaluating)` once a real JD gives the role and employer, and plain `{Role}, {Company}` when the evaluation is done. A gate that stops the run (liveness, blacklist, dealbreaker, agency) ends it on `(on hold)`. On an `auto-pipeline` handoff, `auto-pipeline` owns the title, so leave it. An undisclosed-employer agency posting is titled `{Role}, via {Agency}` only after the **Agency confirmation handoff** resolves.
 
 ## Local public facts reuse (#1025)
 
@@ -96,7 +96,7 @@ Hard limits for Blocks D and G combined:
 - Do not spawn subagents or delegate research to another agent.
 - Do not continue researching after the query cap is reached; summarize the evidence found and explicitly mark missing data as unavailable.
 
-If deeper company research is useful, recommend running `/career-ops deep` separately after the evaluation.
+If deeper company research is useful, recommend running `/project-x deep` separately after the evaluation.
 
 ## Step 0 — Archetype Detection
 
@@ -613,7 +613,7 @@ Three states per row: `✅ {clear verdict}` / `⚠️ {finding}` / `— not eval
 | Posting legitimacy | Block G assessment tier | `✅ High Confidence`, or `⚠️ {tier} — {one-line reason}` for Proceed with Caution / Suspicious |
 | Employment classification | Employment classification signal inside Block G | `✅ clear` when the check ran and found nothing; `⚠️ contractor-style language: "{quoted phrase}"` when the flag fired; `— not evaluated` when the check could not run |
 | Culture screen | Culture screen field in Block A | `✅ pass`, or `⚠️ caution — {evidence}` / `⚠️ fail — {evidence}`; `— not evaluated` when no screen was run |
-| Interview red flags | `interview-prep/{company-slug}-redflags.md` (from `interview-redflag` mode) | **Cross-reference, not a copy:** if the file exists, surface its current warning level plus a relative link — `[{level}](../interview-prep/{company-slug}-redflags.md)` (relative to `reports/`); otherwise `— no interview sessions yet`. **Unverified file:** if the file contains the marker `<!-- career-ops:redflags-unverified -->`, `interview-redflag` kept it without a real-interview session to back it (it may rest on practice or mock sessions), so never surface its warning level: render `— not evaluated: [unverified analysis](../interview-prep/{company-slug}-redflags.md)`. Look for the marker, never for the note's wording: the note is written in the user's output language, the marker never is |
+| Interview red flags | `interview-prep/{company-slug}-redflags.md` (from `interview-redflag` mode) | **Cross-reference, not a copy:** if the file exists, surface its current warning level plus a relative link — `[{level}](../interview-prep/{company-slug}-redflags.md)` (relative to `reports/`); otherwise `— no interview sessions yet`. **Unverified file:** if the file contains the marker `<!-- project-x:redflags-unverified -->`, `interview-redflag` kept it without a real-interview session to back it (it may rest on practice or mock sessions), so never surface its warning level: render `— not evaluated: [unverified analysis](../interview-prep/{company-slug}-redflags.md)`. Look for the marker, never for the note's wording: the note is written in the user's output language, the marker never is |
 | AI claims vs. infrastructure | AI/infrastructure mismatch check in Block G, when present | If this report contains that check, mirror its verdict (`✅ consistent` / `⚠️ {finding}`); otherwise `— not evaluated`. The row activates automatically once the check exists — no ordering dependency |
 | AI-screening disclosure | AI-screening disclosure signal in Block G (Signal 15), when present | If this report contains that check: `✅ discloses AI use` when (a) fired, `ℹ️ {jurisdiction_name} requires disclosure; posting is silent` when only (b) fired (corroborating-only, never a compliance verdict), `— no jurisdiction match` when neither fired because the candidate's jurisdiction has no table row; otherwise `— not evaluated`. The row activates automatically once the check exists — no ordering dependency |
 | Fixed-term contract | Fixed-term disclosure signal in Block G (Signal 16) | `ℹ️ fixed term — "{quoted phrase}"` when explicit fixed-term language is present; otherwise `✅ no fixed term disclosed`; `— not evaluated` only when no JD text was available |
@@ -649,7 +649,7 @@ Mirror the block into `## Machine Summary` as a `risk_summary:` map (exact key n
 
 ## Cover Letter Draft (auto-generated after Block G)
 
-After saving the report and recording in the tracker, append a cover letter draft to the report file under `## Cover Letter Draft`. This is a starting point — not the final letter. The user completes it via `/career-ops cover {slug}`.
+After saving the report and recording in the tracker, append a cover letter draft to the report file under `## Cover Letter Draft`. This is a starting point — not the final letter. The user completes it via `/project-x cover {slug}`.
 
 **How to generate the draft:**
 
@@ -665,7 +665,7 @@ After saving the report and recording in the tracker, append a cover letter draf
 ```markdown
 ## Cover Letter Draft
 
-> Draft generated at evaluation time. Complete via `/career-ops cover {slug}` to fill in angles, confirm research, and generate the PDF.
+> Draft generated at evaluation time. Complete via `/project-x cover {slug}` to fill in angles, confirm research, and generate the PDF.
 > Gaps flagged below — address them during the cover flow.
 
 ---
@@ -697,7 +697,7 @@ I am happy to discuss further at your convenience.
 {8-10 exact phrases from the JD}
 
 ---
-*Run `/career-ops cover {slug}` to complete angles, confirm company research, and generate the PDF.*
+*Run `/project-x cover {slug}` to complete angles, confirm company research, and generate the PDF.*
 ```
 
 Apply all language rules from `_writing.md` Professional Writing section to the draft content. No em dashes, no buzzwords, active voice, concrete claims only.

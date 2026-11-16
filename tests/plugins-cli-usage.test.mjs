@@ -73,10 +73,10 @@ test('--sha with no value is an error, not a clone', () => {
 });
 
 test('an approved plugin that is not installed tells you the add command', { skip: linkedInInstalled }, () => {
-  const r = run(['skill', 'career-ops-plugin-linkedin-alerts']);
+  const r = run(['skill', 'project-x-plugin-linkedin-alerts']);
   assert.equal(r.status, 1, describeSpawn(r, 'skill long name'));
   assert.match(r.stderr, /approved but not installed/);
-  assert.match(r.stderr, /node plugins\.mjs add career-ops-plugin-linkedin-alerts/);
+  assert.match(r.stderr, /node plugins\.mjs add project-x-plugin-linkedin-alerts/);
   assert.doesNotMatch(r.stderr, /Unknown plugin/);
 });
 
@@ -127,7 +127,7 @@ test('the registry name reaches an installed plugin', { skip: linkedInInstalled 
       humanInTheLoop: true,
     }));
     writeFileSync(join(dir, 'index.mjs'), 'export default { async ingest() { return []; } };\n');
-    const r = run(['skill', 'career-ops-plugin-linkedin-alerts'], { CAREER_OPS_ROOT: data });
+    const r = run(['skill', 'project-x-plugin-linkedin-alerts'], { PROJECT_X_ROOT: data });
     assert.equal(r.status, 1, describeSpawn(r, 'installed long name'));
     assert.match(r.stderr, /ships no skill/);
     assert.doesNotMatch(`${r.stdout}\n${r.stderr}`, /Unknown plugin|not installed/);

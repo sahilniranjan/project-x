@@ -1,4 +1,4 @@
-# career-ops: open-source AI job search agent
+# project-x: open-source AI job search agent
 
 ## Origin
 
@@ -19,16 +19,16 @@ Two layers — full list in `DATA_CONTRACT.md`:
 
 **Path Resolution Override & Precedence:**
 The User Layer location (Data Root) is resolved dynamically using the following precedence order:
-1. **Environment Variables:** `CAREER_OPS_ROOT` or `CAREER_OPS_DATA_DIR` overrides the root path (resolved relative to the repository root if it is a relative path). An override, here or in the marker file, that resolves inside a Claude Code plugin install copy is refused: `getCareerOpsRoot()` throws `UnsafeDataRootError` instead of returning it.
-2. **Marker File:** If no environment variable is set, a `.career-ops-data` file in the repository root containing an absolute or relative path to the user data directory is used.
-3. **Plugin Install Default:** If neither is present and the code runs from a Claude Code plugin install copy (inside `~/.claude/plugins/cache/`, `marketplaces/` or `synced/`), `~/career-ops-data` is used. Claude Code replaces that copy on every plugin update, so it never holds user files. See `docs/CLAUDE_PLUGIN.md`.
+1. **Environment Variables:** `PROJECT_X_ROOT` or `PROJECT_X_DATA_DIR` overrides the root path (resolved relative to the repository root if it is a relative path). An override, here or in the marker file, that resolves inside a Claude Code plugin install copy is refused: `getProjectXRoot()` throws `UnsafeDataRootError` instead of returning it.
+2. **Marker File:** If no environment variable is set, a `.project-x-data` file in the repository root containing an absolute or relative path to the user data directory is used.
+3. **Plugin Install Default:** If neither is present and the code runs from a Claude Code plugin install copy (inside `~/.claude/plugins/cache/`, `marketplaces/` or `synced/`), `~/project-x-data` is used. Claude Code replaces that copy on every plugin update, so it never holds user files. See `docs/CLAUDE_PLUGIN.md`.
 4. **Repository Default:** Otherwise, the repository root directory itself is used.
 
 **Tracker Path & Canonical Writes:**
-- **Explicit override:** `CAREER_OPS_TRACKER` environment variable overrides the applications tracker file path. Relative paths are resolved relative to the repository root directory.
+- **Explicit override:** `PROJECT_X_TRACKER` environment variable overrides the applications tracker file path. Relative paths are resolved relative to the repository root directory.
 - **Reading:** If no override is set, reading resolves to `{DATA_ROOT}/data/applications.md` if it exists; otherwise falls back to `{DATA_ROOT}/applications.md`.
-- **Writing:** All write operations (first-run creation or merge operations) target the canonical location `{DATA_ROOT}/data/applications.md` (or the explicit `CAREER_OPS_TRACKER` override).
-- **In scripts:** A new script resolves the data root and the tracker path through `path-resolver.mjs`, not through `__dirname`, because the data root can be overridden and can live outside the repository. Call `getCareerOpsRoot()` for the root, then pass it to `resolveTrackerPath(root)` to read or `resolveTrackerPathForWrite(root)` to write; both take the root as an argument, with no default.
+- **Writing:** All write operations (first-run creation or merge operations) target the canonical location `{DATA_ROOT}/data/applications.md` (or the explicit `PROJECT_X_TRACKER` override).
+- **In scripts:** A new script resolves the data root and the tracker path through `path-resolver.mjs`, not through `__dirname`, because the data root can be overridden and can live outside the repository. Call `getProjectXRoot()` for the root, then pass it to `resolveTrackerPath(root)` to read or `resolveTrackerPathForWrite(root)` to write; both take the root as an argument, with no default.
 
 ## Source-of-Truth Boundary (CRITICAL)
 
@@ -48,7 +48,7 @@ User-facing content (CV, cover letters, application emails, form answers, recrui
 
 **Confirmation UX invariant (binding on any workflow that surfaces a `derived-unverified` finding to the user):** never lead with the unverified number as if confirm/deny were the only options — that invites a guess, and a confirmed guess is worse than an honest unknown because it launders the guess into a "verified" fact. Present the claim plainly and offer four distinct outcomes: (a) confirm it's accurate as stated, (b) provide the correct figure, (c) mark it narrative-only / not a quantified claim, (d) "I don't know" → sets `user-cannot-confirm` on that entry, durably. A `user-cannot-confirm` marker must never decay back into being treated as verified through repeated citation or a later re-scan — every consumer (CV generation, cover letters, interview prep) treats it as narrative texture only, never as a quantified claim in interview-facing output. Building this interactive flow is separate future work; the invariant applies regardless of which mode eventually implements it.
 
-Everything else is **out of scope for content generation**: auto-memory (see below), any directory outside the career-ops project (parent/sibling repos, other codebases on the machine), knowledge from other Claude Code projects on the same machine, and cross-session inferences not written into an in-scope file.
+Everything else is **out of scope for content generation**: auto-memory (see below), any directory outside the project-x project (parent/sibling repos, other codebases on the machine), knowledge from other Claude Code projects on the same machine, and cross-session inferences not written into an in-scope file.
 
 **One narrow exception — `intake`.** Documents the user drops in `documents/` may be read *during the `intake` mode only*, and only to propose **source-annotated** additions to the in-scope files above. They are never a source for generated user-facing content directly, the no-fabrication rule applies unchanged (a proposal must restate what the document says), and nothing is written without the user's explicit confirmation. Once confirmed, the claim lives in `config/profile.yml` / `cv.md` / `modes/_profile.md` and is in scope because it is *there*, not because it was in `documents/`.
 
@@ -82,39 +82,39 @@ On the first message of each session, run silently:
 node update-system.mjs check
 ```
 
-It reports an update only when a newer career-ops release is published; changes merged to `main` between releases never prompt, because an update installs the release, not `main`.
+It reports an update only when a newer project-x release is published; changes merged to `main` between releases never prompt, because an update installs the release, not `main`.
 
 If `{"status": "update-available", "local": ..., "remote": ..., "changelog": ...}` → tell the user:
 
-> "career-ops update available (v{local} → v{remote}). Your data (CV, profile, tracker, reports) will NOT be touched. Want me to update?"
+> "project-x update available (v{local} → v{remote}). Your data (CV, profile, tracker, reports) will NOT be touched. Want me to update?"
 
-If yes → `node update-system.mjs apply --confirm`. If no → `node update-system.mjs dismiss --version {remote}`: that quiets v{remote} only, and a newer release asks again. Every other status (`up-to-date`, `dismissed`, `offline`, `no-remote-version`, `worktree-without-main`, `managed-by-plugin`) → say nothing. In an unattended run (`modes/_shared.md` → **Unattended runs**), say nothing about any update and apply none. The user can check anytime, even after saying no ("check for updates" / "update career-ops") → `node update-system.mjs check --force`. If that returns `managed-by-plugin`, career-ops runs as a Claude Code plugin and `apply` and `rollback` refuse. Answer the request instead of staying silent: Claude updates the plugin, from the career-ops entry under `/plugin` → **Installed** (**Update now**), or, for a plugin added in Claude desktop, with **Check for updates** under **Customize → Plugins**. In a checkout only (a plugin install refuses both), to install the latest commit on `main` instead of the release: `node update-system.mjs apply --channel main --confirm`. That is a one-off: the choice is not saved and the session check above still looks only at releases, so staying on `main` means running `node update-system.mjs check --channel main` and that `apply` again. Rollback, also checkout only: `node update-system.mjs rollback`. From a linked git worktree, all of these run in the checkout that has `main` checked out, so the update lands on `main`; afterwards suggest `git merge main` in the worktree.
+If yes → `node update-system.mjs apply --confirm`. If no → `node update-system.mjs dismiss --version {remote}`: that quiets v{remote} only, and a newer release asks again. Every other status (`up-to-date`, `dismissed`, `offline`, `no-remote-version`, `worktree-without-main`, `managed-by-plugin`) → say nothing. In an unattended run (`modes/_shared.md` → **Unattended runs**), say nothing about any update and apply none. The user can check anytime, even after saying no ("check for updates" / "update project-x") → `node update-system.mjs check --force`. If that returns `managed-by-plugin`, project-x runs as a Claude Code plugin and `apply` and `rollback` refuse. Answer the request instead of staying silent: Claude updates the plugin, from the project-x entry under `/plugin` → **Installed** (**Update now**), or, for a plugin added in Claude desktop, with **Check for updates** under **Customize → Plugins**. In a checkout only (a plugin install refuses both), to install the latest commit on `main` instead of the release: `node update-system.mjs apply --channel main --confirm`. That is a one-off: the choice is not saved and the session check above still looks only at releases, so staying on `main` means running `node update-system.mjs check --channel main` and that `apply` again. Rollback, also checkout only: `node update-system.mjs rollback`. From a linked git worktree, all of these run in the checkout that has `main` checked out, so the update lands on `main`; afterwards suggest `git merge main` in the worktree.
 
-## What is career-ops
+## What is project-x
 
 AI-powered, CLI-agnostic job search automation: pipeline tracking, offer evaluation, CV generation, portal scanning, batch processing. Runs on any AI coding CLI following the [open agent skill standard](https://agentskills.io) (Claude Code, Cursor, Codex, OpenCode, Pi, Oh My Pi, Qwen, Copilot, Kimi, Antigravity CLI, Grok Build CLI). Legacy Gemini API evaluation remains via `gemini-eval.mjs`.
 
 ### Codex invocation
 
-- **Interactive:** run `codex` in the repo root; if `/career-ops` is unavailable, ask Codex to run the mode directly.
+- **Interactive:** run `codex` in the repo root; if `/project-x` is unavailable, ask Codex to run the mode directly.
 - **Headless:** `codex exec "prompt"` for one-shot workers.
-- **Examples:** `Run career-ops scan mode`, `Run career-ops pipeline mode for data/pipeline.md`, `Run career-ops pdf mode`, `Run career-ops tracker mode`, `Evaluate this JD with career-ops auto-pipeline: https://company.com/jobs/123`
+- **Examples:** `Run project-x scan mode`, `Run project-x pipeline mode for data/pipeline.md`, `Run project-x pdf mode`, `Run project-x tracker mode`, `Evaluate this JD with project-x auto-pipeline: https://company.com/jobs/123`
 
 ### Pi invocation
 
 - **Project context:** `pi` reads `AGENTS.md` from the repo root automatically; there is no wrapper file to keep in sync.
-- **Skill:** Pi discovers the shared router at `.agents/skills/career-ops/SKILL.md`, exposed as `/skill:career-ops`. If a Pi build gates project resources behind a trust decision, run `/trust` once in the repo, then restart `pi` before `/skill:career-ops` (`/trust` applies to future Pi processes), or start with `-a`, which trusts a single run and needs no restart.
-- **Interactive:** run `pi` in the repo root, then `/skill:career-ops <mode>`.
+- **Skill:** Pi discovers the shared router at `.agents/skills/project-x/SKILL.md`, exposed as `/skill:project-x`. If a Pi build gates project resources behind a trust decision, run `/trust` once in the repo, then restart `pi` before `/skill:project-x` (`/trust` applies to future Pi processes), or start with `-a`, which trusts a single run and needs no restart.
+- **Interactive:** run `pi` in the repo root, then `/skill:project-x <mode>`.
 - **Headless:** `pi -a -p "prompt"` for one-shot workers; `pi -a --mode json -p "prompt"` when the caller parses events. `-a` trusts project resources for that one run only, so a headless worker on a Pi build that gates them behind a trust decision still loads the skill (see `docs/SUPPORTED_CLIS.md`).
-- **Examples:** `pi -a -p "Run career-ops tracker mode"`, `pi -a -p "Evaluate this JD with career-ops auto-pipeline: https://company.com/jobs/123"`
+- **Examples:** `pi -a -p "Run project-x tracker mode"`, `pi -a -p "Evaluate this JD with project-x auto-pipeline: https://company.com/jobs/123"`
 
 ### Oh My Pi (omp) invocation
 
 - **Project context:** `.omp/AGENTS.md` imports `AGENTS.md` (`@../AGENTS.md`) so OMP's `native` provider loads the root contract without being shadowed by `.github/copilot-instructions.md`.
-- **Skill:** OMP discovers the shared router at `.agents/skills/career-ops/SKILL.md` automatically via its `agents` discovery provider, exposed as `/skill:career-ops`.
-- **Interactive:** run `omp` in the repo root, then `/skill:career-ops <mode>`.
+- **Skill:** OMP discovers the shared router at `.agents/skills/project-x/SKILL.md` automatically via its `agents` discovery provider, exposed as `/skill:project-x`.
+- **Interactive:** run `omp` in the repo root, then `/skill:project-x <mode>`.
 - **Headless:** `omp -p "prompt"` for one-shot workers.
-- **Examples:** `omp -p "Run career-ops tracker mode"`, `omp -p "Evaluate this JD with career-ops auto-pipeline: https://company.com/jobs/123"`
+- **Examples:** `omp -p "Run project-x tracker mode"`, `omp -p "Evaluate this JD with project-x auto-pipeline: https://company.com/jobs/123"`
 
 
 ### Main Files
@@ -145,7 +145,7 @@ AI-powered, CLI-agnostic job search automation: pipeline tracking, offer evaluat
 | `audit-portals.mjs` | Content audit of `portals.yml` — the companion to `verify-portals.mjs`, which answers "does this board answer?" but never "*whose* postings are these?". Fetches each enabled board through the same `providers/` modules `scan.mjs` uses and reports provider + posting count + sample titles/locations per entry, verdicts worst-first: `no-provider` (enabled but nothing claims it, so `scan.mjs` skips it silently — the highest-value check), `error`, `empty`, `small`, `ok`. `--baseline prev.json` compares against an earlier `--json` run and flags boards that lost ≥50% of their postings, the shape an ATS migration takes. **It cannot detect a well-formed board belonging to the wrong entity** — a parent company's board is full of real jobs — so it surfaces the evidence a reader needs instead of pretending to a verdict (JSON, `--summary`, `--strict`) |
 | `scan-dayforce.mjs` | Playwright browser scanner for Dayforce (Ceridian) Recruiting career sites (jobs.dayforcehcm.com — Cloudflare + NextAuth CSRF gated, no bare-HTTP-reachable API); reads `dayforce_boards` from `portals.yml` |
 | `check-liveness.mjs` / `liveness-core.mjs` | Job posting liveness checker + shared logic (expired signals win over generic Apply text). An `expired` verdict is recorded back into `data/scan-history.tsv` as a `skipped_expired` row, so a posting confirmed dead once stops resurfacing in the web "new matches this week" feed (#3891). Only URLs the history already knows are written, once each; `uncertain` is never recorded, and `--no-record` makes the run leave no trace |
-| `robots-check.mjs` | robots.txt gate on the headed liveness retry (#5776): `robotsAllows(url)` reads the host's `robots.txt` once per process as `career-ops` (RFC 9309: the `career-ops` group, else `*`; longest match, Disallow wins a tie) and fails closed, so `check-liveness.mjs` and `scan --verify --headed-fallback` skip the headed retry unless it permits the path. A skip keeps the headless `uncertain` verdict and never records anything as expired; the first headless request is not gated |
+| `robots-check.mjs` | robots.txt gate on the headed liveness retry (#5776): `robotsAllows(url)` reads the host's `robots.txt` once per process as `project-x` (RFC 9309: the `project-x` group, else `*`; longest match, Disallow wins a tie) and fails closed, so `check-liveness.mjs` and `scan --verify --headed-fallback` skip the headed retry unless it permits the path. A skip keeps the headless `uncertain` verdict and never records anything as expired; the first headless request is not gated |
 | `fetch-jd.mjs` | JD text for a posting whose ATS is in `liveness-api.mjs`'s `JD_TEXT_API_ATS`, no browser needed; on an API miss it reads the page's own JSON-LD `JobPosting` (`lib/jd-page-fetch.mjs`, behind the egress guard), which covers Phenom and bespoke career sites whose visible HTML has no JD. The web evaluate run calls it before starting the worker (`web/src/lib/jd-prefetch.mjs`). Prints the JD on stdout and exits 0 on a hit; exits 1 with empty stdout otherwise, so the caller's existing browser/WebFetch fallback is the next step. Backed by `browser-extract.mjs`'s `fetchJdViaKnownApi()`, the same dispatch its `jd` mode uses |
 | `set-status.mjs` | Canonical tracker-row update: `node set-status.mjs --report <report#> <State>`, or `<tracker#\|company>` as the first argument (a bare number is the tracker `#`, not the report number); `[--note] [--force]` — strict states.yml validation, report-link mismatch guard, shared lock, atomic write |
 | `fix-report-links.mjs` | Repairs tracker rows whose Report link points at a missing file: rewrites only that cell to `—` (single-link cells only; others listed for hand review), same broken-link rule as `verify-pipeline.mjs` Check 3 via `findDeadReportLink()` in `tracker-utils.mjs`; `--dry-run` previews, otherwise `.bak` backup + locked atomic write; idempotent |
@@ -158,7 +158,7 @@ AI-powered, CLI-agnostic job search automation: pipeline tracking, offer evaluat
 | `discard-analytics.mjs` | Read-only summary of the pre-screen discard log (`data/discard.log`; `--log batch/logs/discard.log` for batch runs): counts by reason, domain and day, plus the most-discarded URLs with their latest reason, to check by hand for wrong rejections. Title keywords are tuned with `filter-audit.mjs`, since the scanner's title filter never writes this log |
 | `keyword-match.mjs` | ATS keyword-coverage check — JD keywords (from a report) vs CV/HTML → coverage %, present/thin/missing (diagnostic only, never injects keywords) |
 | `upskill.mjs` | Weighted skill-gap map from tracked reports; known skills from `cv.md`/`config/profile.yml` excluded (JSON) |
-| `backup.mjs` | Copies the User Layer (`USER_PATHS` in `update-system.mjs` under the data root) to a backup folder you choose: `--dest` / `CAREER_OPS_BACKUP_DIR`, or a cloud drive with `--provider`; no default destination; whole-file copies, never deletes at the destination, skips `.env` files, `data/cache/` and symlinks, and leaves `data/Connections.csv`, `data/contacts.tsv`, `data/reply-candidates.json` and `output/contacts.vcf` (and any other `.vcf` file) out unless `--include-contacts` (never with `--provider` or a `--dest` inside a Dropbox, iCloud, OneDrive or Google Drive folder at its default location; a synced folder moved elsewhere is not detected, so keep contact exports out of any synced folder); `--include-claude-memory` also copies Claude Code's auto-memory for the checkout (`~/.claude/projects/<checkout-slug>/memory/`, outside the data root) into `claude-memory/` at the destination, synced destinations included; `--claude-memory-dir <dir>` names that folder when Claude Code keeps it elsewhere (JSON or `--dry-run`) |
+| `backup.mjs` | Copies the User Layer (`USER_PATHS` in `update-system.mjs` under the data root) to a backup folder you choose: `--dest` / `PROJECT_X_BACKUP_DIR`, or a cloud drive with `--provider`; no default destination; whole-file copies, never deletes at the destination, skips `.env` files, `data/cache/` and symlinks, and leaves `data/Connections.csv`, `data/contacts.tsv`, `data/reply-candidates.json` and `output/contacts.vcf` (and any other `.vcf` file) out unless `--include-contacts` (never with `--provider` or a `--dest` inside a Dropbox, iCloud, OneDrive or Google Drive folder at its default location; a synced folder moved elsewhere is not detected, so keep contact exports out of any synced folder); `--include-claude-memory` also copies Claude Code's auto-memory for the checkout (`~/.claude/projects/<checkout-slug>/memory/`, outside the data root) into `claude-memory/` at the destination, synced destinations included; `--claude-memory-dir <dir>` names that folder when Claude Code keeps it elsewhere (JSON or `--dry-run`) |
 | `stats.mjs` | Lifetime pipeline stats: tracker roll-up, canonical `ever*` funnel, scan totals, portal coverage, follow-up compliance, scan-run trends (JSON or `--summary`) |
 | `data/status-log.tsv` | Append-only status transition ledger, sibling of the tracker file: `{tracker#}\t{date}\t{from}\t{to}\t{source}\t{note}`. Appended by `set-status.mjs` on every real status change; the tracker stays the source of truth for *state*, the ledger records *when*. An unknown from/to state is the sentinel `-`, and the source column is a closed set whose members are `VALID_SOURCES` in `funnel-velocity.mjs` — see `DATA_CONTRACT.md` before writing to it from anywhere else |
 | `funnel-velocity.mjs` | Funnel calibration vs market benchmarks + stage velocity, folded from `data/status-log.tsv` (JSON or `--summary`) |
@@ -213,9 +213,9 @@ not require this check and must not copy onboarding templates as a side effect
 node doctor.mjs --json
 ```
 
-Output: `{"onboardingNeeded": <bool>, "data_root": "<path>", "project_root": "<path>", "missing": [...], "unpersonalized": [...], "warnings": [...], "autoCopied": [...]}` — `data_root` is the resolved directory for all user-layer files (`data/`, `cv.md`, `config/profile.yml`, `portals.yml`, etc.); `project_root` is the code checkout. In a split checkout (via the `.career-ops-data` marker file or exported `CAREER_OPS_ROOT` / `CAREER_OPS_DATA_DIR`), operate on `{data_root}` for all user files rather than `{project_root}`. Note that per-file environment overrides (such as `CAREER_OPS_TRACKER` or `CAREER_OPS_PROFILE`) take precedence over `data_root` for that specific file. `missing` lists whichever of `cv.md`, `config/profile.yml`, `modes/_profile.md`, `portals.yml` are absent; `warnings` is reserved for non-blocking setup signals. This command is read-only: `autoCopied` is empty unless `--init-templates` is explicitly added during onboarding.
+Output: `{"onboardingNeeded": <bool>, "data_root": "<path>", "project_root": "<path>", "missing": [...], "unpersonalized": [...], "warnings": [...], "autoCopied": [...]}` — `data_root` is the resolved directory for all user-layer files (`data/`, `cv.md`, `config/profile.yml`, `portals.yml`, etc.); `project_root` is the code checkout. In a split checkout (via the `.project-x-data` marker file or exported `PROJECT_X_ROOT` / `PROJECT_X_DATA_DIR`), operate on `{data_root}` for all user files rather than `{project_root}`. Note that per-file environment overrides (such as `PROJECT_X_TRACKER` or `PROJECT_X_PROFILE`) take precedence over `data_root` for that specific file. `missing` lists whichever of `cv.md`, `config/profile.yml`, `modes/_profile.md`, `portals.yml` are absent; `warnings` is reserved for non-blocking setup signals. This command is read-only: `autoCopied` is empty unless `--init-templates` is explicitly added during onboarding.
 
-**`unpersonalized` — act on this even when `onboardingNeeded` is false.** Entries are `{path, reason, impact}` for a personalization file that exists but still carries template content, and for a `config/profile.yml` or `portals.yml` that holds only comments. After onboarding copies `modes/_profile.md` and `modes/_brief.md`, an existence check cannot catch their unedited content. Left unedited, `_profile.md` feeds the **template author's** archetypes and North Star into every A-F evaluation, so offers get scored against a stranger's targeting; `_brief.md` hands the triage first pass literal `{placeholders}`. It is a warning, not a gate (career-ops works out of the box), but before running `scan`, `pipeline`, or `batch` with a non-empty `unpersonalized`, tell the user:
+**`unpersonalized` — act on this even when `onboardingNeeded` is false.** Entries are `{path, reason, impact}` for a personalization file that exists but still carries template content, and for a `config/profile.yml` or `portals.yml` that holds only comments. After onboarding copies `modes/_profile.md` and `modes/_brief.md`, an existence check cannot catch their unedited content. Left unedited, `_profile.md` feeds the **template author's** archetypes and North Star into every A-F evaluation, so offers get scored against a stranger's targeting; `_brief.md` hands the triage first pass literal `{placeholders}`. It is a warning, not a gate (project-x works out of the box), but before running `scan`, `pipeline`, or `batch` with a non-empty `unpersonalized`, tell the user:
 
 > "`modes/_profile.md` is still the shipped template, so evaluations would score against the template author's targeting rather than yours. Want me to personalize it from your CV first? (~1 min, and it changes every score.)"
 
@@ -241,7 +241,7 @@ Use the returned `missing` and `unpersonalized` fields to guide the user step by
 #### Step 0: Free Tier Check
 
 Only if the user mentions cost, pricing, budget, or free alternatives:
-> "career-ops works fully on Antigravity CLI's free tier — no API key or paid subscription needed. See [FREE_TIER.md](docs/FREE_TIER.md) for setup, daily limits, and batch tips."
+> "project-x works fully on Antigravity CLI's free tier — no API key or paid subscription needed. See [FREE_TIER.md](docs/FREE_TIER.md) for setup, daily limits, and batch tips."
 
 If the user is already on a paid plan (Claude Max, Google AI, etc.) or does not mention cost, skip this step silently.
 
@@ -257,7 +257,7 @@ If `cv.md` is missing, ask:
 Create `cv.md` from whatever they provide — clean markdown with standard sections (Summary, Experience, Projects, Education, Skills). The CV checks (`cv-title-check.mjs`, `verify-cv-structure.mjs`, `jd-skill-gap.mjs`) find jobs and skills by heading, so keep the shape `examples/cv-example.md` uses: an Experience section named `## Experience`, `## Work Experience`, `## Professional Experience`, `## Employment History` or `## Work History`; each job as `### Company — Location`, then a bold `**Title**` line, then a dates line; skills under a heading containing "Skills". Pandoc output converted from a .docx (`## **[Experience]{.smallcaps}**`, `---` dashes, trailing `\` hard breaks) is read too (#4879). `node doctor.mjs` warns when it cannot find the Experience section.
 
 #### Step 2: Profile (required)
-If `node doctor.mjs --json` `warnings` says the data-root `.env` sets `CAREER_OPS_PROFILE`, do not copy the example profile. Ask the user to export that variable in the shell (or shell profile) that starts the agent, then restart the session from it, or to remove the line from `.env`. A shell export does not reach an agent session that is already running, so run doctor again only after that.
+If `node doctor.mjs --json` `warnings` says the data-root `.env` sets `PROJECT_X_PROFILE`, do not copy the example profile. Ask the user to export that variable in the shell (or shell profile) that starts the agent, then restart the session from it, or to remove the line from `.env`. A shell export does not reach an agent session that is already running, so run doctor again only after that.
 
 If `config/profile.yml` is missing, ask:
 > "I need a few details to personalize the system:
@@ -356,22 +356,22 @@ Once all files exist, record the agent CLI you are running in, so `doctor.mjs`, 
 node remember-cli.mjs <cli>   # claude, codex, opencode, gemini, grok, ...
 ```
 
-It writes `CAREER_OPS_CLI=<cli>` to the data root's `.env` and keeps every other line. Skip it if the user already set `CAREER_OPS_CLI`.
+It writes `PROJECT_X_CLI=<cli>` to the data root's `.env` and keeps every other line. Skip it if the user already set `PROJECT_X_CLI`.
 
 Then run `node doctor.mjs` once before you confirm. Mention a setup command only for a check that fails. For example, say `npx playwright install chromium` only when the "Playwright chromium" check fails, and never just because the README lists it.
 
 Then confirm:
 > "You're all set! You can now:
 > - Paste a job URL to evaluate it
-> - Run the scan entrypoint for your CLI to search portals: `/career-ops scan`, `/skill:career-ops scan` on Pi, or ask Codex to run `scan`
-> - Open the command menu for your CLI: `/career-ops`, `/skill:career-ops` on Pi, or ask Codex to show the available career-ops modes
+> - Run the scan entrypoint for your CLI to search portals: `/project-x scan`, `/skill:project-x scan` on Pi, or ask Codex to run `scan`
+> - Open the command menu for your CLI: `/project-x`, `/skill:project-x` on Pi, or ask Codex to show the available project-x modes
 >
 > Everything is customizable — just ask me to change anything."
 
 Then suggest automation:
 > "Want me to scan for new offers automatically? I can set up a recurring scan every few days so you don't miss anything. Just say 'scan every 3 days' and I'll configure it."
 
-If the user accepts, use the `/loop` or `/schedule` skill (if available) to set up a recurring scan entrypoint for their CLI (`/career-ops scan`, `/skill:career-ops scan` on Pi, or the equivalent Codex prompt). If those aren't available, point them to [docs/AUTOMATION.md](docs/AUTOMATION.md) for copy-paste cron / launchd / Windows Task Scheduler recipes plus a zero-token triage-to-shortlist prompt, or remind them to run the scan mode periodically.
+If the user accepts, use the `/loop` or `/schedule` skill (if available) to set up a recurring scan entrypoint for their CLI (`/project-x scan`, `/skill:project-x scan` on Pi, or the equivalent Codex prompt). If those aren't available, point them to [docs/AUTOMATION.md](docs/AUTOMATION.md) for copy-paste cron / launchd / Windows Task Scheduler recipes plus a zero-token triage-to-shortlist prompt, or remind them to run the scan mode periodically.
 
 ### Personalization
 
@@ -529,9 +529,9 @@ A single-string `modes_dir` (today's default, ~90% of users) layers the market f
 
 ## Apply scope
 
-Apply reads and searches only this checkout, plus the data root when `CAREER_OPS_ROOT` or `CAREER_OPS_DATA_DIR` is set. Run `node apply-scope.mjs root` and use only the directories it prints.
+Apply reads and searches only this checkout, plus the data root when `PROJECT_X_ROOT` or `PROJECT_X_DATA_DIR` is set. Run `node apply-scope.mjs root` and use only the directories it prints.
 
-- Do not search `$HOME`. Do not grep or open another career-ops install.
+- Do not search `$HOME`. Do not grep or open another project-x install.
 - Open forms in a Playwright browser this project launches. Run `node apply-scope.mjs launch-options` and pass that object to `chromium.launch`. Do not call `chromium.connect` or `connectOverCDP`. Do not read `DevToolsActivePort`. Do not pass a remote-debugging port or a Chrome user-data directory.
 - If Playwright is unavailable, ask the candidate to paste the questions or share a screenshot.
 - Do not submit the form. Ethical Use still holds. Stop before Submit, Send, or Apply until the candidate confirms they submitted it.
@@ -584,7 +584,7 @@ This is a confirmation step, not a replacement for `check-liveness.mjs` — run 
 
 ## Community asks (one at a time, once each)
 
-This project practices CareerOps (see `MANIFESTO.md`), and career-ops never phones home: the only signals the maintainers get are the ones people choose to give. So it asks for them in words, rarely, and at the right moment. There are three asks, each shown at most once and never two in one run: a GitHub star after the first evaluation report, the manifesto later (after five reports, at least a week after the star), and the Hired Wall at a hire (see "Celebrating a hire (the Hired Wall)").
+This project practices ProjectX (see `MANIFESTO.md`), and project-x never phones home: the only signals the maintainers get are the ones people choose to give. So it asks for them in words, rarely, and at the right moment. There are three asks, each shown at most once and never two in one run: a GitHub star after the first evaluation report, the manifesto later (after five reports, at least a week after the star), and the Hired Wall at a hire (see "Celebrating a hire (the Hired Wall)").
 
 - **When:** at the very end of an interactive run that saved at least one evaluation report (`oferta`, `auto-pipeline`, `pipeline`, and their translations), run `node community-asks.mjs next`. If it prints nothing, say nothing about it. If it prints an ask, end your reply with it, after everything else:
   - copy a fenced block (the star's drawing) exactly as printed, fence included: never translate, redraw or re-indent it;
@@ -593,7 +593,7 @@ This project practices CareerOps (see `MANIFESTO.md`), and career-ops never phon
 - **The script decides.** Never ask for a star, a signature or a share on your own, never turn an ask into a bigger one, and never repeat an ask, not even when the user ignored it.
 - **Never** in a headless run or a batch worker (see "Headless / Batch Mode"). Never star through `gh`, `curl` or any API, and never offer to: the GitHub Acceptable Use Policies forbid automated starring.
 - On a `hired` outcome the Hired Wall is the only ask.
-- The user can turn the asks off with `node community-asks.mjs off` or `CAREER_OPS_NO_ASKS=1`.
+- The user can turn the asks off with `node community-asks.mjs off` or `PROJECT_X_NO_ASKS=1`.
 
 ## Headless / Batch Mode
 
@@ -648,7 +648,7 @@ When the user records a `hired` or `accepted` outcome, celebrate FIRST — a lan
 
 > That's the whole point of everything we did here. Congratulations! 🎉
 >
-> One optional thing: career-ops keeps a public wall of people who landed jobs with it. If you want yours there, I'll draft it from what we already know (role, weeks, what helped). You'll see the exact text, and nothing leaves this machine unless you submit it yourself on GitHub. Want the draft? If not, I won't bring this one up again.
+> One optional thing: project-x keeps a public wall of people who landed jobs with it. If you want yours there, I'll draft it from what we already know (role, weeks, what helped). You'll see the exact text, and nothing leaves this machine unless you submit it yourself on GitHub. Want the draft? If not, I won't bring this one up again.
 
 If they say yes: run `node hired-share.mjs --report N --anonymity <their choice> --story "<their words>" --open` — it prints the exact payload, opens a prefilled GitHub issue, and the user reviews and submits it themselves. Ask their anonymity level explicitly and pass it as `handle`, `role` or `count` (the only values the script accepts: handle and avatar, role and location without a handle, or a count only); never default to the most exposed. Offer a 2-sentence draft story built only from tracker data, and let them rewrite it. If they say "not now": `node hired-share.mjs --report N --mark later`. If they say no: `--mark never`, and honor it — that hire is never brought up again.
 

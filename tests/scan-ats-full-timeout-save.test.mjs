@@ -38,15 +38,15 @@ function textHasUrl(text, raw) {
 function childEnv(dir, mode) {
   return {
     ...process.env,
-    CAREER_OPS_ROOT: dir,
-    CAREER_OPS_DATA_DIR: '',
-    CAREER_OPS_PROFILE: '',
-    CAREER_OPS_PORTALS: '',
-    CAREER_OPS_PIPELINE: '',
-    CAREER_OPS_SCAN_HISTORY: '',
-    CAREER_OPS_TRACKER: '',
+    PROJECT_X_ROOT: dir,
+    PROJECT_X_DATA_DIR: '',
+    PROJECT_X_PROFILE: '',
+    PROJECT_X_PORTALS: '',
+    PROJECT_X_PIPELINE: '',
+    PROJECT_X_SCAN_HISTORY: '',
+    PROJECT_X_TRACKER: '',
     STUB_MODE: mode,
-    CAREER_OPS_DNS_LOOKUPS_PER_MIN: '0',
+    PROJECT_X_DNS_LOOKUPS_PER_MIN: '0',
   };
 }
 
@@ -106,7 +106,7 @@ function stopSweep(dir, preload, extraArgs) {
       join(ROOT, 'scan-ats-full.mjs'),
       '--ats', 'greenhouse', '--limit', String(COMPANIES), '--since', '7', '--json',
       ...extraArgs,
-    ], { cwd: dir, env: { ...childEnv(dir, 'stop'), CAREER_OPS_SCAN_RUN: SCAN_RUN_ID } });
+    ], { cwd: dir, env: { ...childEnv(dir, 'stop'), PROJECT_X_SCAN_RUN: SCAN_RUN_ID } });
     let stdout = '';
     let stderr = '';
     let killed = false;

@@ -15,8 +15,8 @@
 //   package.json  homepage      https://santifer.io
 //   CITATION.cff  url           https://santifer.io
 //                               — both set in the same branding commit, BEFORE
-//                                 career-ops.org existed. Meanwhile the GitHub
-//                                 homepage and the README already say career-ops.org.
+//                                 project-x.org existed. Meanwhile the GitHub
+//                                 homepage and the README already say project-x.org.
 //
 // CITATION.cff's `url` is the field Zenodo and citation tooling copy as the
 // SOFTWARE's website, so a stale value there tells the academic-citation

@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/santifer/career-ops/dashboard/internal/ui/screens"
+	"github.com/santifer/project-x/dashboard/internal/ui/screens"
 )
 
 type clipCall struct {

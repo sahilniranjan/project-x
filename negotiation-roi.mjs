@@ -59,7 +59,7 @@
  *      node negotiation-roi.mjs --wage 45 --occurrences 52       (direct annual count)
  *      node negotiation-roi.mjs --self-test
  *
- * Issue #2949 — github.com/career-ops-hq/career-ops
+ * Issue #2949 — github.com/project-x-hq/project-x
  */
 
 import { readFileSync, existsSync } from 'fs';
@@ -70,9 +70,9 @@ import { parseStories } from './lib/story-bank.mjs';
 import { parseStoryBlocks } from './story-provenance-check.mjs';
 import { flagValue, hasFlag } from './lib/cli-flags.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
-import { getCareerOpsRoot } from './path-resolver.mjs';
+import { getProjectXRoot } from './path-resolver.mjs';
 
-const DATA_ROOT = getCareerOpsRoot();
+const DATA_ROOT = getProjectXRoot();
 // BOTH from the data root, because the v1 safety gate compares them: a claim
 // survives only if its number also appears verbatim in cv.md. Resolving the
 // story bank from the CODE root and cv.md from the DATA root pointed the two
@@ -699,7 +699,7 @@ function main() {
 
   if (!existsSync(STORY_BANK_PATH)) {
     console.error(`Error: ${STORY_BANK_PATH} not found.`);
-    console.error('Run /career-ops interview-prep on a role first to populate your story bank.');
+    console.error('Run /project-x interview-prep on a role first to populate your story bank.');
     process.exit(1);
   }
   if (!existsSync(CV_PATH)) {

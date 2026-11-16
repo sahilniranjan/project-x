@@ -36,20 +36,20 @@ import { createAdmissionGate, formatSkipCounts } from './lib/admission-gate.mjs'
 import { localToday } from './lib/local-today.mjs';
 import { canonicalJobKey } from './url-key.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
-import { getCareerOpsRoot, resolveTrackerPath } from './path-resolver.mjs';
+import { getProjectXRoot, resolveTrackerPath } from './path-resolver.mjs';
 import { resolveColumns, parseTrackerRow, isHeaderRow, isSeparatorRow } from './tracker-parse.mjs';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
-const DATA_ROOT = getCareerOpsRoot();
+const DATA_ROOT = getProjectXRoot();
 // The same read resolution as set-status.mjs and every other tracker reader:
-// CAREER_OPS_TRACKER, then data/applications.md, then the legacy root copy.
+// PROJECT_X_TRACKER, then data/applications.md, then the legacy root copy.
 const APPLICATIONS_PATH = resolveTrackerPath(DATA_ROOT);
-// The same resolution as scan.mjs's PIPELINE_PATH, so the CAREER_OPS_PIPELINE
+// The same resolution as scan.mjs's PIPELINE_PATH, so the PROJECT_X_PIPELINE
 // lane is honored by the de-dup read, the export snapshot, the write and the
 // log line alike (#6353). Passed to appendToPipeline() explicitly rather than
 // left to its default, so all four always agree on one file.
-const PIPELINE_PATH = process.env.CAREER_OPS_PIPELINE || path.join(DATA_ROOT, 'data', 'pipeline.md');
-const PIPELINE_LABEL = process.env.CAREER_OPS_PIPELINE ? PIPELINE_PATH : 'data/pipeline.md';
+const PIPELINE_PATH = process.env.PROJECT_X_PIPELINE || path.join(DATA_ROOT, 'data', 'pipeline.md');
+const PIPELINE_LABEL = process.env.PROJECT_X_PIPELINE ? PIPELINE_PATH : 'data/pipeline.md';
 
 // A misbehaving plugin's stray rejection should be attributed and not silently
 // crash the host (the engine's per-hook try/catch handles the common case; this
@@ -109,7 +109,7 @@ function trackerSnapshotRows(md) {
   return rows;
 }
 
-/** URLs already present in the pipeline (data/pipeline.md or the CAREER_OPS_PIPELINE lane), for additive de-duplication. */
+/** URLs already present in the pipeline (data/pipeline.md or the PROJECT_X_PIPELINE lane), for additive de-duplication. */
 function existingPipelineUrls() {
   const urls = new Set();
   if (!existsSync(PIPELINE_PATH)) return urls;
@@ -239,7 +239,7 @@ async function cmdRun(args) {
   if (!resolved.manifest) { console.error(resolved.message); process.exit(1); }
   const manifest = resolved.manifest;
   // Config keys, lock entries, and hook dispatch use the manifest id. The
-  // token may be the longer registry name (`career-ops-plugin-<id>`).
+  // token may be the longer registry name (`project-x-plugin-<id>`).
   const id = manifest.id;
 
   // Provider hooks ride scan, never this CLI.
@@ -299,7 +299,7 @@ async function cmdRun(args) {
       // Only postings: an interview event in scan-history would read as a
       // scanned job everywhere scan-history is counted.
       if (manifest.jobPostings) await appendToScanHistory(jobs, localToday(), 'added');
-      console.log(`→ Appended ${jobs.length} to ${PIPELINE_LABEL}. Run /career-ops pipeline to evaluate.`);
+      console.log(`→ Appended ${jobs.length} to ${PIPELINE_LABEL}. Run /project-x pipeline to evaluate.`);
     }
     return;
   }
@@ -326,7 +326,7 @@ async function cmdRun(args) {
   }
 
   if (hook === 'notify') {
-    const message = positional.slice(hookArgStart).join(' ') || '(career-ops notification)';
+    const message = positional.slice(hookArgStart).join(' ') || '(project-x notification)';
     const results = filterResultsForId(await runHook('notify', { message }, { root: ROOT, dataRoot: DATA_ROOT, dryRun, pluginId: id }), id);
     exitIfPluginDidNotRun(results, id, 'notify');
     let failed = false;
@@ -355,7 +355,7 @@ function findManifest(id) {
   return discoverPlugins(pluginRoots(ROOT), resolveSuccessorIds(ROOT)).find(m => m.id === id) || null;
 }
 
-// The registry lists `career-ops-plugin-<id>`, and `plugins.mjs available`
+// The registry lists `project-x-plugin-<id>`, and `plugins.mjs available`
 // prints that name. The manifest id is the short one. Accept either, and when
 // the plugin is only in the registry, say how to install it instead of
 // "Unknown plugin".
@@ -471,7 +471,7 @@ export function setPluginEnabled(root, id, on, settings) {
   const prev = (cfg.plugins[id] && typeof cfg.plugins[id] === 'object') ? cfg.plugins[id] : {};
   cfg.plugins[id] = { ...prev, ...(settings || {}), enabled: on };
   mkdirSync(path.join(root, 'config'), { recursive: true });
-  writeFileSync(file, '# career-ops plugin activation — see config/plugins.example.yml\n' + yaml.dump(cfg), 'utf8');
+  writeFileSync(file, '# project-x plugin activation — see config/plugins.example.yml\n' + yaml.dump(cfg), 'utf8');
 }
 
 const setEnabled = (id, on, settings) => setPluginEnabled(DATA_ROOT, id, on, settings);
@@ -511,9 +511,9 @@ async function cmdAvailable() {
     const tag = succ ? `  🔁 maintained version: ${succ.name} (install to use it instead)` : '';
     console.log(`  ${m.id}  [${m.hooks.join(', ')}]  — ${m.description}${tag}`);
   }
-  console.log('\n✓ Community plugins approved by career-ops:\n');
+  console.log('\n✓ Community plugins approved by project-x:\n');
   if (reg.plugins.length === 0) {
-    console.log('  (none yet — publish yours as `career-ops-plugin-<name>` and open a registry PR; see docs/PLUGINS.md)');
+    console.log('  (none yet — publish yours as `project-x-plugin-<name>` and open a registry PR; see docs/PLUGINS.md)');
   } else {
     for (const p of reg.plugins) {
       const author = registryAuthor(p);
@@ -554,7 +554,7 @@ function cmdEnable(args) {
   const source = classifySource(m, ROOT, entry);
   if (!confirm) {
     console.log(capabilityCard(m, source));
-    if (source === 'unverified') console.log('\n  ⚠️  UNVERIFIED — not reviewed by career-ops; you are trusting this author.');
+    if (source === 'unverified') console.log('\n  ⚠️  UNVERIFIED — not reviewed by project-x; you are trusting this author.');
     console.log(`\n  This grants the capabilities above. To confirm, run:\n    node plugins.mjs enable ${id} --confirm\n`);
     return;
   }
@@ -619,7 +619,7 @@ function cmdNew(args) {
   console.log(`✓ Scaffolded plugins.local/${name}/`);
   console.log('  Next: edit manifest.json + index.mjs, then either');
   console.log(`    A) develop locally:  node plugins.mjs enable ${name}`);
-  console.log(`    B) publish:          push a github repo named "career-ops-plugin-${name}", then open a registry PR (docs/PLUGINS.md)`);
+  console.log(`    B) publish:          push a github repo named "project-x-plugin-${name}", then open a registry PR (docs/PLUGINS.md)`);
 }
 
 async function cmdAdd(args) {
@@ -637,7 +637,7 @@ async function cmdAdd(args) {
     try { parseRepoArg(target); } catch (e) { console.error(`✗ ${e.message}`); process.exit(1); }
     if (!sha) { console.error('✗ a repo not in the registry requires --sha <40-hex-commit> (we never clone a moving branch).'); process.exit(1); }
     url = target; useSha = sha; approved = false;
-    console.log("⚠️  Not in the career-ops registry — you are installing this author's code with your privileges.");
+    console.log("⚠️  Not in the project-x registry — you are installing this author's code with your privileges.");
   }
 
   console.log(`Cloning ${url} @ ${String(useSha).slice(0, 10)} …`);

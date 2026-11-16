@@ -107,7 +107,7 @@ if (sourceNames.length < 6) {
 // scalar modes_dir must therefore layer the market files on the English canon,
 // not swap them in: the router always reads the English modes/_shared.md and
 // modes/{mode}.md first, or every uncopied rule silently disappears.
-const router = readFileSync(join(ROOT, '.agents', 'skills', 'career-ops', 'SKILL.md'), 'utf8').replace(/\r\n/g, '\n');
+const router = readFileSync(join(ROOT, '.agents', 'skills', 'project-x', 'SKILL.md'), 'utf8').replace(/\r\n/g, '\n');
 const layersCanon = /always read the English version first \(the English `modes\/_shared\.md` and the English `modes\/\{mode\}\.md`/.test(router);
 const englishWins = /the English rule wins/.test(router);
 const keepsTriageLean = /never adds a file the mode's section does not load/.test(router);

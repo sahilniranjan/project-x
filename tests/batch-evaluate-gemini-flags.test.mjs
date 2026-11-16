@@ -46,7 +46,7 @@ test('no flags keep the defaults', () => {
 function run(args) {
   return spawnSync(process.execPath, [join(ROOT, 'batch-evaluate-gemini.mjs'), ...args], {
     cwd: work, encoding: 'utf-8', timeout: 30_000,
-    env: { PATH: process.env.PATH, HOME: work, CAREER_OPS_ROOT: work, GEMINI_API_KEY: '' },
+    env: { PATH: process.env.PATH, HOME: work, PROJECT_X_ROOT: work, GEMINI_API_KEY: '' },
   });
 }
 

@@ -75,7 +75,7 @@ assert(none.advertisedCompared === 0 && none.meanAdvToActPct === null && none.de
     const script = join(dirname(fileURLToPath(import.meta.url)), '..', 'salary-gap.mjs');
     const out = spawnSync(process.execPath, [script, '--summary'], {
       encoding: 'utf-8',
-      env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_TRACKER: '', CAREER_OPS_PROFILE: '' },
+      env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_TRACKER: '', PROJECT_X_PROFILE: '' },
     });
     const line = (out.stdout || '').split(NL).find((l) => l.trim().startsWith('EUR:')) || '';
     assert(out.status === 0

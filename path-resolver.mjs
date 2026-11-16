@@ -64,16 +64,16 @@ export function isPluginInstallCopy(dir = __dirname, env = process.env) {
 
 /**
  * Where a plugin install keeps the user's files when neither the environment
- * nor a marker says where: ~/career-ops-data.
+ * nor a marker says where: ~/project-x-data.
  *
  * @returns {string}
  */
 export function pluginDefaultDataRoot() {
-  return join(homedir(), 'career-ops-data');
+  return join(homedir(), 'project-x-data');
 }
 
 /**
- * Thrown by getCareerOpsRoot() when an explicit data root (an environment
+ * Thrown by getProjectXRoot() when an explicit data root (an environment
  * variable or the marker file) resolves inside a plugin install copy. Claude
  * Code deletes that copy on the next plugin update, so every write there would
  * be lost. The override is refused rather than redirected: it names a folder
@@ -86,7 +86,7 @@ export class UnsafeDataRootError extends Error {
       `Set it to a folder outside ~/.claude/plugins, or remove it to use ${pluginDefaultDataRoot()}.`,
     );
     this.name = 'UnsafeDataRootError';
-    this.code = 'CAREER_OPS_UNSAFE_DATA_ROOT';
+    this.code = 'PROJECT_X_UNSAFE_DATA_ROOT';
     this.root = root;
     this.source = source;
   }
@@ -98,22 +98,22 @@ function explicitRoot(root, source) {
 }
 
 /**
- * Returns the resolved career-ops data directory root.
- * Priority: process.env.CAREER_OPS_ROOT or process.env.CAREER_OPS_DATA_DIR >
- * .career-ops-data marker file > ~/career-ops-data when the code root is a
+ * Returns the resolved project-x data directory root.
+ * Priority: process.env.PROJECT_X_ROOT or process.env.PROJECT_X_DATA_DIR >
+ * .project-x-data marker file > ~/project-x-data when the code root is a
  * Claude Code plugin install copy > codebase root (__dirname).
  *
  * @returns {string} Absolute path to the data root
  * @throws {UnsafeDataRootError} When the environment or the marker names a
  *   folder inside a plugin install copy
  */
-export function getCareerOpsRoot() {
-  const envName = process.env.CAREER_OPS_ROOT?.trim() ? 'CAREER_OPS_ROOT' : 'CAREER_OPS_DATA_DIR';
-  const env = process.env.CAREER_OPS_ROOT?.trim() || process.env.CAREER_OPS_DATA_DIR?.trim();
+export function getProjectXRoot() {
+  const envName = process.env.PROJECT_X_ROOT?.trim() ? 'PROJECT_X_ROOT' : 'PROJECT_X_DATA_DIR';
+  const env = process.env.PROJECT_X_ROOT?.trim() || process.env.PROJECT_X_DATA_DIR?.trim();
   if (env) {
     return explicitRoot(resolve(__dirname, env), envName);
   }
-  const markerFile = join(__dirname, '.career-ops-data');
+  const markerFile = join(__dirname, '.project-x-data');
   if (existsSync(markerFile)) {
     let content = '';
     try {
@@ -122,7 +122,7 @@ export function getCareerOpsRoot() {
       // ignore read errors
     }
     if (content) {
-      return explicitRoot(resolve(__dirname, content), 'The .career-ops-data marker');
+      return explicitRoot(resolve(__dirname, content), 'The .project-x-data marker');
     }
   }
   // A plugin install copy is replaced on every plugin update, so the code
@@ -134,21 +134,21 @@ export function getCareerOpsRoot() {
 }
 
 /**
- * True when CAREER_OPS_PROFILE names a profile. Callers that must tell "an
+ * True when PROJECT_X_PROFILE names a profile. Callers that must tell "an
  * override is set" from "none" use this instead of comparing paths: an override
  * may name the data-root profile itself.
  *
  * @returns {boolean}
  */
 export function hasProfileOverride() {
-  return Boolean(process.env.CAREER_OPS_PROFILE?.trim());
+  return Boolean(process.env.PROJECT_X_PROFILE?.trim());
 }
 
 /**
  * Returns the path to the user's config/profile.yml.
- * Priority: rootDir argument > process.env.CAREER_OPS_PROFILE > data root.
+ * Priority: rootDir argument > process.env.PROJECT_X_PROFILE > data root.
  * A relative override resolves against the working directory, like the other
- * lane variables (CAREER_OPS_PORTALS, CAREER_OPS_PIPELINE, CAREER_OPS_SCAN_HISTORY).
+ * lane variables (PROJECT_X_PORTALS, PROJECT_X_PIPELINE, PROJECT_X_SCAN_HISTORY).
  *
  * Every reader of the profile resolves it here. The override used to be
  * copied by hand into a handful of modules while the rest built the data-root
@@ -161,8 +161,8 @@ export function hasProfileOverride() {
  */
 export function getProfilePath(rootDir) {
   if (rootDir) return join(rootDir, 'config', 'profile.yml');
-  const override = process.env.CAREER_OPS_PROFILE?.trim();
-  return override ? resolve(override) : join(getCareerOpsRoot(), 'config', 'profile.yml');
+  const override = process.env.PROJECT_X_PROFILE?.trim();
+  return override ? resolve(override) : join(getProjectXRoot(), 'config', 'profile.yml');
 }
 
 /**
@@ -235,10 +235,10 @@ function namesAsStoredOnWindows(path) {
 
 /**
  * Returns the canonical path to the tracker applications.md file for reading.
- * Priority: process.env.CAREER_OPS_TRACKER > root/data/applications.md > root/applications.md.
+ * Priority: process.env.PROJECT_X_TRACKER > root/data/applications.md > root/applications.md.
  * Relative overrides are anchored to this codebase, not cwd or rootDir.
  *
- * @param {string} rootDir The career-ops data root directory
+ * @param {string} rootDir The project-x data root directory
  * @returns {string} Canonical absolute path to the tracker file
  */
 export function resolveTrackerPath(rootDir) {
@@ -251,14 +251,14 @@ export function resolveTrackerPath(rootDir) {
  * lock key, but workspace derivation uses the raw form instead (see
  * resolveWorkspaceRootFor) so a symlinked `data/` does not realpath the
  * workspace out of the repo (#3169).
- * A relative CAREER_OPS_TRACKER is anchored to this codebase before any
+ * A relative PROJECT_X_TRACKER is anchored to this codebase before any
  * consumer derives a workspace or link directory from it.
  *
- * @param {string} rootDir The career-ops data root directory
+ * @param {string} rootDir The project-x data root directory
  * @returns {string} Uncanonicalized tracker path
  */
 export function rawTrackerPath(rootDir) {
-  const env = process.env.CAREER_OPS_TRACKER?.trim();
+  const env = process.env.PROJECT_X_TRACKER?.trim();
   return env
     ? resolve(__dirname, env)
     : existsSync(join(rootDir, 'data/applications.md'))
@@ -268,14 +268,14 @@ export function rawTrackerPath(rootDir) {
 
 /**
  * Returns the resolved path to the tracker applications.md file for writing.
- * Priority: process.env.CAREER_OPS_TRACKER > root/data/applications.md.
+ * Priority: process.env.PROJECT_X_TRACKER > root/data/applications.md.
  * Does not check for file existence, providing a deterministic write target.
  * 
- * @param {string} root The career-ops data root directory
+ * @param {string} root The project-x data root directory
  * @returns {string} Absolute path to the tracker file for writing
  */
 export function resolveTrackerPathForWrite(root) {
-  const env = process.env.CAREER_OPS_TRACKER?.trim();
+  const env = process.env.PROJECT_X_TRACKER?.trim();
   if (env) {
     // Same canonicalization as the read path (see canonicalizeTrackerPath): an
     // un-canonicalized env override derives divergent lock paths on symlinked
@@ -296,7 +296,7 @@ export function resolveTrackerPathForWrite(root) {
  * file, so both are read: preferring the checkout's once it existed dropped
  * them. In the default layout the two are one file.
  *
- * @param {string} rootDir The career-ops data root directory
+ * @param {string} rootDir The project-x data root directory
  * @returns {string[]} Absolute paths, the checkout's first; a reader skips one that does not exist
  */
 export function resolveBatchStatePaths(rootDir) {

@@ -80,9 +80,9 @@ function run(args) {
     cwd: sandbox,
     encoding: 'utf-8',
     timeout: 30_000,
-    // Pin the workspace to the sandbox so a developer's own CAREER_OPS_ROOT
+    // Pin the workspace to the sandbox so a developer's own PROJECT_X_ROOT
     // cannot hand the gate a different cv.md.
-    env: { ...process.env, CAREER_OPS_ROOT: sandbox, CAREER_OPS_DATA_DIR: '' },
+    env: { ...process.env, PROJECT_X_ROOT: sandbox, PROJECT_X_DATA_DIR: '' },
   });
   return { ...result, output: `${result.stdout || ''}${result.stderr || ''}` };
 }

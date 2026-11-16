@@ -40,7 +40,7 @@ const DARK = '2b3137';
 export const BADGES = Object.freeze({
   hired: {
     file: 'docs/hired-badge.svg',
-    label: '🎉 HIRED WITH CAREER-OPS',
+    label: '🎉 HIRED WITH PROJECT-X',
     message: (count) => `${count} on the record`,
     color: '2ea44f',
     read: async ({ root }) => {

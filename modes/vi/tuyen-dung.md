@@ -44,7 +44,7 @@ Giới hạn cứng cho Block D và G cộng lại:
 - Không tạo subagent và không giao nghiên cứu cho subagent.
 - Hết hạn mức thì không tìm tiếp: tóm tắt những gì đã có và nói rõ dữ liệu còn thiếu là không có.
 
-Nếu cần đào sâu hơn về công ty, đề xuất chạy riêng `/career-ops deep` sau khi đánh giá.
+Nếu cần đào sâu hơn về công ty, đề xuất chạy riêng `/project-x deep` sau khi đánh giá.
 
 ## Bước 0 — Nhận diện archetype
 
@@ -570,7 +570,7 @@ Ba trạng thái mỗi dòng: `✅ {kết luận rõ}` / `⚠️ {phát hiện}`
 | Posting legitimacy | Tầng đánh giá Block G | `✅ High Confidence`, hoặc `⚠️ {tầng} — {lý do một dòng}` với Proceed with Caution / Suspicious |
 | Employment classification | Tín hiệu phân loại việc làm trong Block G | `✅ clear` khi kiểm tra đã chạy và không thấy gì; `⚠️ contractor-style language: "{cụm trích}"` khi cờ kích hoạt; `— not evaluated` khi không chạy được |
 | Culture screen | Trường Culture screen ở Block A | `✅ pass`, hoặc `⚠️ caution — {bằng chứng}` / `⚠️ fail — {bằng chứng}`; `— not evaluated` nếu chưa sàng lọc |
-| Interview red flags | `interview-prep/{company-slug}-redflags.md` (từ mode `interview-redflag`) | **Tham chiếu chéo, không sao chép:** nếu file tồn tại, hiển thị mức cảnh báo hiện tại cùng liên kết tương đối `[{level}](../interview-prep/{company-slug}-redflags.md)`; nếu không `— no interview sessions yet`. **File chưa xác minh:** nếu file chứa marker `<!-- career-ops:redflags-unverified -->` (mode `interview-redflag` giữ lại file này mà không có buổi phỏng vấn thật nào làm căn cứ), không bao giờ hiển thị mức cảnh báo của nó: ghi `— not evaluated: [unverified analysis](../interview-prep/{company-slug}-redflags.md)`, và `risk_summary.interview_redflags` là `not_evaluated`. Tìm marker, không dựa vào câu chữ của ghi chú: ghi chú được viết bằng ngôn ngữ đầu ra của người dùng. |
+| Interview red flags | `interview-prep/{company-slug}-redflags.md` (từ mode `interview-redflag`) | **Tham chiếu chéo, không sao chép:** nếu file tồn tại, hiển thị mức cảnh báo hiện tại cùng liên kết tương đối `[{level}](../interview-prep/{company-slug}-redflags.md)`; nếu không `— no interview sessions yet`. **File chưa xác minh:** nếu file chứa marker `<!-- project-x:redflags-unverified -->` (mode `interview-redflag` giữ lại file này mà không có buổi phỏng vấn thật nào làm căn cứ), không bao giờ hiển thị mức cảnh báo của nó: ghi `— not evaluated: [unverified analysis](../interview-prep/{company-slug}-redflags.md)`, và `risk_summary.interview_redflags` là `not_evaluated`. Tìm marker, không dựa vào câu chữ của ghi chú: ghi chú được viết bằng ngôn ngữ đầu ra của người dùng. |
 | AI claims vs. infrastructure | Kiểm tra lệch AI/hạ tầng trong Block G, khi có | Nếu báo cáo có kiểm tra này, phản chiếu kết luận (`✅ consistent` / `⚠️ {phát hiện}`); nếu không `— not evaluated` |
 | AI-screening disclosure | Tín hiệu công bố sàng lọc AI trong Block G (Signal 15), khi có | Nếu báo cáo có kiểm tra: `✅ discloses AI use` khi (a) kích hoạt, `ℹ️ {jurisdiction_name} requires disclosure; posting is silent` khi chỉ (b), `— no jurisdiction match` khi không bên nào kích hoạt vì khu vực không có dòng bảng; nếu không `— not evaluated` |
 
@@ -594,7 +594,7 @@ Phản chiếu khối này vào `## Machine Summary` dưới dạng map `risk_su
 
 ## Cover Letter Draft (tự tạo sau Block G)
 
-Sau khi lưu báo cáo và ghi vào tracker, thêm bản nháp cover letter vào file báo cáo dưới `## Cover Letter Draft`. Đây là điểm khởi đầu, không phải thư cuối. Người dùng hoàn thiện bằng `/career-ops cover {slug}`.
+Sau khi lưu báo cáo và ghi vào tracker, thêm bản nháp cover letter vào file báo cáo dưới `## Cover Letter Draft`. Đây là điểm khởi đầu, không phải thư cuối. Người dùng hoàn thiện bằng `/project-x cover {slug}`.
 
 **Cách tạo bản nháp:**
 
@@ -610,7 +610,7 @@ Sau khi lưu báo cáo và ghi vào tracker, thêm bản nháp cover letter vào
 ```markdown
 ## Cover Letter Draft
 
-> Draft generated at evaluation time. Complete via `/career-ops cover {slug}` to fill in angles, confirm research, and generate the PDF.
+> Draft generated at evaluation time. Complete via `/project-x cover {slug}` to fill in angles, confirm research, and generate the PDF.
 > Gaps flagged below — address them during the cover flow.
 
 ---
@@ -642,7 +642,7 @@ Rất mong có cơ hội trao đổi thêm vào thời điểm thuận tiện ch
 {8-10 cụm nguyên văn từ JD}
 
 ---
-*Run `/career-ops cover {slug}` to complete angles, confirm company research, and generate the PDF.*
+*Run `/project-x cover {slug}` to complete angles, confirm company research, and generate the PDF.*
 ```
 
 Áp dụng mọi quy tắc ngôn ngữ trong phần Professional Writing của `_writing.md` và phần "Viết chuyên nghiệp và tương thích ATS" của `_shared.md` cho nội dung bản nháp. Không dùng em dash, không sáo ngữ, câu chủ động, chỉ nhận định cụ thể.

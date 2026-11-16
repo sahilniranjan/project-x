@@ -51,10 +51,10 @@ function run(body, template, partials = {}) {
       maxBuffer: 10 * 1024 * 1024,
       env: {
         ...process.env,
-        CAREER_OPS_ROOT: dir,
-        CAREER_OPS_DATA_DIR: dir,
-        CAREER_OPS_PROFILE: join(dir, 'config', 'profile.yml'),
-        CAREER_OPS_TRACKER: join(dir, 'applications.md'),
+        PROJECT_X_ROOT: dir,
+        PROJECT_X_DATA_DIR: dir,
+        PROJECT_X_PROFILE: join(dir, 'config', 'profile.yml'),
+        PROJECT_X_TRACKER: join(dir, 'applications.md'),
       },
     });
     const html = res.status === 0 ? readFileSync(out, 'utf-8') : '';

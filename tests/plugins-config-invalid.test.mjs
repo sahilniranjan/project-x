@@ -31,7 +31,7 @@ function run(root, args) {
     cwd: ROOT,
     encoding: 'utf8',
     timeout: 60_000,
-    env: { ...process.env, CAREER_OPS_ROOT: root, NO_COLOR: '1' },
+    env: { ...process.env, PROJECT_X_ROOT: root, NO_COLOR: '1' },
   });
 }
 

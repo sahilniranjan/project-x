@@ -1,6 +1,6 @@
 // tests/modes-readme-language-keys.test.mjs — the `language:` snippet each
 // localized mode README tells the user to paste into config/profile.yml uses
-// keys career-ops reads.
+// keys project-x reads.
 //
 // Seventeen READMEs said `primary: {lang}`. Nothing reads language.primary:
 // every reader takes language.output (profile-language.mjs), so a user who
@@ -35,7 +35,7 @@ for (const rel of readmes) {
     snippets++;
     const keys = [...lang.split(/^\S/m)[0].matchAll(/^\s{2}([a-z_]+):/gm)].map((m) => m[1]);
     const unknown = keys.filter((k) => !known.has(k));
-    if (unknown.length) fail(`${rel}: the language: snippet sets ${unknown.join(', ')}, which career-ops never reads (use output:)`);
+    if (unknown.length) fail(`${rel}: the language: snippet sets ${unknown.join(', ')}, which project-x never reads (use output:)`);
     else if (!keys.includes('output')) fail(`${rel}: the language: snippet sets no output: key, so reports stay in English`);
     else pass(`${rel}: the language: snippet sets output:`);
   }

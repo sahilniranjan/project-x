@@ -11,13 +11,13 @@ import { describeSpawn } from './helpers/describe-spawn.mjs';
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const URL = 'https://boards.example.com/fixture/close-date';
 const PATH_VARS = [
-  'CAREER_OPS_PORTALS',
-  'CAREER_OPS_PROFILE',
-  'CAREER_OPS_PIPELINE',
-  'CAREER_OPS_SCAN_HISTORY',
-  'CAREER_OPS_ROOT',
-  'CAREER_OPS_DATA_DIR',
-  'CAREER_OPS_TRACKER',
+  'PROJECT_X_PORTALS',
+  'PROJECT_X_PROFILE',
+  'PROJECT_X_PIPELINE',
+  'PROJECT_X_SCAN_HISTORY',
+  'PROJECT_X_ROOT',
+  'PROJECT_X_DATA_DIR',
+  'PROJECT_X_TRACKER',
   'FIXTURE_CLOSES_AT',
 ];
 
@@ -33,7 +33,7 @@ tracked_companies:
 `;
 
 function sandbox() {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-close-refresh-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-close-refresh-'));
   mkdirSync(join(dir, 'data'));
   writeFileSync(join(dir, 'data', 'applications.md'), '# Applications\n');
   writeFileSync(join(dir, 'portals.yml'), PORTALS);
@@ -41,9 +41,9 @@ function sandbox() {
 }
 
 function childEnv(dir, closesAt) {
-  const env = { ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_HTTP_CACHE: '0' };
+  const env = { ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_HTTP_CACHE: '0' };
   for (const name of PATH_VARS) delete env[name];
-  env.CAREER_OPS_ROOT = dir;
+  env.PROJECT_X_ROOT = dir;
   if (closesAt) env.FIXTURE_CLOSES_AT = closesAt;
   return env;
 }

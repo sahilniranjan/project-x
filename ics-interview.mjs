@@ -606,7 +606,7 @@ async function matchTracker(matchArg, event) {
 
 function printSummary(r) {
   const e = r.event;
-  console.log(`\n${'='.repeat(70)}\n  Interview .ics — career-ops\n${'='.repeat(70)}\n`);
+  console.log(`\n${'='.repeat(70)}\n  Interview .ics — project-x\n${'='.repeat(70)}\n`);
   if (!e) {
     console.log('  No event could be read.');
   } else {

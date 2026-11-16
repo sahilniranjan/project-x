@@ -11,14 +11,14 @@ const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 test('shared painters isolate socket identity by PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH', () => {
   const dir = mkdtempSync(join(tmpdir(), 'co-pdf-execpath-'));
   const savedExecPath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH;
-  const savedSocket = process.env.CAREER_OPS_PDF_SOCKET;
-  const savedRoot = process.env.CAREER_OPS_ROOT;
-  const savedDataDir = process.env.CAREER_OPS_DATA_DIR;
+  const savedSocket = process.env.PROJECT_X_PDF_SOCKET;
+  const savedRoot = process.env.PROJECT_X_ROOT;
+  const savedDataDir = process.env.PROJECT_X_DATA_DIR;
   try {
     delete process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH;
-    delete process.env.CAREER_OPS_PDF_SOCKET;
-    process.env.CAREER_OPS_ROOT = dir;
-    delete process.env.CAREER_OPS_DATA_DIR;
+    delete process.env.PROJECT_X_PDF_SOCKET;
+    process.env.PROJECT_X_ROOT = dir;
+    delete process.env.PROJECT_X_DATA_DIR;
     const defaultSocket = sharedPdfSocketPath(ROOT);
 
     process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH = '/custom/chrome';
@@ -31,12 +31,12 @@ test('shared painters isolate socket identity by PLAYWRIGHT_CHROMIUM_EXECUTABLE_
   } finally {
     if (savedExecPath === undefined) delete process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH;
     else process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH = savedExecPath;
-    if (savedSocket === undefined) delete process.env.CAREER_OPS_PDF_SOCKET;
-    else process.env.CAREER_OPS_PDF_SOCKET = savedSocket;
-    if (savedRoot === undefined) delete process.env.CAREER_OPS_ROOT;
-    else process.env.CAREER_OPS_ROOT = savedRoot;
-    if (savedDataDir === undefined) delete process.env.CAREER_OPS_DATA_DIR;
-    else process.env.CAREER_OPS_DATA_DIR = savedDataDir;
+    if (savedSocket === undefined) delete process.env.PROJECT_X_PDF_SOCKET;
+    else process.env.PROJECT_X_PDF_SOCKET = savedSocket;
+    if (savedRoot === undefined) delete process.env.PROJECT_X_ROOT;
+    else process.env.PROJECT_X_ROOT = savedRoot;
+    if (savedDataDir === undefined) delete process.env.PROJECT_X_DATA_DIR;
+    else process.env.PROJECT_X_DATA_DIR = savedDataDir;
     rmSync(dir, { recursive: true, force: true });
   }
 });
@@ -45,24 +45,24 @@ test('shared painters isolate socket identity by workspace root', () => {
   const dataRoot = mkdtempSync(join(tmpdir(), 'co-pdf-data-root-'));
   const workspaceA = mkdtempSync(join(tmpdir(), 'co-pdf-workspace-a-'));
   const workspaceB = mkdtempSync(join(tmpdir(), 'co-pdf-workspace-b-'));
-  const savedSocket = process.env.CAREER_OPS_PDF_SOCKET;
-  const savedRoot = process.env.CAREER_OPS_ROOT;
-  const savedDataDir = process.env.CAREER_OPS_DATA_DIR;
+  const savedSocket = process.env.PROJECT_X_PDF_SOCKET;
+  const savedRoot = process.env.PROJECT_X_ROOT;
+  const savedDataDir = process.env.PROJECT_X_DATA_DIR;
   try {
-    delete process.env.CAREER_OPS_PDF_SOCKET;
-    process.env.CAREER_OPS_ROOT = dataRoot;
-    delete process.env.CAREER_OPS_DATA_DIR;
+    delete process.env.PROJECT_X_PDF_SOCKET;
+    process.env.PROJECT_X_ROOT = dataRoot;
+    delete process.env.PROJECT_X_DATA_DIR;
     assert.notEqual(
       sharedPdfSocketPath(ROOT, workspaceA),
       sharedPdfSocketPath(ROOT, workspaceB),
     );
   } finally {
-    if (savedSocket === undefined) delete process.env.CAREER_OPS_PDF_SOCKET;
-    else process.env.CAREER_OPS_PDF_SOCKET = savedSocket;
-    if (savedRoot === undefined) delete process.env.CAREER_OPS_ROOT;
-    else process.env.CAREER_OPS_ROOT = savedRoot;
-    if (savedDataDir === undefined) delete process.env.CAREER_OPS_DATA_DIR;
-    else process.env.CAREER_OPS_DATA_DIR = savedDataDir;
+    if (savedSocket === undefined) delete process.env.PROJECT_X_PDF_SOCKET;
+    else process.env.PROJECT_X_PDF_SOCKET = savedSocket;
+    if (savedRoot === undefined) delete process.env.PROJECT_X_ROOT;
+    else process.env.PROJECT_X_ROOT = savedRoot;
+    if (savedDataDir === undefined) delete process.env.PROJECT_X_DATA_DIR;
+    else process.env.PROJECT_X_DATA_DIR = savedDataDir;
     for (const dir of [dataRoot, workspaceA, workspaceB]) rmSync(dir, { recursive: true, force: true });
   }
 });
@@ -74,17 +74,17 @@ test('shared painters resolve browser settings independently of the render works
   const browserRootB = mkdtempSync(join(tmpdir(), 'co-pdf-browser-b-'));
   const saved = {
     executable: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH,
-    autodetect: process.env.CAREER_OPS_BROWSER_AUTODETECT,
-    socket: process.env.CAREER_OPS_PDF_SOCKET,
-    root: process.env.CAREER_OPS_ROOT,
-    dataDir: process.env.CAREER_OPS_DATA_DIR,
+    autodetect: process.env.PROJECT_X_BROWSER_AUTODETECT,
+    socket: process.env.PROJECT_X_PDF_SOCKET,
+    root: process.env.PROJECT_X_ROOT,
+    dataDir: process.env.PROJECT_X_DATA_DIR,
   };
   try {
     delete process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH;
-    delete process.env.CAREER_OPS_BROWSER_AUTODETECT;
-    delete process.env.CAREER_OPS_PDF_SOCKET;
-    process.env.CAREER_OPS_ROOT = dataRoot;
-    delete process.env.CAREER_OPS_DATA_DIR;
+    delete process.env.PROJECT_X_BROWSER_AUTODETECT;
+    delete process.env.PROJECT_X_PDF_SOCKET;
+    process.env.PROJECT_X_ROOT = dataRoot;
+    delete process.env.PROJECT_X_DATA_DIR;
     writeFileSync(join(browserRootA, '.env'), 'PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=browser-a/chrome\n');
     writeFileSync(join(browserRootB, '.env'), 'PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=browser-b/chrome\n');
 
@@ -95,10 +95,10 @@ test('shared painters resolve browser settings independently of the render works
   } finally {
     for (const [name, value] of [
       ['PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH', saved.executable],
-      ['CAREER_OPS_BROWSER_AUTODETECT', saved.autodetect],
-      ['CAREER_OPS_PDF_SOCKET', saved.socket],
-      ['CAREER_OPS_ROOT', saved.root],
-      ['CAREER_OPS_DATA_DIR', saved.dataDir],
+      ['PROJECT_X_BROWSER_AUTODETECT', saved.autodetect],
+      ['PROJECT_X_PDF_SOCKET', saved.socket],
+      ['PROJECT_X_ROOT', saved.root],
+      ['PROJECT_X_DATA_DIR', saved.dataDir],
     ]) {
       if (value === undefined) delete process.env[name];
       else process.env[name] = value;

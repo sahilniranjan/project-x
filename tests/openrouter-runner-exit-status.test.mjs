@@ -3,7 +3,7 @@
 // status (`npm run or:eval` from cron) can tell a failed run from a good one.
 // Every case below used to exit 0.
 //
-// Nothing here reaches the network: CAREER_OPS_MODEL pins a model, so the free
+// Nothing here reaches the network: PROJECT_X_MODEL pins a model, so the free
 // model list is never fetched, OPENROUTER_API_KEY is set empty, so a request
 // stops at the key check, and a preload replaces fetch() as a backstop.
 import { pass, fail, rmSync, ROOT, NODE } from './helpers.mjs';
@@ -21,15 +21,15 @@ const stub = join(cwd, 'stub-fetch.mjs');
 writeFileSync(stub, 'globalThis.fetch = async () => { throw new Error("fetch stubbed in test"); };\n');
 
 // A key or model from the developer's shell would change which path runs.
-const env = Object.fromEntries(Object.entries(process.env).filter(([k]) => !/^(OPENROUTER_|CAREER_OPS_)/.test(k)));
-env.CAREER_OPS_ROOT = root;
-env.CAREER_OPS_MODEL = 'test/model';
+const env = Object.fromEntries(Object.entries(process.env).filter(([k]) => !/^(OPENROUTER_|PROJECT_X_)/.test(k)));
+env.PROJECT_X_ROOT = root;
+env.PROJECT_X_MODEL = 'test/model';
 // Empty, not absent: the runner fills an absent variable from the checkout's
 // .env. On a configured checkout that is a real key, and a profile path would
 // point loadContext(), which runs for every command, at the developer's own
-// profile. An empty CAREER_OPS_PROFILE reads the profile under `root`.
+// profile. An empty PROJECT_X_PROFILE reads the profile under `root`.
 env.OPENROUTER_API_KEY = '';
-env.CAREER_OPS_PROFILE = '';
+env.PROJECT_X_PROFILE = '';
 
 function run(...args) {
   const r = spawnSync(NODE, ['--import', pathToFileURL(stub).href, join(ROOT, 'openrouter-runner.mjs'), ...args], {

@@ -117,8 +117,8 @@ function evaluate(script, reply) {
   ], {
     cwd: dir, encoding: 'utf-8', timeout: 60_000,
     env: {
-      PATH: process.env.PATH, HOME: dir, CAREER_OPS_ROOT: dir, MODEL_REPLY: reply,
-      CAREER_OPS_REPORTS_DIR: join(dir, 'reports'),
+      PATH: process.env.PATH, HOME: dir, PROJECT_X_ROOT: dir, MODEL_REPLY: reply,
+      PROJECT_X_REPORTS_DIR: join(dir, 'reports'),
     },
   });
   assert.equal(r.status, 0, r.stderr);

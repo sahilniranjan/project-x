@@ -290,7 +290,7 @@ test('fetchJdFromPage fails closed when the connect-time lookup guard is opted o
     const { fetchJdFromPage } = await import('./lib/jd-page-fetch.mjs');
     console.log(String(await fetchJdFromPage('https://careers.example.com/job/1')));`;
   const run = (env) => spawnSync(process.execPath, ['--input-type=module', '-e', script], { cwd: root, encoding: 'utf8', env: { ...process.env, ...env }, timeout: 20000 });
-  const off = run({ CAREER_OPS_NO_DNS_CACHE: '1' });
+  const off = run({ PROJECT_X_NO_DNS_CACHE: '1' });
   assert.equal(off.stdout.trim(), 'null', off.stderr);
   assert.doesNotMatch(off.stdout, /FETCHED/, 'no request may be made without the guard');
 });
@@ -363,10 +363,10 @@ test('rebinding over a real socket: public pre-check, loopback at connect time, 
     console.log(JSON.stringify({ out, hits, code }));
     server.close();`;
   const run = spawnSync(process.execPath, ['--input-type=module', '-e', script], {
-    cwd: root, encoding: 'utf8', timeout: 30000, env: { ...process.env, CAREER_OPS_NO_DNS_CACHE: '', NO_PROXY: '*', no_proxy: '*' },
+    cwd: root, encoding: 'utf8', timeout: 30000, env: { ...process.env, PROJECT_X_NO_DNS_CACHE: '', NO_PROXY: '*', no_proxy: '*' },
   });
   assert.equal(run.status, 0, run.stderr);
-  assert.deepEqual(JSON.parse(run.stdout.trim().split('\n').pop()), { out: null, hits: 0, code: 'ECAREEROPS_BLOCKED_ADDRESS' }, 'the loopback server must receive no request');
+  assert.deepEqual(JSON.parse(run.stdout.trim().split('\n').pop()), { out: null, hits: 0, code: 'EPROJECTX_BLOCKED_ADDRESS' }, 'the loopback server must receive no request');
 });
 
 test('a visible closure banner makes the page closed even with no JSON-LD expiry', async () => {
@@ -387,11 +387,11 @@ test('closure wording inside a script or style is not visible page text', async 
   } finally { net.restore(); }
 });
 
-test('NODE_USE_ENV_PROXY without CAREER_OPS_TRUST_PROXY_EGRESS fails closed', async () => {
+test('NODE_USE_ENV_PROXY without PROJECT_X_TRUST_PROXY_EGRESS fails closed', async () => {
   const { spawnSync } = await import('node:child_process');
   const code = `import { fetchJdFromPage } from './lib/jd-page-fetch.mjs'; let hit=0; globalThis.fetch=async()=>{hit++;throw new Error('x')}; const out=await fetchJdFromPage('https://careers.example.com/job/1'); console.log(JSON.stringify({out,hit}));`;
-  const run = (env) => JSON.parse(spawnSync(process.execPath, ['--input-type=module', '-e', code], { cwd: fileURLToPath(new URL('..', import.meta.url)), env: { ...process.env, CAREER_OPS_NO_DNS_CACHE: '', ...env }, encoding: 'utf8' }).stdout.trim());
-  assert.deepEqual(run({ NODE_USE_ENV_PROXY: '1', CAREER_OPS_TRUST_PROXY_EGRESS: '' }), { out: null, hit: 0 });
+  const run = (env) => JSON.parse(spawnSync(process.execPath, ['--input-type=module', '-e', code], { cwd: fileURLToPath(new URL('..', import.meta.url)), env: { ...process.env, PROJECT_X_NO_DNS_CACHE: '', ...env }, encoding: 'utf8' }).stdout.trim());
+  assert.deepEqual(run({ NODE_USE_ENV_PROXY: '1', PROJECT_X_TRUST_PROXY_EGRESS: '' }), { out: null, hit: 0 });
 });
 
 test('hostile markup cannot make the visible-text closure check slow', async () => {

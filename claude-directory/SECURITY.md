@@ -1,5 +1,5 @@
 # Security Policy
 
-This directory is the career-ops plugin for Claude. It holds the career-ops skill and its manifest, and runs no hooks.
+This directory is the project-x plugin for Claude. It holds the project-x skill and its manifest, and runs no hooks.
 
-To report a vulnerability in career-ops, including anything this plugin installs or runs, follow the project's [security policy](https://github.com/career-ops-hq/career-ops/blob/main/SECURITY.md). Please do not open a public issue for it.
+To report a vulnerability in project-x, including anything this plugin installs or runs, follow the project's [security policy](https://github.com/project-x-hq/project-x/blob/main/SECURITY.md). Please do not open a public issue for it.

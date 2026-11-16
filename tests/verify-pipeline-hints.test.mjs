@@ -102,7 +102,7 @@ try {
     row(3, 'Applied', 'Evaluated', '—'));
 
   const runVp = (extraArgs = []) => {
-    const env = { ...process.env, CAREER_OPS_TRACKER: tracker, CAREER_OPS_REPORTS: reports };
+    const env = { ...process.env, PROJECT_X_TRACKER: tracker, PROJECT_X_REPORTS: reports };
     try {
       const stdout = execFileSync(NODE, [join(ROOT, 'verify-pipeline.mjs'), ...extraArgs],
         { cwd: ROOT, env, encoding: 'utf-8', stdio: ['pipe', 'pipe', 'pipe'], timeout: 60_000 });
@@ -176,7 +176,7 @@ try {
   try {
     syncOut = execFileSync(NODE, [join(ROOT, 'verify-pipeline.mjs')], {
       cwd: ROOT, encoding: 'utf-8', stdio: ['pipe', 'pipe', 'pipe'], timeout: 60_000,
-      env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_TRACKER: syncTracker, CAREER_OPS_REPORTS: reports },
+      env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_TRACKER: syncTracker, PROJECT_X_REPORTS: reports },
     });
   } catch (err) { syncOut = typeof err.stdout === 'string' ? err.stdout : ''; }
   const syncLines = syncOut.split('\n');

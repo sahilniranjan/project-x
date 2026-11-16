@@ -98,10 +98,10 @@ providerFixture: {
       break providerFixture;
     }
 
-    // verify-pipeline.mjs resolves CAREER_OPS via getCareerOpsRoot() and, past
+    // verify-pipeline.mjs resolves PROJECT_X via getProjectXRoot() and, past
     // the tracker, mkdir's/reads real-looking data/reports paths under it
-    // (line 54 `mkdirSync(join(CAREER_OPS, 'data'), ...)`). The spawn below
-    // inherits the full process.env, so a developer's own CAREER_OPS_ROOT
+    // (line 54 `mkdirSync(join(PROJECT_X, 'data'), ...)`). The spawn below
+    // inherits the full process.env, so a developer's own PROJECT_X_ROOT
     // would otherwise leak in and the check would touch their real checkout.
     const dataRoot = join(tmp, 'data-root');
     mkdirSync(join(dataRoot, 'config'), { recursive: true });
@@ -123,17 +123,17 @@ providerFixture: {
             cwd: codeRoot, encoding: 'utf8', timeout: 60000, stdio: ['pipe', 'pipe', 'pipe'],
             env: {
               ...process.env,
-              CAREER_OPS_ROOT: dataRoot,
+              PROJECT_X_ROOT: dataRoot,
               // Explicitly undefined (not omitted): a bare ...process.env
               // spread would otherwise leak the developer's own
-              // CAREER_OPS_REPORTS in unchanged, and verify-pipeline.mjs
-              // resolves it as an absolute-or-relative-to-CAREER_OPS override
+              // PROJECT_X_REPORTS in unchanged, and verify-pipeline.mjs
+              // resolves it as an absolute-or-relative-to-PROJECT_X override
               // that wins over dataRoot entirely (CodeRabbit, #4046). An
               // undefined value drops the key from the child's env, so
               // verify-pipeline.mjs falls back to its default, dataRoot/reports.
-              CAREER_OPS_REPORTS: undefined,
-              CAREER_OPS_PORTALS: portals,
-              CAREER_OPS_TRACKER: tracker,
+              PROJECT_X_REPORTS: undefined,
+              PROJECT_X_PORTALS: portals,
+              PROJECT_X_TRACKER: tracker,
               APIFY_TOKEN: '',
             },
           }),

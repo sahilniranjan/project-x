@@ -324,7 +324,7 @@ try {
     writeFileSync(join(coldRoot, 'data', 'applications.md'), coldTrackerMd);
     writeFileSync(join(coldRoot, 'data', 'follow-ups.md'), coldFollowupsMd);
     const coldSummaryOut = run(NODE, [join(ROOT, 'stats.mjs'), '--summary'], {
-      env: { ...process.env, CAREER_OPS_ROOT: coldRoot, CAREER_OPS_DATA_DIR: '' },
+      env: { ...process.env, PROJECT_X_ROOT: coldRoot, PROJECT_X_DATA_DIR: '' },
     });
     if (coldSummaryOut && coldSummaryOut.includes('3 active (2 live, 1 cold)')) {
       pass('stats.mjs --summary integrates live/cold counts into the existing Tracker line');

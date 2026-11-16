@@ -6,8 +6,8 @@ import (
 
 	tea "github.com/charmbracelet/bubbletea"
 
-	"github.com/santifer/career-ops/dashboard/internal/model"
-	"github.com/santifer/career-ops/dashboard/internal/theme"
+	"github.com/santifer/project-x/dashboard/internal/model"
+	"github.com/santifer/project-x/dashboard/internal/theme"
 )
 
 func TestPipelineHiredSelectionWaitsForWrite(t *testing.T) {

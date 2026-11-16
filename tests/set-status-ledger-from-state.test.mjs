@@ -10,9 +10,9 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { NODE, ROOT, rmSync } from './helpers.mjs';
 
-const OVERRIDES = ['CAREER_OPS_DATA_DIR', 'CAREER_OPS_TRACKER', 'CAREER_OPS_PIPELINE', 'CAREER_OPS_SCAN_HISTORY',
-  'CAREER_OPS_PORTALS', 'CAREER_OPS_PROFILE', 'CAREER_OPS_FOLLOWUPS', 'CAREER_OPS_REPORTS', 'CAREER_OPS_CV',
-  'CAREER_OPS_JDS', 'CAREER_OPS_ADDITIONS', 'CAREER_OPS_ACTIVITY_DIR'];
+const OVERRIDES = ['PROJECT_X_DATA_DIR', 'PROJECT_X_TRACKER', 'PROJECT_X_PIPELINE', 'PROJECT_X_SCAN_HISTORY',
+  'PROJECT_X_PORTALS', 'PROJECT_X_PROFILE', 'PROJECT_X_FOLLOWUPS', 'PROJECT_X_REPORTS', 'PROJECT_X_CV',
+  'PROJECT_X_JDS', 'PROJECT_X_ADDITIONS', 'PROJECT_X_ACTIVITY_DIR'];
 
 function withRow(status, fn, notesCell = '') {
   const root = mkdtempSync(join(tmpdir(), 'set-status-ledger-'));
@@ -25,7 +25,7 @@ function withRow(status, fn, notesCell = '') {
     `| 1 | 2026-10-01 | Acme | Data Engineer | 4.2/5 | ${status} | ❌ | — | ${notesCell} |`,
     '',
   ].join('\n'));
-  const env = { ...process.env, CAREER_OPS_ROOT: root };
+  const env = { ...process.env, PROJECT_X_ROOT: root };
   for (const name of OVERRIDES) env[name] = '';
   const run = (script, ...args) => spawnSync(NODE, [join(ROOT, script), ...args], { encoding: 'utf8', env, cwd: root });
   const ledger = () => readFileSync(join(root, 'data', 'status-log.tsv'), 'utf8').trim().split('\n').map((line) => line.split('\t'));

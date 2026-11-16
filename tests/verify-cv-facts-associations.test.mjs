@@ -80,7 +80,7 @@ function check(change = {}, sourceText = CV, config = {}) {
   // root can't reach it.
   const result = spawnSync(process.execPath, [fileURLToPath(new URL('../build-cv-html.mjs', import.meta.url)), input, output], {
     encoding: 'utf8',
-    env: { ...process.env, CAREER_OPS_ROOT: tmp, CAREER_OPS_PROFILE: '', CAREER_OPS_TRACKER: '' },
+    env: { ...process.env, PROJECT_X_ROOT: tmp, PROJECT_X_PROFILE: '', PROJECT_X_TRACKER: '' },
   });
   assert.equal(result.status, 0, result.stderr + result.stdout);
   return verifyFacts(readFileSync(output, 'utf8'), { sourcePaths: [source], configPath });

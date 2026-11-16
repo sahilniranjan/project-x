@@ -17,9 +17,9 @@ try {
     const table = header + rows.map((r, i) =>
       `| ${i + 1} | 2026-09-01 | ${r.company} | ${r.via} | ${r.role} | 3.0/5 | SKIP | ❌ | — | ${r.notes} |\n`).join('');
     writeFileSync(tracker, table);
-    const env = Object.fromEntries(Object.entries(process.env).filter(([key]) => !key.startsWith('CAREER_OPS_')));
+    const env = Object.fromEntries(Object.entries(process.env).filter(([key]) => !key.startsWith('PROJECT_X_')));
     const child = spawnSync(NODE, [join(ROOT, 'verify-pipeline.mjs'), '--no-hints'], {
-      cwd: ROOT, env: { ...env, CAREER_OPS_ROOT: tmp },
+      cwd: ROOT, env: { ...env, PROJECT_X_ROOT: tmp },
       encoding: 'utf8', windowsHide: true, timeout: 60_000,
     });
     if (child.error || child.status !== 0 || !child.stdout.includes(`Checking ${rows.length} entries`)) {

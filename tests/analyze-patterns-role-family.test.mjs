@@ -131,7 +131,7 @@ const BASELINE_KEYS = [
 ];
 
 function runCli(args, trackerRows, logText = '') {
-  const dataRoot = mkdtempSync(join(tmpdir(), 'career-ops-role-family-'));
+  const dataRoot = mkdtempSync(join(tmpdir(), 'project-x-role-family-'));
   try {
     mkdirSync(join(dataRoot, 'data'));
     writeFileSync(join(dataRoot, 'data', 'applications.md'), [
@@ -143,7 +143,7 @@ function runCli(args, trackerRows, logText = '') {
     if (logText) writeFileSync(join(dataRoot, 'data', 'status-log.tsv'), logText, 'utf-8');
     const res = spawnSync(process.execPath, [SCRIPT, ...args], {
       cwd: ROOT, encoding: 'utf-8', timeout: 30_000,
-      env: { ...process.env, CAREER_OPS_ROOT: dataRoot },
+      env: { ...process.env, PROJECT_X_ROOT: dataRoot },
     });
     assert.equal(res.status, 0, `${res.stderr}${res.stdout}`);
     return res.stdout;

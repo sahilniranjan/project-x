@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/santifer/career-ops/dashboard/internal/model"
-	"github.com/santifer/career-ops/dashboard/internal/theme"
+	"github.com/santifer/project-x/dashboard/internal/model"
+	"github.com/santifer/project-x/dashboard/internal/theme"
 )
 
 // newFlashTestModel builds the smallest pipeline model that renders a help bar.

@@ -23,15 +23,15 @@ function fixture(t, requested, ledger) {
     'num\tdate\tcompany\trole\tstatus\tscore\tpdf\treport\tnotes\n'
     + `${requested}\t2026-10-26\tNew Employer\tEngineer\tEvaluated\t4.0/5\t❌\t[010](reports/010-new.md)\t\n`);
   const env = {
-    ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_DATA_DIR: '',
-    CAREER_OPS_TRACKER: tracker, CAREER_OPS_ADDITIONS: additions,
-    CAREER_OPS_BATCH_STATE: join(dir, 'batch/batch-state.tsv'),
-    CAREER_OPS_FOLLOWUPS: '', CAREER_OPS_REPORTS_DIR: '', CAREER_OPS_PDF_INDEX: '',
+    ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_DATA_DIR: '',
+    PROJECT_X_TRACKER: tracker, PROJECT_X_ADDITIONS: additions,
+    PROJECT_X_BATCH_STATE: join(dir, 'batch/batch-state.tsv'),
+    PROJECT_X_FOLLOWUPS: '', PROJECT_X_REPORTS_DIR: '', PROJECT_X_PDF_INDEX: '',
   };
   if (ledger) {
     const path = join(dir, ledger.path);
     writeFileSync(path, ledger.contents);
-    if (ledger.override) env.CAREER_OPS_FOLLOWUPS = path;
+    if (ledger.override) env.PROJECT_X_FOLLOWUPS = path;
   }
   const result = spawnSync(NODE, [join(ROOT, 'merge-tracker.mjs')], {
     env, encoding: 'utf8', timeout: 30_000,

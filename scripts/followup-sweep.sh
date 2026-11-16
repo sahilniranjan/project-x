@@ -7,9 +7,9 @@ set -euo pipefail
 REPO="$(cd "$(dirname "${0}")/.." && pwd)"
 cd "$REPO"
 
-# Same data root as followup-cadence.mjs (CAREER_OPS_ROOT, CAREER_OPS_DATA_DIR,
-# or .career-ops-data), so drafts, logs, and the enabled check stay aligned.
-ROOT="$(node --input-type=module -e "import { getCareerOpsRoot } from './path-resolver.mjs'; process.stdout.write(getCareerOpsRoot())")"
+# Same data root as followup-cadence.mjs (PROJECT_X_ROOT, PROJECT_X_DATA_DIR,
+# or .project-x-data), so drafts, logs, and the enabled check stay aligned.
+ROOT="$(node --input-type=module -e "import { getProjectXRoot } from './path-resolver.mjs'; process.stdout.write(getProjectXRoot())")"
 OUT_DIR="$ROOT/output"
 DATE_STR="$(date +%Y-%m-%d)"
 DRAFT_FILE="$OUT_DIR/followup-drafts-$DATE_STR.md"
@@ -48,7 +48,7 @@ case "$enabled_status" in
     ;;
 esac
 
-PROMPT="Run the career-ops 'followup' mode (modes/followup.md) against $ROOT/data/applications.md and $ROOT/data/follow-ups.md. Run node followup-cadence.mjs, and for every overdue/urgent entry generate the follow-up email/LinkedIn draft per the mode's framework (voice-dna.md guardrails apply). Write the full dashboard plus every generated draft to $DRAFT_FILE as markdown. Do NOT send, submit, or record anything as sent -- draft-only, for the user to review later. If there is nothing overdue/urgent, write a one-line note to that file saying so instead."
+PROMPT="Run the project-x 'followup' mode (modes/followup.md) against $ROOT/data/applications.md and $ROOT/data/follow-ups.md. Run node followup-cadence.mjs, and for every overdue/urgent entry generate the follow-up email/LinkedIn draft per the mode's framework (voice-dna.md guardrails apply). Write the full dashboard plus every generated draft to $DRAFT_FILE as markdown. Do NOT send, submit, or record anything as sent -- draft-only, for the user to review later. If there is nothing overdue/urgent, write a one-line note to that file saying so instead."
 
 # Headless claude -p denies any tool call that would need approval, so grant
 # exactly what the sweep needs: the read-only scripts modes/followup.md runs,
@@ -82,5 +82,5 @@ PROMPT="Run the career-ops 'followup' mode (modes/followup.md) against $ROOT/dat
 } >> "$LOG_FILE" 2>&1
 
 if [ -f "$DRAFT_FILE" ]; then
-  osascript -e "display notification \"Follow-up drafts ready: $DRAFT_FILE\" with title \"career-ops\"" >/dev/null 2>&1 || true
+  osascript -e "display notification \"Follow-up drafts ready: $DRAFT_FILE\" with title \"project-x\"" >/dev/null 2>&1 || true
 fi

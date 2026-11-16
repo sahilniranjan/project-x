@@ -26,9 +26,9 @@ const TRACKER = [
 function run(dataRoot, args, extraEnv = {}) {
   const env = {
     ...process.env,
-    CAREER_OPS_ROOT: dataRoot,
-    CAREER_OPS_DATA_DIR: '',
-    CAREER_OPS_TRACKER: '',
+    PROJECT_X_ROOT: dataRoot,
+    PROJECT_X_DATA_DIR: '',
+    PROJECT_X_TRACKER: '',
     ...extraEnv,
   };
   delete env.FORCE_COLOR;
@@ -76,11 +76,11 @@ test('an existing legacy tracker at the data root is still read', () => {
   }
 });
 
-test('CAREER_OPS_TRACKER still names the file when that override is missing', () => {
+test('PROJECT_X_TRACKER still names the file when that override is missing', () => {
   const dir = mkdtempSync(join(tmpdir(), 'co-status-env-'));
   const tracker = join(dir, 'custom-tracker.md');
   try {
-    const r = run(dir, ['1', 'Applied', '--dry-run'], { CAREER_OPS_TRACKER: tracker });
+    const r = run(dir, ['1', 'Applied', '--dry-run'], { PROJECT_X_TRACKER: tracker });
     assert.equal(r.status, 2, r.all);
     assert.match(r.all, new RegExp(escaped(tracker)));
     assert.match(r.all, /created when you evaluate your first offer/);

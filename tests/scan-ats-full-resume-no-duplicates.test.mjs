@@ -56,7 +56,7 @@ globalThis.fetch = async () => { throw new Error('Unexpected network request'); 
 
   const sweep = (mode, extra = []) => spawnSync(NODE, ['--import', pathToFileURL(preload).href, join(ROOT, 'scan-ats-full.mjs'), '--ats', 'greenhouse', '--json', ...extra], {
     cwd: dir, encoding: 'utf-8', timeout: 120_000,
-    env: { ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_DATA_DIR: '', STUB_MODE: mode, CAREER_OPS_DNS_LOOKUPS_PER_MIN: '0' },
+    env: { ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_DATA_DIR: '', STUB_MODE: mode, PROJECT_X_DNS_LOOKUPS_PER_MIN: '0' },
   });
   const pending = () => readFileSync(join(dir, 'data', 'pipeline.md'), 'utf-8')
     .split('\n').filter((l) => /^- \[ \] https:\/\/job-boards\.greenhouse\.io\//.test(l));

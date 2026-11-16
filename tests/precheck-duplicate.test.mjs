@@ -34,7 +34,7 @@ try {
 
   const run = (args, env = {}) => execFileSync(NODE, [join(ROOT, 'precheck-duplicate.mjs'), ...args], {
     encoding: 'utf-8', timeout: 30000,
-    env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_DATA_DIR: '', CAREER_OPS_TRACKER: '', ...env },
+    env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_DATA_DIR: '', PROJECT_X_TRACKER: '', ...env },
   });
   const json = (args, env) => JSON.parse(run([...args, '--json'], env));
 
@@ -83,20 +83,20 @@ try {
   if (line && line.includes('Applied') && line.includes('2026-01-10')) pass('text output is one line per candidate with status and date');
   else fail(`text line: ${line}`);
 
-  // 9. CAREER_OPS_TRACKER override is honoured; the tracker is never modified.
+  // 9. PROJECT_X_TRACKER override is honoured; the tracker is never modified.
   const other = join(work, 'other.md');
   writeFileSync(other, [...HEADER, row(9, '2026-04-01', 'Initech', 'Analyst', 'Applied')].join('\n') + '\n');
   r = json(['--company', 'Initech', '--title', 'Analyst']);
   if (r.candidates.length === 0) pass('default tracker has no Initech row');
   else fail('unexpected Initech match');
-  const o = json(['--company', 'Initech', '--title', 'Analyst'], { CAREER_OPS_TRACKER: other });
-  if (o.candidates[0]?.num === 9) pass('CAREER_OPS_TRACKER override is honoured');
+  const o = json(['--company', 'Initech', '--title', 'Analyst'], { PROJECT_X_TRACKER: other });
+  if (o.candidates[0]?.num === 9) pass('PROJECT_X_TRACKER override is honoured');
   else fail(`override: ${JSON.stringify(o)}`);
   if (readFileSync(tracker, 'utf-8') === FIXTURE) pass('tracker file is unchanged (read-only)');
   else fail('tracker was modified');
 
   // 10. A missing tracker is advisory, exit 0.
-  const none = run(['--company', 'X', '--title', 'Y'], { CAREER_OPS_TRACKER: join(work, 'missing.md') });
+  const none = run(['--company', 'X', '--title', 'Y'], { PROJECT_X_TRACKER: join(work, 'missing.md') });
   if (/No tracker found/.test(none)) pass('missing tracker exits 0 with a notice');
   else fail(`missing tracker: ${none}`);
 
@@ -134,7 +134,7 @@ try {
     row(2, '2026-10-24', 'Northwind Foods', 'Operations Analyst', 'Applied', 'req JR-4411; remote'),
     row(3, '2026-10-25', 'Acme Supply Canada', 'Payroll Manager (Brampton, ON)', 'Applied'),
   ].join('\n') + '\n');
-  const q = (args) => json(args, { CAREER_OPS_ROOT: root2 }).candidates;
+  const q = (args) => json(args, { PROJECT_X_ROOT: root2 }).candidates;
   let cc = q(['--company', 'Acme Supply Canada', '--title', 'Zzz Unrelated', '--req', 'JR9727']);
   if (cc[0]?.num === 1 && cc[0].reason === 'req') pass('--req JR9727 matches a note written JR9727');
   else fail(`JR9727: ${JSON.stringify(cc)}`);

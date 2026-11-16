@@ -1,6 +1,6 @@
 # dashboard/
 
-Standalone Go TUI for browsing the career-ops pipeline.
+Standalone Go TUI for browsing the project-x pipeline.
 
 ## Purpose
 
@@ -37,7 +37,7 @@ never on a timer. A missing `pipeline.md` is an empty Inbox; one that cannot
 be read keeps the rows already shown and says why.
 
 The tab reads `data/pipeline.md` under the data root, as the web inbox does.
-It does not follow `CAREER_OPS_PIPELINE`: a second search lane's inbox is not
+It does not follow `PROJECT_X_PIPELINE`: a second search lane's inbox is not
 shown.
 
 ## Prerequisites and running
@@ -45,7 +45,7 @@ shown.
 Requires Go 1.26+ (`go.mod`). From the repo root:
 
 ```bash
-npm run serve:dashboard    # go run . --path .. (The script automatically resolves external data directories by falling back through CAREER_OPS_ROOT and CAREER_OPS_DATA_DIR enviornment variables,defaulting to repository root.)
+npm run serve:dashboard    # go run . --path .. (The script automatically resolves external data directories by falling back through PROJECT_X_ROOT and PROJECT_X_DATA_DIR enviornment variables,defaulting to repository root.)
 npm run build:dashboard    # build the standalone binary
 ```
 
@@ -53,7 +53,7 @@ npm run build:dashboard    # build the standalone binary
 an extension-less binary on Windows; the wrapper picks the platform-correct
 output name (`career-dashboard.exe` on Windows, `career-dashboard` elsewhere).
 
-The binary accepts `--path <dir>` pointing at a career-ops directory
+The binary accepts `--path <dir>` pointing at a project-x directory
 (default `.`). The data loader tries both `{path}/applications.md` and
 `{path}/data/applications.md` for layout compatibility.
 

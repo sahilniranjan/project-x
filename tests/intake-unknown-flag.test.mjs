@@ -17,7 +17,7 @@ const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const CV = '# Avery Quinn\n\nSenior analytics engineer. Metric layer, SQL.\n';
 
 function sandbox() {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-intake-flags-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-intake-flags-'));
   const docs = join(dir, 'documents', 'cv');
   mkdirSync(docs, { recursive: true });
   writeFileSync(join(docs, 'master.md'), CV);
@@ -32,12 +32,12 @@ function spawn(sb, args, extraEnv = {}) {
     env: {
       ...process.env,
       ...extraEnv,
-      CAREER_OPS_ROOT: sb.dir,
-      CAREER_OPS_DATA_DIR: '',
-      CAREER_OPS_DOCUMENTS_DIR: '',
-      CAREER_OPS_TRACKER: '',
+      PROJECT_X_ROOT: sb.dir,
+      PROJECT_X_DATA_DIR: '',
+      PROJECT_X_DOCUMENTS_DIR: '',
+      PROJECT_X_TRACKER: '',
       // After the spreads, so a developer shell value cannot redirect --commit.
-      CAREER_OPS_INTAKE_STATE: join(sb.dir, 'data', 'intake-state.json'),
+      PROJECT_X_INTAKE_STATE: join(sb.dir, 'data', 'intake-state.json'),
     },
   });
 }
@@ -131,7 +131,7 @@ describe('intake rejects an unknown flag instead of scanning', () => {
     const inheritedBody = '{"ingested":{"sentinel":true}}\n';
     writeFileSync(inherited, inheritedBody);
     try {
-      const result = spawn(sb, ['--commit', '--all'], { CAREER_OPS_INTAKE_STATE: inherited });
+      const result = spawn(sb, ['--commit', '--all'], { PROJECT_X_INTAKE_STATE: inherited });
       assert.equal(result.status, 0, `${result.status} ${result.stderr}\n${result.stdout}`);
       assert.doesNotMatch(result.stderr, /unrecognized flag/);
       assert.match(result.stdout, /Recorded/);

@@ -1,6 +1,6 @@
 # modes/
 
-The "brain" of career-ops: Markdown prompt files executed by whatever AI
+The "brain" of project-x: Markdown prompt files executed by whatever AI
 coding CLI you use.
 
 ## Purpose

@@ -19,7 +19,7 @@
 // must stop before it touches the tracker.
 //
 // Drives the REAL dedup-tracker.mjs CLI against a temp tracker via the
-// CAREER_OPS_TRACKER hook: the deletion is what loses data, so the rows left in
+// PROJECT_X_TRACKER hook: the deletion is what loses data, so the rows left in
 // the file are what is asserted.
 import { pass, fail, rmSync, linkRepoPackage, ROOT } from './helpers.mjs';
 import assert from 'node:assert';
@@ -45,7 +45,7 @@ function withTracker(rows, fn) {
     writeFileSync(tracker, trackerText(rows));
     const r = spawnSync(process.execPath, [DEDUP], {
       encoding: 'utf-8',
-      env: { ...process.env, CAREER_OPS_TRACKER: tracker },
+      env: { ...process.env, PROJECT_X_TRACKER: tracker },
     });
     assert.equal(r.status, 0, describeSpawn(r, `dedup-tracker exited ${r.status}`));
     fn(readFileSync(tracker, 'utf-8').split('\n').filter((l) => /^\|\s*\d+\s*\|/.test(l)));
@@ -187,7 +187,7 @@ function inSandbox(statesYml, fn) {
     writeFileSync(tracker, trackerText(DUPLICATE_ROWS));
     const r = spawnSync(process.execPath, [join(dir, 'dedup-tracker.mjs')], {
       encoding: 'utf-8',
-      env: { ...process.env, CAREER_OPS_TRACKER: tracker },
+      env: { ...process.env, PROJECT_X_TRACKER: tracker },
     });
     fn({ r, tracker });
   } finally {

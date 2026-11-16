@@ -34,9 +34,9 @@ import { scanBoard } from '../scan-dayforce.mjs';
 import { buildTitleFilter, buildLocationFilter } from '../scan.mjs';
 import { validatePortalsConfig } from '../validate-portals.mjs';
 
-// The child scanners get none of the caller's CAREER_OPS_* settings: each one
+// The child scanners get none of the caller's PROJECT_X_* settings: each one
 // points at the developer's own data.
-const cleanEnv = () => Object.fromEntries(Object.entries(process.env).filter(([name]) => !name.startsWith('CAREER_OPS_')));
+const cleanEnv = () => Object.fromEntries(Object.entries(process.env).filter(([name]) => !name.startsWith('PROJECT_X_')));
 
 const ok = (name, fn) => { try { fn(); pass(name); } catch (e) { fail(`${name} — ${e.message}`); } };
 const okAsync = async (name, fn) => { try { await fn(); pass(name); } catch (e) { fail(`${name} — ${e.message}`); } };
@@ -264,7 +264,7 @@ function scan(contentFilterYaml, jobs, { titleFilterYaml = ['title_filter:', '  
       '',
     ].join('\n'));
     writeFileSync(join(dir, 'jobs.json'), JSON.stringify(jobs));
-    // An explicit profile, so the caller's own CAREER_OPS_PROFILE never leaks in.
+    // An explicit profile, so the caller's own PROJECT_X_PROFILE never leaks in.
     const profile = join(dir, 'profile.yml');
     writeFileSync(profile, profileYaml);
     const preload = join(dir, 'preload.mjs');
@@ -278,9 +278,9 @@ function scan(contentFilterYaml, jobs, { titleFilterYaml = ['title_filter:', '  
     ].join('\n'));
     const r = spawnSync(NODE, ['--import', pathToFileURL(preload).href, join(ROOT, 'scan.mjs'), ...args], {
       cwd: dir, encoding: 'utf-8', timeout: 30000,
-      env: { ...cleanEnv(), CAREER_OPS_ROOT: dir, CAREER_OPS_DATA_DIR: '', CAREER_OPS_PORTALS: portals, CAREER_OPS_PROFILE: profile,
+      env: { ...cleanEnv(), PROJECT_X_ROOT: dir, PROJECT_X_DATA_DIR: '', PROJECT_X_PORTALS: portals, PROJECT_X_PROFILE: profile,
         // Empty, so a caller's own pipeline lane or history file is never written to.
-        CAREER_OPS_PIPELINE: '', CAREER_OPS_SCAN_HISTORY: '' },
+        PROJECT_X_PIPELINE: '', PROJECT_X_SCAN_HISTORY: '' },
     });
     const read = (name) => (existsSync(join(dir, 'data', name)) ? readFileSync(join(dir, 'data', name), 'utf-8') : '');
     const urls = read('pipeline.md').split('\n').map(l => l.match(/^- \[[ x]\]\s+(https?:\/\/\S+)/)?.[1]).filter(Boolean);
@@ -496,7 +496,7 @@ function runWithPortals(script, lines, args = []) {
     writeFileSync(preload, "globalThis.fetch = async () => { throw new Error('Unexpected network request'); };\n");
     return spawnSync(NODE, ['--import', pathToFileURL(preload).href, join(ROOT, script), ...args], {
       cwd: dir, encoding: 'utf-8', timeout: 30000,
-      env: { ...cleanEnv(), CAREER_OPS_ROOT: dir, CAREER_OPS_DATA_DIR: '', CAREER_OPS_PORTALS: portals, CAREER_OPS_PROFILE: join(dir, 'profile.yml') },
+      env: { ...cleanEnv(), PROJECT_X_ROOT: dir, PROJECT_X_DATA_DIR: '', PROJECT_X_PORTALS: portals, PROJECT_X_PROFILE: join(dir, 'profile.yml') },
     });
   } finally {
     rmSync(dir, { recursive: true, force: true });

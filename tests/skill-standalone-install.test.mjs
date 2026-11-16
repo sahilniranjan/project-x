@@ -1,12 +1,12 @@
 // tests/skill-standalone-install.test.mjs — a skill installed on its own must
-// lead the user to career-ops instead of stopping in silence.
+// lead the user to project-x instead of stopping in silence.
 //
-// Skill catalogs (`npx skills add career-ops-hq/career-ops`) copy only
-// .agents/skills/career-ops/SKILL.md. Nothing around it holds AGENTS.md or
+// Skill catalogs (`npx skills add project-x-hq/project-x`) copy only
+// .agents/skills/project-x/SKILL.md. Nothing around it holds AGENTS.md or
 // modes/, so Project Root Resolution finds no PROJECT_ROOT. The router used to
 // say only "stop and locate the checkout", which left a user who had pasted a
 // job URL with no next step. It now carries a "Skill installed without
-// career-ops" branch: look for an existing install, offer `init` with the
+// project-x" branch: look for an existing install, offer `init` with the
 // user's yes, then pick up the original request.
 //
 // HERMETIC: copies SKILL.md alone into a temp directory, the way a catalog does.
@@ -18,10 +18,10 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
-const SOURCE = join(ROOT, '.agents', 'skills', 'career-ops', 'SKILL.md');
+const SOURCE = join(ROOT, '.agents', 'skills', 'project-x', 'SKILL.md');
 const ENTRYPOINTS = ['.agents', '.antigravitycli', '.claude', '.grok', '.kimi', '.opencode', '.qwen']
-  .map((dir) => join(ROOT, dir, 'skills', 'career-ops', 'SKILL.md'));
-const HEADING = '### Skill installed without career-ops';
+  .map((dir) => join(ROOT, dir, 'skills', 'project-x', 'SKILL.md'));
+const HEADING = '### Skill installed without project-x';
 
 function findProjectRoot(skillPath) {
   let current = dirname(skillPath);
@@ -43,11 +43,11 @@ function standaloneBranch(text) {
 test('a catalog-style install has only SKILL.md and no PROJECT_ROOT', () => {
   const dir = mkdtempSync(join(tmpdir(), 'co-skill-only-'));
   try {
-    const skillDir = join(dir, '.claude', 'skills', 'career-ops');
+    const skillDir = join(dir, '.claude', 'skills', 'project-x');
     mkdirSync(skillDir, { recursive: true });
     copyFileSync(SOURCE, join(skillDir, 'SKILL.md'));
     assert.deepEqual(readdirSync(skillDir), ['SKILL.md']);
-    assert.equal(findProjectRoot(join(skillDir, 'SKILL.md')), null, 'a temp dir should not resolve to a career-ops checkout');
+    assert.equal(findProjectRoot(join(skillDir, 'SKILL.md')), null, 'a temp dir should not resolve to a project-x checkout');
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
@@ -55,28 +55,28 @@ test('a catalog-style install has only SKILL.md and no PROJECT_ROOT', () => {
 
 test('the missing-sentinel rule points at the standalone branch', () => {
   const text = readFileSync(SOURCE, 'utf8');
-  assert.match(text, /If those two sentinels cannot be found[^\n]*Skill installed without career-ops/);
+  assert.match(text, /If those two sentinels cannot be found[^\n]*Skill installed without project-x/);
   assert.ok(text.includes(HEADING), `SKILL.md has no "${HEADING}" section`);
 });
 
 test('the standalone branch looks for an install, asks before init and resumes the request', () => {
   const branch = standaloneBranch(readFileSync(SOURCE, 'utf8'));
-  for (const place of ['CAREER_OPS_ROOT', './career-ops', '~/career-ops']) {
+  for (const place of ['PROJECT_X_ROOT', './project-x', '~/project-x']) {
     assert.ok(branch.includes(place), `standalone branch does not look in ${place}`);
   }
   // Pinned to the release (the Claude plugin directory blocks an unpinned npx); release-please bumps it.
   const { version } = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'));
-  assert.ok(branch.includes(`npx @santifer/career-ops@${version} init`), `standalone branch does not name the init command pinned to ${version}`);
-  assert.doesNotMatch(branch, /npx @santifer\/career-ops init/, 'standalone branch has an unpinned init command');
+  assert.ok(branch.includes(`npx @santifer/project-x@${version} init`), `standalone branch does not name the init command pinned to ${version}`);
+  assert.doesNotMatch(branch, /npx @santifer\/project-x init/, 'standalone branch has an unpinned init command');
   assert.match(branch, /Ask before running it/, 'standalone branch must ask before installing');
   assert.match(branch, /original request/, 'standalone branch must pick the user\'s request back up');
-  assert.match(branch, /https:\/\/github\.com\/career-ops-hq\/career-ops(?![\w-])/, 'standalone branch must link the canonical repo');
+  assert.match(branch, /https:\/\/github\.com\/project-x-hq\/project-x(?![\w-])/, 'standalone branch must link the canonical repo');
   assert.doesNotMatch(branch, /github\.com\/santifer\//, 'standalone branch links the old repo path');
 });
 
 test('every SKILL.md entrypoint carries the same standalone branch', () => {
   const expected = standaloneBranch(readFileSync(SOURCE, 'utf8'));
   for (const entry of ENTRYPOINTS) {
-    assert.equal(standaloneBranch(readFileSync(entry, 'utf8')), expected, `${entry} differs from .agents/skills/career-ops/SKILL.md`);
+    assert.equal(standaloneBranch(readFileSync(entry, 'utf8')), expected, `${entry} differs from .agents/skills/project-x/SKILL.md`);
   }
 });

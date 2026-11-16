@@ -48,7 +48,7 @@ const MAX_TIMER_MS = 2_147_483_647; // setTimeout rewrites anything above this t
  * typo instead of a slow board. Falling back is the quieter outcome: a scan at
  * the 10s default beats a scan where every portal reads as unreachable.
  *
- * @param {unknown} raw - Raw env value (CAREER_OPS_HTTP_TIMEOUT_MS).
+ * @param {unknown} raw - Raw env value (PROJECT_X_HTTP_TIMEOUT_MS).
  * @param {number} [fallback=10_000] - Value used when `raw` is unusable.
  * @returns {number} Milliseconds.
  */
@@ -63,7 +63,7 @@ let proxyAgent;
 let proxySignature;
 
 async function proxyFor(url) {
-  if (process.env.CAREER_OPS_TRUST_PROXY_EGRESS !== '1') return { dispatcher: undefined, proxyHost: undefined };
+  if (process.env.PROJECT_X_TRUST_PROXY_EGRESS !== '1') return { dispatcher: undefined, proxyHost: undefined };
   const target = new URL(url);
   const httpProxy = process.env.http_proxy || process.env.HTTP_PROXY || '';
   const httpsProxy = process.env.https_proxy || process.env.HTTPS_PROXY || httpProxy;
@@ -88,7 +88,7 @@ async function proxyFor(url) {
   // Existing installations can keep direct transport without installing undici.
   // Resolve the optional transport only after both the trust flag and proxy URL.
   const { EnvHttpProxyAgent, fetch: undiciFetch } = await import('undici').catch((cause) => {
-    throw new Error('Trusted proxy egress requires undici; run npm install in the career-ops directory, then retry.', { cause });
+    throw new Error('Trusted proxy egress requires undici; run npm install in the project-x directory, then retry.', { cause });
   });
   if (signature !== proxySignature) {
     // proxyTunnel: true keeps every request, http:// included, on a CONNECT
@@ -154,7 +154,7 @@ async function fetchWithTimeout(url, opts = {}, consume, allowManualRedirectResp
  * @param {typeof fetch} [fetchImpl] undici's fetch when a proxy dispatcher is used; global fetch otherwise.
  * @returns {Promise<any>}
  */
-async function fetchInContext(url, { timeoutMs = resolveDefaultTimeoutMs(process.env.CAREER_OPS_HTTP_TIMEOUT_MS), headers = {}, method = 'GET', body = null, redirect = 'error', onResponse, acceptNotModified = false } = {}, consume, dispatcher, allowManualRedirectResponse = false, fetchImpl = fetch) {
+async function fetchInContext(url, { timeoutMs = resolveDefaultTimeoutMs(process.env.PROJECT_X_HTTP_TIMEOUT_MS), headers = {}, method = 'GET', body = null, redirect = 'error', onResponse, acceptNotModified = false } = {}, consume, dispatcher, allowManualRedirectResponse = false, fetchImpl = fetch) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
@@ -199,7 +199,7 @@ async function fetchInContext(url, { timeoutMs = resolveDefaultTimeoutMs(process
     } catch (err) {
       if (!dispatcher && ['ENOTFOUND', 'EAI_AGAIN'].includes(err?.cause?.code)
         && (process.env.https_proxy || process.env.HTTPS_PROXY || process.env.http_proxy || process.env.HTTP_PROXY)) {
-        err.message += ' (proxy variables are set but provider requests use direct fetch; set CAREER_OPS_TRUST_PROXY_EGRESS=1 only if your proxy blocks private destination addresses)';
+        err.message += ' (proxy variables are set but provider requests use direct fetch; set PROJECT_X_TRUST_PROXY_EGRESS=1 only if your proxy blocks private destination addresses)';
       }
       throw err;
     }

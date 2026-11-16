@@ -71,7 +71,7 @@ test('a partial board is not a dead-board failure; it has its own streak', () =>
 });
 
 test('scan logs a partly-read board `partial` in health and the --json receipt, even when it read nothing', () => {
-  const dataRoot = mkdtempSync(join(tmpdir(), 'career-ops-partial-board-'));
+  const dataRoot = mkdtempSync(join(tmpdir(), 'project-x-partial-board-'));
   try {
     mkdirSync(join(dataRoot, 'config'));
     writeFileSync(join(dataRoot, 'config', 'profile.yml'), '{}\n');
@@ -96,16 +96,16 @@ test('scan logs a partly-read board `partial` in health and the --json receipt, 
       `  return [job];`,
       `};`,
     ].join('\n'));
-    // Drop every inherited CAREER_OPS_* override (pipeline, scan history,
+    // Drop every inherited PROJECT_X_* override (pipeline, scan history,
     // tracker, profile, data dir, cache, ...) so the scan reads and writes only
     // inside dataRoot, never a developer's real files. Case-insensitive, since
     // Windows environment names are.
-    const env = Object.fromEntries(Object.entries(process.env).filter(([k]) => !k.toUpperCase().startsWith('CAREER_OPS_')));
+    const env = Object.fromEntries(Object.entries(process.env).filter(([k]) => !k.toUpperCase().startsWith('PROJECT_X_')));
     const result = spawnSync(process.execPath, [
       '--import', pathToFileURL(preload).href, fileURLToPath(new URL('../scan.mjs', import.meta.url)), '--json', '--quiet',
     ], {
       cwd: dataRoot,
-      env: { ...env, CAREER_OPS_ROOT: dataRoot, CAREER_OPS_PORTALS: join(dataRoot, 'portals.yml') },
+      env: { ...env, PROJECT_X_ROOT: dataRoot, PROJECT_X_PORTALS: join(dataRoot, 'portals.yml') },
       encoding: 'utf8',
       timeout: 30000,
     });
@@ -129,7 +129,7 @@ test('scan logs a partly-read board `partial` in health and the --json receipt, 
 // line or stats' persistently-dead count, whose remedies (verify-portals, a new
 // slug) cannot clear it. It gets its own repeat line instead.
 test('a board capped on purpose for 3+ runs gets its own repeat line, not the ðŸš¨', () => {
-  const dataRoot = mkdtempSync(join(tmpdir(), 'career-ops-capped-streak-'));
+  const dataRoot = mkdtempSync(join(tmpdir(), 'project-x-capped-streak-'));
   try {
     mkdirSync(join(dataRoot, 'config'));
     writeFileSync(join(dataRoot, 'config', 'profile.yml'), '{}\n');
@@ -140,14 +140,14 @@ test('a board capped on purpose for 3+ runs gets its own repeat line, not the ðŸ
       `import provider from ${JSON.stringify(new URL('../providers/builtin.mjs', import.meta.url).href)};`,
       `provider.fetch = async (entry) => Object.assign([{ title: 'Some Role', url: 'https://builtin.com/job/1', company: entry.name, location: 'Remote' }], { truncated: { reason: 'page-cap', fetched: 40, total: 2372 } });`,
     ].join('\n'));
-    const env = Object.fromEntries(Object.entries(process.env).filter(([k]) => !k.toUpperCase().startsWith('CAREER_OPS_')));
+    const env = Object.fromEntries(Object.entries(process.env).filter(([k]) => !k.toUpperCase().startsWith('PROJECT_X_')));
     let result;
     for (let run = 0; run < 3; run++) {
       result = spawnSync(process.execPath, [
         '--import', pathToFileURL(preload).href, fileURLToPath(new URL('../scan.mjs', import.meta.url)),
       ], {
         cwd: dataRoot,
-        env: { ...env, CAREER_OPS_ROOT: dataRoot, CAREER_OPS_PORTALS: join(dataRoot, 'portals.yml') },
+        env: { ...env, PROJECT_X_ROOT: dataRoot, PROJECT_X_PORTALS: join(dataRoot, 'portals.yml') },
         encoding: 'utf8',
         timeout: 30000,
       });

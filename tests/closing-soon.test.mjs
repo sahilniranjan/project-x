@@ -145,7 +145,7 @@ function run(args, { dataRoot, decoyCwd }) {
   return spawnSync(process.execPath, [join(ROOT, 'closing-soon.mjs'), ...args], {
     cwd: decoyCwd,
     encoding: 'utf-8',
-    env: { ...process.env, CAREER_OPS_ROOT: dataRoot, CAREER_OPS_TRACKER: '' },
+    env: { ...process.env, PROJECT_X_ROOT: dataRoot, PROJECT_X_TRACKER: '' },
   });
 }
 

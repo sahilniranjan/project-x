@@ -23,15 +23,15 @@ test('opencode.ai gets the session header with the id it was given', () => {
   assert.equal(h['x-opencode-session'], SESSION);
 });
 
-test('opencode.ai gets career-ops own User-Agent with the version', () => {
+test('opencode.ai gets project-x own User-Agent with the version', () => {
   const ua = endpointHeaders('opencode.ai', SESSION, '1.38.0')['User-Agent'];
-  assert.equal(ua, 'career-ops/1.38.0');
+  assert.equal(ua, 'project-x/1.38.0');
   assert.doesNotMatch(ua, /node|undici|fetch|axios|openai|curl|python/i);
 });
 
-test('the User-Agent falls back to a versioned career-ops string without a version', () => {
+test('the User-Agent falls back to a versioned project-x string without a version', () => {
   const ua = endpointHeaders('opencode.ai', SESSION)['User-Agent'];
-  assert.match(ua, /^career-ops\/\d/);
+  assert.match(ua, /^project-x\/\d/);
 });
 
 for (const host of [

@@ -4,7 +4,7 @@
 // batch-evaluate-gemini read only the working directory's .env, so with a
 // separate data folder the keys in its .env never reached them.
 //
-// Each runner starts in an empty working directory, with CAREER_OPS_ROOT
+// Each runner starts in an empty working directory, with PROJECT_X_ROOT
 // pointing at a data root whose .env holds one setting the runner acts on
 // before any network request: an invalid value it rejects by name, or an API
 // key whose absence it reports.
@@ -18,7 +18,7 @@ console.log('\nModel runners — .env is read from the data root');
 
 // dotenv keeps a variable that is already set, even to '', so an inherited
 // setting would hide the file under test: these are removed, not blanked.
-const OWNED = /^(GEMINI_|OPENAI_|OLLAMA_|OPENROUTER_|CAREER_OPS_)/;
+const OWNED = /^(GEMINI_|OPENAI_|OLLAMA_|OPENROUTER_|PROJECT_X_)/;
 
 const CONTEXT = { 'cv.md': '# CV\n', 'modes/_profile.md': '# Profile\n', 'config/profile.yml': 'candidate:\n  full_name: Test\n' };
 
@@ -37,7 +37,7 @@ function runner(script, { rootEnv, cwdEnv, args = () => [] } = {}) {
     if (rootEnv !== undefined) writeFileSync(join(root, '.env'), rootEnv);
     if (cwdEnv !== undefined) writeFileSync(join(cwd, '.env'), cwdEnv);
     const env = Object.fromEntries(Object.entries(process.env).filter(([k]) => !OWNED.test(k)));
-    env.CAREER_OPS_ROOT = root;
+    env.PROJECT_X_ROOT = root;
     const r = spawnSync(NODE, [join(ROOT, script), ...args(root)], {
       cwd, env, encoding: 'utf8', input: '', timeout: 60000,
     });

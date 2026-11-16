@@ -32,8 +32,8 @@ writeFileSync(join(work, 'config', 'profile.yml'), 'candidate:\n  full_name: Tes
 
 // dotenv keeps a variable that is already set, even to '', so inherited
 // settings are removed rather than blanked.
-const base = Object.fromEntries(Object.entries(process.env).filter(([k]) => !/^(OLLAMA_|OPENAI_|CAREER_OPS_)/.test(k)));
-base.CAREER_OPS_ROOT = work;
+const base = Object.fromEntries(Object.entries(process.env).filter(([k]) => !/^(OLLAMA_|OPENAI_|PROJECT_X_)/.test(k)));
+base.PROJECT_X_ROOT = work;
 
 const RUNNERS = {
   // ollama-eval probes the server first; the stub makes that probe fail.

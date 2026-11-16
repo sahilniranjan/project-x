@@ -20,7 +20,7 @@ console.log('\ntest-all.mjs — a node:test suite past its budget in the in-proc
 const RUNNER_IMPORT = "import { test } from 'node:" + "test';";
 const check = (name, ok, detail) => (ok ? pass(name) : fail(`${name}${detail ? ` — ${detail}` : ''}`));
 
-const { sandbox, suite, runner, remove } = createRunnerSandbox('career-ops-serial-timeout-');
+const { sandbox, suite, runner, remove } = createRunnerSandbox('project-x-serial-timeout-');
 try {
   const helpersFile = join(sandbox, 'tests', 'helpers.mjs');
   const src = readFileSync(helpersFile, 'utf-8');

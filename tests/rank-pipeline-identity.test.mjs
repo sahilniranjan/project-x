@@ -21,7 +21,7 @@ function runRanking(rows, results, current = null, limit = rows.length) {
       + `console.log(${JSON.stringify(JSON.stringify(results))});\n`);
     execFileSync(process.execPath, [join(ROOT, 'rank-pipeline.mjs'), '--cli', 'fixture-ranker', '--limit', String(limit)], {
       env: envWithPathFirst(join(root, 'bin'), {
-        CAREER_OPS_ROOT: root,
+        PROJECT_X_ROOT: root,
         RANK_PIPELINE: join(root, 'data', 'pipeline.md'),
       }),
     });

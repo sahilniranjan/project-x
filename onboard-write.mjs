@@ -8,7 +8,7 @@ import { dirname, join, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { loadYaml } from './lib/yaml-document.mjs';
 import { compileKeyword, foldTitle } from './title-keywords.mjs';
-import { getCareerOpsRoot, getProfilePath } from './path-resolver.mjs';
+import { getProjectXRoot, getProfilePath } from './path-resolver.mjs';
 import { writeFileAtomic } from './tracker-utils.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
 
@@ -375,7 +375,7 @@ export function main(argv = process.argv.slice(2)) {
     return 0;
   }
   const answers = normalizeAnswers(readAnswers(opts.answers));
-  const root = opts.target ? resolve(opts.target) : getCareerOpsRoot();
+  const root = opts.target ? resolve(opts.target) : getProjectXRoot();
   const targets = [
     {
       key: 'profile',
@@ -390,7 +390,7 @@ export function main(argv = process.argv.slice(2)) {
     {
       key: 'portals',
       rel: 'portals.yml',
-      path: opts.target ? join(root, 'portals.yml') : (process.env.CAREER_OPS_PORTALS || join(root, 'portals.yml')),
+      path: opts.target ? join(root, 'portals.yml') : (process.env.PROJECT_X_PORTALS || join(root, 'portals.yml')),
       build: () => {
         const template = readFileSync(PORTALS_TEMPLATE, 'utf8');
         const text = buildPortals(template, answers);

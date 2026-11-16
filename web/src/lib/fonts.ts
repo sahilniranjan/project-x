@@ -1,6 +1,6 @@
 import localFont from "next/font/local";
 
-// Body / UI — Inter, same as the career-ops-docs home. The latin variable
+// Body / UI — Inter, same as the project-x-docs home. The latin variable
 // subset is vendored so an offline production build never contacts Google.
 export const inter = localFont({
   src: [{

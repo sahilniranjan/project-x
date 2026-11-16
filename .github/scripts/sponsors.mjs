@@ -32,13 +32,13 @@ const LOGO_HEIGHT = 48;
 // English copy of the section. Translations carry their own heading, intro and
 // note; only the rows are shared.
 export const HEADING = '## Sponsors';
-export const INTRO = 'career-ops is free for candidates, forever. These companies sponsor the project:';
+export const INTRO = 'project-x is free for candidates, forever. These companies sponsor the project:';
 export const NOTE = 'Sponsorship buys clearly labeled visibility, never influence: no amount of money changes the roadmap or places anything in the product. Sponsors never appear in evaluations, rankings or recommendations.';
 
 // Where the section sits in README.md: after the community section, before the
 // value proposition. Placement is part of the sponsorship agreement.
 export const HEADING_BEFORE = "## You don't have to search alone";
-export const HEADING_AFTER = '## What career-ops does for you';
+export const HEADING_AFTER = '## What project-x does for you';
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 

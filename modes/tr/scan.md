@@ -297,7 +297,7 @@ pipeline.md dosyasına yeni eklenenler: N
   + {company} | {title} | {query_name}
   ...
 
-→ Yeni teklifleri değerlendirmek için `pipeline` modunu çalıştır (varsa `/career-ops pipeline` çalıştır veya ajandan `pipeline` çalıştırmasını iste).
+→ Yeni teklifleri değerlendirmek için `pipeline` modunu çalıştır (varsa `/project-x pipeline` çalıştır veya ajandan `pipeline` çalıştırmasını iste).
 ```
 
 ## careers_url Yönetimi

@@ -633,28 +633,28 @@ try {
   // isolated tmp cwd (never this checkout's own config/profile.yml, so both
   // the fallback and the throw are checked on every machine, onboarded or
   // not). Same pattern as tests/providers/vdab.test.mjs, plus
-  // CAREER_OPS_PROFILE cleared for the duration: when set, it overrides the
+  // PROJECT_X_PROFILE cleared for the duration: when set, it overrides the
   // relative path and the fixture would never be read.
   {
     const withTmpCwd = async (setup, run) => {
-      const tmp = mkdtempSync(join(tmpdir(), 'career-ops-gupy-fallback-'));
+      const tmp = mkdtempSync(join(tmpdir(), 'project-x-gupy-fallback-'));
       const cwdBefore = process.cwd();
-      const rootEnvBefore = { root: process.env.CAREER_OPS_ROOT, dir: process.env.CAREER_OPS_DATA_DIR };
-      const profileEnvBefore = process.env.CAREER_OPS_PROFILE;
+      const rootEnvBefore = { root: process.env.PROJECT_X_ROOT, dir: process.env.PROJECT_X_DATA_DIR };
+      const profileEnvBefore = process.env.PROJECT_X_PROFILE;
       try {
         setup(tmp);
         process.chdir(tmp);
-        process.env.CAREER_OPS_ROOT = tmp;
-        process.env.CAREER_OPS_DATA_DIR = '';
-        delete process.env.CAREER_OPS_PROFILE;
+        process.env.PROJECT_X_ROOT = tmp;
+        process.env.PROJECT_X_DATA_DIR = '';
+        delete process.env.PROJECT_X_PROFILE;
         return await run();
       } finally {
-        if (profileEnvBefore === undefined) delete process.env.CAREER_OPS_PROFILE;
-        else process.env.CAREER_OPS_PROFILE = profileEnvBefore;
-        if (rootEnvBefore.root === undefined) delete process.env.CAREER_OPS_ROOT;
-        else process.env.CAREER_OPS_ROOT = rootEnvBefore.root;
-        if (rootEnvBefore.dir === undefined) delete process.env.CAREER_OPS_DATA_DIR;
-        else process.env.CAREER_OPS_DATA_DIR = rootEnvBefore.dir;
+        if (profileEnvBefore === undefined) delete process.env.PROJECT_X_PROFILE;
+        else process.env.PROJECT_X_PROFILE = profileEnvBefore;
+        if (rootEnvBefore.root === undefined) delete process.env.PROJECT_X_ROOT;
+        else process.env.PROJECT_X_ROOT = rootEnvBefore.root;
+        if (rootEnvBefore.dir === undefined) delete process.env.PROJECT_X_DATA_DIR;
+        else process.env.PROJECT_X_DATA_DIR = rootEnvBefore.dir;
         process.chdir(cwdBefore);
         rmSync(tmp, { recursive: true, force: true });
       }

@@ -5,8 +5,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/santifer/career-ops/dashboard/internal/data"
-	"github.com/santifer/career-ops/dashboard/internal/model"
+	"github.com/santifer/project-x/dashboard/internal/data"
+	"github.com/santifer/project-x/dashboard/internal/model"
 )
 
 // Issue 6036: `y` copies the selected application's newest CV PDF path.
@@ -50,7 +50,7 @@ func TestCopyPDFKeyEmitsNewestPDFPath(t *testing.T) {
 	}
 }
 
-func TestCopyPDFKeyPathIsAbsoluteWithRelativeCareerOpsPath(t *testing.T) {
+func TestCopyPDFKeyPathIsAbsoluteWithRelativeProjectXPath(t *testing.T) {
 	root := t.TempDir()
 	writePDFFixture(t, root, "output/cv-jane-doe-globex-2026-06-05.pdf")
 	t.Chdir(filepath.Dir(root))

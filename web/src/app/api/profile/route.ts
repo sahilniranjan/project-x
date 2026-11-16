@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import * as yaml from "js-yaml";
-import { careerOpsRoot } from "@/lib/career-ops";
+import { projectXRoot } from "@/lib/project-x";
 import { atomicWriteWithBackup } from "@/lib/core/safe-write";
 
 export const runtime = "nodejs";
@@ -65,7 +65,7 @@ export async function POST(req: Request) {
   const proposed = patchToProfile(patch);
   if (Object.keys(proposed).length === 0) return Response.json({ error: "nothing to write" }, { status: 400 });
 
-  const root = careerOpsRoot();
+  const root = projectXRoot();
   const file = path.join(root, "config", "profile.yml");
   let base: Record<string, unknown> = {};
   let seeded = false;

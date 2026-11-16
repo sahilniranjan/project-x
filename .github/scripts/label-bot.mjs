@@ -18,7 +18,7 @@ const log = (l) => { lines.push(l); process.stdout.write(l + '\n'); };
 
 async function rest(method, url, body) {
   const res = await fetch(url.startsWith('http') ? url : `${API}/${url}`, {
-    method, headers: { authorization: `Bearer ${TOKEN}`, accept: 'application/vnd.github+json', 'x-github-api-version': '2022-11-28', 'user-agent': 'career-ops-label-bot', ...(body ? { 'content-type': 'application/json' } : {}) },
+    method, headers: { authorization: `Bearer ${TOKEN}`, accept: 'application/vnd.github+json', 'x-github-api-version': '2022-11-28', 'user-agent': 'project-x-label-bot', ...(body ? { 'content-type': 'application/json' } : {}) },
     body: body ? JSON.stringify(body) : undefined,
   });
   const text = await res.text();

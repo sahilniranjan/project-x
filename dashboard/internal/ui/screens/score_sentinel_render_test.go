@@ -6,8 +6,8 @@ import (
 
 	"github.com/charmbracelet/lipgloss"
 
-	"github.com/santifer/career-ops/dashboard/internal/model"
-	"github.com/santifer/career-ops/dashboard/internal/theme"
+	"github.com/santifer/project-x/dashboard/internal/model"
+	"github.com/santifer/project-x/dashboard/internal/theme"
 )
 
 // A row whose Score cell is a sentinel has no number to print: the renderer

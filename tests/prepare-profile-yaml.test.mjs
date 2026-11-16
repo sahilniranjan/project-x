@@ -6,10 +6,10 @@ import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { ROOT, pass, fail } from './helpers.mjs';
 import { describeSpawn } from './helpers/describe-spawn.mjs';
-const root = mkdtempSync(join(tmpdir(), 'career-ops-prepare-yaml-'));
+const root = mkdtempSync(join(tmpdir(), 'project-x-prepare-yaml-'));
 mkdirSync(join(root, 'config')); mkdirSync(join(root, 'output'));
 writeFileSync(join(root, 'output', 'fictional.pdf'), '%PDF-fixture');
-const env = { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_PROFILE: '' };
+const env = { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_PROFILE: '' };
 const run = yaml => {
   writeFileSync(join(root, 'config', 'profile.yml'), yaml);
   return spawnSync(process.execPath, [join(ROOT, 'prepare-application.mjs'), '--url', 'https://boards.greenhouse.io/fictional/jobs/1', '--pdf', 'output/fictional.pdf'], { env, encoding: 'utf8' });

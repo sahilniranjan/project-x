@@ -2,9 +2,9 @@
 // provider registry from the CHECKOUT, not from the user's data root (#4171).
 //
 // `providers/` is system layer: it ships with the code and never travels to a
-// data root. Anchoring it to getCareerOpsRoot() worked only while the data root
+// data root. Anchoring it to getProjectXRoot() worked only while the data root
 // and the checkout were the same directory. Under the external-data-root layout
-// (CAREER_OPS_ROOT / CAREER_OPS_DATA_DIR, or a `.career-ops-data` marker),
+// (PROJECT_X_ROOT / PROJECT_X_DATA_DIR, or a `.project-x-data` marker),
 // loadProviders() read a directory that does not exist and returned an EMPTY
 // registry — so audit-portals.mjs, the script whose whole job is catching the
 // silent "enabled but nothing scans it" state, reported `0 audited` and exited
@@ -34,21 +34,21 @@ const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
  */
 async function importUnderDataRoot(dataRoot) {
   const previous = {
-    root: process.env.CAREER_OPS_ROOT,
-    dataDir: process.env.CAREER_OPS_DATA_DIR,
-    portals: process.env.CAREER_OPS_PORTALS,
+    root: process.env.PROJECT_X_ROOT,
+    dataDir: process.env.PROJECT_X_DATA_DIR,
+    portals: process.env.PROJECT_X_PORTALS,
   };
-  process.env.CAREER_OPS_ROOT = dataRoot;
-  delete process.env.CAREER_OPS_DATA_DIR;
-  delete process.env.CAREER_OPS_PORTALS;
+  process.env.PROJECT_X_ROOT = dataRoot;
+  delete process.env.PROJECT_X_DATA_DIR;
+  delete process.env.PROJECT_X_PORTALS;
   try {
     const url = `${pathToFileURL(join(ROOT, 'audit-portals.mjs')).href}?data-root=${encodeURIComponent(dataRoot)}`;
     return await import(url);
   } finally {
     for (const [name, value] of [
-      ['CAREER_OPS_ROOT', previous.root],
-      ['CAREER_OPS_DATA_DIR', previous.dataDir],
-      ['CAREER_OPS_PORTALS', previous.portals],
+      ['PROJECT_X_ROOT', previous.root],
+      ['PROJECT_X_DATA_DIR', previous.dataDir],
+      ['PROJECT_X_PORTALS', previous.portals],
     ]) {
       if (value === undefined) delete process.env[name];
       else process.env[name] = value;
@@ -57,7 +57,7 @@ async function importUnderDataRoot(dataRoot) {
 }
 
 function fixture() {
-  const dataRoot = mkdtempSync(join(tmpdir(), 'career-ops-auditproviders-'));
+  const dataRoot = mkdtempSync(join(tmpdir(), 'project-x-auditproviders-'));
   mkdirSync(join(dataRoot, 'data'), { recursive: true });
   writeFileSync(
     join(dataRoot, 'portals.yml'),

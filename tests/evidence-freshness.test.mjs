@@ -292,7 +292,7 @@ try {
       'the check writes nothing');
 
     const bare = sandbox({ github: null });
-    const env = { ...process.env, CAREER_OPS_ROOT: bare, CAREER_OPS_DATA_DIR: '', CAREER_OPS_PROFILE: '' };
+    const env = { ...process.env, PROJECT_X_ROOT: bare, PROJECT_X_DATA_DIR: '', PROJECT_X_PROFILE: '' };
     const run = spawnSync(NODE, [join(ROOT, 'evidence-freshness.mjs')], { cwd: ROOT, encoding: 'utf8', timeout: 30000, env });
     let parsed = null;
     try { parsed = JSON.parse(run.stdout); } catch { /* checked below */ }

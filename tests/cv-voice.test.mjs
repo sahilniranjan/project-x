@@ -155,7 +155,7 @@ test('generate-latex blocks a stock verb and still blocks an invented metric', (
       cwd: root,
       encoding: 'utf-8',
       timeout: 30_000,
-      env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_DATA_DIR: '' },
+      env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_DATA_DIR: '' },
     });
     const stockReport = JSON.parse(stock.stdout);
     assert.equal(stockReport.factCheck.verdict, 'block');
@@ -167,7 +167,7 @@ test('generate-latex blocks a stock verb and still blocks an invented metric', (
       cwd: root,
       encoding: 'utf-8',
       timeout: 30_000,
-      env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_DATA_DIR: '' },
+      env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_DATA_DIR: '' },
     });
     const numberReport = JSON.parse(number.stdout);
     assert.equal(numberReport.factCheck.verdict, 'block');
@@ -190,7 +190,7 @@ test('a dash the candidate wrote still counts when --source is a separate tex fi
       cwd: root,
       encoding: 'utf-8',
       timeout: 30_000,
-      env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_DATA_DIR: '' },
+      env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_DATA_DIR: '' },
     });
     const report = JSON.parse(run.stdout);
     const reason = report.factCheck.reason || '';
@@ -288,7 +288,7 @@ test('generate-latex warns on a long dash and does not block the build', () => {
       cwd: root,
       encoding: 'utf-8',
       timeout: 30_000,
-      env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_DATA_DIR: '' },
+      env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_DATA_DIR: '' },
     });
     const report = JSON.parse(run.stdout);
     assert.equal(report.factCheck.verdict, 'warn');
@@ -315,7 +315,7 @@ test('generate-latex allows a stock verb the candidate listed in cv-facts', () =
       cwd: root,
       encoding: 'utf-8',
       timeout: 30_000,
-      env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_DATA_DIR: '' },
+      env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_DATA_DIR: '' },
     });
     const report = JSON.parse(run.stdout);
     const reason = report.factCheck.reason || '';
@@ -337,7 +337,7 @@ test('generate-latex checks wording against cv.md, not article-digest.md', () =>
       cwd: root,
       encoding: 'utf-8',
       timeout: 30_000,
-      env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_DATA_DIR: '' },
+      env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_DATA_DIR: '' },
     });
     const report = JSON.parse(run.stdout);
     assert.equal(report.factCheck.verdict, 'block');

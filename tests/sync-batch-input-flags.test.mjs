@@ -11,14 +11,14 @@ import { fileURLToPath } from 'node:url';
 import { describeSpawn, exitedNonZero } from './helpers/describe-spawn.mjs';
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
-const OVERRIDES = ['CAREER_OPS_DATA_DIR', 'CAREER_OPS_TRACKER', 'CAREER_OPS_PIPELINE', 'CAREER_OPS_SCAN_HISTORY', 'CAREER_OPS_PORTALS', 'CAREER_OPS_PROFILE', 'CAREER_OPS_FOLLOWUPS', 'CAREER_OPS_REPORTS', 'CAREER_OPS_CV', 'CAREER_OPS_JDS', 'CAREER_OPS_ADDITIONS'];
+const OVERRIDES = ['PROJECT_X_DATA_DIR', 'PROJECT_X_TRACKER', 'PROJECT_X_PIPELINE', 'PROJECT_X_SCAN_HISTORY', 'PROJECT_X_PORTALS', 'PROJECT_X_PROFILE', 'PROJECT_X_FOLLOWUPS', 'PROJECT_X_REPORTS', 'PROJECT_X_CV', 'PROJECT_X_JDS', 'PROJECT_X_ADDITIONS'];
 
 function withPipeline(fn) {
   const root = mkdtempSync(join(tmpdir(), 'sync-batch-flags-'));
   try {
     const pipeline = join(root, 'pipeline.md');
     writeFileSync(pipeline, '# Pipeline\n\n## Pending\n\n- [ ] https://jobs.example.com/acme/1 | Acme | Engineer\n');
-    const env = { ...process.env, CAREER_OPS_ROOT: root };
+    const env = { ...process.env, PROJECT_X_ROOT: root };
     for (const key of OVERRIDES) env[key] = '';
     const run = (...args) => spawnSync(process.execPath, [join(ROOT, 'sync-batch-input.mjs'), ...args], { cwd: root, encoding: 'utf8', timeout: 30000, env });
     fn({ root, pipeline, run });

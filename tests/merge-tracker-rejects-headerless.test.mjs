@@ -58,18 +58,18 @@ function mergeOne(content, extraArgs = []) {
       stdio: ['ignore', 'pipe', 'pipe'],
       env: ownRootEnv({
         // Pin the child's data root at the fixture and blank the inherited
-        // overrides. ownRootEnv() clears CAREER_OPS_DATA_DIR and
-        // CAREER_OPS_PDF_SHARED but not CAREER_OPS_PDF_INDEX, and
+        // overrides. ownRootEnv() clears PROJECT_X_DATA_DIR and
+        // PROJECT_X_PDF_SHARED but not PROJECT_X_PDF_INDEX, and
         // resolvePdfIndexPath() prefers that variable, so it has to be cleared
         // here too or a developer's exported manifest would be read and written
         // during the run.
-        CAREER_OPS_ROOT: work,
-        CAREER_OPS_TRACKER: tracker,
-        CAREER_OPS_ADDITIONS: adds,
-        CAREER_OPS_BATCH_STATE: isolatedBatchStatePath(adds),
-        CAREER_OPS_PDF_INDEX: '',
-        CAREER_OPS_FOLLOWUPS: '',
-        CAREER_OPS_FOLLOWUPS_LOCK: '',
+        PROJECT_X_ROOT: work,
+        PROJECT_X_TRACKER: tracker,
+        PROJECT_X_ADDITIONS: adds,
+        PROJECT_X_BATCH_STATE: isolatedBatchStatePath(adds),
+        PROJECT_X_PDF_INDEX: '',
+        PROJECT_X_FOLLOWUPS: '',
+        PROJECT_X_FOLLOWUPS_LOCK: '',
       }),
     });
     return {

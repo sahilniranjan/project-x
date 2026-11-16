@@ -26,15 +26,15 @@ function layers() {
 }
 
 test('the default user directory is data/templates under the data root', () => {
-  const prior = process.env.CAREER_OPS_ROOT;
+  const prior = process.env.PROJECT_X_ROOT;
   // An absolute path on this platform: a bare '/tmp/...' gains a drive letter on Windows.
   const root = join(tmpdir(), 'some-data-root');
-  process.env.CAREER_OPS_ROOT = root;
+  process.env.PROJECT_X_ROOT = root;
   try {
     assert.equal(DEFAULT_USER_TEMPLATES_DIR(), join(root, 'data', 'templates'));
   } finally {
-    if (prior === undefined) delete process.env.CAREER_OPS_ROOT;
-    else process.env.CAREER_OPS_ROOT = prior;
+    if (prior === undefined) delete process.env.PROJECT_X_ROOT;
+    else process.env.PROJECT_X_ROOT = prior;
   }
 });
 
@@ -51,7 +51,7 @@ test('a template only in the user directory is listed and resolves, tagged as th
 
 test('on a name clash the user file wins and nothing throws', () => {
   const { system, user } = layers();
-  writeFileSync(join(user, 'cv-template.modern.html'), `<!-- career-ops-template\nname: My Modern\n-->\n${CV}`);
+  writeFileSync(join(user, 'cv-template.modern.html'), `<!-- project-x-template\nname: My Modern\n-->\n${CV}`);
 
   const listed = listTemplates('cv', { dir: system, userDir: user });
 
@@ -81,16 +81,16 @@ test('a missing user directory is not an error', () => {
 
 test('naming only dir keeps the old behaviour: no user layer is read', () => {
   const { system } = layers();
-  const prior = process.env.CAREER_OPS_ROOT;
+  const prior = process.env.PROJECT_X_ROOT;
   const data = mkdtempSync(join(tmpdir(), 'cvt-env-'));
   mkdirSync(join(data, 'data', 'templates'), { recursive: true });
   writeFileSync(join(data, 'data', 'templates', 'cv-template.leak.html'), CV);
-  process.env.CAREER_OPS_ROOT = data;
+  process.env.PROJECT_X_ROOT = data;
   try {
     assert.ok(!listTemplates('cv', { dir: system }).some((t) => t.name === 'leak'));
   } finally {
-    if (prior === undefined) delete process.env.CAREER_OPS_ROOT;
-    else process.env.CAREER_OPS_ROOT = prior;
+    if (prior === undefined) delete process.env.PROJECT_X_ROOT;
+    else process.env.PROJECT_X_ROOT = prior;
   }
 });
 
@@ -98,13 +98,13 @@ test('with no dir given, the data root user directory is searched', () => {
   const data = mkdtempSync(join(tmpdir(), 'cvt-env-'));
   mkdirSync(join(data, 'data', 'templates'), { recursive: true });
   writeFileSync(join(data, 'data', 'templates', 'cv-template.fromdata.html'), CV);
-  const prior = process.env.CAREER_OPS_ROOT;
-  process.env.CAREER_OPS_ROOT = data;
+  const prior = process.env.PROJECT_X_ROOT;
+  process.env.PROJECT_X_ROOT = data;
   try {
     assert.ok(listTemplates('cv').some((t) => t.name === 'fromdata' && t.layer === 'user'));
   } finally {
-    if (prior === undefined) delete process.env.CAREER_OPS_ROOT;
-    else process.env.CAREER_OPS_ROOT = prior;
+    if (prior === undefined) delete process.env.PROJECT_X_ROOT;
+    else process.env.PROJECT_X_ROOT = prior;
   }
 });
 

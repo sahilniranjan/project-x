@@ -22,7 +22,7 @@ Quando o candidato cola uma **URL** (não texto do JD), confirme que a vaga aind
 
 Não continue para o Bloco A até que este gate seja resolvido. O snapshot capturado aqui é reutilizado pelos sinais de frescor do Bloco G.
 
-**Título da sessão:** aplique a regra **Session Title** do router (`SKILL.md`, #5303) em uma sessão interativa quando o host permitir: `Career-ops eval (fetching)` enquanto o JD é lido, `{Cargo}, {Empresa} (evaluating)` assim que um JD real indica o cargo e o empregador, e apenas `{Cargo}, {Empresa}` quando a avaliação termina. Um gate que interrompe a execução (liveness, blacklist, dealbreaker, agência) termina em `(on hold)`. Em um handoff do `auto-pipeline`, o título é do `auto-pipeline`; não o altere. Uma vaga de agência com empregador não revelado é intitulada `{Cargo}, via {Agência}` somente após o **Agency confirmation handoff** ser resolvido.
+**Título da sessão:** aplique a regra **Session Title** do router (`SKILL.md`, #5303) em uma sessão interativa quando o host permitir: `Project-x eval (fetching)` enquanto o JD é lido, `{Cargo}, {Empresa} (evaluating)` assim que um JD real indica o cargo e o empregador, e apenas `{Cargo}, {Empresa}` quando a avaliação termina. Um gate que interrompe a execução (liveness, blacklist, dealbreaker, agência) termina em `(on hold)`. Em um handoff do `auto-pipeline`, o título é do `auto-pipeline`; não o altere. Uma vaga de agência com empregador não revelado é intitulada `{Cargo}, via {Agência}` somente após o **Agency confirmation handoff** ser resolvido.
 
 ## Local public facts reuse (#1025)
 
@@ -52,7 +52,7 @@ Limites rígidos para Blocos D e G combinados:
 - Não dispare subagentes ou delegue pesquisa para outro agente.
 - Não continue pesquisando após o teto de consultas ser atingido; resuma a evidência encontrada e marque explicitamente dados ausentes como indisponíveis.
 
-Se uma pesquisa mais profunda de empresa for útil, recomende executar `/career-ops deep` separadamente após a avaliação.
+Se uma pesquisa mais profunda de empresa for útil, recomende executar `/project-x deep` separadamente após a avaliação.
 
 ## Passo 0 — Detecção de Arquétipo
 
@@ -551,7 +551,7 @@ Três estados por linha: `✅ {veredito claro}` / `⚠️ {achado}` / `— não 
 | Legitimidade da vaga | Tier de avaliação do Bloco G | `✅ High Confidence`, ou `⚠️ {tier} — {motivo em uma linha}` para Proceed with Caution / Suspicious |
 | Classificação de vínculo | Sinal de classificação de vínculo dentro do Bloco G | `✅ claro` quando a verificação rodou e não encontrou nada; `⚠️ linguagem de contratado: "{frase citada}"` quando a sinalização disparou; `— não avaliado` quando a verificação não pôde rodar |
 | Culture screen | Campo Culture screen no Bloco A | `✅ pass`, ou `⚠️ caution — {evidência}` / `⚠️ fail — {evidência}`; `— não avaliado` quando nenhum screen foi executado |
-| Red flags de entrevista | `interview-prep/{company-slug}-redflags.md` (do modo `interview-redflag`) | **Referência cruzada, não uma cópia:** se o arquivo existir, apresente seu nível de alerta atual mais um link relativo — `[{nível}](../interview-prep/{company-slug}-redflags.md)` (relativo a `reports/`); caso contrário `— sem sessões de entrevista ainda`. **Arquivo não verificado:** se o arquivo contiver o marcador `<!-- career-ops:redflags-unverified -->` (o modo `interview-redflag` o manteve sem uma sessão de entrevista real que o sustente), nunca apresente seu nível de alerta: renderize `— não avaliado: [análise não verificada](../interview-prep/{company-slug}-redflags.md)`, e `risk_summary.interview_redflags` é `not_evaluated`. Procure o marcador, não o texto da nota, que é escrito no idioma de saída do usuário. |
+| Red flags de entrevista | `interview-prep/{company-slug}-redflags.md` (do modo `interview-redflag`) | **Referência cruzada, não uma cópia:** se o arquivo existir, apresente seu nível de alerta atual mais um link relativo — `[{nível}](../interview-prep/{company-slug}-redflags.md)` (relativo a `reports/`); caso contrário `— sem sessões de entrevista ainda`. **Arquivo não verificado:** se o arquivo contiver o marcador `<!-- project-x:redflags-unverified -->` (o modo `interview-redflag` o manteve sem uma sessão de entrevista real que o sustente), nunca apresente seu nível de alerta: renderize `— não avaliado: [análise não verificada](../interview-prep/{company-slug}-redflags.md)`, e `risk_summary.interview_redflags` é `not_evaluated`. Procure o marcador, não o texto da nota, que é escrito no idioma de saída do usuário. |
 | Alegações de IA vs infraestrutura | Verificação de descompasso IA/infraestrutura no Bloco G, quando presente | Se este report contiver essa verificação, espelhe seu veredito (`✅ consistente` / `⚠️ {achado}`); caso contrário `— não avaliado`. A linha ativa automaticamente uma vez que a verificação existe — sem dependência de ordenação |
 | Divulgação de triagem por IA | Sinal de divulgação de triagem por IA no Bloco G (Sinal 15), quando presente | Se este report contiver essa verificação: `✅ divulga uso de IA` quando (a) disparou, `ℹ️ {nome_da_jurisdição} exige divulgação; a vaga está silenciosa` quando apenas (b) disparou (apenas corroborante, nunca um veredito de conformidade), `— sem correspondência de jurisdição` quando nenhum disparou porque a jurisdição do candidato não tem linha na tabela; caso contrário `— não avaliado`. A linha ativa automaticamente uma vez que a verificação existe — sem dependência de ordenação |
 | Contrato por prazo determinado | Sinal de divulgação de prazo determinado no Bloco G (Sinal 16) | `ℹ️ prazo determinado — "{frase citada}"` quando linguagem explícita de prazo fixo está presente; caso contrário `✅ sem prazo determinado divulgado`; `— não avaliado` apenas quando nenhum texto de JD estava disponível |
@@ -579,7 +579,7 @@ Espelhe o bloco em `## Machine Summary` como um mapa `risk_summary:` (nomes exat
 
 ## Rascunho de Carta de Apresentação (auto-gerado após o Bloco G)
 
-Após salvar o report e registrar no tracker, anexe um rascunho de carta de apresentação ao arquivo do report sob `## Rascunho de Carta de Apresentação`. Este é um ponto de partida — não a carta final. O usuário a completa via `/career-ops cover {slug}`.
+Após salvar o report e registrar no tracker, anexe um rascunho de carta de apresentação ao arquivo do report sob `## Rascunho de Carta de Apresentação`. Este é um ponto de partida — não a carta final. O usuário a completa via `/project-x cover {slug}`.
 
 **Como gerar o rascunho:**
 
@@ -595,7 +595,7 @@ Após salvar o report e registrar no tracker, anexe um rascunho de carta de apre
 ```markdown
 ## Rascunho de Carta de Apresentação
 
-> Rascunho gerado no momento da avaliação. Complete via `/career-ops cover {slug}` para preencher ângulos, confirmar pesquisa e gerar o PDF.
+> Rascunho gerado no momento da avaliação. Complete via `/project-x cover {slug}` para preencher ângulos, confirmar pesquisa e gerar o PDF.
 > Gaps sinalizados abaixo — trate-os durante o fluxo de carta de apresentação.
 
 ---
@@ -627,7 +627,7 @@ Fico à disposição para conversarmos quando for conveniente.
 {8-10 frases exatas do JD}
 
 ---
-*Execute `/career-ops cover {slug}` para completar ângulos, confirmar pesquisa da empresa e gerar o PDF.*
+*Execute `/project-x cover {slug}` para completar ângulos, confirmar pesquisa da empresa e gerar o PDF.*
 ```
 
 Aplique todas as regras de linguagem da seção Professional Writing de `_writing.md` ao conteúdo do rascunho. Sem travessões, sem buzzwords, voz ativa, apenas afirmações concretas.

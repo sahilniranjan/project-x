@@ -10,7 +10,7 @@ function coverFixture(templateValue) {
   writeFileSync(join(dir, 'cover-letter-template.html'), '{{NAME}}{{ROLE_TITLE}}{{OPENING}}');
   writeFileSync(
     join(dir, 'cover-letter-template.formal.html'),
-    '<!-- career-ops-template\nname: Formal\nversion: 1.0.0\n-->\n{{NAME}}{{ROLE_TITLE}}{{OPENING}}'
+    '<!-- project-x-template\nname: Formal\nversion: 1.0.0\n-->\n{{NAME}}{{ROLE_TITLE}}{{OPENING}}'
   );
   const profile = join(dir, 'profile.yml');
   writeFileSync(
@@ -69,7 +69,7 @@ test('resolveCoverTemplatePath: a template missing required placeholders throws'
   const { dir, profile } = coverFixture('broken');
   writeFileSync(
     join(dir, 'cover-letter-template.broken.html'),
-    '<!-- career-ops-template\nname: Broken\nversion: 1.0.0\n-->\n{{NAME}}',
+    '<!-- project-x-template\nname: Broken\nversion: 1.0.0\n-->\n{{NAME}}',
   );
   assert.throws(
     () => resolveCoverTemplatePath({}, { dir, profilePath: profile }),
@@ -104,7 +104,7 @@ test('resolveCoverTemplatePath: fallback: true does not hide an invalid template
   const { dir, profile } = coverFixture('broken');
   writeFileSync(
     join(dir, 'cover-letter-template.broken.html'),
-    '<!-- career-ops-template\nname: Broken\nversion: 1.0.0\n-->\n{{NAME}}',
+    '<!-- project-x-template\nname: Broken\nversion: 1.0.0\n-->\n{{NAME}}',
   );
   assert.throws(
     () => resolveCoverTemplatePath({}, { dir, profilePath: profile, fallback: true }),

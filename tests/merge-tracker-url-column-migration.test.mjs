@@ -27,7 +27,7 @@ function run(env, args = ['--backfill-urls']) {
   return execFileSync(process.execPath, [MERGE, ...args], {
     cwd: env.root,
     encoding: 'utf8',
-    env: { ...process.env, CAREER_OPS_TRACKER: env.tracker, CAREER_OPS_ADDITIONS: env.additions, CAREER_OPS_BATCH_STATE: isolatedBatchStatePath(env.additions) },
+    env: { ...process.env, PROJECT_X_TRACKER: env.tracker, PROJECT_X_ADDITIONS: env.additions, PROJECT_X_BATCH_STATE: isolatedBatchStatePath(env.additions) },
   });
 }
 
@@ -35,7 +35,7 @@ function runResult(env, args = ['--backfill-urls']) {
   return spawnSync(process.execPath, [MERGE, ...args], {
     cwd: env.root,
     encoding: 'utf8',
-    env: { ...process.env, CAREER_OPS_TRACKER: env.tracker, CAREER_OPS_ADDITIONS: env.additions, CAREER_OPS_BATCH_STATE: isolatedBatchStatePath(env.additions) },
+    env: { ...process.env, PROJECT_X_TRACKER: env.tracker, PROJECT_X_ADDITIONS: env.additions, PROJECT_X_BATCH_STATE: isolatedBatchStatePath(env.additions) },
   });
 }
 

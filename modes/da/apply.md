@@ -79,7 +79,7 @@ For hvert spørgsmål, byg svaret efter dette skema:
 2. **Tidligere `## Application Answers` / Blok H**: Hvis et sendt svar eller et udkast findes (sendt svar først), så brug det som grundlag og finpuds
 3. **Tonen "Jeg vælger jer"**: samme framework som i auto-pipeline -- selvsikker, ikke bønfaldende
 4. **Specificitet**: citér noget konkret fra opslaget, der er synligt på skærmen
-5. **career-ops proof point**: inkludér i "Yderligere oplysninger", hvis et sådant felt findes
+5. **project-x proof point**: inkludér i "Yderligere oplysninger", hvis et sådant felt findes
 
 **Felter, der er specifikke for almindelige danske formularer:**
 - **Lønforventning (brutto årsløn)** -> Interval fra `profile.yml`, i DKK, med bemærkningen "forhandlelig afhængigt af den samlede pakke"
@@ -120,7 +120,7 @@ Før noget gemmes, og igen lige før hver skrivning nedenfor (status og svar), s
 Hvis kandidaten bekræfter, at ansøgningen er sendt:
 1. Opdatér status til "Applied" med det kanoniske CLI: `node set-status.mjs --report <report#> Applied` (redigér ikke `applications.md`-tabellen i hånden)
 2. Opdatér report'ens `## Application Answers`-afsnit med de endelige svar og `**State:** submitted` (format i `modes/apply.md` -> Step 8). Blok H forbliver evalueringens udkast og ændres ikke
-3. Foreslå næste trin: `/career-ops contacto` til LinkedIn-outreach mod den ansættende leder
+3. Foreslå næste trin: `/project-x contacto` til LinkedIn-outreach mod den ansættende leder
 
 ## Håndtering af scroll
 

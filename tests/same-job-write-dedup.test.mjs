@@ -20,7 +20,7 @@ function offer(url, title) {
 }
 
 test('concurrent pipeline writes keep one row for one Greenhouse posting', async () => {
-  const root = mkdtempSync(join(tmpdir(), 'career-ops-one-job-'));
+  const root = mkdtempSync(join(tmpdir(), 'project-x-one-job-'));
   const pipeline = join(root, 'pipeline.md');
   try {
     await Promise.all([
@@ -43,7 +43,7 @@ test('concurrent pipeline writes keep one row for one Greenhouse posting', async
 });
 
 test('a posting already in Processed is not queued again under an alias URL', async () => {
-  const root = mkdtempSync(join(tmpdir(), 'career-ops-one-job-'));
+  const root = mkdtempSync(join(tmpdir(), 'project-x-one-job-'));
   const pipeline = join(root, 'pipeline.md');
   try {
     writeFileSync(pipeline, [
@@ -91,7 +91,7 @@ function historyRow(url, firstSeen, status) {
 }
 
 test('a TTL-released finished row is queued again under an alias URL', async () => {
-  const root = mkdtempSync(join(tmpdir(), 'career-ops-one-job-'));
+  const root = mkdtempSync(join(tmpdir(), 'project-x-one-job-'));
   const pipeline = join(root, 'pipeline.md');
   const history = join(root, 'scan-history.tsv');
   try {
@@ -126,7 +126,7 @@ test('a TTL-released finished row is queued again under an alias URL', async () 
 });
 
 test('a finished row with no released history candidate stays one pipeline row', async () => {
-  const root = mkdtempSync(join(tmpdir(), 'career-ops-one-job-'));
+  const root = mkdtempSync(join(tmpdir(), 'project-x-one-job-'));
   const pipeline = join(root, 'pipeline.md');
   const history = join(root, 'scan-history.tsv');
   try {
@@ -164,13 +164,13 @@ function runHistoryWriter(root, historyPath, status, urls, { date = '2026-11-05'
       cwd: root,
       env: {
         ...process.env,
-        CAREER_OPS_ROOT: root,
-        CAREER_OPS_DATA_DIR: '',
-        CAREER_OPS_SCAN_HISTORY: historyPath,
-        CAREER_OPS_PIPELINE: '',
-        CAREER_OPS_PORTALS: portalsPath,
-        CAREER_OPS_PROFILE: '',
-        CAREER_OPS_TRACKER: '',
+        PROJECT_X_ROOT: root,
+        PROJECT_X_DATA_DIR: '',
+        PROJECT_X_SCAN_HISTORY: historyPath,
+        PROJECT_X_PIPELINE: '',
+        PROJECT_X_PORTALS: portalsPath,
+        PROJECT_X_PROFILE: '',
+        PROJECT_X_TRACKER: '',
       },
     });
     let err = '';
@@ -187,7 +187,7 @@ function historyRows(text) {
 }
 
 test('concurrent scan-history writes keep one added row per posting', async () => {
-  const root = mkdtempSync(join(tmpdir(), 'career-ops-one-job-hist-'));
+  const root = mkdtempSync(join(tmpdir(), 'project-x-one-job-hist-'));
   mkdirSync(join(root, 'data'));
   const history = join(root, 'data', 'scan-history.tsv');
   try {
@@ -224,7 +224,7 @@ function recheckPortals(root) {
 }
 
 test('a released added row still records the next time the posting is added', async () => {
-  const root = mkdtempSync(join(tmpdir(), 'career-ops-one-job-hist-'));
+  const root = mkdtempSync(join(tmpdir(), 'project-x-one-job-hist-'));
   mkdirSync(join(root, 'data'));
   const history = join(root, 'data', 'scan-history.tsv');
   const portals = recheckPortals(root);
@@ -244,7 +244,7 @@ test('a released added row still records the next time the posting is added', as
 });
 
 test('a relisting still records a later skipped_expired row', async () => {
-  const root = mkdtempSync(join(tmpdir(), 'career-ops-one-job-hist-'));
+  const root = mkdtempSync(join(tmpdir(), 'project-x-one-job-hist-'));
   mkdirSync(join(root, 'data'));
   const history = join(root, 'data', 'scan-history.tsv');
   const portals = recheckPortals(root);
@@ -266,7 +266,7 @@ test('a relisting still records a later skipped_expired row', async () => {
 });
 
 test('a still-pinning added row and a skip bucket stay one history row', async () => {
-  const root = mkdtempSync(join(tmpdir(), 'career-ops-one-job-hist-'));
+  const root = mkdtempSync(join(tmpdir(), 'project-x-one-job-hist-'));
   mkdirSync(join(root, 'data'));
   const history = join(root, 'data', 'scan-history.tsv');
   const portals = recheckPortals(root);

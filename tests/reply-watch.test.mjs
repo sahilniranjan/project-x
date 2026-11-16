@@ -12,7 +12,7 @@ import { acquireTrackerLock, canonicalizeTrackerPath, trackerLockDirFor } from '
 const SCRIPT = join(ROOT, 'reply-watch.mjs');
 
 function setupWorkspace() {
-  const tmp = mkdtempSync(join(tmpdir(), 'career-ops-reply-watch-'));
+  const tmp = mkdtempSync(join(tmpdir(), 'project-x-reply-watch-'));
   const dataDir = join(tmp, 'data');
   mkdirSync(dataDir, { recursive: true });
   
@@ -30,7 +30,7 @@ function runReplyWatch(tmp, trackerFile, candidatesFile = null, input = '', time
     input,
     encoding: 'utf-8',
     timeout: timeoutMs,
-    env: { ...process.env, CAREER_OPS_TRACKER: trackerFile }
+    env: { ...process.env, PROJECT_X_TRACKER: trackerFile }
   });
 }
 

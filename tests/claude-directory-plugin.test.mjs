@@ -6,8 +6,8 @@
 // root is too big for it: thousands of files, files over 256 KiB, a hook that
 // runs `npm install`. Every one of those holds each new version for a human
 // reviewer. claude-directory/ is the thin plugin instead: the router SKILL.md,
-// a README that says what career-ops runs, sends and fetches, and the license.
-// The skill's "Skill installed without career-ops" branch installs the rest
+// a README that says what project-x runs, sends and fetches, and the license.
+// The skill's "Skill installed without project-x" branch installs the rest
 // with the user's yes.
 //
 // The copies must not drift from their sources, and every version in the
@@ -30,8 +30,8 @@ const files = listTree(DIR, { links: 'reject' })
   .map((path) => ({ path, rel: relative(DIR, path).split(sep).join('/'), st: lstatSync(path) }));
 
 test('the skill and the license are byte-identical copies of the canonical ones', () => {
-  assert.equal(read('claude-directory/skills/career-ops/SKILL.md'), read('.agents/skills/career-ops/SKILL.md'),
-    'claude-directory/skills/career-ops/SKILL.md diverged: copy .agents/skills/career-ops/SKILL.md over it');
+  assert.equal(read('claude-directory/skills/project-x/SKILL.md'), read('.agents/skills/project-x/SKILL.md'),
+    'claude-directory/skills/project-x/SKILL.md diverged: copy .agents/skills/project-x/SKILL.md over it');
   assert.equal(read('claude-directory/LICENSE'), read('LICENSE'), 'claude-directory/LICENSE diverged: copy LICENSE over it');
 });
 
@@ -44,24 +44,24 @@ test('the manifest names the project, its license and the release version', () =
   assert.ok(manifest.description && manifest.author?.name, 'the directory warns without description and author');
   for (const key of ['hooks', 'mcpServers', 'lspServers']) assert.equal(manifest[key], undefined, `the thin plugin declares no ${key}`);
   // Listing fields. The portal reads the icon only on the first save or submission, so it must be declared, not just present.
-  assert.equal(manifest.displayName, 'career-ops');
+  assert.equal(manifest.displayName, 'project-x');
   assert.equal(join(DIR, manifest.icon ?? ''), join(DIR, '.claude-plugin', 'icon.png'), 'plugin.json must point `icon` at .claude-plugin/icon.png');
   for (const key of ['homepage', 'documentationUrl', 'supportUrl', 'privacyPolicyUrl']) assert.match(manifest[key] ?? '', /^https:\/\//, `${key} must be an https URL`);
 });
 
-test('every package launcher is pinned to an exact version, and career-ops to this release', () => {
+test('every package launcher is pinned to an exact version, and project-x to this release', () => {
   const launcher = /\b(?:npx|bunx|uvx|pnpm dlx|yarn dlx|pipx run)\s+(?:-{1,2}[\w-]+(?:=\S+)?\s+)*([^\s`'"]+)/g;
-  let careerOps = 0;
+  let projectX = 0;
   for (const { path, rel } of files) {
     for (const [, pkg] of readFileSync(path, 'utf8').matchAll(launcher)) {
       assert.match(pkg, /^(?:@[\w.-]+\/)?[\w.-]+(?:@|==)\d+\.\d+\.\d+$/, `${rel}: "${pkg}" is not pinned to an exact version`);
-      if (pkg.startsWith('@santifer/career-ops@')) {
-        careerOps++;
-        assert.equal(pkg, `@santifer/career-ops@${version}`, `${rel}: the init command must pin the current release`);
+      if (pkg.startsWith('@santifer/project-x@')) {
+        projectX++;
+        assert.equal(pkg, `@santifer/project-x@${version}`, `${rel}: the init command must pin the current release`);
       }
     }
   }
-  assert.ok(careerOps >= 3, 'the skill (twice) and the README name the pinned init command');
+  assert.ok(projectX >= 3, 'the skill (twice) and the README name the pinned init command');
 });
 
 test('every line that carries the release version is marked for release-please', () => {
@@ -69,7 +69,7 @@ test('every line that carries the release version is marked for release-please',
   const extra = config.packages['.']['extra-files'];
   const generic = extra.filter((f) => f.type === 'generic').map((f) => f.path);
   assert.ok(extra.some((f) => f.path === 'claude-directory/.claude-plugin/plugin.json' && f.jsonpath === '$.version'));
-  for (const rel of ['claude-directory/skills/career-ops/SKILL.md', 'claude-directory/README.md', '.agents/skills/career-ops/SKILL.md']) {
+  for (const rel of ['claude-directory/skills/project-x/SKILL.md', 'claude-directory/README.md', '.agents/skills/project-x/SKILL.md']) {
     assert.ok(generic.includes(rel), `release-please-config.json does not bump ${rel}`);
     for (const line of read(rel).split('\n').filter((l) => l.includes(version))) {
       assert.match(line, /x-release-please-version/, `${rel}: a line with ${version} has no x-release-please-version marker`);
@@ -102,7 +102,7 @@ test('the README is long enough and says what the plugin runs, sends and fetches
   const readme = read('claude-directory/README.md');
   const prose = readme.replace(/```[\s\S]*?```/g, '').replaceAll('<!-- x-release-please-version -->', '');
   assert.ok(prose.split(/\s+/).filter(Boolean).length >= 40, 'the directory blocks a README under 40 words outside code blocks');
-  for (const fact of ['npm registry', 'GitHub API', 'npm install', 'Chromium', 'portals.yml', 'https://career-ops.org/privacy']) {
+  for (const fact of ['npm registry', 'GitHub API', 'npm install', 'Chromium', 'portals.yml', 'https://project-x.org/privacy']) {
     assert.ok(readme.includes(fact), `README no longer mentions ${fact}`);
   }
 });

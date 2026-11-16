@@ -1,4 +1,4 @@
-# Career-Ops - panelist role table (#5797)
+# Project-X - panelist role table (#5797)
 #
 # Read by panelist-roles.mjs. DATA, not logic: extending it never requires
 # touching the script. Nothing here is personal data; the script never stores

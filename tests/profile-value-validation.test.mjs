@@ -111,7 +111,7 @@ function doctorProfileWarning(t, profile) {
     cwd: dir,
     encoding: 'utf8',
     timeout: 60_000,
-    env: { ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_DATA_DIR: '', CAREER_OPS_PROFILE: '' },
+    env: { ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_DATA_DIR: '', PROJECT_X_PROFILE: '' },
   });
   const line = r.stdout.split('\n').find((l) => l.includes('config/profile.yml: '));
   assert.ok(line, r.stdout + r.stderr);
@@ -127,7 +127,7 @@ test('doctor calls a bad value a bad value, not an unrecognized key', (t) => {
   assert.match(both, /2 issues — unrecognized keys and invalid values have no effect/);
 });
 
-test('doctor --target names the target profile even with CAREER_OPS_PROFILE set', (t) => {
+test('doctor --target names the target profile even with PROJECT_X_PROFILE set', (t) => {
   const dir = mkdtempSync(join(tmpdir(), 'co-profile-target-'));
   const other = mkdtempSync(join(tmpdir(), 'co-profile-other-'));
   t.after(() => {
@@ -142,14 +142,14 @@ test('doctor --target names the target profile even with CAREER_OPS_PROFILE set'
     cwd: dir,
     encoding: 'utf8',
     timeout: 60_000,
-    env: { ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_DATA_DIR: '', CAREER_OPS_PROFILE: elsewhere },
+    env: { ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_DATA_DIR: '', PROJECT_X_PROFILE: elsewhere },
   });
   const out = r.stdout + r.stderr;
   assert.match(out, /config\/profile\.yml: spend_tier/, out);
   assert.doesNotMatch(out, /elsewhere\.yml: spend_tier/, out);
 });
 
-test('doctor names a CAREER_OPS_PROFILE outside the root in the warning summary', (t) => {
+test('doctor names a PROJECT_X_PROFILE outside the root in the warning summary', (t) => {
   const dir = mkdtempSync(join(tmpdir(), 'co-profile-root-'));
   const other = mkdtempSync(join(tmpdir(), 'co-profile-other-'));
   t.after(() => {
@@ -164,7 +164,7 @@ test('doctor names a CAREER_OPS_PROFILE outside the root in the warning summary'
     cwd: dir,
     encoding: 'utf8',
     timeout: 60_000,
-    env: { ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_DATA_DIR: '', CAREER_OPS_PROFILE: elsewhere },
+    env: { ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_DATA_DIR: '', PROJECT_X_PROFILE: elsewhere },
   });
   const out = r.stdout + r.stderr;
   const summary = out.split('\n').find((l) => l.includes('1 issue —'));

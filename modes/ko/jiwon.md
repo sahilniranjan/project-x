@@ -79,7 +79,7 @@ Follow the Scope section in `modes/apply.md`. Run `node apply-scope.mjs root` an
 2. **이전 `## Application Answers` / 블록 H**: 제출한 답변이나 기존 초안이 있으면(제출한 답변 우선) base로 가져와 다듬기
 3. **"제가 귀사를 선택합니다" 톤**: auto-pipeline과 같은 framework 사용 -- 자신감 있게, 애원하지 않게
 4. **구체성**: 화면에 보이는 공고 내용 중 구체적인 요소 언급
-5. **career-ops proof point**: "추가 정보" 같은 필드가 있으면 포함
+5. **project-x proof point**: "추가 정보" 같은 필드가 있으면 포함
 
 **한국 지원서 폼에서 자주 나오는 필드:**
 - **희망 연봉 / 처우** -> `profile.yml`의 range를 사용. 세전 연봉 기준인지 명확히 쓰고, "전체 보상 패키지에 따라 협의 가능"이라고 덧붙임
@@ -121,7 +121,7 @@ Notes:
 후보자가 지원서를 제출했다고 확인하면:
 1. 정식 CLI로 status를 `Applied`로 변경합니다: `node set-status.mjs --report <report#> Applied` (`data/applications.md` 표를 직접 수정하지 않습니다). TSV 병합은 기존 row의 status를 바꾸지 않습니다.
 2. 최종 답변을 report의 `## Application Answers` 섹션에 `**State:** submitted`와 함께 업데이트합니다(형식은 `modes/apply.md` -> Step 8). 블록 H는 평가 단계의 초안이므로 수정하지 않습니다.
-3. 다음 단계로 `/career-ops contacto`를 제안해 hiring manager 또는 recruiter에게 LinkedIn outreach를 할 수 있게 합니다.
+3. 다음 단계로 `/project-x contacto`를 제안해 hiring manager 또는 recruiter에게 LinkedIn outreach를 할 수 있게 합니다.
 
 ## 스크롤 처리
 

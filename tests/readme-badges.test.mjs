@@ -13,11 +13,11 @@ const roots = [];
 after(() => { for (const root of roots) rmSync(root, { recursive: true, force: true }); });
 
 function repo({ count = 23, version = '1.40.0' } = {}) {
-  const root = mkdtempSync(join(tmpdir(), 'career-ops-badges-'));
+  const root = mkdtempSync(join(tmpdir(), 'project-x-badges-'));
   roots.push(root);
   mkdirSync(join(root, 'docs'), { recursive: true });
   writeFileSync(join(root, 'docs', 'hired-count.json'), `${JSON.stringify({ count, updatedAt: '2026-11-08' })}\n`);
-  writeFileSync(join(root, 'package.json'), `${JSON.stringify({ name: 'career-ops', version })}\n`);
+  writeFileSync(join(root, 'package.json'), `${JSON.stringify({ name: 'project-x', version })}\n`);
   return root;
 }
 
@@ -38,7 +38,7 @@ function fakeFetch({ members = 5200, shields = (url) => ({ ok: true, status: 200
 test('a badge URL is a static shields.io badge in the README style', () => {
   const hired = badgeUrl(BADGES.hired, 22);
   assert.ok(hired.startsWith('https://img.shields.io/badge/'));
-  assert.ok(hired.includes('CAREER--OPS'), 'a dash in the label is written twice');
+  assert.ok(hired.includes('PROJECT--X'), 'a dash in the label is written twice');
   assert.ok(hired.includes('22%20on%20the%20record'));
   assert.ok(hired.includes('style=for-the-badge') && hired.includes('labelColor=2b3137'));
   assert.ok(!hired.includes('/dynamic/'), 'never a live badge: that is what timed out');
@@ -94,7 +94,7 @@ test('every README shows the badges from the repo, not live shields.io ones', ()
     for (const file of ['docs/hired-badge.svg', 'docs/discord-badge.svg', 'docs/npm-badge.svg']) {
       assert.ok(text.includes(`src="${file}"`), `${name} lacks ${file}`);
     }
-    assert.ok(!text.includes('img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcareer-ops-hq%2Fcareer-ops%2Fmain%2Fdocs%2Fhired-count.json'), name);
+    assert.ok(!text.includes('img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fproject-x-hq%2Fproject-x%2Fmain%2Fdocs%2Fhired-count.json'), name);
     assert.ok(!text.includes('discord.com%2Fapi'), name);
     assert.ok(!text.includes('img.shields.io/npm/v/'), name);
   }

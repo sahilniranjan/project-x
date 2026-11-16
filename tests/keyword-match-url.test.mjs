@@ -25,7 +25,7 @@ writeFileSync(cvPath, '# Candidate\n\nBuilt Python services and Docker images.\n
 function runCli(extraArgs) {
   return spawnSync(NODE, [join(ROOT, 'keyword-match.mjs'), ...extraArgs], {
     encoding: 'utf-8',
-    env: { ...process.env, CAREER_OPS_ROOT: dir },
+    env: { ...process.env, PROJECT_X_ROOT: dir },
   });
 }
 

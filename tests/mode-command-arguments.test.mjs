@@ -158,7 +158,7 @@ const bash = getBash();
 if (!['posix', 'git-bash', 'path'].includes(bashSource())) {
   warn(`behaviour checks skipped: no native bash (${bashSource()})`);
 } else if (canonical['archive-posting.mjs'] && canonical['keyword-match.mjs']) {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-mode-args-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-mode-args-'));
   try {
     for (const script of Object.keys(MUST_CARRY)) {
       // Records the argv it was started with; `exit-7` as the last argument tests exit-code passthrough.

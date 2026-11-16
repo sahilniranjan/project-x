@@ -10,10 +10,10 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/x/ansi"
 
-	"github.com/santifer/career-ops/dashboard/internal/data"
-	"github.com/santifer/career-ops/dashboard/internal/i18n"
-	"github.com/santifer/career-ops/dashboard/internal/theme"
-	"github.com/santifer/career-ops/dashboard/internal/ui/screens"
+	"github.com/santifer/project-x/dashboard/internal/data"
+	"github.com/santifer/project-x/dashboard/internal/i18n"
+	"github.com/santifer/project-x/dashboard/internal/theme"
+	"github.com/santifer/project-x/dashboard/internal/ui/screens"
 )
 
 // The Inbox tab (#5269) reads data/pipeline.md and the batch files and writes
@@ -59,7 +59,7 @@ func writeInboxRoot(t *testing.T) (string, []string) {
 		}
 		paths = append(paths, p)
 	}
-	t.Setenv("CAREER_OPS_TRACKER", "")
+	t.Setenv("PROJECT_X_TRACKER", "")
 	t.Chdir(root)
 	return root, paths
 }
@@ -72,7 +72,7 @@ func newInboxApp(t *testing.T, root string) appModel {
 	}
 	th := theme.NewTheme("auto")
 	m := appModel{
-		careerOpsPath: root,
+		projectXPath: root,
 		theme:         th,
 		pipeline:      screens.NewPipelineModel(th, apps, data.ComputeMetrics(apps), root, 140, 40),
 	}
@@ -196,7 +196,7 @@ func TestInboxKeysChangeNoFile(t *testing.T) {
 	}
 	for _, o := range opened {
 		if o != "open https://jobs.example.com/acme/1" && o != "open https://jobs.example.com/acme/2" &&
-			!strings.HasPrefix(o, "open https://career-ops.org/manifesto") {
+			!strings.HasPrefix(o, "open https://project-x.org/manifesto") {
 			t.Errorf("the Inbox tried to %s", o)
 		}
 	}

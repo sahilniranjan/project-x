@@ -41,7 +41,7 @@ import { fileURLToPath } from 'url';
 import { flagValue, hasFlag, validateFlags } from './lib/cli-flags.mjs';
 import { execFileSync } from 'child_process';
 import { createHash } from 'crypto';
-import { getCareerOpsRoot, resolveTrackerPath } from './path-resolver.mjs';
+import { getProjectXRoot, resolveTrackerPath } from './path-resolver.mjs';
 import { browserLaunchOptions } from './lib/browser-launch.mjs';
 
 const USAGE = `Usage:
@@ -178,7 +178,7 @@ function runSetStatus(args, trackerPath) {
   try {
     return JSON.parse(execFileSync(process.execPath, [join(CODE_ROOT, 'set-status.mjs'), ...args], {
       encoding: 'utf-8',
-      env: { ...process.env, CAREER_OPS_TRACKER: trackerPath },
+      env: { ...process.env, PROJECT_X_TRACKER: trackerPath },
       stdio: ['ignore', 'pipe', 'pipe'],
     }));
   } catch (err) {
@@ -288,7 +288,7 @@ async function main() {
   let trackerText = null;
   let reportsRoot = null;
   if (fromTracker) {
-    const root = getCareerOpsRoot();
+    const root = getProjectXRoot();
     trackerPath = resolveTrackerPath(root);
     reportsRoot = join(root, 'reports');
     if (!existsSync(trackerPath)) {

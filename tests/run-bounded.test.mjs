@@ -38,7 +38,7 @@ const RECORDER = [
 ].join('\n');
 
 test('run-bounded starts the bounded script with windowsHide', () => {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-run-bounded-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-run-bounded-'));
   try {
     const recorder = join(dir, 'recorder.mjs');
     const script = join(dir, 'script.mjs');

@@ -4,14 +4,14 @@
  * When the headless liveness check meets an anti-bot wall,
  * checkUrlLivenessWithFallback (liveness-browser.mjs) retries the same URL in
  * a headed Chromium. That retry exists only to get past a bot wall, so it is
- * the most aggressive fetch career-ops makes, and it runs against any posting
+ * the most aggressive fetch project-x makes, and it runs against any posting
  * URL a user pastes or a scan finds, including hosts no maintainer reviewed.
  * This module reads the site's published robots.txt first, and the retry runs
  * only when that file permits the path. The first headless request is not
- * gated, and this is not a claim that career-ops is "robots.txt-compliant".
+ * gated, and this is not a claim that project-x is "robots.txt-compliant".
  *
  * Rules (RFC 9309), deliberately on the cautious side:
- *   - the group naming career-ops's own product token (the one in
+ *   - the group naming project-x's own product token (the one in
  *     DEFAULT_USER_AGENT) is used when it holds a rule, otherwise `*`;
  *   - longest match wins, and an equal-length Allow/Disallow tie goes to
  *     Disallow (Google resolves ties to Allow; this does not);
@@ -68,7 +68,7 @@
  * What the port changes: the matcher, grouping, soft-200 and U+FFFD checks
  * are carried over as they are. The transport is not: the original shells out
  * to curl and retries a refused robots.txt with a browser User-Agent, while
- * this reads it once, as career-ops, through the provider transport. The
+ * this reads it once, as project-x, through the provider transport. The
  * original also checks the `*` group in addition to its own agent's; this
  * follows RFC 9309 group selection, as #5776 specifies.
  */
@@ -78,10 +78,10 @@ import { DEFAULT_USER_AGENT } from './user-agent.mjs';
 import { isBlockedAddress } from './providers/_ip-guard.mjs';
 
 /**
- * The product token career-ops sends, read out of DEFAULT_USER_AGENT
- * (`Mozilla/5.0 (compatible; career-ops/1.0; ...)`) so the two cannot drift.
+ * The product token project-x sends, read out of DEFAULT_USER_AGENT
+ * (`Mozilla/5.0 (compatible; project-x/1.0; ...)`) so the two cannot drift.
  */
-export const ROBOTS_PRODUCT_TOKEN = (/compatible;\s*([A-Za-z_-]+)\//.exec(DEFAULT_USER_AGENT)?.[1] ?? 'career-ops').toLowerCase();
+export const ROBOTS_PRODUCT_TOKEN = (/compatible;\s*([A-Za-z_-]+)\//.exec(DEFAULT_USER_AGENT)?.[1] ?? 'project-x').toLowerCase();
 
 /** RFC 9309 section 2.5: a parser must read at least 500 KiB. Larger is refused, not truncated. */
 export const ROBOTS_MAX_BYTES = 500 * 1024;
@@ -190,8 +190,8 @@ export function hasUndecodableRule(text) {
 }
 
 /**
- * The RFC 9309 product-token part of a User-agent value: `career-ops/1.0`
- * names the `career-ops` group. A value with no token characters (`*`, or a
+ * The RFC 9309 product-token part of a User-agent value: `project-x/1.0`
+ * names the `project-x` group. A value with no token characters (`*`, or a
  * garbled one) is kept whole, lower-cased.
  */
 function agentKey(value) {
@@ -363,7 +363,7 @@ function classifyFetchError(err, timeoutMs) {
   if (err?.timedOut || err?.name === 'TimeoutError' || err?.name === 'AbortError') {
     return deny('robots_timeout', `fetch timed out after ${timeoutMs}ms`);
   }
-  if (code === 'ECAREEROPS_BLOCKED_ADDRESS') return deny('robots_blocked_address', String(err.message ?? err).split('\n')[0]);
+  if (code === 'EPROJECTX_BLOCKED_ADDRESS') return deny('robots_blocked_address', String(err.message ?? err).split('\n')[0]);
   if (code === 'response_too_large') return deny('robots_too_large', `body is larger than ${ROBOTS_MAX_BYTES} bytes`);
   if (RESOLVE_FAILURE_CODES.has(code)) return deny('robots_unresolvable', `host did not resolve (${code})`);
   return deny('robots_fetch_error', `fetch failed (${String(err?.message ?? err).split('\n')[0]})`);

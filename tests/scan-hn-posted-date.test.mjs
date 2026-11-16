@@ -46,7 +46,7 @@ ok('scan-history records the comment date the provider read, not the scan date',
     const { GEMINI_API_KEY: _key, ...env } = process.env;
     const r = spawnSync(NODE, ['--import', pathToFileURL(preload).href, join(ROOT, 'scan-hn.mjs')], {
       cwd: dir, encoding: 'utf-8', timeout: 30000,
-      env: { ...env, CAREER_OPS_ROOT: dir, CAREER_OPS_DATA_DIR: '', CAREER_OPS_PORTALS: portals },
+      env: { ...env, PROJECT_X_ROOT: dir, PROJECT_X_DATA_DIR: '', PROJECT_X_PORTALS: portals },
     });
     assert.strictEqual(r.status, 0, `scan-hn exited ${r.status}: ${r.stdout}${r.stderr}`);
     const lines = readFileSync(join(dir, 'data', 'scan-history.tsv'), 'utf-8').trim().split('\n');

@@ -19,7 +19,7 @@ batch/logs/
 batch/tracker-additions/
 batch/batch-state.tsv
 batch/batch-input.tsv
-.career-ops-data
+.project-x-data
 .env
 
 # Dependencies and build output

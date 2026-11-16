@@ -16,14 +16,14 @@ function fixture(t) {
 }
 
 function run(root, args) {
-  const env = Object.fromEntries(Object.entries(process.env).filter(([key]) => !key.startsWith('CAREER_OPS_')));
+  const env = Object.fromEntries(Object.entries(process.env).filter(([key]) => !key.startsWith('PROJECT_X_')));
   const result = spawnSync(process.execPath, [SCRIPT, ...args], {
     cwd: root,
     env: {
       ...env,
-      CAREER_OPS_ROOT: root,
-      CAREER_OPS_PROFILE: join(root, 'profile.yml'),
-      CAREER_OPS_CV: join(root, 'cv.md'),
+      PROJECT_X_ROOT: root,
+      PROJECT_X_PROFILE: join(root, 'profile.yml'),
+      PROJECT_X_CV: join(root, 'cv.md'),
     },
     encoding: 'utf8',
     timeout: 30_000,

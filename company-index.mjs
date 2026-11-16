@@ -2,7 +2,7 @@
 
 /**
  * company-index.mjs — local company index for filtered reverse-ATS scans.
- * LOCAL to this checkout (not upstream career-ops); `update-system` leaves it
+ * LOCAL to this checkout (not upstream project-x); `update-system` leaves it
  * alone because it is not a tracked system file.
  *
  * The public ATS directories scan-ats-full.mjs walks (~27k boards) are bare IDs.
@@ -35,14 +35,14 @@ import { createInterface } from 'readline';
 import { SOURCES, loadCompanyList, parallelEach, withTimeout } from './scan-ats-full.mjs';
 import { makeHttpCtx } from './providers/_http.mjs';
 import { loadDeadBoards, shouldSkipDeadBoard, boardKey } from './dead-boards.mjs';
-import { getCareerOpsRoot } from './path-resolver.mjs';
+import { getProjectXRoot } from './path-resolver.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
 import {
   CATALOG, profileFromJobs, displayNameFromSlug, joinKey, companyTypes, workModel, sizeBand,
   normalizeCompanyFilter, matchesCompanyFilter, priorityScore, isFilterActive,
 } from './lib/company-profile.mjs';
 
-const ROOT = getCareerOpsRoot();
+const ROOT = getProjectXRoot();
 export const INDEX_PATH = path.join(ROOT, 'data/company-index.json');
 const SEEDS_CACHE = path.join(ROOT, 'data/cache/company-index-seeds.json');
 const RATES_PATH = path.join(ROOT, 'data/cache/scan-rates.json');

@@ -18,7 +18,7 @@ import { fileURLToPath, pathToFileURL } from 'url';
 import { loadYaml } from './lib/yaml-document.mjs';
 import { flagValue, hasFlag, validateFlags } from './lib/cli-flags.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
-import { getCareerOpsRoot } from './path-resolver.mjs';
+import { getProjectXRoot } from './path-resolver.mjs';
 import { barePrefixDomainKeywords, compileContentTraits } from './title-keywords.mjs';
 import { nearestKey } from './validate-profile.mjs';
 
@@ -29,7 +29,7 @@ const PROVIDERS_DIR = join(ROOT, 'providers');
 // the cwd instead, so `npm run validate:portals` (npm always runs it from the
 // checkout) could not find an external data root's file, and a run from any
 // other directory validated whatever copy sat there.
-const DEFAULT_PORTALS_PATH = process.env.CAREER_OPS_PORTALS || join(getCareerOpsRoot(), 'portals.yml');
+const DEFAULT_PORTALS_PATH = process.env.PROJECT_X_PORTALS || join(getProjectXRoot(), 'portals.yml');
 
 function hasText(value) {
   return typeof value === 'string' && value.trim() !== '';
@@ -631,7 +631,7 @@ async function validateFile(filePath) {
 }
 
 async function runSelfTest() {
-  const tmp = mkdtempSync(join(tmpdir(), 'career-ops-validate-portals-self-test-'));
+  const tmp = mkdtempSync(join(tmpdir(), 'project-x-validate-portals-self-test-'));
   try {
     const file = join(tmp, 'bad.yml');
     writeFileSync(file, `

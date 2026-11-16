@@ -1,4 +1,4 @@
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/wordmark-dark.svg"><img src="docs/wordmark-light.svg" alt="career-ops" width="250" height="56"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/wordmark-dark.svg"><img src="docs/wordmark-light.svg" alt="project-x" width="250" height="56"></picture></p>
 
 <p align="center">வேலை தேடலுக்கான ஓப்பன் சோர்ஸ் AI ஏஜென்ட்.</p>
 
@@ -26,7 +26,7 @@
 
 <!-- The non-breaking spaces (&nbsp;) and word joiners (&#8288;) below decide where each line wraps on a phone. Keep them when editing. -->
 
-<p align="center"><a href="https://github.com/santifer"><img src="docs/avatar-santifer.png" width="48" height="48" align="middle" alt="Santiago Fernández de Valderrama Aparicio"></a>&nbsp;&nbsp;<a href="https://github.com/santifer"><strong>@santifer</strong></a> உருவாக்கியது,&nbsp;&nbsp;<a href="https://github.com/career-ops-hq/career-ops/blob/main/README.ta.md#builders"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/builders-stack-dark.svg"><img src="docs/builders-stack-light.svg" alt="" height="32" align="middle"></picture></a>&nbsp;&nbsp;<a href="https://github.com/career-ops-hq/career-ops/blob/main/README.ta.md#builders">800+ பங்களிப்பாளர்களுடன்</a></p>
+<p align="center"><a href="https://github.com/santifer"><img src="docs/avatar-santifer.png" width="48" height="48" align="middle" alt="Santiago Fernández de Valderrama Aparicio"></a>&nbsp;&nbsp;<a href="https://github.com/santifer"><strong>@santifer</strong></a> உருவாக்கியது,&nbsp;&nbsp;<a href="https://github.com/project-x-hq/project-x/blob/main/README.ta.md#builders"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/builders-stack-dark.svg"><img src="docs/builders-stack-light.svg" alt="" height="32" align="middle"></picture></a>&nbsp;&nbsp;<a href="https://github.com/project-x-hq/project-x/blob/main/README.ta.md#builders">800+ பங்களிப்பாளர்களுடன்</a></p>
 
 <p align="center">
 <strong>மாதக்கணக்கில் CV அனுப்பினேன், பதில் மௌனம்&nbsp;மட்டுமே.</strong><br>
@@ -44,7 +44,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/demo.gif" alt="career-ops dashboard-இல் ஆசிரியரின் சொந்த வேலைத் தேடல்: மதிப்பெண் இடப்பட்ட அறிவிப்புகள், ‘விண்ணப்பிக்க வேண்டாம்’ எனக் குறிக்கப்பட்டவற்றின் சிவப்பு எண்ணிக்கை, பிறகு ஒரு முழு மதிப்பீட்டு அறிக்கை" width="800">
+  <img src="docs/demo.gif" alt="project-x dashboard-இல் ஆசிரியரின் சொந்த வேலைத் தேடல்: மதிப்பெண் இடப்பட்ட அறிவிப்புகள், ‘விண்ணப்பிக்க வேண்டாம்’ எனக் குறிக்கப்பட்டவற்றின் சிவப்பு எண்ணிக்கை, பிறகு ஒரு முழு மதிப்பீட்டு அறிக்கை" width="800">
 </p>
 
 <p align="center"><sub>என் சொந்தத் தேடல், பாதியில் இருந்தபோது, UI&nbsp;ஸ்பானிஷ்&nbsp;மொழியில்.</sub></p>
@@ -56,15 +56,15 @@
 
 <p align="center">
   ஆறு மாதங்கள் கழித்து, <strong>அந்த வேலையை விட்டு&nbsp;விலகினேன்.</strong><br>
-  இப்போது நாங்கள் career-ops-ஐ உருவாக்குகிறோம், நீங்களும்&nbsp;உங்கள்&nbsp;வேலையைப்&nbsp;பெற.
+  இப்போது நாங்கள் project-x-ஐ உருவாக்குகிறோம், நீங்களும்&nbsp;உங்கள்&nbsp;வேலையைப்&nbsp;பெற.
 </p>
 
-<p align="center"><a href="#இப்போது-உங்கள்-முறை">ஒரு வேலையை வைத்து முயன்று&nbsp;பாருங்கள்&nbsp;↓</a> · <a href="https://santifer.io/career-ops-system">முழுக் கதையையும்&nbsp;படியுங்கள்&nbsp;→</a></p>
-<p align="center"><sub>டெர்மினலைப் பயன்படுத்த விருப்பமில்லையா? <a href="https://career-ops.org/waitlist?ref=readme-ta">வெப் பதிப்புக்கான காத்திருப்புப் பட்டியலில் சேருங்கள்&nbsp;→</a></sub></p>
+<p align="center"><a href="#இப்போது-உங்கள்-முறை">ஒரு வேலையை வைத்து முயன்று&nbsp;பாருங்கள்&nbsp;↓</a> · <a href="https://santifer.io/project-x-system">முழுக் கதையையும்&nbsp;படியுங்கள்&nbsp;→</a></p>
+<p align="center"><sub>டெர்மினலைப் பயன்படுத்த விருப்பமில்லையா? <a href="https://project-x.org/waitlist?ref=readme-ta">வெப் பதிப்புக்கான காத்திருப்புப் பட்டியலில் சேருங்கள்&nbsp;→</a></sub></p>
 
 <br>
 
-<p align="center"><a href="HIRED.md"><img src="docs/hired-badge.svg" alt="Hired with career-ops: public stories on the record"></a></p>
+<p align="center"><a href="HIRED.md"><img src="docs/hired-badge.svg" alt="Hired with project-x: public stories on the record"></a></p>
 
 <p align="center">எனக்குப் பிறகு வந்தவர்கள், தங்களுக்கு எப்படி வேலை கிடைத்தது என்பதை எழுதி வைத்தார்கள்.</p>
 
@@ -72,9 +72,9 @@
   <a href="HIRED.md"><img src="docs/hired-wall.svg" alt="நீங்கள் திறந்து படிக்கக்கூடிய வேலை கிடைத்த கதைகள்" width="800"></a>
 </p>
 
-<p align="center"><sub>ஒவ்வொரு கார்டும் நீங்கள் திறக்கக்கூடிய பொது issue. உங்களுக்கும் கிடைத்ததா? <a href="https://github.com/career-ops-hq/career-ops/issues/new?template=i-got-hired.yml">உங்கள் கார்டை விடுங்கள் →</a></sub></p>
+<p align="center"><sub>ஒவ்வொரு கார்டும் நீங்கள் திறக்கக்கூடிய பொது issue. உங்களுக்கும் கிடைத்ததா? <a href="https://github.com/project-x-hq/project-x/issues/new?template=i-got-hired.yml">உங்கள் கார்டை விடுங்கள் →</a></sub></p>
 
-<p align="center">⭐ <strong>career-ops உங்களுக்கு உதவியிருந்தால், ஒரு ஸ்டார் அடுத்தவர் இதைக் கண்டுபிடிக்க&nbsp;உதவும்.</strong></p>
+<p align="center">⭐ <strong>project-x உங்களுக்கு உதவியிருந்தால், ஒரு ஸ்டார் அடுத்தவர் இதைக் கண்டுபிடிக்க&nbsp;உதவும்.</strong></p>
 
 <br>
 
@@ -99,7 +99,7 @@
 இன்று இரவு நீங்கள் விண்ணப்பிக்க இருந்த ஒரு வேலையை ஒட்டுங்கள். <em>விண்ணப்பிக்க வேண்டாம்</em> என்று வந்தால், உங்கள் இரவை இப்போதுதான் மீட்டுக்கொண்டீர்கள். ஒரு திட்டத்துடன் வந்தால், அடுத்து என்ன செய்வது என்று உங்களுக்குத் தெரியும்.
 
 ```bash
-npx @santifer/career-ops init
+npx @santifer/project-x init
 ```
 
 <p align="center"><sub>ஓப்பன் சோர்ஸ். உங்கள் கணினியில். நீங்கள் ஏற்கனவே பயன்படுத்தும் AI CLI-க்குள்ளேயே. <a href="docs/RUNNING_ON_A_BUDGET.md">இலவச மற்றும் லோக்கல் மாடல்களும் உண்டு.</a></sub></p>
@@ -111,15 +111,15 @@ npx @santifer/career-ops init
 
 > குறைவானவற்றுக்கு, சிறப்பாக விண்ணப்பியுங்கள். எண்ணிக்கையை விடச் சமிக்ஞை. முக்கிய வார்த்தைகளை விடச் சான்று. முடிவெடுப்பது மனிதர். முதலில் லோக்கல். மேசையின் இரு பக்கங்களிலும் மாண்பு.
 
-<p align="center"><a href="https://career-ops.org/manifesto?utm_source=readme"><img src="https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcareer-ops-hq%2Fcareer-ops%2Fmain%2FSIGNATURES.md&search=n%3A(%5Cd%2B)%5Cs*%24&replace=%241%20signatories&label=THE%20CAREEROPS%20MANIFESTO&color=DD7627&style=for-the-badge&labelColor=2b3137" alt="CareerOps அறிக்கை: கையொப்பமிட்டவர்களின் நேரடி எண்ணிக்கை"></a></p>
+<p align="center"><a href="https://project-x.org/manifesto?utm_source=readme"><img src="https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fproject-x-hq%2Fproject-x%2Fmain%2FSIGNATURES.md&search=n%3A(%5Cd%2B)%5Cs*%24&replace=%241%20signatories&label=THE%20PROJECTX%20MANIFESTO&color=DD7627&style=for-the-badge&labelColor=2b3137" alt="ProjectX அறிக்கை: கையொப்பமிட்டவர்களின் நேரடி எண்ணிக்கை"></a></p>
 
 <p align="center">அவர்களில் சிலர், அவர்களின் சொந்த வார்த்தைகளில்.</p>
 
 <p align="center">
-  <a href="https://career-ops.org/manifesto?utm_source=readme"><img src="docs/manifesto-wall.svg" alt="CareerOps அறிக்கையின் மூன்று கையொப்பங்கள், அவர்களின் சொந்த வார்த்தைகளில்" width="800"></a>
+  <a href="https://project-x.org/manifesto?utm_source=readme"><img src="docs/manifesto-wall.svg" alt="ProjectX அறிக்கையின் மூன்று கையொப்பங்கள், அவர்களின் சொந்த வார்த்தைகளில்" width="800"></a>
 </p>
 
-<p align="center"><sub>ஒவ்வொரு கையொப்பமும் நீங்கள் சரிபார்க்கக்கூடிய ஒரு commit. <a href="https://career-ops.org/manifesto?utm_source=readme">அனைத்தையும் படியுங்கள், அல்லது உங்களுடையதைச் சேருங்கள் →</a></sub></p>
+<p align="center"><sub>ஒவ்வொரு கையொப்பமும் நீங்கள் சரிபார்க்கக்கூடிய ஒரு commit. <a href="https://project-x.org/manifesto?utm_source=readme">அனைத்தையும் படியுங்கள், அல்லது உங்களுடையதைச் சேருங்கள் →</a></sub></p>
 
 <br>
 
@@ -131,21 +131,21 @@ npx @santifer/career-ops init
 
 [சரிசெய்தல் எழுதப்படுவது இங்கேதான்](CONTRIBUTING.md). ஒரு அறை, கிளப் அல்ல. **சேர்ந்து கட்டுவோம்.**
 
-<p align="center"><a href="https://discord.gg/8pRpHETxa4"><img src="docs/discord-badge.svg" alt="Discord: career-ops சர்வரின் உறுப்பினர்களின் நேரடி எண்ணிக்கை"></a></p>
+<p align="center"><a href="https://discord.gg/8pRpHETxa4"><img src="docs/discord-badge.svg" alt="Discord: project-x சர்வரின் உறுப்பினர்களின் நேரடி எண்ணிக்கை"></a></p>
 
 ## ஆதரவாளர்கள்
 
-career-ops விண்ணப்பதாரர்களுக்கு எப்போதும் இலவசம். இந்த நிறுவனங்கள் இந்தத் திட்டத்திற்கு நிதியுதவி அளிக்கின்றன:
+project-x விண்ணப்பதாரர்களுக்கு எப்போதும் இலவசம். இந்த நிறுவனங்கள் இந்தத் திட்டத்திற்கு நிதியுதவி அளிக்கின்றன:
 
 <p align="center">
-  <a href="https://serpapi.com/career-ops-org" title="SerpApi"><img src="docs/sponsors/serpapi.svg" alt="SerpApi" height="48"></a>
+  <a href="https://serpapi.com/project-x-org" title="SerpApi"><img src="docs/sponsors/serpapi.svg" alt="SerpApi" height="48"></a>
 </p>
 
 <p align="center"><strong>SerpApi</strong> · Build a portfolio project with live search data. SerpApi gives developers structured JSON/Markdown from Google Search, Maps, Shopping, and other engines through a simple API call.</p>
 
 > ஆதரவு வாங்குவது தெளிவாகக் குறிக்கப்பட்ட தெரிவுநிலையை மட்டுமே, செல்வாக்கை அல்ல: எந்தத் தொகையும் திட்டவரைபடத்தை மாற்றாது, தயாரிப்பில் எதையும் வைக்காது. ஆதரவாளர்கள் மதிப்பீடுகள், தரவரிசைகள் அல்லது பரிந்துரைகளில் ஒருபோதும் தோன்றுவதில்லை.
 
-## career-ops உங்களுக்காக என்ன செய்கிறது
+## project-x உங்களுக்காக என்ன செய்கிறது
 
 ஒரு வேலையை ஒட்டுங்கள். அந்த இரவு அதற்குத் தகுமா என்று சொல்கிறது.
 
@@ -160,7 +160,7 @@ career-ops விண்ணப்பதாரர்களுக்கு எப�
 
 முதல் முறை இயக்கும்போது இவை அனைத்தையும் சாட்டில் கேட்கிறது. கையால் அமைக்க எதுவும் இல்லை.
 
-## career-ops செய்யாதவை
+## project-x செய்யாதவை
 
 - **விண்ணப்பத்தைத் தானாகச் சமர்ப்பித்தல்.** ஒவ்வொரு புலத்திற்கும் பதிலின் வரைவை எழுதுகிறது; நீங்கள் சரிபார்த்து Submit-ஐ அழுத்துகிறீர்கள். ஸ்கிரிப்ட் ஒருபோதும் POST செய்வதில்லை (`prepare-application.mjs`).
 - **மின்னஞ்சல் அனுப்புவது.** வரைவுகள் மட்டுமே. இந்த முழு கோட்பேஸிலும் மின்னஞ்சல் அனுப்பும் எந்த வழியும் இல்லை.
@@ -176,7 +176,7 @@ career-ops விண்ணப்பதாரர்களுக்கு எப�
 | **A-H மதிப்பீடு**        | பதவிச் சுருக்கம், CV பொருத்தம் (இந்த விளம்பரத்திற்கு ஒவ்வொரு தேவையும் எவ்வளவு முக்கியம், அந்த எடை JD-யின் சொற்களிலிருந்தா, அதன் கட்டமைப்பிலிருந்தா அல்லது ஒரு மதிப்பீட்டிலிருந்தா என்பது தேவைவாரியாகக் குறிக்கப்படும்; ஒரு மதிப்பீடு ஒருபோதும் உச்ச நிலையில் இருக்காது), நிலை உத்தி, சம்பள ஆய்வு, தனிப்பயனாக்கம், நேர்காணல் தயாரிப்பு (STAR+R), மேலும் பகுதி G நம்பகத்தன்மை சோதனை (இன்னும் திறந்திருக்கிறதா, இது மறுபதிவா: கவனிப்புகள், தீர்ப்புகள் அல்ல), மற்றும் விசா ஸ்பான்சர்ஷிப் இல்லை என வெளிப்படையாகக் கூறும் JD-ஐ கடுமையான தடையாகக் குறிக்கும் பணி அனுமதி சமிக்ஞை |
 | **Human-in-the-Loop**    | AI மதிப்பிட்டுப் பரிந்துரைக்கிறது, நீங்கள் முடிவெடுத்துச் செயல்படுகிறீர்கள். அமைப்பு ஒருபோதும் விண்ணப்பத்தைச் சமர்ப்பிக்காது: இறுதி முடிவு எப்போதும் உங்களுடையது <!-- hitl: absolute guarantee. Do not add "automatically", "by itself", "without your permission" or any other hedge when translating this row. -->               |
 | **ATS PDF உருவாக்கம்**   | ATS படிக்கக்கூடிய CV-கள், உங்கள் சொந்த அனுபவத்திலிருந்து ஒவ்வொரு JD-க்கும் ஏற்பத் தனிப்பயனாக்கப்பட்டவை, Space Grotesk + DM Sans வடிவமைப்பில் |
-| **Cover Letter உருவாக்கி** | ஆய்வு அடிப்படையிலான cover letter-கள்: keyword பிரதிபலிப்பு, நான்கு ஊடாடும் கோணக் கேள்விகள் (ஏன்/சிக்கல்கள்/அணுகுமுறை/தொனி), சாட்டில் வரைவு ஒப்புதல், CV-களுக்கான அதே HTML + Playwright பைப்லைன் மூலம் A4 PDF. ஒவ்வொரு மதிப்பீட்டிலும் தானாக வரைவு; `/career-ops cover` மூலம் தேவைப்படும்போது முடித்து உருவாக்குங்கள் |
+| **Cover Letter உருவாக்கி** | ஆய்வு அடிப்படையிலான cover letter-கள்: keyword பிரதிபலிப்பு, நான்கு ஊடாடும் கோணக் கேள்விகள் (ஏன்/சிக்கல்கள்/அணுகுமுறை/தொனி), சாட்டில் வரைவு ஒப்புதல், CV-களுக்கான அதே HTML + Playwright பைப்லைன் மூலம் A4 PDF. ஒவ்வொரு மதிப்பீட்டிலும் தானாக வரைவு; `/project-x cover` மூலம் தேவைப்படும்போது முடித்து உருவாக்குங்கள் |
 | **CV-க்கு அப்பால்**      | நிறுவன ஆய்வு ([`deep`](modes/deep.md)) AI உத்தி, சமீபத்திய நகர்வுகள், பொறியியல் கலாச்சாரம், உங்கள் சுயவிவரம் எடுக்க வேண்டிய கோணம் ஆகியவற்றை வெளிக்கொணர்கிறது. தொடர்பு கண்டறிதல் ([`contacto`](modes/contacto.md)) தொடர்புகொள்ளத் தகுந்த hiring manager, ரிக்ரூட்டர் அல்லது குழு உறுப்பினரை அடையாளம் கண்டு, ஒவ்வொரு தொடர்பு வகைக்கும் ஏற்ப ≤300 எழுத்துகளிலான LinkedIn செய்தியை வரைகிறது. முறையான விண்ணப்ப மின்னஞ்சல் வரைவுகள் ([`email`](modes/email.md)) மதிப்பிடப்பட்ட அறிக்கையையோ ஒட்டப்பட்ட JD-ஐயோ தலைப்பு, உடல், இணைப்புப் பட்டியலாக மாற்றுகின்றன; எதையும் அனுப்பாமல், சமர்ப்பிக்காமல், கிளிக் செய்யாமல். விண்ணப்பம் உங்களை வரிசையில் சேர்க்கும்; ஆய்வு உங்களுக்கு ஒரு உரையாடலைப் பெற்றுத் தரும். |
 | **முறை பகுப்பாய்வு**     | நிராகரிப்பு முறைகளும் ATS சேனல்வாரி முன்னேற்ற விகிதங்களும் (`analyze-patterns.mjs`), முழுத் தேடலின் funnel புள்ளிவிவரங்கள் (`stats.mjs`), மறுபதிவுகளைக் கண்டறிதல், அவை ghost job-இன் அறிகுறியாக இருக்கலாம் (`detect-reposts.mjs`) |
 
@@ -188,7 +188,7 @@ career-ops விண்ணப்பதாரர்களுக்கு எப�
 | **Auto-Pipeline**        | ஒரு URL-ஐ ஒட்டுங்கள்; முழு மதிப்பீடு + PDF + tracker பதிவு பெறுங்கள்                                                                       |
 | **நேர்காணல் கதை வங்கி**  | மதிப்பீடுகள் முழுவதும் STAR+Reflection கதைகளைச் சேகரிக்கிறது: உங்களிடம் கேட்கப்படும் நடத்தை சார்ந்த கேள்விகளுக்கு ஏற்ப நீங்கள் மாற்றியமைக்கக்கூடிய 5-10 முதன்மைக் கதைகள் |
 | **பேச்சுவார்த்தை ஸ்கிரிப்ட்கள்** | சம்பளப் பேச்சுவார்த்தை கட்டமைப்புகள், புவியியல் தள்ளுபடிக்கு எதிர்வாதம், போட்டி வாய்ப்புகளை நெம்புகோலாகப் பயன்படுத்துதல்                  |
-| **விண்ணப்ப மின்னஞ்சல் வரைவுகள்** | அறிக்கை அல்லது ஒட்டப்பட்ட JD-யிலிருந்து ரிக்ரூட்டர்/பரிந்துரை/நேரடி விண்ணப்பத்திற்கான முறையான மின்னஞ்சல்கள்: தலைப்பு, இணைப்புகள் சரிபார்ப்புப் பட்டியல், ஆதாரத்துடன் கூடிய பொருத்தப் புள்ளிகள், சுயவிவர அடிப்படையிலான தொடர்புத் தகவல். வரைவு மட்டுமே: career-ops ஒருபோதும் அனுப்பாது, சமர்ப்பிக்காது, எதையும் கிளிக் செய்யாது. |
+| **விண்ணப்ப மின்னஞ்சல் வரைவுகள்** | அறிக்கை அல்லது ஒட்டப்பட்ட JD-யிலிருந்து ரிக்ரூட்டர்/பரிந்துரை/நேரடி விண்ணப்பத்திற்கான முறையான மின்னஞ்சல்கள்: தலைப்பு, இணைப்புகள் சரிபார்ப்புப் பட்டியல், ஆதாரத்துடன் கூடிய பொருத்தப் புள்ளிகள், சுயவிவர அடிப்படையிலான தொடர்புத் தகவல். வரைவு மட்டுமே: project-x ஒருபோதும் அனுப்பாது, சமர்ப்பிக்காது, எதையும் கிளிக் செய்யாது. |
 | **தள ஸ்கேனர்**           | 100+ நிறுவனங்கள் முன்கூட்டியே அமைக்கப்பட்டுள்ளன (Anthropic, OpenAI, ElevenLabs, Retool, n8n...) + Ashby, Greenhouse, Lever, Wellfound முழுவதும் தனிப்பயன் வலைத் தேடல் வினவல்கள் |
 | **நிதி பெற்ற நிறுவனங்களைக் கண்டறிதல்** | முதலில் மதிப்பாய்வு செய்யும் `company:funded` கட்டளை, கட்டமைக்கப்பட்ட பொது ஊட்டங்களிலிருந்து சமீபத்தில் நிதி பெற்ற நிறுவனங்களையும் மூல நோயறிதல்களையும் உங்கள் தரவைத் திருத்தாமல் காட்டுகிறது |
 | **தொகுப்புச் செயலாக்கம்** | Headless CLI workers (`claude -p` / `opencode run`) மூலம் இணையான மதிப்பீடு                                                                |
@@ -210,28 +210,28 @@ career-ops விண்ணப்பதாரர்களுக்கு எப�
 **விரைவான வழி, ஒரே கட்டளையில்:**
 
 ```bash
-npx @santifer/career-ops init
+npx @santifer/project-x init
 ```
 
 > 💡 `npx` [Node.js](https://nodejs.org)-உடன் வருகிறது: எதையும் global-ஆக நிறுவாமல்
 > நிறுவியை ஒரு முறை இயக்குகிறது. Node இன்னும் இல்லையா? முதலில் அதை நிறுவுங்கள்.
 > (ஏற்கனவே Claude Code / Codex CLI பயன்படுத்துகிறீர்களா? அப்படியானால் ஏற்கனவே உங்களிடம் உள்ளது.)
 
-இது சமீபத்திய வெளியீட்டை `./career-ops`-இல் clone செய்து dependencies-ஐ நிறுவுகிறது. பிறகு:
+இது சமீபத்திய வெளியீட்டை `./project-x`-இல் clone செய்து dependencies-ஐ நிறுவுகிறது. பிறகு:
 
 ```bash
-cd career-ops
+cd project-x
 claude   # or codex / qwen / opencode / agy / grok — open your AI CLI here
 ```
 
-**முதல் முறை இயக்கும்போது, career-ops உரையாடல் மூலமாகவே அமைப்பை வழிநடத்துகிறது: உங்கள் CV, சுயவிவரம், இலக்குப் பதவிகள். கையால் திருத்த எதுவும் இல்லை.**
+**முதல் முறை இயக்கும்போது, project-x உரையாடல் மூலமாகவே அமைப்பை வழிநடத்துகிறது: உங்கள் CV, சுயவிவரம், இலக்குப் பதவிகள். கையால் திருத்த எதுவும் இல்லை.**
 
 <details>
 <summary><b>கையால் அமைக்க விரும்புகிறீர்களா? (git clone)</b></summary>
 
 ```bash
-git clone https://github.com/career-ops-hq/career-ops.git
-cd career-ops && npm install
+git clone https://github.com/project-x-hq/project-x.git
+cd project-x && npm install
 npx playwright install chromium   # only needed for PDF generation
 # On a non-Debian/Ubuntu Linux distro (Fedora, Arch, ...), Chromium's system
 # libraries aren't installed by the line above — install them yourself with
@@ -258,14 +258,14 @@ claude   # or codex / opencode / qwen / agy / grok
 ### Global நிறுவல்
 
 ```bash
-npm i -g @santifer/career-ops
+npm i -g @santifer/project-x
 ```
 
-இது `career-ops` binary-ஐ global-ஆக நிறுவுகிறது, எனவே `npx` இல்லாமல் `career-ops init [folder]`-ஐ இயக்கலாம். `init` மட்டுமே அதன் ஒரே கட்டளை: அது ஒரு workspace-ஐ அமைக்கிறது; அதன் பிறகு எல்லா வேலையும் இந்த binary வழியாக அல்ல, உங்கள் AI கோடிங் CLI-க்குள் நடக்கிறது (கீழே Usage பார்க்கவும்).
+இது `project-x` binary-ஐ global-ஆக நிறுவுகிறது, எனவே `npx` இல்லாமல் `project-x init [folder]`-ஐ இயக்கலாம். `init` மட்டுமே அதன் ஒரே கட்டளை: அது ஒரு workspace-ஐ அமைக்கிறது; அதன் பிறகு எல்லா வேலையும் இந்த binary வழியாக அல்ல, உங்கள் AI கோடிங் CLI-க்குள் நடக்கிறது (கீழே Usage பார்க்கவும்).
 
 **எதைப் பயன்படுத்த வேண்டும்?**
-- `npx @santifer/career-ops init`: முதல் பயன்பாட்டிற்கு சிறந்தது; தனி project folder-ஐ உருவாக்குகிறது.
-- `npm i -g @santifer/career-ops`: `npx` வடிவத்தை விட `career-ops init` என்று தட்டச்சு செய்ய விரும்பினால். இது வேறு எந்தக் கட்டளையையும் சேர்க்காது.
+- `npx @santifer/project-x init`: முதல் பயன்பாட்டிற்கு சிறந்தது; தனி project folder-ஐ உருவாக்குகிறது.
+- `npm i -g @santifer/project-x`: `npx` வடிவத்தை விட `project-x init` என்று தட்டச்சு செய்ய விரும்பினால். இது வேறு எந்தக் கட்டளையையும் சேர்க்காது.
 
 ### இயக்க வேறு வழிகள்
 
@@ -274,23 +274,23 @@ npm i -g @santifer/career-ops
 
 > **இந்த அமைப்பு உங்கள் AI கோடிங் CLI-யாலேயே தனிப்பயனாக்கப்பட வடிவமைக்கப்பட்டது.** Modes, archetypes, scoring weights, பேச்சுவார்த்தை ஸ்கிரிப்ட்கள்: மாற்றச் சொன்னால் போதும். அது பயன்படுத்தும் அதே கோப்புகளையே படிக்கிறது, எனவே எதைத் திருத்த வேண்டும் என்பது அதற்குச் சரியாகத் தெரியும்.
 
-முழு அமைப்பு வழிகாட்டிக்கு [docs/SETUP.md](docs/SETUP.md), தனிப்பயன் அல்லது லோக்கல் மாடல்களைப் பயன்படுத்தி career-ops-ஐ மலிவாக இயக்க [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md) (Antigravity CLI-யின் இலவச அடுக்கில் செலவின்றி இயக்க [docs/FREE_TIER.md](docs/FREE_TIER.md)), தொடர் ஸ்கேன்களைத் திட்டமிடவும் token செலவின்றி triage-to-shortlist செய்யவும் [docs/AUTOMATION.md](docs/AUTOMATION.md), ATS auto-fill ஓட்டத்தின் விவரங்களுக்கு [docs/APPLY_AUTOFILL.md](docs/APPLY_AUTOFILL.md), உங்கள் LinkedIn தொடர்புகளின் export-ஐ உங்கள் funnel-இல் உள்ள நிறுவனங்களுடன் ஒப்பிட [docs/LINKEDIN_JOIN.md](docs/LINKEDIN_JOIN.md), பொதுவான அமைப்புக் கேள்விகளுக்கான பதில்களுக்கு [docs/FAQ.md](docs/FAQ.md) ஆகியவற்றைப் பார்க்கவும்; இதில் [கதை மூலப் பதிவு எப்படிப் புனையப்பட்ட எண்களைத் தடுக்கிறது](docs/FAQ.md#why-does-career-ops-refuse-to-use-a-number-from-my-story-bank) என்பதும் அடங்கும். வடிவமைப்புக் கொள்கைகள் [ARCHITECTURE.md](ARCHITECTURE.md)-இல்; இயக்க நேர ஓட்டங்கள் [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)-இல்.
+முழு அமைப்பு வழிகாட்டிக்கு [docs/SETUP.md](docs/SETUP.md), தனிப்பயன் அல்லது லோக்கல் மாடல்களைப் பயன்படுத்தி project-x-ஐ மலிவாக இயக்க [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md) (Antigravity CLI-யின் இலவச அடுக்கில் செலவின்றி இயக்க [docs/FREE_TIER.md](docs/FREE_TIER.md)), தொடர் ஸ்கேன்களைத் திட்டமிடவும் token செலவின்றி triage-to-shortlist செய்யவும் [docs/AUTOMATION.md](docs/AUTOMATION.md), ATS auto-fill ஓட்டத்தின் விவரங்களுக்கு [docs/APPLY_AUTOFILL.md](docs/APPLY_AUTOFILL.md), உங்கள் LinkedIn தொடர்புகளின் export-ஐ உங்கள் funnel-இல் உள்ள நிறுவனங்களுடன் ஒப்பிட [docs/LINKEDIN_JOIN.md](docs/LINKEDIN_JOIN.md), பொதுவான அமைப்புக் கேள்விகளுக்கான பதில்களுக்கு [docs/FAQ.md](docs/FAQ.md) ஆகியவற்றைப் பார்க்கவும்; இதில் [கதை மூலப் பதிவு எப்படிப் புனையப்பட்ட எண்களைத் தடுக்கிறது](docs/FAQ.md#why-does-project-x-refuse-to-use-a-number-from-my-story-bank) என்பதும் அடங்கும். வடிவமைப்புக் கொள்கைகள் [ARCHITECTURE.md](ARCHITECTURE.md)-இல்; இயக்க நேர ஓட்டங்கள் [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)-இல்.
 
 ## Usage
 
-உங்கள் AI CLI-இல் ஒரு வேலை URL-ஐயோ விவரத்தையோ ஒட்டுங்கள். இணைப்புடன் உள்ள வேலை அறிவிப்பு இன்னும் திறந்திருக்கிறதா என career-ops சரிபார்க்கும் (ஒட்டிய உரைக்குச் சரிபார்க்க இணைப்பு இல்லை), உங்கள் CV-க்கு எதிராக மதிப்பெண் இடும், ஒரு report எழுதும், உங்கள் CV-ஐ ஏற்றவாறு தயாரிக்கும் (இயல்பாக PDF), உங்கள் tracker-இல் ஒரு வரியைச் சேர்க்கும். பெரும்பாலான நாட்களுக்கு இது போதும். மற்றதெல்லாம் பெயர் சொல்லிக் கேட்கும் mode-கள். ஒரு வேலை அறிவிப்பைப் படிக்க முடியாவிட்டால், pipeline நின்று உரையை ஒட்டச் சொல்லும்.
+உங்கள் AI CLI-இல் ஒரு வேலை URL-ஐயோ விவரத்தையோ ஒட்டுங்கள். இணைப்புடன் உள்ள வேலை அறிவிப்பு இன்னும் திறந்திருக்கிறதா என project-x சரிபார்க்கும் (ஒட்டிய உரைக்குச் சரிபார்க்க இணைப்பு இல்லை), உங்கள் CV-க்கு எதிராக மதிப்பெண் இடும், ஒரு report எழுதும், உங்கள் CV-ஐ ஏற்றவாறு தயாரிக்கும் (இயல்பாக PDF), உங்கள் tracker-இல் ஒரு வரியைச் சேர்க்கும். பெரும்பாலான நாட்களுக்கு இது போதும். மற்றதெல்லாம் பெயர் சொல்லிக் கேட்கும் mode-கள். ஒரு வேலை அறிவிப்பைப் படிக்க முடியாவிட்டால், pipeline நின்று உரையை ஒட்டச் சொல்லும்.
 
 ### ஒரு mode-ஐக் கேட்பது எப்படி
 
 | CLI | `scan`-ஐக் கேட்பது எப்படி |
 | --- | --- |
-| Claude Code, OpenCode, Antigravity CLI (`agy`), Grok Build CLI | `/career-ops scan` |
-| Pi | `/skill:career-ops scan` |
-| Codex, Qwen, Cursor அல்லது ஆதரிக்கப்படும் வேறு எந்த CLI | சாதாரண மொழியில்: "Run the career-ops scan mode" |
+| Claude Code, OpenCode, Antigravity CLI (`agy`), Grok Build CLI | `/project-x scan` |
+| Pi | `/skill:project-x scan` |
+| Codex, Qwen, Cursor அல்லது ஆதரிக்கப்படும் வேறு எந்த CLI | சாதாரண மொழியில்: "Run the project-x scan mode" |
 
-பின்னால் எதுவும் இல்லாத `/career-ops` கட்டளை மெனுவைக் காட்டும் அதைப் பயன்படுத்தும் CLI-களில். சாதாரண மொழி ஆதரிக்கப்படும் எல்லா CLI-களிலும் வேலை செய்யும். Claude Code plugin ஆக இருந்தால் கட்டளை `/career-ops:career-ops`.
+பின்னால் எதுவும் இல்லாத `/project-x` கட்டளை மெனுவைக் காட்டும் அதைப் பயன்படுத்தும் CLI-களில். சாதாரண மொழி ஆதரிக்கப்படும் எல்லா CLI-களிலும் வேலை செய்யும். Claude Code plugin ஆக இருந்தால் கட்டளை `/project-x:project-x`.
 
-இவை அனைத்தும் ஒரே router-ஆன `.agents/skills/career-ops/SKILL.md`-ஐயும் அதே `modes/*.md` கோப்புகளையும் பகிர்கின்றன; எனவே எந்த CLI-யும் கோரிக்கையை ஒரே மாதிரி வழிநடத்தும் (உலாவியை அதிகம் பயன்படுத்தும் mode-களுக்கு Playwright கருவிகளும் தேவை). Codex-இல் slash கட்டளைகளுக்கு உத்தரவாதம் இல்லை: சாதாரண மொழியில் கேளுங்கள், அல்லது `codex exec "Evaluate this JD with career-ops auto-pipeline: https://company.com/jobs/123"` மூலம் ஒரு prompt-ஐ headless-ஆக இயக்குங்கள் ([docs/CODEX.md](docs/CODEX.md)). ஆதரிக்கப்படும் ஒவ்வொரு CLI-யிலும் இதை எப்படி இயக்குவது, headless கட்டளை உள்ள CLI-களுக்கு அந்தக் கட்டளைகள், CLI-வாரியான அமைப்புக் குறிப்புகள் ஆகியவை [docs/SUPPORTED_CLIS.md](docs/SUPPORTED_CLIS.md)-இல் உள்ளன.
+இவை அனைத்தும் ஒரே router-ஆன `.agents/skills/project-x/SKILL.md`-ஐயும் அதே `modes/*.md` கோப்புகளையும் பகிர்கின்றன; எனவே எந்த CLI-யும் கோரிக்கையை ஒரே மாதிரி வழிநடத்தும் (உலாவியை அதிகம் பயன்படுத்தும் mode-களுக்கு Playwright கருவிகளும் தேவை). Codex-இல் slash கட்டளைகளுக்கு உத்தரவாதம் இல்லை: சாதாரண மொழியில் கேளுங்கள், அல்லது `codex exec "Evaluate this JD with project-x auto-pipeline: https://company.com/jobs/123"` மூலம் ஒரு prompt-ஐ headless-ஆக இயக்குங்கள் ([docs/CODEX.md](docs/CODEX.md)). ஆதரிக்கப்படும் ஒவ்வொரு CLI-யிலும் இதை எப்படி இயக்குவது, headless கட்டளை உள்ள CLI-களுக்கு அந்தக் கட்டளைகள், CLI-வாரியான அமைப்புக் குறிப்புகள் ஆகியவை [docs/SUPPORTED_CLIS.md](docs/SUPPORTED_CLIS.md)-இல் உள்ளன.
 
 ### அன்றாடக் கட்டளைகள்
 
@@ -389,7 +389,7 @@ npm i -g @santifer/career-ops
 | கட்டளை | என்ன செய்கிறது |
 | --- | --- |
 | [`agent-inbox`](modes/agent-inbox.md) | அடுத்த session-க்கான கோரிக்கைகளை வரிசையில் வை, அப்போது அவற்றைச் செயல்படுத்து (`data/agent-inbox.md`). `inbox` என்பதும் வேலை செய்யும் |
-| [`update`](modes/update.md) | diff முன்னோட்டத்துடனும் இணக்கச் சரிபார்ப்புடனும் career-ops அமைப்புக் கோப்புகளைப் புதுப்பி |
+| [`update`](modes/update.md) | diff முன்னோட்டத்துடனும் இணக்கச் சரிபார்ப்புடனும் project-x அமைப்புக் கோப்புகளைப் புதுப்பி |
 
 </details>
 
@@ -432,7 +432,7 @@ Features: 10 வடிகட்டி tabs, 8 வரிசைப்படுத�
 ## Project Structure
 
 ```
-career-ops/
+project-x/
 ├── AGENTS.md                    # Canonical agent instructions (all CLIs)
 ├── CLAUDE.md                    # Claude Code wrapper (imports AGENTS.md)
 ├── CODEX.md                     # Codex wrapper (imports AGENTS.md)
@@ -473,20 +473,20 @@ career-ops/
 
 உங்கள் தனிப்பட்ட தரவைக் கோடிலிருந்து பிரிக்க (branch மாற்றுவது, updates-ஐப் பெறுவது, பல சுயவிவரங்களைச் சோதிப்பது எளிதாகும்), பின்வரும் முன்னுரிமையில் ஒரு வெளிப்புற தரவு அடைவை அமைக்கலாம்:
 
-1. **Environment Variables:** `CAREER_OPS_ROOT` அல்லது `CAREER_OPS_DATA_DIR` environment variable-ஐ அமைக்கவும்:
+1. **Environment Variables:** `PROJECT_X_ROOT` அல்லது `PROJECT_X_DATA_DIR` environment variable-ஐ அமைக்கவும்:
    ```bash
-   export CAREER_OPS_ROOT=~/my-career-data
+   export PROJECT_X_ROOT=~/my-career-data
    ```
-2. **Marker File:** repository root-இல் உங்கள் தரவு அடைவின் பாதையைக் கொண்ட `.career-ops-data` கோப்பை உருவாக்கவும்.
+2. **Marker File:** repository root-இல் உங்கள் தரவு அடைவின் பாதையைக் கொண்ட `.project-x-data` கோப்பை உருவாக்கவும்.
 3. **இயல்பு:** repository root.
 
 தீர்மானிக்கப்பட்டதும், அனைத்துப் பயனர் கோப்புகளும் அந்த folder-ஐ ஒட்டியே தீர்க்கப்பட்டு எழுதப்படும்; prompt கோப்புகளும் ஸ்கிரிப்ட்களும் தொடர்ந்து repository-ஐ ஒட்டியே தீர்க்கப்படும்.
 
-- **Tracker Override:** விண்ணப்ப tracker கோப்பின் பாதையை நேரடியாக மாற்ற `CAREER_OPS_TRACKER`-ஐயும் அமைக்கலாம்.
+- **Tracker Override:** விண்ணப்ப tracker கோப்பின் பாதையை நேரடியாக மாற்ற `PROJECT_X_TRACKER`-ஐயும் அமைக்கலாம்.
 - **Writes:** அனைத்து எழுதும் செயல்பாடுகளும் (merges போன்றவை) நியமப்படி `{DATA_ROOT}/data/applications.md`-ஐ இலக்காகக் கொள்ளும்.
 - **Scanner config:** `portals.yml` கோப்பு `{DATA_ROOT}/portals.yml`-இல் படிக்கப்பட்டுச் சரிபார்க்கப்படுகிறது, எனவே `scan.mjs` படிக்கும் அதே கோப்பையே `node validate-portals.mjs` சரிபார்க்கிறது.
-- **உருவாக்கப்பட்ட ஆவணங்கள்:** தனிப்பயனாக்கப்பட்ட CV-களும் cover letter-களும் `{DATA_ROOT}/output/`-இன் கீழ் எழுதப்படுகின்றன; அவற்றை ஒரு அறிக்கையுடன் இணைக்கும் PDF manifest `{DATA_ROOT}/data/pdf-index.tsv`-இல் இருக்கும். `CAREER_OPS_TRACKER` அமைக்கப்படாதவரை, அந்த எழுதுதல்களுக்கு எல்லை வகுக்கும் tracker workspace என்பது data root தான், checkout அல்ல.
-- **Tracker override-இன் கீழ் PDF-கள்:** `generate-pdf.mjs` workspace-ஐத் தீர்மானிக்கும் முன் `CAREER_OPS_TRACKER`-ஐத் தீர்க்கிறது, எனவே override அமைக்கப்பட்டிருந்தால் workspace என்பது அந்த tracker உள்ள folder (அல்லது tracker ஒரு `data/` folder-இல் இருந்தால், அதற்கு மேலே உள்ள folder). அப்போது CV-யின் HTML-உம் ஒவ்வொரு PDF-உம் அந்த workspace-க்குள்ளேயே இருக்க வேண்டும், manifest அதன் `data/pdf-index.tsv`-க்கு நகரும். Cover letter-கள் இன்னும் `{DATA_ROOT}/output/`-ஐயே இலக்காகக் கொள்வதால், அந்த folder tracker-இன் workspace-க்கு வெளியே இருந்தால் அவை மறுக்கப்படும்.
+- **உருவாக்கப்பட்ட ஆவணங்கள்:** தனிப்பயனாக்கப்பட்ட CV-களும் cover letter-களும் `{DATA_ROOT}/output/`-இன் கீழ் எழுதப்படுகின்றன; அவற்றை ஒரு அறிக்கையுடன் இணைக்கும் PDF manifest `{DATA_ROOT}/data/pdf-index.tsv`-இல் இருக்கும். `PROJECT_X_TRACKER` அமைக்கப்படாதவரை, அந்த எழுதுதல்களுக்கு எல்லை வகுக்கும் tracker workspace என்பது data root தான், checkout அல்ல.
+- **Tracker override-இன் கீழ் PDF-கள்:** `generate-pdf.mjs` workspace-ஐத் தீர்மானிக்கும் முன் `PROJECT_X_TRACKER`-ஐத் தீர்க்கிறது, எனவே override அமைக்கப்பட்டிருந்தால் workspace என்பது அந்த tracker உள்ள folder (அல்லது tracker ஒரு `data/` folder-இல் இருந்தால், அதற்கு மேலே உள்ள folder). அப்போது CV-யின் HTML-உம் ஒவ்வொரு PDF-உம் அந்த workspace-க்குள்ளேயே இருக்க வேண்டும், manifest அதன் `data/pdf-index.tsv`-க்கு நகரும். Cover letter-கள் இன்னும் `{DATA_ROOT}/output/`-ஐயே இலக்காகக் கொள்வதால், அந்த folder tracker-இன் workspace-க்கு வெளியே இருந்தால் அவை மறுக்கப்படும்.
 - **கோடு அடுக்கு இடம் மாறாது:** `node_modules/`, `providers/`, `modes/` மற்றும் ஸ்கிரிப்ட்கள் எப்போதும் repository-ஐ ஒட்டியே தீர்க்கப்படுகின்றன, data root-ஐ ஒட்டி ஒருபோதும் அல்ல.
 
 Go dashboard TUI, Node.js ஸ்கிரிப்ட்கள், AI ஏஜென்ட் modes அனைத்தும் இந்தத் தீர்வு வரிசையைத் தானாகவே பின்பற்றுகின்றன.
@@ -508,7 +508,7 @@ Go dashboard TUI, Node.js ஸ்கிரிப்ட்கள், AI ஏஜெ�
 - **Data**: Markdown அட்டவணைகள் + YAML config + TSV batch கோப்புகள்
 
 <p align="center">
-  <a href="https://github.com/career-ops-hq/career-ops/releases/latest"><img src="docs/npm-badge.svg" alt="Latest release"></a>
+  <a href="https://github.com/project-x-hq/project-x/releases/latest"><img src="docs/npm-badge.svg" alt="Latest release"></a>
 </p>
 
 <p align="center">
@@ -541,43 +541,43 @@ Go dashboard TUI, Node.js ஸ்கிரிப்ட்கள், AI ஏஜெ�
 
 ## அடிக்கடி கேட்கப்படும் கேள்விகள் (FAQ)
 
-**career-ops என்றால் என்ன?**
-career-ops ([career-ops.org](https://career-ops.org), **careerops** என்றும் அழைக்கப்படுகிறது) என்பது உங்கள் AI கோடிங் CLI-யில் (Claude Code, Codex, OpenCode மற்றும் பிற) உங்கள் கணினியிலேயே இயங்கும், ஒவ்வொரு முடிவையும் உங்களிடம் விட்டுவிடும் ஓப்பன் சோர்ஸ் AI வேலை தேடல் அமைப்பு. உங்கள் CV-ஐ வைத்து வேலை வாய்ப்புகளை மதிப்பிடுகிறது, ATS-க்கு ஏற்ற PDF-களை உருவாக்குகிறது, தொடர்புகொள்ள வேண்டிய சரியான நபரைக் கண்டறிகிறது, அனைத்தையும் ஒரே இடத்தில் கண்காணிக்கிறது: இறுதி முடிவு எப்போதும் உங்களுடையது. இது [CareerOps அறிக்கையின்](https://career-ops.org/manifesto) முதல் குறிப்பு செயலாக்கம்.
+**project-x என்றால் என்ன?**
+project-x ([project-x.org](https://project-x.org), **projectx** என்றும் அழைக்கப்படுகிறது) என்பது உங்கள் AI கோடிங் CLI-யில் (Claude Code, Codex, OpenCode மற்றும் பிற) உங்கள் கணினியிலேயே இயங்கும், ஒவ்வொரு முடிவையும் உங்களிடம் விட்டுவிடும் ஓப்பன் சோர்ஸ் AI வேலை தேடல் அமைப்பு. உங்கள் CV-ஐ வைத்து வேலை வாய்ப்புகளை மதிப்பிடுகிறது, ATS-க்கு ஏற்ற PDF-களை உருவாக்குகிறது, தொடர்புகொள்ள வேண்டிய சரியான நபரைக் கண்டறிகிறது, அனைத்தையும் ஒரே இடத்தில் கண்காணிக்கிறது: இறுதி முடிவு எப்போதும் உங்களுடையது. இது [ProjectX அறிக்கையின்](https://project-x.org/manifesto) முதல் குறிப்பு செயலாக்கம்.
 
 **தனிப்பயனாக்கப்பட்ட CV எதையாவது புனையுமா?**
-புனையக்கூடாது, ப்ராம்ப்ட்களும் அதையே சொல்கின்றன: மறுவடிவமைக்கலாம், ஒருபோதும் புனையக்கூடாது. உங்கள் மூலங்களில் இல்லாத எண்களோ தகவல்களோ கொண்ட CV-ஐ `generate-pdf` தடுக்கிறது, நீங்கள் `--skip-fact-check` கொடுத்தால் தவிர. `pdf` பயன்முறை `cv-title-check.mjs`-ஐயும் இயக்குகிறது: தனிப்பயனாக்கிய CV-யில் உள்ள ஒவ்வொரு பதவிப் பெயரையும், அதே வேலைக்கு cv.md தரும் பதவிப் பெயருடன் (நிறுவனம், தேதிகள் மூலம் பொருத்தி) ஒப்பிட்டு, வேறுபடும் ஒவ்வொன்றையும் வைத்துக்கொள்வதா திரும்ப மாற்றுவதா என்று உங்களிடம் கேட்கிறது. பதவிப் பெயரை மாற்றி அமைப்பது சில நேரங்களில் உங்கள் முடிவாக இருக்கலாம் என்பதால், அது எச்சரிக்கை மட்டுமே தருகிறது, தடுப்பதில்லை. மாற்றி எழுதியதை இன்னும் எதுவும் மதிப்பிடுவதில்லை: [#1411](https://github.com/career-ops-hq/career-ops/issues/1411) (பொருந்தாவிட்டால் தடுக்கும் உண்மைத்தன்மைச் சோதனை) இதைக் கண்காணிக்கிறது. அதுவரை, அனுப்பும் முன் ஒவ்வொரு CV-ஐயும் படியுங்கள். [சட்டப்பூர்வ மறுப்பு](LEGAL_DISCLAIMER.md) இதையே அதிக வார்த்தைகளில் சொல்கிறது.
+புனையக்கூடாது, ப்ராம்ப்ட்களும் அதையே சொல்கின்றன: மறுவடிவமைக்கலாம், ஒருபோதும் புனையக்கூடாது. உங்கள் மூலங்களில் இல்லாத எண்களோ தகவல்களோ கொண்ட CV-ஐ `generate-pdf` தடுக்கிறது, நீங்கள் `--skip-fact-check` கொடுத்தால் தவிர. `pdf` பயன்முறை `cv-title-check.mjs`-ஐயும் இயக்குகிறது: தனிப்பயனாக்கிய CV-யில் உள்ள ஒவ்வொரு பதவிப் பெயரையும், அதே வேலைக்கு cv.md தரும் பதவிப் பெயருடன் (நிறுவனம், தேதிகள் மூலம் பொருத்தி) ஒப்பிட்டு, வேறுபடும் ஒவ்வொன்றையும் வைத்துக்கொள்வதா திரும்ப மாற்றுவதா என்று உங்களிடம் கேட்கிறது. பதவிப் பெயரை மாற்றி அமைப்பது சில நேரங்களில் உங்கள் முடிவாக இருக்கலாம் என்பதால், அது எச்சரிக்கை மட்டுமே தருகிறது, தடுப்பதில்லை. மாற்றி எழுதியதை இன்னும் எதுவும் மதிப்பிடுவதில்லை: [#1411](https://github.com/project-x-hq/project-x/issues/1411) (பொருந்தாவிட்டால் தடுக்கும் உண்மைத்தன்மைச் சோதனை) இதைக் கண்காணிக்கிறது. அதுவரை, அனுப்பும் முன் ஒவ்வொரு CV-ஐயும் படியுங்கள். [சட்டப்பூர்வ மறுப்பு](LEGAL_DISCLAIMER.md) இதையே அதிக வார்த்தைகளில் சொல்கிறது.
 
-**career-ops-ஐ இலவசமாகவோ, மலிவான / லோக்கல் மாடலிலோ இயக்க முடியுமா?**
-ஆம். career-ops CLI-agnostic; இலவச மற்றும் லோக்கல் மாடல்களில் (OpenRouter இலவச மாடல்கள், Ollama, அல்லது எந்த OpenAI-compatible endpoint) இயங்கும், எனவே நீங்கள் கட்டணச் சந்தாவுடன் கட்டுப்படவில்லை. முழு அமைப்பிற்கு [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md) பார்க்கவும்.
+**project-x-ஐ இலவசமாகவோ, மலிவான / லோக்கல் மாடலிலோ இயக்க முடியுமா?**
+ஆம். project-x CLI-agnostic; இலவச மற்றும் லோக்கல் மாடல்களில் (OpenRouter இலவச மாடல்கள், Ollama, அல்லது எந்த OpenAI-compatible endpoint) இயங்கும், எனவே நீங்கள் கட்டணச் சந்தாவுடன் கட்டுப்படவில்லை. முழு அமைப்பிற்கு [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md) பார்க்கவும்.
 
-**Claude Pro/Max-க்குப் பணம் செலுத்துகிறேன், ஆனால் career-ops API credits-ஐச் செலவழிக்கிறது. ஏன்?**
+**Claude Pro/Max-க்குப் பணம் செலுத்துகிறேன், ஆனால் project-x API credits-ஐச் செலவழிக்கிறது. ஏன்?**
 உங்கள் environment-இல் உள்ள `ANTHROPIC_API_KEY` உங்கள் உள்நுழைந்த சந்தாவை விட முன்னுரிமை பெறுவதால்: CLI அந்த key-ஐப் பயன்படுத்தி token-க்கு கட்டணம் விதிக்கிறது. `echo $ANTHROPIC_API_KEY` இயக்குங்கள்; ஏதேனும் அச்சிடப்பட்டால், அதை உங்கள் shell profile-இலிருந்து நீக்கி, டெர்மினலை மறுதொடக்கம் செய்து `/login` இயக்குங்கள். Batch mode விதிவிலக்கு, ஏனெனில் `claude -p` workers ஊடாடும் உள்நுழைவைப் பயன்படுத்துவதில்லை: ஒரு முறை `claude setup-token` இயக்கி, முடிவை `CLAUDE_CODE_OAUTH_TOKEN` ஆக export செய்யுங்கள். முழு விளக்கம் [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md#2b-already-paying-for-a-subscription-make-sure-you-are-using-it)-இல்.
 
-**career-ops எந்த AI CLI-களுடன் வேலை செய்யும்?**
-career-ops திறந்த Agent Skill Standard வழியாக எந்த முக்கிய AI கோடிங் CLI-யிலும் (Claude Code, Codex, Gemini / Antigravity, OpenCode, Grok, Qwen மற்றும் பல) இயங்கும், எனவே ஒருபோதும் ஒரு vendor-உடன் பூட்டப்படாது. உங்களிடம் ஏற்கனவே உள்ள CLI-ஐப் பயன்படுத்துங்கள்.
+**project-x எந்த AI CLI-களுடன் வேலை செய்யும்?**
+project-x திறந்த Agent Skill Standard வழியாக எந்த முக்கிய AI கோடிங் CLI-யிலும் (Claude Code, Codex, Gemini / Antigravity, OpenCode, Grok, Qwen மற்றும் பல) இயங்கும், எனவே ஒருபோதும் ஒரு vendor-உடன் பூட்டப்படாது. உங்களிடம் ஏற்கனவே உள்ள CLI-ஐப் பயன்படுத்துங்கள்.
 
-**Windows-இல் career-ops-ஐ எப்படி நிறுவுவது?**
-career-ops Windows-இல் இயங்கும். தளம் சார்ந்த அமைப்பும் அறியப்பட்ட சிக்கல்களும் (Git Bash கண்டறிதல், line endings, Task Scheduler) [docs/WINDOWS.md](docs/WINDOWS.md)-இல் உள்ளன. நிறுவலின்போது symlink பிழையால் skills ஏறாவிட்டால், தீர்வு [docs/FAQ.md](docs/FAQ.md)-இல் உள்ளது. முழு படிகள் [docs/SETUP.md](docs/SETUP.md)-இல்.
+**Windows-இல் project-x-ஐ எப்படி நிறுவுவது?**
+project-x Windows-இல் இயங்கும். தளம் சார்ந்த அமைப்பும் அறியப்பட்ட சிக்கல்களும் (Git Bash கண்டறிதல், line endings, Task Scheduler) [docs/WINDOWS.md](docs/WINDOWS.md)-இல் உள்ளன. நிறுவலின்போது symlink பிழையால் skills ஏறாவிட்டால், தீர்வு [docs/FAQ.md](docs/FAQ.md)-இல் உள்ளது. முழு படிகள் [docs/SETUP.md](docs/SETUP.md)-இல்.
 
-**career-ops எனக்காக வேலைகளுக்குத் தானாக விண்ணப்பிக்குமா?**
-இல்லை. career-ops ஒரு வடிகட்டி, கண்மூடித்தனமாக விண்ணப்பிக்கும் auto-applier அல்ல. AI மதிப்பிட்டு, தரவரிசைப்படுத்தி, வரைவு எழுதுகிறது; நீங்கள் மதிப்பாய்வு செய்து முடிவெடுக்கிறீர்கள். அது வரைவு எழுதி, படிவங்களை நிரப்புகிறது; ஒருபோதும் சமர்ப்பிப்பதில்லை. நீங்கள் Submit-ஐ அழுத்துகிறீர்கள். இந்த human-in-the-loop வடிவமைப்பே முழு நோக்கம்.
+**project-x எனக்காக வேலைகளுக்குத் தானாக விண்ணப்பிக்குமா?**
+இல்லை. project-x ஒரு வடிகட்டி, கண்மூடித்தனமாக விண்ணப்பிக்கும் auto-applier அல்ல. AI மதிப்பிட்டு, தரவரிசைப்படுத்தி, வரைவு எழுதுகிறது; நீங்கள் மதிப்பாய்வு செய்து முடிவெடுக்கிறீர்கள். அது வரைவு எழுதி, படிவங்களை நிரப்புகிறது; ஒருபோதும் சமர்ப்பிப்பதில்லை. நீங்கள் Submit-ஐ அழுத்துகிறீர்கள். இந்த human-in-the-loop வடிவமைப்பே முழு நோக்கம்.
 
-**career-ops இலவசமா, ஓப்பன் சோர்ஸா?**
-ஆம். career-ops இலவசம் மற்றும் ஓப்பன் சோர்ஸ், விண்ணப்பதாரருக்கு எப்போதும் அப்படியே இருக்கும். இது [CareerOps அறிக்கையின்](https://career-ops.org/manifesto) முதல் குறிப்பு செயலாக்கம். படியுங்கள், நீங்கள் நம்புவதை அது சொல்கிறது என்றால், கையொப்பமிடுங்கள்.
+**project-x இலவசமா, ஓப்பன் சோர்ஸா?**
+ஆம். project-x இலவசம் மற்றும் ஓப்பன் சோர்ஸ், விண்ணப்பதாரருக்கு எப்போதும் அப்படியே இருக்கும். இது [ProjectX அறிக்கையின்](https://project-x.org/manifesto) முதல் குறிப்பு செயலாக்கம். படியுங்கள், நீங்கள் நம்புவதை அது சொல்கிறது என்றால், கையொப்பமிடுங்கள்.
 
 ## ஆசிரியரைப் பற்றி
 
-நான் [Santiago Fernández de Valderrama Aparicio](https://santifer.io/about) (santifer), முன்னாள் நிறுவனர்: இன்றும் என் பெயரில் இயங்கும் ஒரு தொழிலை உருவாக்கி விற்றேன். என் சொந்த வேலை தேடலை நிர்வகிக்க career-ops-ஐ உருவாக்கினேன், அது வேலை செய்தது: அதன் மூலம் எனக்கு Head of Applied AI பதவி கிடைத்தது. ஆறு மாதங்கள் கழித்து, career-ops-ஐ முழு நேரமாக உருவாக்குவதில் கவனம் செலுத்த அந்தப் பதவியை விட்டு விலகினேன்.
+நான் [Santiago Fernández de Valderrama Aparicio](https://santifer.io/about) (santifer), முன்னாள் நிறுவனர்: இன்றும் என் பெயரில் இயங்கும் ஒரு தொழிலை உருவாக்கி விற்றேன். என் சொந்த வேலை தேடலை நிர்வகிக்க project-x-ஐ உருவாக்கினேன், அது வேலை செய்தது: அதன் மூலம் எனக்கு Head of Applied AI பதவி கிடைத்தது. ஆறு மாதங்கள் கழித்து, project-x-ஐ முழு நேரமாக உருவாக்குவதில் கவனம் செலுத்த அந்தப் பதவியை விட்டு விலகினேன்.
 
-இவ்வளவு பெரிய repository, AI ஏஜென்ட்களின் ஒரு படையாலும் ஒவ்வொரு merge-ஐயும் முடிவு செய்யும் ஒரு மனிதராலும் எப்படிப் பராமரிக்கப்படுகிறது என்று அறிய ஆர்வமா? [Agentic maintenance: how career-ops is run by a fleet of AI agents](https://santifer.io/ai-agent-fleet) படியுங்கள்.
+இவ்வளவு பெரிய repository, AI ஏஜென்ட்களின் ஒரு படையாலும் ஒவ்வொரு merge-ஐயும் முடிவு செய்யும் ஒரு மனிதராலும் எப்படிப் பராமரிக்கப்படுகிறது என்று அறிய ஆர்வமா? [Agentic maintenance: how project-x is run by a fleet of AI agents](https://santifer.io/ai-agent-fleet) படியுங்கள்.
 
 என் portfolio மற்றும் பிற open source திட்டங்கள் → [santifer.io](https://santifer.io)
 
-Wikidata: [Santiago Fernández de Valderrama Aparicio](https://www.wikidata.org/wiki/Q138710224) · [career-ops](https://www.wikidata.org/wiki/Q139007988).
+Wikidata: [Santiago Fernández de Valderrama Aparicio](https://www.wikidata.org/wiki/Q138710224) · [project-x](https://www.wikidata.org/wiki/Q139007988).
 
 ## Disclaimer
 
-**career-ops ஒரு லோக்கல், ஓப்பன் சோர்ஸ் கருவி, hosted சேவை அல்ல.** இந்த மென்பொருளைப் பயன்படுத்துவதன் மூலம் நீங்கள் ஒப்புக்கொள்வது:
+**project-x ஒரு லோக்கல், ஓப்பன் சோர்ஸ் கருவி, hosted சேவை அல்ல.** இந்த மென்பொருளைப் பயன்படுத்துவதன் மூலம் நீங்கள் ஒப்புக்கொள்வது:
 
 1. **உங்கள் தரவை நீங்கள் கட்டுப்படுத்துகிறீர்கள்.** உங்கள் CV, தொடர்புத் தகவல், தனிப்பட்ட தரவு உங்கள் கணினியிலேயே இருக்கும், நீங்கள் தேர்ந்தெடுக்கும் AI வழங்குநருக்கு (Anthropic, OpenAI போன்றவை) நேரடியாக அனுப்பப்படும். உங்கள் தரவு எதையும் நாங்கள் சேகரிப்பதில்லை, சேமிப்பதில்லை, அணுகுவதில்லை.
 2. **AI-ஐ நீங்கள் கட்டுப்படுத்துகிறீர்கள்.** இயல்பு ப்ராம்ப்ட்கள் விண்ணப்பங்களைத் தானாகச் சமர்ப்பிக்க வேண்டாம் என AI-க்கு அறிவுறுத்துகின்றன, ஆனால் AI மாடல்கள் எதிர்பாராத விதமாக நடந்துகொள்ளலாம். ப்ராம்ப்ட்களை மாற்றினாலோ வேறு மாடல்களைப் பயன்படுத்தினாலோ, அது உங்கள் சொந்தப் பொறுப்பு. **சமர்ப்பிக்கும் முன் AI உருவாக்கிய உள்ளடக்கத்தின் துல்லியத்தை எப்போதும் சரிபாருங்கள்.**
@@ -588,19 +588,19 @@ Wikidata: [Santiago Fernández de Valderrama Aparicio](https://www.wikidata.org/
 
 ## Contributors
 
-<a href="https://github.com/career-ops-hq/career-ops/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=career-ops-hq/career-ops&v=2" />
+<a href="https://github.com/project-x-hq/project-x/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=project-x-hq/project-x&v=2" />
 </a>
 
 கோடு, ஆவணங்கள், மொழிபெயர்ப்புகள் அல்லது சோதனைகளை வழங்கிய ஒவ்வொருவரும்
 [CONTRIBUTORS.md](CONTRIBUTORS.md)-இல் பட்டியலிடப்பட்டுள்ளனர்; மேலே உள்ள வரைபடத்தில்
 காட்ட முடியாத கோடு அல்லாத பங்களிப்புகளும் உட்பட.
 
-career-ops மூலம் வேலை கிடைத்ததா? [உங்கள் கதையைப் பகிருங்கள்!](https://github.com/career-ops-hq/career-ops/issues/new?template=i-got-hired.yml)
+project-x மூலம் வேலை கிடைத்ததா? [உங்கள் கதையைப் பகிருங்கள்!](https://github.com/project-x-hq/project-x/issues/new?template=i-got-hired.yml)
 
 ## License & Trademark
 
-கோடு [MIT](LICENSE) உரிமத்தின் கீழ் உள்ளது. "career-ops" பெயரும்
+கோடு [MIT](LICENSE) உரிமத்தின் கீழ் உள்ளது. "project-x" பெயரும்
 பிராண்டும் [Trademark Policy](TRADEMARK.md)-யால் நிர்வகிக்கப்படுகின்றன: சமூகப்
 பயன்பாட்டிற்கு அனுமதி, வணிகத் தயாரிப்புப் பெயரிடலுக்கும் ஒப்புதலுக்கும்
 ஒதுக்கீடு.
@@ -613,7 +613,7 @@ career-ops மூலம் வேலை கிடைத்ததா? [உங்�
   <a href="https://warpchart.dev/hq">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://warpchart.dev/api/chart?theme=dark&v=3">
-      <img alt="Live star telemetry of career-ops-hq/career-ops" src="https://warpchart.dev/api/chart?theme=light&v=3" loading="lazy">
+      <img alt="Live star telemetry of project-x-hq/project-x" src="https://warpchart.dev/api/chart?theme=light&v=3" loading="lazy">
     </picture>
   </a>
 </p>

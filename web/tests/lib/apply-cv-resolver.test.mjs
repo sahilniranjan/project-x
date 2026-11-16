@@ -15,7 +15,7 @@
  * registration, and no core-only-install skip guard, because web/ is always
  * present when this suite runs.
  *
- * resolveTailoredCv() is TypeScript that reaches web/src/lib/career-ops via
+ * resolveTailoredCv() is TypeScript that reaches web/src/lib/project-x via
  * the `@/` path alias (Next's tsconfig paths). Node 22 type-strips .ts on
  * import, but it does NOT understand that alias — `npm test` here is plain
  * `node --test`, with no webpack/SWC in the loop. The tiny inline loader
@@ -62,9 +62,9 @@ register('data:text/javascript,' + encodeURIComponent(loaderSrc), pathToFileURL(
 const { resolveTailoredCv } = await import('../../src/lib/apply/cv.ts');
 const { sortNewestFirst } = await import('../../src/lib/apply/cv-match.mjs');
 
-// Provision a throwaway career-ops root with an output/ dir, redirected via
-// the same CAREER_OPS_ROOT override career-ops.ts's careerOpsRoot() reads
-// (see web/src/lib/career-ops.ts) — no monkeypatching fs needed.
+// Provision a throwaway project-x root with an output/ dir, redirected via
+// the same PROJECT_X_ROOT override project-x.ts's projectXRoot() reads
+// (see web/src/lib/project-x.ts) — no monkeypatching fs needed.
 async function withFixture(files, fn) {
   const root = mkdtempSync(join(tmpdir(), 'cv-resolver-'));
   const outputDir = join(root, 'output');
@@ -77,13 +77,13 @@ async function withFixture(files, fn) {
       utimesSync(p, t, t);
     }
   }
-  const prev = process.env.CAREER_OPS_ROOT;
-  process.env.CAREER_OPS_ROOT = root;
+  const prev = process.env.PROJECT_X_ROOT;
+  process.env.PROJECT_X_ROOT = root;
   try {
     return await fn(outputDir);
   } finally {
-    if (prev === undefined) delete process.env.CAREER_OPS_ROOT;
-    else process.env.CAREER_OPS_ROOT = prev;
+    if (prev === undefined) delete process.env.PROJECT_X_ROOT;
+    else process.env.PROJECT_X_ROOT = prev;
   }
 }
 

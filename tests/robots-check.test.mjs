@@ -11,7 +11,7 @@
 // Not ported, because the transport they test does not exist here: the curl
 // argv, `--proto` pinning, CLI entry point, subprocess decoding cases, and the
 // retry of a refused robots.txt with a browser User-Agent (this module reads
-// it once, as career-ops; a 403 skips the headed retry).
+// it once, as project-x; a 403 skips the headed retry).
 //
 // Run:  node --test tests/robots-check.test.mjs
 
@@ -146,38 +146,38 @@ test('CRLF line endings parse like LF', () => {
 
 // ── Agent selection ──────────────────────────────────────────────────────
 
-test('the product token is career-ops, read from DEFAULT_USER_AGENT', () => {
-  assert.equal(ROBOTS_PRODUCT_TOKEN, 'career-ops');
-  assert.match(DEFAULT_USER_AGENT, /compatible; career-ops\//, 'a UA edit must keep the token in sync');
+test('the product token is project-x, read from DEFAULT_USER_AGENT', () => {
+  assert.equal(ROBOTS_PRODUCT_TOKEN, 'project-x');
+  assert.match(DEFAULT_USER_AGENT, /compatible; project-x\//, 'a UA edit must keep the token in sync');
 });
 
-test('a career-ops group is obeyed over `*`', () => {
-  const body = 'User-agent: career-ops\nDisallow: /\n\nUser-agent: *\nAllow: /\n';
+test('a project-x group is obeyed over `*`', () => {
+  const body = 'User-agent: project-x\nDisallow: /\n\nUser-agent: *\nAllow: /\n';
   assert.equal(isPathAllowed(body, ROBOTS_PRODUCT_TOKEN, '/a'), false);
   assert.equal(isPathAllowed(body, '*', '/a'), true);
-  // ...and a career-ops Allow wins over a `*` Disallow: groups do not combine.
-  const permissive = 'User-agent: *\nDisallow: /\n\nUser-agent: career-ops\nAllow: /\n';
+  // ...and a project-x Allow wins over a `*` Disallow: groups do not combine.
+  const permissive = 'User-agent: *\nDisallow: /\n\nUser-agent: project-x\nAllow: /\n';
   assert.equal(isPathAllowed(permissive, ROBOTS_PRODUCT_TOKEN, '/a'), true);
 });
 
 test('agent matching is case-insensitive and ignores a version suffix', () => {
-  assert.equal(isPathAllowed('User-agent: CAREER-OPS\nDisallow: /x\n', 'career-ops', '/x'), false);
-  assert.equal(isPathAllowed('User-agent: career-ops/1.0\nDisallow: /x\n', 'career-ops', '/x'), false);
+  assert.equal(isPathAllowed('User-agent: PROJECT-X\nDisallow: /x\n', 'project-x', '/x'), false);
+  assert.equal(isPathAllowed('User-agent: project-x/1.0\nDisallow: /x\n', 'project-x', '/x'), false);
 });
 
-test('a group for another agent does not bind career-ops; `*` does', () => {
+test('a group for another agent does not bind project-x; `*` does', () => {
   assert.equal(isPathAllowed('User-agent: OtherBot\nDisallow: /\n', ROBOTS_PRODUCT_TOKEN, '/a'), true);
   assert.equal(isPathAllowed(API_BLOCK, ROBOTS_PRODUCT_TOKEN, '/api/v1'), false);
 });
 
 test('several agents in one record share its rules', () => {
-  const body = 'User-agent: A\nUser-agent: career-ops\nDisallow: /z\n';
-  assert.equal(isPathAllowed(body, 'career-ops', '/z'), false);
+  const body = 'User-agent: A\nUser-agent: project-x\nDisallow: /z\n';
+  assert.equal(isPathAllowed(body, 'project-x', '/z'), false);
   assert.equal(isPathAllowed(body, 'A', '/z'), false);
 });
 
 test('a named group with no rule lines falls back to `*`, never to allow-all', () => {
-  const body = 'User-agent: *\nDisallow: /\n\nUser-agent: career-ops\n';
+  const body = 'User-agent: *\nDisallow: /\n\nUser-agent: project-x\n';
   assert.equal(isPathAllowed(body, ROBOTS_PRODUCT_TOKEN, '/a'), false);
 });
 
@@ -336,7 +336,7 @@ test('a transport error skips the retry', async () => {
 });
 
 test('the transport egress guard refusing a host skips the retry', async () => {
-  const blocked = Object.assign(new Error('Refusing to connect to example.com: resolves to non-public address 10.0.0.1'), { code: 'ECAREEROPS_BLOCKED_ADDRESS' });
+  const blocked = Object.assign(new Error('Refusing to connect to example.com: resolves to non-public address 10.0.0.1'), { code: 'EPROJECTX_BLOCKED_ADDRESS' });
   const { fetchImpl } = transport(() => blocked);
   const v = await robotsAllows('https://example.com/jobs/1', { fetchImpl, resolver: async () => PUBLIC, cache: new Map() });
   assert.deepEqual([v.allowed, v.code], [false, 'robots_blocked_address']);
@@ -429,7 +429,7 @@ test('the robots URL is rebuilt from the origin, never the caller path or creden
   assert.deepEqual(calls.map(({ url }) => url), ['https://example.com:8443/robots.txt']);
 });
 
-test('robots.txt is requested as career-ops, with DEFAULT_USER_AGENT', async () => {
+test('robots.txt is requested as project-x, with DEFAULT_USER_AGENT', async () => {
   const v = await gate('https://example.com/jobs/1', 'User-agent: *\nAllow: /\n');
   assert.equal(v.calls[0].init.headers['user-agent'], DEFAULT_USER_AGENT);
 });

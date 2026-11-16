@@ -12,7 +12,7 @@ const SCRIPT = join(dirname(dirname(fileURLToPath(import.meta.url))), 'reconcile
 const URL = 'https://jobs.example.test/4521';
 
 function fixture(t, { report, stateScore = '-', stateStatus = 'completed', language = 'en' }) {
-  const root = mkdtempSync(join(tmpdir(), 'career-ops-reconcile-score-'));
+  const root = mkdtempSync(join(tmpdir(), 'project-x-reconcile-score-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   for (const dir of ['data', 'batch', 'reports']) mkdirSync(join(root, dir));
   const pipeline = join(root, 'data', 'pipeline.md');
@@ -26,7 +26,7 @@ function fixture(t, { report, stateScore = '-', stateStatus = 'completed', langu
   const run = (...args) => {
     const result = spawnSync(process.execPath, [SCRIPT, '--pipeline', pipeline, '--state', join(root, 'batch', 'batch-state.tsv'), ...args], {
       cwd: root,
-      env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_DATA_DIR: root, CAREER_OPS_TRACKER: '' },
+      env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_DATA_DIR: root, PROJECT_X_TRACKER: '' },
       encoding: 'utf8',
       timeout: 15_000,
     });
@@ -116,14 +116,14 @@ test('an empty PDF field does not consume the next header', t => {
 for (const [pdf, expected] of [
   ['Not generated', 'PDF ❌'],
   ['output/042-cv.pdf', 'PDF ✅'],
-  ['no generado — ejecuta /career-ops pdf example para crearlo bajo demanda', 'PDF ❌'],
+  ['no generado — ejecuta /project-x pdf example para crearlo bajo demanda', 'PDF ❌'],
   ['no se generó ningún archivo .pdf', 'PDF ❌'],
-  ['nicht erstellt — mit /career-ops pdf example bei Bedarf erzeugen', 'PDF ❌'],
-  ['não gerado — execute /career-ops pdf example para criar quando quiser', 'PDF ❌'],
-  ['未生成 — 运行 /career-ops pdf example 按需生成', 'PDF ❌'],
+  ['nicht erstellt — mit /project-x pdf example bei Bedarf erzeugen', 'PDF ❌'],
+  ['não gerado — execute /project-x pdf example para criar quando quiser', 'PDF ❌'],
+  ['未生成 — 运行 /project-x pdf example 按需生成', 'PDF ❌'],
   ['❌', 'PDF ❌'],
   ['✅', 'PDF ✅'],
-  ['/home/candidate/career-ops/output/cv-candidate-042-example-2026-09-01.PDF', 'PDF ✅'],
+  ['/home/candidate/project-x/output/cv-candidate-042-example-2026-09-01.PDF', 'PDF ✅'],
 ]) {
   test(`a skipped batch entry preserves PDF field: ${pdf}`, t => {
     const f = fixture(t, { report: `**Score:** 2.5/5\n**PDF:** ${pdf}`, stateStatus: 'skipped' });

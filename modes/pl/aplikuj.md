@@ -79,7 +79,7 @@ Dla każdego pytania zbuduj odpowiedź według tego schematu:
 2. **Poprzednie `## Application Answers` / Blok H**: Jeśli istnieje wysłana odpowiedź lub szkic (najpierw wysłana odpowiedź), weź go jako bazę i dopracuj
 3. **Ton "To ja wybieram Was"**: ten sam framework co w auto-pipeline -- pewny siebie, nie błagalny
 4. **Konkretność**: zacytuj coś konkretnego z oferty widocznej na ekranie
-5. **career-ops proof point**: dołącz w "Informacje dodatkowe", jeśli takie pole istnieje
+5. **project-x proof point**: dołącz w "Informacje dodatkowe", jeśli takie pole istnieje
 
 **Pola specyficzne dla typowych polskich formularzy:**
 - **Oczekiwania płacowe** -> Widełki z `profile.yml`, w PLN, z zaznaczeniem, czy netto czy brutto (oraz UoP/B2B) i dopiskiem "do negocjacji w zależności od całego pakietu"
@@ -120,7 +120,7 @@ Zanim cokolwiek zapiszesz, i ponownie tuż przed każdym zapisem poniżej (statu
 Jeśli kandydat potwierdzi, że aplikacja została wysłana:
 1. Zaktualizuj status na "Applied" kanonicznym CLI: `node set-status.mjs --report <report#> Applied` (nie edytuj tabeli `applications.md` ręcznie)
 2. Zaktualizuj sekcję `## Application Answers` reportu finalnymi odpowiedziami i `**State:** submitted` (format w `modes/apply.md` -> Step 8). Blok H pozostaje szkicem z oceny i się go nie zmienia
-3. Zasugeruj następny krok: `/career-ops contacto` dla LinkedIn outreach do hiring managera
+3. Zasugeruj następny krok: `/project-x contacto` dla LinkedIn outreach do hiring managera
 
 ## Obsługa przewijania
 

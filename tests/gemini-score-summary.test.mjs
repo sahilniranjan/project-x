@@ -50,7 +50,7 @@ function sandbox() {
 }
 
 const env = (dir, extra = {}) => ({
-  PATH: process.env.PATH, HOME: dir, CAREER_OPS_ROOT: dir, MODEL_REPLY: BOLD, ...extra,
+  PATH: process.env.PATH, HOME: dir, PROJECT_X_ROOT: dir, MODEL_REPLY: BOLD, ...extra,
 });
 
 /** The one tracker addition a run wrote, as { label: value }. */

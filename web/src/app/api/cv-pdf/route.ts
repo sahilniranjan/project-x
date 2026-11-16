@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 import fs from "node:fs";
 import path from "node:path";
 import { resolveTailoredCv } from "@/lib/apply/cv";
-import { careerOpsRoot, isRegularContainedFile, pdfPathStatusForReport } from "@/lib/career-ops";
+import { projectXRoot, isRegularContainedFile, pdfPathStatusForReport } from "@/lib/project-x";
 import { companySlug } from "@/lib/company-slug.mjs";
 import { matchesTailoredCv, sortNewestFirst } from "@/lib/apply/cv-match.mjs";
 
@@ -76,7 +76,7 @@ export async function GET(req: NextRequest) {
   const key = companySlug(company);
   if (!key) return new Response("no tailored CV found for this offer", { status: 404 });
   const { slug } = key;
-  const dir = path.join(careerOpsRoot(), "output");
+  const dir = path.join(projectXRoot(), "output");
 
   let files: string[];
   try {

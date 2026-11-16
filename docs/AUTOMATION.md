@@ -1,6 +1,6 @@
 # Automation: recurring scans, a zero-token triage, and a follow-up sweep
 
-`career-ops` offers to scan for you on a schedule ("just say *scan every 3 days*"),
+`project-x` offers to scan for you on a schedule ("just say *scan every 3 days*"),
 but the actual scheduling is left to your operating system. This page ships the
 recipes: how to run the scanner unattended, a cheap zero-token **triage** pass
 that turns a pile of freshly-scanned URLs into a short "worth a look" list —
@@ -26,7 +26,7 @@ Three independent pieces, smallest first. You can use any of them on their own.
 > machine — none of your data is uploaded. The scan does reach out to *public*
 > job-board APIs to read listings (the same zero-key reads the manual scan makes),
 > but it sends none of your personal data with them, and the triage only reads your
-> local files. Evaluating a shortlisted role later (`/career-ops pipeline`) is the
+> local files. Evaluating a shortlisted role later (`/project-x pipeline`) is the
 > only step that spends tokens.
 
 > Companion page: [Keeping portals.yml live](KEEPING_PORTALS_LIVE.md) covers the
@@ -44,7 +44,7 @@ The scan exits 2 when every target it tried failed (no network, for example), an
 when at least one board was read, so a scheduler that alerts on a non-zero exit
 reports an outage without flagging every run that hit one dead board.
 
-Replace `/path/to/career-ops` with your checkout path, and make sure `node` is on
+Replace `/path/to/project-x` with your checkout path, and make sure `node` is on
 the `PATH` the scheduler uses (schedulers often run with a minimal environment — use
 an absolute path to `node` if in doubt, e.g. `which node`).
 
@@ -64,42 +64,42 @@ day-of-month field resets at each month boundary, so the gap across month-end ca
 be 1–3 days rather than a strict rolling 72 hours:
 
 ```cron
-0 9 */3 * * cd /path/to/career-ops && /usr/local/bin/node scan.mjs >> data/scan.log 2>&1
+0 9 */3 * * cd /path/to/project-x && /usr/local/bin/node scan.mjs >> data/scan.log 2>&1
 ```
 
 For a simpler, exactly-even cadence, run it **daily** and let the scanner's dedup
 absorb the days you don't need — `0 9 * * *` — or on weekdays only, at 8am:
 
 ```cron
-0 8 * * 1-5 cd /path/to/career-ops && /usr/local/bin/node scan.mjs >> data/scan.log 2>&1
+0 8 * * 1-5 cd /path/to/project-x && /usr/local/bin/node scan.mjs >> data/scan.log 2>&1
 ```
 
 macOS also runs cron, but launchd below survives sleep better.
 
 #### macOS — launchd
 
-Save as `~/Library/LaunchAgents/io.career-ops.scan.plist`, then
-`launchctl load ~/Library/LaunchAgents/io.career-ops.scan.plist`:
+Save as `~/Library/LaunchAgents/io.project-x.scan.plist`, then
+`launchctl load ~/Library/LaunchAgents/io.project-x.scan.plist`:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-  <key>Label</key> <string>io.career-ops.scan</string>
+  <key>Label</key> <string>io.project-x.scan</string>
   <key>ProgramArguments</key>
   <array>
     <string>/usr/local/bin/node</string>
     <string>scan.mjs</string>
   </array>
-  <key>WorkingDirectory</key> <string>/path/to/career-ops</string>
+  <key>WorkingDirectory</key> <string>/path/to/project-x</string>
   <key>StartCalendarInterval</key>
   <dict>
     <key>Hour</key><integer>9</integer>
     <key>Minute</key><integer>0</integer>
   </dict>
-  <key>StandardOutPath</key> <string>/path/to/career-ops/data/scan.log</string>
-  <key>StandardErrorPath</key> <string>/path/to/career-ops/data/scan.log</string>
+  <key>StandardOutPath</key> <string>/path/to/project-x/data/scan.log</string>
+  <key>StandardErrorPath</key> <string>/path/to/project-x/data/scan.log</string>
 </dict>
 </plist>
 ```
@@ -119,9 +119,9 @@ replace the `StartCalendarInterval` block with an interval in seconds:
 #### Windows — Task Scheduler
 
 ```powershell
-$action  = New-ScheduledTaskAction -Execute "node.exe" -Argument "scan.mjs" -WorkingDirectory "C:\path\to\career-ops"
+$action  = New-ScheduledTaskAction -Execute "node.exe" -Argument "scan.mjs" -WorkingDirectory "C:\path\to\project-x"
 $trigger = New-ScheduledTaskTrigger -Daily -At 9am
-Register-ScheduledTask -TaskName "career-ops scan" -Action $action -Trigger $trigger -Description "Recurring career-ops job scan"
+Register-ScheduledTask -TaskName "project-x scan" -Action $action -Trigger $trigger -Description "Recurring project-x job scan"
 ```
 
 ### B. Scheduled scans page (web UI)
@@ -160,12 +160,12 @@ The task runs in the current user's interactive session, so you must be logged i
 
 The macOS and Linux worker records each check in `<store>.tick`, next to the
 scheduled jobs store (`data/scheduled-jobs.json.tick` by default); the page reads
-that file for "Last OS check". The installer bakes `CAREER_OPS_ROOT`,
-`CAREER_OPS_DATA_DIR` and `CAREER_OPS_SCHEDULED_JOBS_PATH` into the job when they
+that file for "Last OS check". The installer bakes `PROJECT_X_ROOT`,
+`PROJECT_X_DATA_DIR` and `PROJECT_X_SCHEDULED_JOBS_PATH` into the job when they
 are set in the shell that runs it. The web process must get the same values, for
 example in `web/.env.local`, or the page reads a different store and tick file.
 The installer does not read `web/.env.local`, so export the values in your shell
-when you install (for example `CAREER_OPS_ROOT=/path/to/data sh web/scripts/install-scan-schedule.sh`).
+when you install (for example `PROJECT_X_ROOT=/path/to/data sh web/scripts/install-scan-schedule.sh`).
 Run the installer again after you change them.
 
 After any of these, new postings land in `data/pipeline.md` under `## Pending` on
@@ -223,7 +223,7 @@ Leave data/pipeline.md unchanged — this only reads it and writes data/shortlis
 Open `data/shortlist.md`, then run a real evaluation only on the "Worth a look" rows:
 
 ```text
-/career-ops pipeline
+/project-x pipeline
 ```
 
 That keeps the expensive step — token-spending evaluation — pointed only at postings
@@ -275,22 +275,22 @@ reviewing it first, headless or not.
 
 ### macOS — launchd
 
-Save as `~/Library/LaunchAgents/io.career-ops.followup.plist`, then
-`launchctl load ~/Library/LaunchAgents/io.career-ops.followup.plist`:
+Save as `~/Library/LaunchAgents/io.project-x.followup.plist`, then
+`launchctl load ~/Library/LaunchAgents/io.project-x.followup.plist`:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-  <key>Label</key> <string>io.career-ops.followup</string>
+  <key>Label</key> <string>io.project-x.followup</string>
   <key>ProgramArguments</key>
   <array>
     <string>/bin/zsh</string>
     <string>-l</string>
-    <string>/path/to/career-ops/scripts/followup-sweep.sh</string>
+    <string>/path/to/project-x/scripts/followup-sweep.sh</string>
   </array>
-  <key>WorkingDirectory</key> <string>/path/to/career-ops</string>
+  <key>WorkingDirectory</key> <string>/path/to/project-x</string>
   <key>StartCalendarInterval</key>
   <array>
     <dict>
@@ -304,8 +304,8 @@ Save as `~/Library/LaunchAgents/io.career-ops.followup.plist`, then
       <key>Minute</key>  <integer>0</integer>
     </dict>
   </array>
-  <key>StandardOutPath</key>   <string>/path/to/career-ops/data/followup-sweep.launchd.log</string>
-  <key>StandardErrorPath</key> <string>/path/to/career-ops/data/followup-sweep.launchd.log</string>
+  <key>StandardOutPath</key>   <string>/path/to/project-x/data/followup-sweep.launchd.log</string>
+  <key>StandardErrorPath</key> <string>/path/to/project-x/data/followup-sweep.launchd.log</string>
 </dict>
 </plist>
 ```
@@ -320,7 +320,7 @@ catching up whenever you next open it.
 ### cron (same idea, simpler, no wake-catch-up)
 
 ```cron
-0 9 * * 1,4 /path/to/career-ops/scripts/followup-sweep.sh
+0 9 * * 1,4 /path/to/project-x/scripts/followup-sweep.sh
 ```
 
 ### Why launchd/cron here, and not the CLI's own scheduler
@@ -349,7 +349,7 @@ silently discarding the evaluation itself.
 
 ---
 
-## How this fits the rest of career-ops
+## How this fits the rest of project-x
 
 - **Zero-token by default.** Scheduling and triage cost nothing; only the eval you
   choose to run spends tokens.

@@ -5,7 +5,7 @@
 // the model's maximum output (prompt + max output, at the model's price) and
 // answers HTTP 402 when the balance cannot cover that reservation, even when
 // the report itself would have cost cents. The limit comes from
-// CAREER_OPS_MAX_TOKENS (default 32768) and is sent as `max_tokens`, except to
+// PROJECT_X_MAX_TOKENS (default 32768) and is sent as `max_tokens`, except to
 // api.openai.com, whose reasoning models reject `max_tokens` and take
 // `max_completion_tokens` instead.
 //
@@ -21,7 +21,7 @@ import { join } from 'path';
 import { pathToFileURL } from 'url';
 import { pass, fail, NODE, ROOT } from './helpers.mjs';
 
-console.log('\nopenai-eval.mjs — caps the completion with max_tokens (CAREER_OPS_MAX_TOKENS)');
+console.log('\nopenai-eval.mjs — caps the completion with max_tokens (PROJECT_X_MAX_TOKENS)');
 
 const DEFAULT_MAX_TOKENS = 32768;
 
@@ -56,7 +56,7 @@ globalThis.fetch = (url, init) =>
 /** Run openai-eval once; resolves with the exit code, output and captured request. */
 function run({ env = {}, url = base, preload = null } = {}) {
   const childEnv = { ...process.env };
-  for (const k of ['CAREER_OPS_MAX_TOKENS', 'OPENAI_API_KEY', 'OPENAI_BASE_URL', 'OPENAI_MODEL']) delete childEnv[k];
+  for (const k of ['PROJECT_X_MAX_TOKENS', 'OPENAI_API_KEY', 'OPENAI_BASE_URL', 'OPENAI_MODEL']) delete childEnv[k];
   Object.assign(childEnv, env);
   const before = requests.length;
   const argv = [
@@ -87,20 +87,20 @@ try {
     else fail(`gateway request also carries max_completion_tokens: ${b.max_completion_tokens}`);
   }
 
-  // 2. CAREER_OPS_MAX_TOKENS overrides the default.
+  // 2. PROJECT_X_MAX_TOKENS overrides the default.
   {
-    const r = await run({ env: { CAREER_OPS_MAX_TOKENS: '4096' } });
-    if (r.body?.max_tokens === 4096) pass('CAREER_OPS_MAX_TOKENS=4096 sends max_tokens = 4096');
-    else fail(`CAREER_OPS_MAX_TOKENS=4096 not honoured: max_tokens=${r.body?.max_tokens} (exit ${r.code})`);
+    const r = await run({ env: { PROJECT_X_MAX_TOKENS: '4096' } });
+    if (r.body?.max_tokens === 4096) pass('PROJECT_X_MAX_TOKENS=4096 sends max_tokens = 4096');
+    else fail(`PROJECT_X_MAX_TOKENS=4096 not honoured: max_tokens=${r.body?.max_tokens} (exit ${r.code})`);
   }
 
   // 3. An invalid value stops before any request is made, naming the variable.
   for (const bad of ['abc', '0', '-5', '8k']) {
-    const r = await run({ env: { CAREER_OPS_MAX_TOKENS: bad } });
-    if (r.code !== 0 && r.body === null && /CAREER_OPS_MAX_TOKENS/.test(r.stderr)) {
-      pass(`CAREER_OPS_MAX_TOKENS=${JSON.stringify(bad)} is refused before any request`);
+    const r = await run({ env: { PROJECT_X_MAX_TOKENS: bad } });
+    if (r.code !== 0 && r.body === null && /PROJECT_X_MAX_TOKENS/.test(r.stderr)) {
+      pass(`PROJECT_X_MAX_TOKENS=${JSON.stringify(bad)} is refused before any request`);
     } else {
-      fail(`CAREER_OPS_MAX_TOKENS=${JSON.stringify(bad)}: exit ${r.code}, request ${r.body ? 'sent' : 'not sent'}, stderr: ${r.stderr.trim().split('\n').pop()}`);
+      fail(`PROJECT_X_MAX_TOKENS=${JSON.stringify(bad)}: exit ${r.code}, request ${r.body ? 'sent' : 'not sent'}, stderr: ${r.stderr.trim().split('\n').pop()}`);
     }
   }
 
@@ -118,9 +118,9 @@ try {
   // 5. A reply cut off by the limit says so, and says which variable raises it.
   {
     finishReason = 'length';
-    const r = await run({ env: { CAREER_OPS_MAX_TOKENS: '4096' } });
+    const r = await run({ env: { PROJECT_X_MAX_TOKENS: '4096' } });
     finishReason = 'stop';
-    if (/truncated/i.test(r.stderr) && /CAREER_OPS_MAX_TOKENS/.test(r.stderr)) pass('warns when the reply stops at the token limit (finish_reason "length")');
+    if (/truncated/i.test(r.stderr) && /PROJECT_X_MAX_TOKENS/.test(r.stderr)) pass('warns when the reply stops at the token limit (finish_reason "length")');
     else fail(`no truncation warning on finish_reason "length": ${r.stderr.trim().split('\n').slice(-2).join(' | ')}`);
 
     const ok = await run();

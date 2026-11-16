@@ -1,14 +1,14 @@
 # Getting Help
 
-career-ops is an open source project maintained in limited time. Here's how to get help efficiently.
+project-x is an open source project maintained in limited time. Here's how to get help efficiently.
 
 ## Where to ask
 
 | Question type | Where |
 |---|---|
-| **Bug** (something is broken) | [GitHub Issues](https://github.com/career-ops-hq/career-ops/issues) — use the Bug Report template |
-| **Feature idea** | [GitHub Issues](https://github.com/career-ops-hq/career-ops/issues) — use the Feature Request template |
-| **How do I...?** | [GitHub Discussions](https://github.com/career-ops-hq/career-ops/discussions) or [Discord](https://discord.gg/8pRpHETxa4) |
+| **Bug** (something is broken) | [GitHub Issues](https://github.com/project-x-hq/project-x/issues) — use the Bug Report template |
+| **Feature idea** | [GitHub Issues](https://github.com/project-x-hq/project-x/issues) — use the Feature Request template |
+| **How do I...?** | [GitHub Discussions](https://github.com/project-x-hq/project-x/discussions) or [Discord](https://discord.gg/8pRpHETxa4) |
 | **Setup help** | Check [docs/FAQ.md](docs/FAQ.md) for common questions, then [docs/SETUP.md](docs/SETUP.md), then ask in [Discord](https://discord.gg/8pRpHETxa4) |
 | **Security vulnerability** | Report privately via GitHub (**Security → Report a vulnerability**) or email hi@santifer.io — see [SECURITY.md](SECURITY.md) |
 

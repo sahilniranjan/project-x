@@ -131,7 +131,7 @@ const without = (text, line) => {
     const cvText = '# CV\n\n## Projects\n\n- **Widgets** -- loader\n';
     writeFileSync(cv, cvText);
     writeFileSync(digest, DIGEST);
-    const env = { ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_CV: cv, CAREER_OPS_ARTICLE_DIGEST: digest };
+    const env = { ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_CV: cv, PROJECT_X_ARTICLE_DIGEST: digest };
     const input = JSON.stringify({ articleDigestUpdate: { dedupKey: 'Widgets', bullet: BULLET } });
     const run = (...flags) => spawnSync(NODE, [join(ROOT, 'add-entry.mjs'), '--stdin', ...flags], { input, env, encoding: 'utf8', timeout: 30000 });
     const status = (res) => { try { return JSON.parse(res.stdout).articleDigestUpdate?.status; } catch { return `exit ${res.status}: ${res.stderr.trim()}`; } };

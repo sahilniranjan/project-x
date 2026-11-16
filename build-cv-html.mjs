@@ -39,7 +39,7 @@ import { fileURLToPath } from 'url';
 import { tmpdir } from 'os';
 import { loadYaml } from './lib/yaml-document.mjs';
 import { stripEmptySections } from './cv-sections-core.mjs';
-import { getCareerOpsRoot, getProfilePath } from './path-resolver.mjs';
+import { getProjectXRoot, getProfilePath } from './path-resolver.mjs';
 import { validateLockedSections, sectionKey } from './generate-pdf.mjs';
 import { readLockedSections } from './theme-style.mjs';
 import { hasRequiredFields, templateSlotWarnings, validatePayload } from './lib/cv-payload-schema.mjs';
@@ -48,7 +48,7 @@ import { PAGE_WIDTHS, resolvePageFormat } from './lib/page-format.mjs';
 import { PARTIAL_SECTIONS, declaredSections, parseMeta } from './lib/template-manifest.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const DATA_ROOT = getCareerOpsRoot();
+const DATA_ROOT = getProjectXRoot();
 const trackerPath = resolveTrackerPath(DATA_ROOT);
 const workspaceRoot = resolveWorkspaceRoot(trackerPath);
 const TEMPLATE_PATH = resolve(__dirname, 'templates', 'cv-template.html');
@@ -155,8 +155,8 @@ function profilePhotoValue() {
 // A relative candidate.photo comes from config/profile.yml, a user-layer file,
 // so it is read from the data root, where that file and the user's other files
 // live. It used to resolve against this script's directory, so with the user
-// layer moved out of the checkout (CAREER_OPS_ROOT, CAREER_OPS_DATA_DIR or a
-// .career-ops-data marker) the photo sitting next to the profile was never
+// layer moved out of the checkout (PROJECT_X_ROOT, PROJECT_X_DATA_DIR or a
+// .project-x-data marker) the photo sitting next to the profile was never
 // found and the build failed. The checkout stays as a fallback, so a photo kept
 // there by an install that moved its data root still resolves. Without a data
 // root override the two are the same directory.
@@ -1119,7 +1119,7 @@ async function main() {
     console.error('  When no partial file is found the built-in builder is used —');
     console.error('  unless the template manifest declares the section (#3852):');
     console.error('  `sections: all` or `sections: experience, education` in the');
-    console.error('  <!-- career-ops-template --> block makes a missing or malformed');
+    console.error('  <!-- project-x-template --> block makes a missing or malformed');
     console.error('  partial fail the build instead of falling back.');
     process.exit(args.includes('--help') ? 0 : 1);
   }

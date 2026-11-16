@@ -23,7 +23,7 @@
 import path from 'node:path';
 import { createAdmissionGate } from './lib/admission-gate.mjs';
 import { normalizeCompanyName } from './invite-match.mjs';
-import { getCareerOpsRoot } from './path-resolver.mjs';
+import { getProjectXRoot } from './path-resolver.mjs';
 import { withPipelineLock } from './pipeline-lock.mjs';
 import {
   companyRoleDedupKey,
@@ -141,7 +141,7 @@ export function formatLocalSkips(counts) {
  * @param {'completed'|'failed'} [run.status]
  * @param {string} [filePath]
  */
-export async function writeRunLog(run, filePath = path.join(getCareerOpsRoot(), 'data/scan-runs.tsv')) {
+export async function writeRunLog(run, filePath = path.join(getProjectXRoot(), 'data/scan-runs.tsv')) {
   const { counts = {} } = run;
   await withPipelineLock(filePath, async () => appendScanRunSummary({
     timestamp: new Date().toISOString(),

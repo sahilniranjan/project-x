@@ -1,4 +1,4 @@
-# career-ops Batch Worker — Single-Pass CV Match Evaluation
+# project-x Batch Worker — Single-Pass CV Match Evaluation
 
 Canonical base language: English.
 

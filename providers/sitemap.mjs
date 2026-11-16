@@ -53,7 +53,7 @@
 // postings rather than board size. It is bounded by `detailLimit`, paced,
 // retry-wrapped, skipped while probing (`ctx.maxPages`), and fails open: a
 // detail page that errors or answers a bot challenge keeps the sitemap row.
-// career-ops does not work around bot protection; on a site that challenges
+// project-x does not work around bot protection; on a site that challenges
 // its User-Agent, leave fetchDetails off.
 //
 // Truncation is never silent: every cap that drops rows or sitemaps prints a

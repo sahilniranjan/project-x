@@ -6,7 +6,7 @@ import { pass, fail } from './helpers.mjs';
 import { openProviderIdCache } from '../provider-id-cache.mjs';
 
 console.log('\nProvider id cache (ctx.idCache store)');
-const dir = mkdtempSync(join(tmpdir(), 'career-ops-provider-ids-'));
+const dir = mkdtempSync(join(tmpdir(), 'project-x-provider-ids-'));
 const read = (id) => JSON.parse(readFileSync(join(dir, `${id}.json`), 'utf8'));
 try {
   // A fresh store has nothing, and an unchanged slice writes no file.

@@ -4,7 +4,7 @@
  * Known platforms use their provider id so callers can route directly to the
  * matching scanner plugin. An otherwise-valid web URL returns its lower-cased
  * hostname instead of collapsing to "unknown": the long tail is useful signal
- * even before career-ops has a provider for it.
+ * even before project-x has a provider for it.
  */
 
 const hostIs = (host, suffix) => host === suffix || host.endsWith(`.${suffix}`);

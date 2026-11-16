@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * openai-tailor.mjs — OpenAI-compatible CV Tailoring for career-ops
+ * openai-tailor.mjs — OpenAI-compatible CV Tailoring for project-x
  *
  * Tailor your CV (HTML) with ANY OpenAI-compatible chat endpoint instead of Claude.
  * This is the headless companion to openai-eval.mjs. It takes an evaluation report
@@ -20,7 +20,7 @@ import { randomUUID } from 'crypto';
 import { readFileSync, existsSync, writeFileSync, mkdirSync } from 'fs';
 import { join, dirname, basename } from 'path';
 import { fileURLToPath } from 'url';
-import { getCareerOpsRoot, getProfilePath } from './path-resolver.mjs';
+import { getProjectXRoot, getProfilePath } from './path-resolver.mjs';
 import { loadYaml } from './lib/yaml-document.mjs';
 import { validateLockedSections, sectionKey } from './generate-pdf.mjs';
 import { readLockedSections } from './theme-style.mjs';
@@ -38,11 +38,11 @@ try {
   // The data root's .env first: doctor.mjs, remember-cli.mjs, scan.mjs and the
   // plugin engine all read it there. The working directory's .env, the only one
   // read before, still supplies what the data root's leaves unset.
-  config({ path: [join(getCareerOpsRoot(), '.env'), join(process.cwd(), '.env')] });
+  config({ path: [join(getProjectXRoot(), '.env'), join(process.cwd(), '.env')] });
 } catch { /* dotenv optional */ }
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
-const DATA_ROOT = getCareerOpsRoot();
+const DATA_ROOT = getProjectXRoot();
 
 // ---------------------------------------------------------------------------
 // Paths
@@ -65,7 +65,7 @@ const args = process.argv.slice(2);
 if (args.length === 0 || args[0] === '--help' || args[0] === '-h') {
   console.log(`
 ╔══════════════════════════════════════════════════════════════════╗
-║      career-ops — OpenAI-compatible CV Tailoring (Headless)      ║
+║      project-x — OpenAI-compatible CV Tailoring (Headless)      ║
 ╚══════════════════════════════════════════════════════════════════╝
 
   Tailor your CV with any OpenAI-compatible API to output a filled HTML file.
@@ -85,7 +85,7 @@ if (args.length === 0 || args[0] === '--help' || args[0] === '-h') {
 
   ENV
     OPENAI_API_KEY, OPENAI_BASE_URL, OPENAI_MODEL, OPENAI_TIMEOUT_MS
-    CAREER_OPS_MAX_TOKENS  Output cap per tailored CV (default 32768). Keeps a
+    PROJECT_X_MAX_TOKENS  Output cap per tailored CV (default 32768). Keeps a
                      gateway like OpenRouter from reserving credit for the
                      model's whole output window (HTTP 402 on a low balance).
 
@@ -207,7 +207,7 @@ const templateHtml   = readFile(PATHS.template, 'templates/cv-template.html', tr
 // ---------------------------------------------------------------------------
 // Build system prompt
 // ---------------------------------------------------------------------------
-const systemPrompt = `You are career-ops, an AI-powered CV tailoring engine.
+const systemPrompt = `You are project-x, an AI-powered CV tailoring engine.
 You read a candidate's base CV, profile, an evaluation report, and a Job Description.
 Your job is to apply strict anti-fabrication tailoring rules to fill in an HTML template.
 
@@ -299,10 +299,10 @@ if (!Number.isSafeInteger(timeoutMs) || timeoutMs <= 0 || timeoutMs > 2_147_483_
 
 // Empty means unset, as for every other variable here. Digits only, so "8k"
 // is refused instead of being read as 8.
-const maxTokensEnv = process.env.CAREER_OPS_MAX_TOKENS?.trim();
+const maxTokensEnv = process.env.PROJECT_X_MAX_TOKENS?.trim();
 const maxTokens = maxTokensEnv ? (/^\d+$/.test(maxTokensEnv) ? Number(maxTokensEnv) : NaN) : DEFAULT_MAX_TOKENS;
 if (!(maxTokens > 0)) {
-  console.error(`❌  Invalid CAREER_OPS_MAX_TOKENS: "${process.env.CAREER_OPS_MAX_TOKENS}" — must be a positive integer (output tokens).`);
+  console.error(`❌  Invalid PROJECT_X_MAX_TOKENS: "${process.env.PROJECT_X_MAX_TOKENS}" — must be a positive integer (output tokens).`);
   process.exit(1);
 }
 
@@ -315,10 +315,10 @@ if (apiKey) headers['Authorization'] = `Bearer ${apiKey}`;
 // id, and its docs ask for an own user agent: the same headers openai-eval.mjs
 // sends (#5825), for opencode.ai only. One tailoring run is one conversation.
 // https://opencode.ai/v2/docs/console/go/#where-can-i-use-it
-let careerOpsVersion;
+let projectXVersion;
 // VERSION may carry a release-please marker ("1.38.0 # x-release-please-version").
-try { careerOpsVersion = readFileSync(join(ROOT, 'VERSION'), 'utf-8').trim().split(/\s+/)[0] || undefined; } catch { /* default User-Agent version */ }
-Object.assign(headers, endpointHeaders(endpointHost, randomUUID(), careerOpsVersion));
+try { projectXVersion = readFileSync(join(ROOT, 'VERSION'), 'utf-8').trim().split(/\s+/)[0] || undefined; } catch { /* default User-Agent version */ }
+Object.assign(headers, endpointHeaders(endpointHost, randomUUID(), projectXVersion));
 
 let tailoredHtml;
 try {
@@ -348,7 +348,7 @@ try {
     console.error(`    ${body.slice(0, 300)}`);
     if (res.status === 402) {
       console.error(`    → Not enough credit at ${endpointHost} for the prompt plus the ${maxTokens}-token output cap.`);
-      console.error(`      Top up, or lower CAREER_OPS_MAX_TOKENS.`);
+      console.error(`      Top up, or lower PROJECT_X_MAX_TOKENS.`);
     }
     process.exit(1);
   }
@@ -361,7 +361,7 @@ try {
   // hand that to generate-pdf as the tailored CV, so nothing is saved.
   if (data.choices?.[0]?.finish_reason === 'length') {
     console.error(`❌  The reply stopped at the ${maxTokens}-token output cap, so the tailored CV is cut short. Nothing was saved.`);
-    console.error(`    Raise CAREER_OPS_MAX_TOKENS to allow a longer reply.`);
+    console.error(`    Raise PROJECT_X_MAX_TOKENS to allow a longer reply.`);
     process.exit(1);
   }
   if (!tailoredHtml) {

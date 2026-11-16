@@ -6,7 +6,7 @@
  *
  * Human-in-the-loop is the contract: this script never posts anything. The
  * only thing that leaves the machine is what the user submits from their own
- * GitHub account, after seeing every field. career-ops has no backend and no
+ * GitHub account, after seeing every field. project-x has no backend and no
  * telemetry; the public ledger is the repo itself (HIRED.md + the issues).
  *
  *   node hired-share.mjs --report 12                      # draft from tracker row 12
@@ -33,7 +33,7 @@ import { flagValue, hasFlag, validateFlags } from './lib/cli-flags.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
 import { parseTrackerRow, resolveColumns, isSeparatorRow, isHeaderRow, parseMarkdownLinks, extractTrackerReportNumbers } from './tracker-parse.mjs';
 import { resolveTrackerPath, resolveWorkspaceRoot, writeFileAtomic, acquireTrackerLock, loadCanonicalStates, resolveCanonicalStateId } from './tracker-utils.mjs';
-import { getCareerOpsRoot } from './path-resolver.mjs';
+import { getProjectXRoot } from './path-resolver.mjs';
 import { fileURLToPath } from 'url';
 
 // System-layer states.yml resolves from the codebase, not the data root (#3500).
@@ -48,7 +48,7 @@ function canonicalStates() {
   return statesCache;
 }
 
-const REPO_URL = 'https://github.com/career-ops-hq/career-ops';
+const REPO_URL = 'https://github.com/project-x-hq/project-x';
 const TEMPLATE = 'i-got-hired.yml';
 const LEVELS = ['handle', 'role', 'count'];
 
@@ -354,10 +354,10 @@ async function main() {
   const bad = validateFlags(args, KNOWN_FLAGS, USAGE, { valueFlags: VALUE_FLAGS, requireOperand: true });
   if (bad) { process.exitCode = 1; return; }
 
-  // Default to the configured data root (CAREER_OPS_ROOT / CAREER_OPS_DATA_DIR /
-  // .career-ops-data marker), not process.cwd(): with the user layer outside the
+  // Default to the configured data root (PROJECT_X_ROOT / PROJECT_X_DATA_DIR /
+  // .project-x-data marker), not process.cwd(): with the user layer outside the
   // checkout, the cwd-derived root found no tracker and reported no hires.
-  const root = flagValue(args, '--root') || resolveWorkspaceRoot(resolveTrackerPath(getCareerOpsRoot()));
+  const root = flagValue(args, '--root') || resolveWorkspaceRoot(resolveTrackerPath(getProjectXRoot()));
   const trackerPath = resolveTrackerPath(root);
   const tracker = existsSync(trackerPath) ? readFileSync(trackerPath, 'utf8') : '';
   const hires = hiredRows(tracker);

@@ -1,9 +1,9 @@
-# Shared context -- career-ops (India)
+# Shared context -- project-x (India)
 
 <!-- ============================================================
      PERSONALIZING THIS FILE
      ============================================================
-     This file holds the shared context for the career-ops India
+     This file holds the shared context for the project-x India
      market modes. It is a system file: an update replaces it.
      Personal targeting (archetypes, comp targets, narrative) goes in
      config/profile.yml and modes/_profile.md, never here.

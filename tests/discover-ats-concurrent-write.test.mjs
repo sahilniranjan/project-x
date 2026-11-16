@@ -19,7 +19,7 @@ async function until(check) {
 }
 
 function fixture() {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-discover-concurrent-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-discover-concurrent-'));
   const portals = join(dir, 'portals.yml');
   const preload = join(dir, 'preload.mjs');
   writeFileSync(portals, initial);
@@ -30,7 +30,7 @@ function fixture() {
     import { syncBuiltinESMExports } from 'node:module';
     import greenhouse from ${JSON.stringify(pathToFileURL(join(ROOT, 'providers/greenhouse.mjs')).href)};
     greenhouse.fetch = async () => [{ title: 'Engineer', url: 'https://example.test/job' }];
-    const portals = process.env.CAREER_OPS_PORTALS;
+    const portals = process.env.PROJECT_X_PORTALS;
     const role = process.env.DISCOVERY_WRITER;
     const write = fs.writeFileSync;
     const rename = fs.renameSync;
@@ -69,7 +69,7 @@ function start(f, company, role, write = true) {
   const child = spawn(NODE, ['--import', pathToFileURL(f.preload).href,
     join(ROOT, 'discover-ats.mjs'), company, '--vendors', 'gh', ...(write ? ['--write'] : [])], {
     cwd: ROOT,
-    env: { ...process.env, CAREER_OPS_ROOT: f.dir, CAREER_OPS_PORTALS: f.portals, DISCOVERY_WRITER: role },
+    env: { ...process.env, PROJECT_X_ROOT: f.dir, PROJECT_X_PORTALS: f.portals, DISCOVERY_WRITER: role },
     stdio: ['ignore', 'pipe', 'pipe'],
   });
   let stdout = '', stderr = '';

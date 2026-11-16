@@ -1,10 +1,10 @@
 #!/bin/bash
-# CareerOps.command — double-click launcher for the career-ops web control panel.
+# ProjectX.command — double-click launcher for the project-x web control panel.
 #
 # Starts the local Next.js panel (web/) and opens it in your browser.
 # Close this Terminal window, or press Ctrl-C, to stop it.
 #
-# This file is not part of upstream career-ops; it is local to this checkout and
+# This file is not part of upstream project-x; it is local to this checkout and
 # is left alone by `npm run update`.
 
 set -uo pipefail
@@ -14,9 +14,9 @@ set -m   # own process group per background job, so cleanup can kill the whole t
 # on-demand compilation. `next dev` was OOM-killed twice on this machine under
 # swap pressure, and none of what it costs is useful when you are USING the
 # panel rather than editing it.
-#   ./CareerOps.command          -> production (default)
-#   ./CareerOps.command dev      -> dev server (hot reload, heavy)
-#   ./CareerOps.command rebuild  -> recompile, then production
+#   ./ProjectX.command          -> production (default)
+#   ./ProjectX.command dev      -> dev server (hot reload, heavy)
+#   ./ProjectX.command rebuild  -> recompile, then production
 MODE="${1:-prod}"
 
 MIN_NODE_MAJOR=22
@@ -61,13 +61,13 @@ pick_node() {
   return 1
 }
 
-NODE_BIN="$(pick_node)" || die "career-ops needs Node ${MIN_NODE_MAJOR} or newer, and I couldn't find it.
+NODE_BIN="$(pick_node)" || die "project-x needs Node ${MIN_NODE_MAJOR} or newer, and I couldn't find it.
   Looked on PATH, in ~/.nvm/versions/node/, /opt/homebrew/bin and /usr/local/bin.
   Install Node ${MIN_NODE_MAJOR}+ (https://nodejs.org) and double-click this again."
 
 PATH="$(dirname "$NODE_BIN"):$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
 export PATH
-export CAREER_OPS_ROOT="$ROOT"
+export PROJECT_X_ROOT="$ROOT"
 
 # --- Port selection. Reuse a panel that's already running; step over anything else. ---
 #     Probe over 127.0.0.1, but hand the BROWSER "localhost": Next dev only treats
@@ -80,7 +80,7 @@ PORT=""
 for ((p = BASE_PORT; p < BASE_PORT + PORT_TRIES; p++)); do
   if ! port_busy "$p"; then PORT="$p"; break; fi
   if is_our_panel "$p"; then
-    printf '\n\033[32m✓ career-ops is already running.\033[0m Opening http://localhost:%s\n\n' "$p"
+    printf '\n\033[32m✓ project-x is already running.\033[0m Opening http://localhost:%s\n\n' "$p"
     open "http://localhost:$p"
     exit 0
   fi
@@ -93,7 +93,7 @@ if [ ! -d "$ROOT/web/node_modules" ]; then
   (cd "$ROOT/web" && npm ci) || die "npm ci failed in web/. Scroll up for the reason."
 fi
 
-printf '\n\033[1m  career-ops\033[0m\n'
+printf '\n\033[1m  project-x\033[0m\n'
 printf '  ─────────────────────────────────────────────\n'
 printf '  Panel   http://localhost:%s\n' "$PORT"
 printf '  Data    %s\n' "$ROOT"
@@ -134,7 +134,7 @@ cleanup() {
   kill "$OPENER_PID" 2>/dev/null
   kill -TERM "-$DEV_PID" 2>/dev/null || kill -TERM "$DEV_PID" 2>/dev/null
   wait "$DEV_PID" 2>/dev/null
-  printf '\n\033[36mcareer-ops stopped.\033[0m\n'
+  printf '\n\033[36mproject-x stopped.\033[0m\n'
 }
 trap cleanup EXIT INT TERM HUP
 

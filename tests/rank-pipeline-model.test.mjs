@@ -19,7 +19,7 @@ for (const [cli, command] of [['codex', 'exec'], ['opencode', 'run'], ['claude',
         `require('node:fs').writeFileSync(process.env.RANK_ARGS, JSON.stringify(process.argv.slice(2)));\n`
         + `console.log('[{"id":0,"score":4,"reason":"Fixture match"}]');\n`);
       const env = envWithPathFirst(join(root, 'bin'), {
-        CAREER_OPS_ROOT: root,
+        PROJECT_X_ROOT: root,
         RANK_ARGS: join(root, 'args.json'),
       });
       const rank = (args) => execFileSync(process.execPath, [join(ROOT, 'rank-pipeline.mjs'), '--cli', cli, ...args], { env });

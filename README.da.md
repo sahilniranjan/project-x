@@ -1,4 +1,4 @@
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/wordmark-dark.svg"><img src="docs/wordmark-light.svg" alt="career-ops" width="250" height="56"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/wordmark-dark.svg"><img src="docs/wordmark-light.svg" alt="project-x" width="250" height="56"></picture></p>
 
 <p align="center">Open source-AI-agenten til jobsøgning.</p>
 
@@ -26,7 +26,7 @@
 
 <!-- The non-breaking spaces (&nbsp;) and word joiners (&#8288;) below decide where each line wraps on a phone. Keep them when editing. -->
 
-<p align="center"><a href="https://github.com/santifer"><img src="docs/avatar-santifer.png" width="48" height="48" align="middle" alt="Santiago Fernández de Valderrama Aparicio"></a>&nbsp;&nbsp;Skabt af <a href="https://github.com/santifer"><strong>@santifer</strong></a>, med&nbsp;&nbsp;<a href="https://github.com/career-ops-hq/career-ops/blob/main/README.da.md#builders"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/builders-stack-dark.svg"><img src="docs/builders-stack-light.svg" alt="" height="32" align="middle"></picture></a>&nbsp;&nbsp;<a href="https://github.com/career-ops-hq/career-ops/blob/main/README.da.md#builders">800+ bidragydere</a></p>
+<p align="center"><a href="https://github.com/santifer"><img src="docs/avatar-santifer.png" width="48" height="48" align="middle" alt="Santiago Fernández de Valderrama Aparicio"></a>&nbsp;&nbsp;Skabt af <a href="https://github.com/santifer"><strong>@santifer</strong></a>, med&nbsp;&nbsp;<a href="https://github.com/project-x-hq/project-x/blob/main/README.da.md#builders"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/builders-stack-dark.svg"><img src="docs/builders-stack-light.svg" alt="" height="32" align="middle"></picture></a>&nbsp;&nbsp;<a href="https://github.com/project-x-hq/project-x/blob/main/README.da.md#builders">800+ bidragydere</a></p>
 
 <p align="center">
 <strong>Måneder med at sende CV'er ud i&nbsp;stilheden.</strong><br>
@@ -44,7 +44,7 @@ Den tilpasser dit CV og skriver udkast til dine&nbsp;svar. <strong>Du&nbsp;trykk
 </p>
 
 <p align="center">
-  <img src="docs/demo.gif" alt="Forfatterens egen jobsøgning i career-ops-dashboardet: scorede opslag, et rødt tal for dem, der er markeret „søg ikke“, og derefter en fuld vurderingsrapport" width="800">
+  <img src="docs/demo.gif" alt="Forfatterens egen jobsøgning i project-x-dashboardet: scorede opslag, et rødt tal for dem, der er markeret „søg ikke“, og derefter en fuld vurderingsrapport" width="800">
 </p>
 
 <p align="center"><sub>Min egen jobsøgning, undervejs, med&nbsp;brugerfladen&nbsp;på&nbsp;spansk.</sub></p>
@@ -56,15 +56,15 @@ Den tilpasser dit CV og skriver udkast til dine&nbsp;svar. <strong>Du&nbsp;trykk
 
 <p align="center">
   Seks måneder senere <strong>forlod jeg det job.</strong><br>
-  Nu bygger vi career-ops, så&nbsp;du&nbsp;kan&nbsp;lande&nbsp;dit.
+  Nu bygger vi project-x, så&nbsp;du&nbsp;kan&nbsp;lande&nbsp;dit.
 </p>
 
-<p align="center"><a href="#din-tur">Prøv den på ét&nbsp;job&nbsp;↓</a> · <a href="https://santifer.io/career-ops-system">Læs hele&nbsp;historien&nbsp;→</a></p>
-<p align="center"><sub>Vil du helst undgå terminalen? <a href="https://career-ops.org/waitlist?ref=readme-da">Skriv dig på ventelisten til en webversion&nbsp;→</a></sub></p>
+<p align="center"><a href="#din-tur">Prøv den på ét&nbsp;job&nbsp;↓</a> · <a href="https://santifer.io/project-x-system">Læs hele&nbsp;historien&nbsp;→</a></p>
+<p align="center"><sub>Vil du helst undgå terminalen? <a href="https://project-x.org/waitlist?ref=readme-da">Skriv dig på ventelisten til en webversion&nbsp;→</a></sub></p>
 
 <br>
 
-<p align="center"><a href="HIRED.md"><img src="docs/hired-badge.svg" alt="Hired with career-ops: public stories on the record"></a></p>
+<p align="center"><a href="HIRED.md"><img src="docs/hired-badge.svg" alt="Hired with project-x: public stories on the record"></a></p>
 
 <p align="center">De, der kom efter mig, skrev ned, hvordan de blev ansat.</p>
 
@@ -72,9 +72,9 @@ Den tilpasser dit CV og skriver udkast til dine&nbsp;svar. <strong>Du&nbsp;trykk
   <a href="HIRED.md"><img src="docs/hired-wall.svg" alt="Ansættelseshistorier, du kan åbne og læse" width="800"></a>
 </p>
 
-<p align="center"><sub>Hvert kort er et offentligt issue, du kan åbne. Har du fået dit job? <a href="https://github.com/career-ops-hq/career-ops/issues/new?template=i-got-hired.yml">Efterlad dit kort →</a></sub></p>
+<p align="center"><sub>Hvert kort er et offentligt issue, du kan åbne. Har du fået dit job? <a href="https://github.com/project-x-hq/project-x/issues/new?template=i-got-hired.yml">Efterlad dit kort →</a></sub></p>
 
-<p align="center">⭐ <strong>Hvis career-ops har hjulpet dig, hjælper en stjerne den næste med at finde&nbsp;det.</strong></p>
+<p align="center">⭐ <strong>Hvis project-x har hjulpet dig, hjælper en stjerne den næste med at finde&nbsp;det.</strong></p>
 
 <br>
 
@@ -99,7 +99,7 @@ Den tilpasser dit CV og skriver udkast til dine&nbsp;svar. <strong>Du&nbsp;trykk
 Indsæt ét job, du var ved at søge i aften. Kommer det tilbage som <em>søg ikke</em>, har du lige fået aftenen tilbage. Kommer det tilbage med en plan, ved du, hvad du skal gøre nu.
 
 ```bash
-npx @santifer/career-ops init
+npx @santifer/project-x init
 ```
 
 <p align="center"><sub>Open source. Lokalt. I den AI-CLI, du allerede bruger. <a href="docs/RUNNING_ON_A_BUDGET.md">Gratis og lokale modeller inkluderet.</a></sub></p>
@@ -111,15 +111,15 @@ Stilheden, efter du trykker send, handler ikke om dig. Nok mennesker så det sam
 
 > Søg bedre, til færre. Signal frem for volumen. Beviser frem for nøgleord. Et menneske beslutter. Lokalt først. Værdighed på begge sider af bordet.
 
-<p align="center"><a href="https://career-ops.org/manifesto?utm_source=readme"><img src="https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcareer-ops-hq%2Fcareer-ops%2Fmain%2FSIGNATURES.md&search=n%3A(%5Cd%2B)%5Cs*%24&replace=%241%20signatories&label=THE%20CAREEROPS%20MANIFESTO&color=DD7627&style=for-the-badge&labelColor=2b3137" alt="CareerOps-manifestet: antal underskrivere, live"></a></p>
+<p align="center"><a href="https://project-x.org/manifesto?utm_source=readme"><img src="https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fproject-x-hq%2Fproject-x%2Fmain%2FSIGNATURES.md&search=n%3A(%5Cd%2B)%5Cs*%24&replace=%241%20signatories&label=THE%20PROJECTX%20MANIFESTO&color=DD7627&style=for-the-badge&labelColor=2b3137" alt="ProjectX-manifestet: antal underskrivere, live"></a></p>
 
 <p align="center">Et par af dem, med deres egne ord.</p>
 
 <p align="center">
-  <a href="https://career-ops.org/manifesto?utm_source=readme"><img src="docs/manifesto-wall.svg" alt="Tre underskrifter på CareerOps-manifestet, med deres egne ord" width="800"></a>
+  <a href="https://project-x.org/manifesto?utm_source=readme"><img src="docs/manifesto-wall.svg" alt="Tre underskrifter på ProjectX-manifestet, med deres egne ord" width="800"></a>
 </p>
 
-<p align="center"><sub>Hver underskrift er et commit, du kan efterprøve. <a href="https://career-ops.org/manifesto?utm_source=readme">Læs dem alle, eller tilføj din →</a></sub></p>
+<p align="center"><sub>Hver underskrift er et commit, du kan efterprøve. <a href="https://project-x.org/manifesto?utm_source=readme">Læs dem alle, eller tilføj din →</a></sub></p>
 
 <br>
 
@@ -131,21 +131,21 @@ Rekruttering reparerer ikke sig selv. Det kan de, der går igennem den, og de er
 
 [Det er her, rettelsen bliver skrevet](CONTRIBUTING.md). Et rum, ikke en klub. **Lad os bygge sammen.**
 
-<p align="center"><a href="https://discord.gg/8pRpHETxa4"><img src="docs/discord-badge.svg" alt="Discord: antal medlemmer på career-ops-serveren, live"></a></p>
+<p align="center"><a href="https://discord.gg/8pRpHETxa4"><img src="docs/discord-badge.svg" alt="Discord: antal medlemmer på project-x-serveren, live"></a></p>
 
 ## Sponsorer
 
-career-ops er gratis for kandidater, for altid. Disse virksomheder sponsorerer projektet:
+project-x er gratis for kandidater, for altid. Disse virksomheder sponsorerer projektet:
 
 <p align="center">
-  <a href="https://serpapi.com/career-ops-org" title="SerpApi"><img src="docs/sponsors/serpapi.svg" alt="SerpApi" height="48"></a>
+  <a href="https://serpapi.com/project-x-org" title="SerpApi"><img src="docs/sponsors/serpapi.svg" alt="SerpApi" height="48"></a>
 </p>
 
 <p align="center"><strong>SerpApi</strong> · Build a portfolio project with live search data. SerpApi gives developers structured JSON/Markdown from Google Search, Maps, Shopping, and other engines through a simple API call.</p>
 
 > Sponsorat køber tydeligt markeret synlighed, aldrig indflydelse: intet beløb ændrer køreplanen eller placerer noget i produktet. Sponsorer optræder aldrig i evalueringer, rangeringer eller anbefalinger.
 
-## Hvad career-ops gør for dig
+## Hvad project-x gør for dig
 
 Indsæt et job. Den fortæller dig, om aftenen er det værd.
 
@@ -160,7 +160,7 @@ De første kørsler er ujævne. Den kender dig ikke endnu. Tal med den: dit CV, 
 
 Ved første start spørger den om alt det i chatten. Intet at konfigurere i hånden.
 
-## Hvad career-ops ikke gør
+## Hvad project-x ikke gør
 
 - **Sende en ansøgning automatisk.** Den skriver udkast til svaret i hvert felt; du gennemgår og klikker Send. Scriptet laver aldrig et POST (`prepare-application.mjs`).
 - **Sender en e-mail.** Kun udkast. Der findes ingen mailtransport nogen steder i koden.
@@ -176,7 +176,7 @@ Den omformulerer dit CV; den må aldrig opdigte det. En kontrol i koden stopper 
 | **A-H-vurdering**        | Rolleresumé, CV-match (med hvor meget hvert krav betyder for dette opslag, og om vægten kom fra jobbeskrivelsens egen ordlyd, dens struktur eller et skøn, mærket pr. krav; et skøn kan aldrig ligge i topbåndet), niveaustrategi, lønresearch, personalisering, samtaleforberedelse (STAR+R), plus et troværdighedstjek i blok G (er det stadig åbent, er det et genopslag: observationer, ikke domme), og et arbejdstilladelsessignal, der markerer en jobbeskrivelse med eksplicit ingen visumsponsorering som en hård blokering |
 | **Human-in-the-Loop**    | AI vurderer og anbefaler, du beslutter og handler. Systemet indsender aldrig en ansøgning: du har altid det sidste ord <!-- hitl: absolute guarantee. Do not add "automatically", "by itself", "without your permission" or any other hedge when translating this row. -->               |
 | **ATS-PDF-generering**   | ATS-læsbare CV'er tilpasset hver jobbeskrivelse ud fra din egen erfaring, i Space Grotesk + DM Sans-design                                |
-| **Ansøgningsgenerator**  | Researchbaserede ansøgninger med spejling af nøgleord, fire interaktive vinkelspørgsmål (hvorfor/problemer/tilgang/tone), godkendelse af udkast i chatten og A4-PDF via samme HTML + Playwright-pipeline som CV'er. Laver automatisk udkast ved hver vurdering; færdiggør og generér efter behov via `/career-ops cover` |
+| **Ansøgningsgenerator**  | Researchbaserede ansøgninger med spejling af nøgleord, fire interaktive vinkelspørgsmål (hvorfor/problemer/tilgang/tone), godkendelse af udkast i chatten og A4-PDF via samme HTML + Playwright-pipeline som CV'er. Laver automatisk udkast ved hver vurdering; færdiggør og generér efter behov via `/project-x cover` |
 | **Ud over CV'et**        | Virksomhedsresearch ([`deep`](modes/deep.md)) afdækker AI-strategi, seneste træk, engineering-kultur og den vinkel, din profil bør tage. Kontaktsøgning ([`contacto`](modes/contacto.md)) finder den hiring manager, rekrutterer eller kollega, det er værd at kontakte, og skriver et LinkedIn-udkast på ≤300 tegn tilpasset hver kontakttype. Formelle udkast til ansøgningsmails ([`email`](modes/email.md)) gør en vurderet rapport eller indsat jobbeskrivelse til emnelinje, brødtekst og tjekliste over vedhæftninger uden at sende, indsende eller klikke på noget. Ansøgninger sætter dig i køen; research giver dig en samtale. |
 | **Mønsteranalyse**       | Afslagsmønstre og fremgangsrater pr. ATS-kanal (`analyze-patterns.mjs`), tragtstatistik for hele søgningen (`stats.mjs`), registrering af genopslag, et muligt tegn på et spøgelsesjob (`detect-reposts.mjs`) |
 
@@ -188,7 +188,7 @@ Den omformulerer dit CV; den må aldrig opdigte det. En kontrol i koden stopper 
 | **Auto-pipeline**        | Indsæt en URL, få en fuld vurdering + PDF + tracker-post                                                                                 |
 | **Interview-historiebank** | Samler STAR+Reflection-historier på tværs af vurderinger: 5-10 masterhistorier, du kan tilpasse til de adfærdsspørgsmål, du får          |
 | **Forhandlingsscripts**  | Rammer for lønforhandling, modsvar til geografisk rabat, brug af konkurrerende tilbud                                                    |
-| **Udkast til ansøgningsmails** | Formelle mails til rekrutterer, henvisning eller uopfordret ansøgning fra en rapport eller indsat jobbeskrivelse, med emnelinje, tjekliste over vedhæftninger, dokumenterede matchpunkter og en kontaktblok fra din profil. Kun udkast: career-ops sender, indsender eller klikker aldrig på noget. |
+| **Udkast til ansøgningsmails** | Formelle mails til rekrutterer, henvisning eller uopfordret ansøgning fra en rapport eller indsat jobbeskrivelse, med emnelinje, tjekliste over vedhæftninger, dokumenterede matchpunkter og en kontaktblok fra din profil. Kun udkast: project-x sender, indsender eller klikker aldrig på noget. |
 | **Portalscanner**        | 100+ forudkonfigurerede virksomheder (Anthropic, OpenAI, ElevenLabs, Retool, n8n...) + egne websøgninger på tværs af Ashby, Greenhouse, Lever, Wellfound |
 | **Find finansierede virksomheder** | Kommandoen `company:funded` (gennemse først) viser nyligt finansierede virksomheder og kildediagnostik fra strukturerede offentlige feeds uden at redigere dine data |
 | **Batch-behandling**     | Parallel vurdering med headless CLI-workers (`claude -p` / `opencode run`)                                                               |
@@ -210,28 +210,28 @@ Den omformulerer dit CV; den må aldrig opdigte det. En kontrol i koden stopper 
 **Hurtigste vej, én kommando:**
 
 ```bash
-npx @santifer/career-ops init
+npx @santifer/project-x init
 ```
 
 > 💡 `npx` følger med [Node.js](https://nodejs.org): det kører installationen én gang
 > uden at installere noget globalt. Ingen Node endnu? Installer den først.
 > (Bruger du allerede en Claude Code / Codex CLI? Så har du den allerede.)
 
-Det kloner den seneste udgivelse ind i `./career-ops` og installerer afhængigheder. Derefter:
+Det kloner den seneste udgivelse ind i `./project-x` og installerer afhængigheder. Derefter:
 
 ```bash
-cd career-ops
+cd project-x
 claude   # or codex / qwen / opencode / agy / grok — open your AI CLI here
 ```
 
-**Ved første start fører career-ops dig gennem opsætningen (dit CV, din profil og dine målroller) bare ved at chatte. Intet at redigere i hånden.**
+**Ved første start fører project-x dig gennem opsætningen (dit CV, din profil og dine målroller) bare ved at chatte. Intet at redigere i hånden.**
 
 <details>
 <summary><b>Foretrækker du at sætte det op manuelt? (git clone)</b></summary>
 
 ```bash
-git clone https://github.com/career-ops-hq/career-ops.git
-cd career-ops && npm install
+git clone https://github.com/project-x-hq/project-x.git
+cd project-x && npm install
 npx playwright install chromium   # only needed for PDF generation
 # On a non-Debian/Ubuntu Linux distro (Fedora, Arch, ...), Chromium's system
 # libraries aren't installed by the line above — install them yourself with
@@ -258,14 +258,14 @@ claude   # or codex / opencode / qwen / agy / grok
 ### Global installation
 
 ```bash
-npm i -g @santifer/career-ops
+npm i -g @santifer/project-x
 ```
 
-Det installerer `career-ops`-binæren globalt, så du kan køre `career-ops init [folder]` uden `npx`. `init` er dens eneste kommando: den opretter et arbejdsområde, og alt derefter foregår i din AI-kodnings-CLI (se Brug nedenfor), ikke gennem denne binær.
+Det installerer `project-x`-binæren globalt, så du kan køre `project-x init [folder]` uden `npx`. `init` er dens eneste kommando: den opretter et arbejdsområde, og alt derefter foregår i din AI-kodnings-CLI (se Brug nedenfor), ikke gennem denne binær.
 
 **Hvilken skal du bruge?**
-- `npx @santifer/career-ops init`: bedst til første brug; opretter en dedikeret projektmappe.
-- `npm i -g @santifer/career-ops`: hvis du hellere vil skrive `career-ops init` end `npx`-formen. Den tilføjer ingen andre kommandoer.
+- `npx @santifer/project-x init`: bedst til første brug; opretter en dedikeret projektmappe.
+- `npm i -g @santifer/project-x`: hvis du hellere vil skrive `project-x init` end `npx`-formen. Den tilføjer ingen andre kommandoer.
 
 ### Andre måder at køre det på
 
@@ -274,23 +274,23 @@ Det installerer `career-ops`-binæren globalt, så du kan køre `career-ops init
 
 > **Systemet er designet til at blive tilpasset af din AI-kodnings-CLI selv.** Tilstande, arketyper, scorevægte, forhandlingsscripts: bed den bare om at ændre dem. Den læser de samme filer, som den bruger, så den ved præcis, hvad den skal redigere.
 
-Se [docs/SETUP.md](docs/SETUP.md) for den fulde opsætningsguide, [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md) for at køre career-ops billigt med egne eller lokale modeller (og [docs/FREE_TIER.md](docs/FREE_TIER.md) for at køre det gratis på Antigravity CLI's gratis niveau), [docs/AUTOMATION.md](docs/AUTOMATION.md) for planlægning af tilbagevendende scanninger og en opskrift på triage-til-shortlist uden tokens, [docs/APPLY_AUTOFILL.md](docs/APPLY_AUTOFILL.md) for detaljer om ATS-autoudfyldningsflowet, [docs/LINKEDIN_JOIN.md](docs/LINKEDIN_JOIN.md) for at krydstjekke en eksport af dine LinkedIn-forbindelser mod virksomhederne i din tragt, og [docs/FAQ.md](docs/FAQ.md) for svar på almindelige opsætningsspørgsmål, herunder [hvordan historiers oprindelse forhindrer opdigtede tal](docs/FAQ.md#why-does-career-ops-refuse-to-use-a-number-from-my-story-bank). Designprincipper ligger i [ARCHITECTURE.md](ARCHITECTURE.md); runtime-flows i [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+Se [docs/SETUP.md](docs/SETUP.md) for den fulde opsætningsguide, [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md) for at køre project-x billigt med egne eller lokale modeller (og [docs/FREE_TIER.md](docs/FREE_TIER.md) for at køre det gratis på Antigravity CLI's gratis niveau), [docs/AUTOMATION.md](docs/AUTOMATION.md) for planlægning af tilbagevendende scanninger og en opskrift på triage-til-shortlist uden tokens, [docs/APPLY_AUTOFILL.md](docs/APPLY_AUTOFILL.md) for detaljer om ATS-autoudfyldningsflowet, [docs/LINKEDIN_JOIN.md](docs/LINKEDIN_JOIN.md) for at krydstjekke en eksport af dine LinkedIn-forbindelser mod virksomhederne i din tragt, og [docs/FAQ.md](docs/FAQ.md) for svar på almindelige opsætningsspørgsmål, herunder [hvordan historiers oprindelse forhindrer opdigtede tal](docs/FAQ.md#why-does-project-x-refuse-to-use-a-number-from-my-story-bank). Designprincipper ligger i [ARCHITECTURE.md](ARCHITECTURE.md); runtime-flows i [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## Brug
 
-Indsæt en job-URL eller jobbeskrivelse i din AI-CLI. career-ops tjekker, at et linket opslag stadig er aktivt (indsat tekst har intet link at tjekke), vurderer det op mod dit CV, skriver en rapport, tilpasser dit CV (som PDF som standard) og tilføjer en række til din tracker. Det dækker de fleste dage. Alt andet er en tilstand, du beder om ved navn. Hvis et opslag ikke kan læses, stopper pipelinen og beder dig indsætte teksten.
+Indsæt en job-URL eller jobbeskrivelse i din AI-CLI. project-x tjekker, at et linket opslag stadig er aktivt (indsat tekst har intet link at tjekke), vurderer det op mod dit CV, skriver en rapport, tilpasser dit CV (som PDF som standard) og tilføjer en række til din tracker. Det dækker de fleste dage. Alt andet er en tilstand, du beder om ved navn. Hvis et opslag ikke kan læses, stopper pipelinen og beder dig indsætte teksten.
 
 ### Sådan beder du om en tilstand
 
 | CLI | Sådan beder du om `scan` |
 | --- | --- |
-| Claude Code, OpenCode, Antigravity CLI (`agy`), Grok Build CLI | `/career-ops scan` |
-| Pi | `/skill:career-ops scan` |
-| Codex, Qwen, Cursor eller en hvilken som helst anden understøttet CLI | Almindeligt sprog: "Run the career-ops scan mode" |
+| Claude Code, OpenCode, Antigravity CLI (`agy`), Grok Build CLI | `/project-x scan` |
+| Pi | `/skill:project-x scan` |
+| Codex, Qwen, Cursor eller en hvilken som helst anden understøttet CLI | Almindeligt sprog: "Run the project-x scan mode" |
 
-`/career-ops` uden noget efter sig viser kommandomenuen i de CLI'er, der bruger den. Almindeligt sprog virker i alle understøttede CLI'er. Som Claude Code-plugin er kommandoen `/career-ops:career-ops`.
+`/project-x` uden noget efter sig viser kommandomenuen i de CLI'er, der bruger den. Almindeligt sprog virker i alle understøttede CLI'er. Som Claude Code-plugin er kommandoen `/project-x:project-x`.
 
-De deler alle én router, `.agents/skills/career-ops/SKILL.md`, og de samme `modes/*.md`-filer, så alle CLI'er router en forespørgsel på samme måde (browsertunge tilstande kræver også Playwright-værktøjer). Slash-kommandoer er ikke garanteret i Codex: bed om det i almindeligt sprog, eller kør ét prompt headless med `codex exec "Evaluate this JD with career-ops auto-pipeline: https://company.com/jobs/123"` ([docs/CODEX.md](docs/CODEX.md)). Hvordan du kører det i hver understøttet CLI, headless-kommandoer hvor en CLI har en, og opsætningsnoter for den enkelte CLI står i [docs/SUPPORTED_CLIS.md](docs/SUPPORTED_CLIS.md).
+De deler alle én router, `.agents/skills/project-x/SKILL.md`, og de samme `modes/*.md`-filer, så alle CLI'er router en forespørgsel på samme måde (browsertunge tilstande kræver også Playwright-værktøjer). Slash-kommandoer er ikke garanteret i Codex: bed om det i almindeligt sprog, eller kør ét prompt headless med `codex exec "Evaluate this JD with project-x auto-pipeline: https://company.com/jobs/123"` ([docs/CODEX.md](docs/CODEX.md)). Hvordan du kører det i hver understøttet CLI, headless-kommandoer hvor en CLI har en, og opsætningsnoter for den enkelte CLI står i [docs/SUPPORTED_CLIS.md](docs/SUPPORTED_CLIS.md).
 
 ### Hverdagens kommandoer
 
@@ -389,7 +389,7 @@ De deler alle én router, `.agents/skills/career-ops/SKILL.md`, og de samme `mod
 | Kommando | Hvad den gør |
 | --- | --- |
 | [`agent-inbox`](modes/agent-inbox.md) | Stil anmodninger i kø til næste session, og gennemgå dem dér (`data/agent-inbox.md`). `inbox` virker også |
-| [`update`](modes/update.md) | Opdatér career-ops' systemfiler, med diff-forhåndsvisning og kompatibilitetstjek |
+| [`update`](modes/update.md) | Opdatér project-x' systemfiler, med diff-forhåndsvisning og kompatibilitetstjek |
 
 </details>
 
@@ -432,7 +432,7 @@ Der findes også en **eksperimentel web-UI** (alfa og tilvalg: intet kører, med
 ## Projektstruktur
 
 ```
-career-ops/
+project-x/
 ├── AGENTS.md                    # Canonical agent instructions (all CLIs)
 ├── CLAUDE.md                    # Claude Code wrapper (imports AGENTS.md)
 ├── CODEX.md                     # Codex wrapper (imports AGENTS.md)
@@ -473,20 +473,20 @@ Som standard ligger brugerlagets data (såsom `cv.md`, `portals.yml` og mapperne
 
 For at adskille dine personlige data fra koden (så det bliver lettere at skifte branch, hente opdateringer eller teste flere profiler) kan du konfigurere en ekstern datamappe med følgende rækkefølge:
 
-1. **Miljøvariabler:** Sæt miljøvariablen `CAREER_OPS_ROOT` eller `CAREER_OPS_DATA_DIR`:
+1. **Miljøvariabler:** Sæt miljøvariablen `PROJECT_X_ROOT` eller `PROJECT_X_DATA_DIR`:
    ```bash
-   export CAREER_OPS_ROOT=~/my-career-data
+   export PROJECT_X_ROOT=~/my-career-data
    ```
-2. **Markørfil:** Opret en `.career-ops-data`-fil i repository-roden med stien til din datamappe.
+2. **Markørfil:** Opret en `.project-x-data`-fil i repository-roden med stien til din datamappe.
 3. **Standard:** Repository-roden.
 
 Når det er afgjort, opløses og skrives alle brugerfiler relativt til den mappe, mens promptfiler og scripts fortsat opløses relativt til repositoryet.
 
-- **Tilsidesæt tracker:** Du kan også sætte `CAREER_OPS_TRACKER` for direkte at tilsidesætte stien til ansøgningstrackerens fil.
+- **Tilsidesæt tracker:** Du kan også sætte `PROJECT_X_TRACKER` for direkte at tilsidesætte stien til ansøgningstrackerens fil.
 - **Skrivninger:** Alle skriveoperationer (såsom sammenfletninger) retter sig kanonisk mod `{DATA_ROOT}/data/applications.md`.
 - **Scannerkonfiguration:** `portals.yml` læses og valideres i `{DATA_ROOT}/portals.yml`, så `node validate-portals.mjs` tjekker den samme fil, som `scan.mjs` læser.
-- **Genererede dokumenter:** Tilpassede CV'er og ansøgninger skrives under `{DATA_ROOT}/output/`, og PDF-manifestet, der knytter dem til en rapport, ligger i `{DATA_ROOT}/data/pdf-index.tsv`. Så længe `CAREER_OPS_TRACKER` ikke er sat, er trackerens arbejdsområde, som afgrænser de skrivninger, datamappen og ikke checkoutet.
-- **PDF'er med tilsidesat tracker:** `generate-pdf.mjs` opløser `CAREER_OPS_TRACKER`, før den udleder arbejdsområdet, så når tilsidesættelsen er sat, er arbejdsområdet den mappe, der indeholder trackeren (eller mappen over den, når trackeren ligger i en `data/`-mappe). CV'ets HTML og hver PDF skal så ligge inden for det arbejdsområde, og manifestet flytter til dets `data/pdf-index.tsv`. Ansøgninger skrives stadig til `{DATA_ROOT}/output/`, så de afvises, når den mappe ligger uden for trackerens arbejdsområde.
+- **Genererede dokumenter:** Tilpassede CV'er og ansøgninger skrives under `{DATA_ROOT}/output/`, og PDF-manifestet, der knytter dem til en rapport, ligger i `{DATA_ROOT}/data/pdf-index.tsv`. Så længe `PROJECT_X_TRACKER` ikke er sat, er trackerens arbejdsområde, som afgrænser de skrivninger, datamappen og ikke checkoutet.
+- **PDF'er med tilsidesat tracker:** `generate-pdf.mjs` opløser `PROJECT_X_TRACKER`, før den udleder arbejdsområdet, så når tilsidesættelsen er sat, er arbejdsområdet den mappe, der indeholder trackeren (eller mappen over den, når trackeren ligger i en `data/`-mappe). CV'ets HTML og hver PDF skal så ligge inden for det arbejdsområde, og manifestet flytter til dets `data/pdf-index.tsv`. Ansøgninger skrives stadig til `{DATA_ROOT}/output/`, så de afvises, når den mappe ligger uden for trackerens arbejdsområde.
 - **Kodelaget bliver, hvor det er:** `node_modules/`, `providers/`, `modes/` og selve scriptene opløses altid i forhold til repositoryet, aldrig datamappen.
 
 Go-dashboardets TUI, Node.js-scripts og AI-agenttilstande respekterer alle automatisk denne rækkefølge.
@@ -508,7 +508,7 @@ Go-dashboardets TUI, Node.js-scripts og AI-agenttilstande respekterer alle autom
 - **Data**: Markdown-tabeller + YAML-konfiguration + TSV-batchfiler
 
 <p align="center">
-  <a href="https://github.com/career-ops-hq/career-ops/releases/latest"><img src="docs/npm-badge.svg" alt="Latest release"></a>
+  <a href="https://github.com/project-x-hq/project-x/releases/latest"><img src="docs/npm-badge.svg" alt="Latest release"></a>
 </p>
 
 <p align="center">
@@ -541,43 +541,43 @@ Go-dashboardets TUI, Node.js-scripts og AI-agenttilstande respekterer alle autom
 
 ## FAQ
 
-**Hvad er career-ops?**
-career-ops ([career-ops.org](https://career-ops.org), også kendt som **careerops**) er en open source AI-jobsøgning, der kører lokalt i din AI-kodnings-CLI (Claude Code, Codex, OpenCode og andre) og overlader hver beslutning til dig. Den vurderer jobopslag mod dit CV, genererer ATS-tilpassede PDF'er, finder den rette person at kontakte og holder styr på alt ét sted: du har altid det sidste ord. Den er den første referenceimplementering af [CareerOps-manifestet](https://career-ops.org/manifesto).
+**Hvad er project-x?**
+project-x ([project-x.org](https://project-x.org), også kendt som **projectx**) er en open source AI-jobsøgning, der kører lokalt i din AI-kodnings-CLI (Claude Code, Codex, OpenCode og andre) og overlader hver beslutning til dig. Den vurderer jobopslag mod dit CV, genererer ATS-tilpassede PDF'er, finder den rette person at kontakte og holder styr på alt ét sted: du har altid det sidste ord. Den er den første referenceimplementering af [ProjectX-manifestet](https://project-x.org/manifesto).
 
 **Kan det tilpassede CV finde på ting?**
-Det må det ikke, og prompterne siger det: omformuler, opdigt aldrig. `generate-pdf` blokerer et CV med tal eller fakta, der ikke står i dine kilder, medmindre du angiver `--skip-fact-check`. `pdf`-tilstanden kører også `cv-title-check.mjs`, som sammenligner hver jobtitel i det tilpassede CV med den titel, cv.md giver samme job (matchet på virksomhed og datoer), og spørger dig, om en afvigende titel skal beholdes eller rettes tilbage. Den advarer i stedet for at blokere, fordi en omformuleret titel nogle gange er dit valg. Intet bedømmer omformuleringer endnu: [#1411](https://github.com/career-ops-hq/career-ops/issues/1411) (troskabskontrol, der blokerer ved afvigelse) følger det. Indtil da: læs hvert CV, før du sender det. [Den juridiske ansvarsfraskrivelse](LEGAL_DISCLAIMER.md) siger det samme med flere ord.
+Det må det ikke, og prompterne siger det: omformuler, opdigt aldrig. `generate-pdf` blokerer et CV med tal eller fakta, der ikke står i dine kilder, medmindre du angiver `--skip-fact-check`. `pdf`-tilstanden kører også `cv-title-check.mjs`, som sammenligner hver jobtitel i det tilpassede CV med den titel, cv.md giver samme job (matchet på virksomhed og datoer), og spørger dig, om en afvigende titel skal beholdes eller rettes tilbage. Den advarer i stedet for at blokere, fordi en omformuleret titel nogle gange er dit valg. Intet bedømmer omformuleringer endnu: [#1411](https://github.com/project-x-hq/project-x/issues/1411) (troskabskontrol, der blokerer ved afvigelse) følger det. Indtil da: læs hvert CV, før du sender det. [Den juridiske ansvarsfraskrivelse](LEGAL_DISCLAIMER.md) siger det samme med flere ord.
 
-**Kan jeg køre career-ops gratis eller på en billigere / lokal model?**
-Ja. career-ops er CLI-uafhængig og kører på gratis og lokale modeller (gratis OpenRouter-modeller, Ollama eller ethvert OpenAI-kompatibelt endpoint), så du er ikke bundet til et betalt abonnement. Se [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md) for den fulde opsætning.
+**Kan jeg køre project-x gratis eller på en billigere / lokal model?**
+Ja. project-x er CLI-uafhængig og kører på gratis og lokale modeller (gratis OpenRouter-modeller, Ollama eller ethvert OpenAI-kompatibelt endpoint), så du er ikke bundet til et betalt abonnement. Se [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md) for den fulde opsætning.
 
-**Jeg betaler for Claude Pro/Max, men career-ops brænder API-kredit af. Hvorfor?**
+**Jeg betaler for Claude Pro/Max, men project-x brænder API-kredit af. Hvorfor?**
 Fordi en `ANTHROPIC_API_KEY` i dit miljø går forud for dit indloggede abonnement: CLI'en bruger nøglen og fakturerer pr. token. Kør `echo $ANTHROPIC_API_KEY`, og hvis den udskriver noget, så fjern den fra din shell-profil, genstart terminalen og kør `/login`. Batch-tilstand er undtagelsen, da `claude -p`-workers ikke bruger det interaktive login: kør `claude setup-token` én gang og eksportér resultatet som `CLAUDE_CODE_OAUTH_TOKEN`. Fuld gennemgang i [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md#2b-already-paying-for-a-subscription-make-sure-you-are-using-it).
 
-**Hvilke AI-CLI'er virker career-ops med?**
-career-ops kører på enhver større AI-kodnings-CLI (Claude Code, Codex, Gemini / Antigravity, OpenCode, Grok, Qwen og flere) gennem den åbne Agent Skill Standard, så den er aldrig låst til én leverandør. Brug den CLI, du allerede har.
+**Hvilke AI-CLI'er virker project-x med?**
+project-x kører på enhver større AI-kodnings-CLI (Claude Code, Codex, Gemini / Antigravity, OpenCode, Grok, Qwen og flere) gennem den åbne Agent Skill Standard, så den er aldrig låst til én leverandør. Brug den CLI, du allerede har.
 
-**Hvordan installerer jeg career-ops på Windows?**
-career-ops kører på Windows. Platformspecifik opsætning og de kendte faldgruber (Git Bash-detektion, linjeskift, Opgavestyring) findes i [docs/WINDOWS.md](docs/WINDOWS.md). Hvis skills ikke indlæses med en symlink-fejl under installationen, findes løsningen i [docs/FAQ.md](docs/FAQ.md). Fulde trin findes i [docs/SETUP.md](docs/SETUP.md).
+**Hvordan installerer jeg project-x på Windows?**
+project-x kører på Windows. Platformspecifik opsætning og de kendte faldgruber (Git Bash-detektion, linjeskift, Opgavestyring) findes i [docs/WINDOWS.md](docs/WINDOWS.md). Hvis skills ikke indlæses med en symlink-fejl under installationen, findes løsningen i [docs/FAQ.md](docs/FAQ.md). Fulde trin findes i [docs/SETUP.md](docs/SETUP.md).
 
-**Søger career-ops job for mig automatisk?**
-Nej. career-ops er et filter, ikke en spray-and-pray-autosøger. AI'en vurderer, rangerer og skriver udkast; du gennemgår og beslutter. Den skriver udkast og udfylder felterne; den indsender aldrig. Du trykker på Send. Det human-in-the-loop-design er hele pointen.
+**Søger project-x job for mig automatisk?**
+Nej. project-x er et filter, ikke en spray-and-pray-autosøger. AI'en vurderer, rangerer og skriver udkast; du gennemgår og beslutter. Den skriver udkast og udfylder felterne; den indsender aldrig. Du trykker på Send. Det human-in-the-loop-design er hele pointen.
 
-**Er career-ops gratis og open source?**
-Ja. career-ops er gratis og open source, og for kandidaten vil det altid være sådan. Det er den første referenceimplementering af [CareerOps-manifestet](https://career-ops.org/manifesto). Læs det, og hvis det siger, hvad du tror på, så skriv under.
+**Er project-x gratis og open source?**
+Ja. project-x er gratis og open source, og for kandidaten vil det altid være sådan. Det er den første referenceimplementering af [ProjectX-manifestet](https://project-x.org/manifesto). Læs det, og hvis det siger, hvad du tror på, så skriv under.
 
 ## Om forfatteren
 
-Jeg er [Santiago Fernández de Valderrama Aparicio](https://santifer.io/about) (santifer), tidligere stifter: jeg byggede og solgte en virksomhed, der stadig kører med mit navn på. Jeg byggede career-ops til at styre min egen jobsøgning, og det virkede: det skaffede mig en stilling som Head of Applied AI. Seks måneder senere forlod jeg den stilling for at fokusere på at bygge career-ops på fuld tid.
+Jeg er [Santiago Fernández de Valderrama Aparicio](https://santifer.io/about) (santifer), tidligere stifter: jeg byggede og solgte en virksomhed, der stadig kører med mit navn på. Jeg byggede project-x til at styre min egen jobsøgning, og det virkede: det skaffede mig en stilling som Head of Applied AI. Seks måneder senere forlod jeg den stilling for at fokusere på at bygge project-x på fuld tid.
 
-Nysgerrig efter, hvordan et repository af denne størrelse vedligeholdes med en flåde af AI-agenter og et menneske, der beslutter hver merge? Læs [Agentic maintenance: how career-ops is run by a fleet of AI agents](https://santifer.io/ai-agent-fleet).
+Nysgerrig efter, hvordan et repository af denne størrelse vedligeholdes med en flåde af AI-agenter og et menneske, der beslutter hver merge? Læs [Agentic maintenance: how project-x is run by a fleet of AI agents](https://santifer.io/ai-agent-fleet).
 
 Min portefølje og andre open source-projekter → [santifer.io](https://santifer.io)
 
-Wikidata: [Santiago Fernández de Valderrama Aparicio](https://www.wikidata.org/wiki/Q138710224) · [career-ops](https://www.wikidata.org/wiki/Q139007988).
+Wikidata: [Santiago Fernández de Valderrama Aparicio](https://www.wikidata.org/wiki/Q138710224) · [project-x](https://www.wikidata.org/wiki/Q139007988).
 
 ## Juridisk ansvarsfraskrivelse
 
-**career-ops er et lokalt open source-værktøj, IKKE en hostet tjeneste.** Ved at bruge denne software anerkender du:
+**project-x er et lokalt open source-værktøj, IKKE en hostet tjeneste.** Ved at bruge denne software anerkender du:
 
 1. **Du kontrollerer dine data.** Dit CV, dine kontaktoplysninger og personlige data bliver på din maskine og sendes direkte til den AI-udbyder, du vælger (Anthropic, OpenAI osv.). Vi indsamler, gemmer eller har ikke adgang til nogen af dine data.
 2. **Du kontrollerer AI'en.** Standardprompterne instruerer AI'en i ikke at indsende ansøgninger automatisk, men AI-modeller kan opføre sig uforudsigeligt. Hvis du ændrer prompterne eller bruger andre modeller, gør du det på egen risiko. **Gennemgå altid AI-genereret indhold for nøjagtighed, før du sender.**
@@ -588,20 +588,20 @@ Se [LEGAL_DISCLAIMER.md](LEGAL_DISCLAIMER.md) for alle detaljer. Denne software 
 
 ## Bidragydere
 
-<a href="https://github.com/career-ops-hq/career-ops/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=career-ops-hq/career-ops&v=2" />
+<a href="https://github.com/project-x-hq/project-x/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=project-x-hq/project-x&v=2" />
 </a>
 
 Alle, der har leveret kode, dokumentation, oversættelser eller tests, står i
 [CONTRIBUTORS.md](CONTRIBUTORS.md), inklusive bidrag uden kode, som
 grafen ovenfor ikke kan vise.
 
-Blev du ansat med career-ops? [Del din historie!](https://github.com/career-ops-hq/career-ops/issues/new?template=i-got-hired.yml)
+Blev du ansat med project-x? [Del din historie!](https://github.com/project-x-hq/project-x/issues/new?template=i-got-hired.yml)
 
 ## Licens og varemærke
 
 Koden er licenseret under [MIT](LICENSE). Navnet og brandet
-"career-ops" er underlagt [varemærkepolitikken](TRADEMARK.md), tilladende
+"project-x" er underlagt [varemærkepolitikken](TRADEMARK.md), tilladende
 for community-brug, forbeholdt kommerciel produktnavngivning og
 anbefalinger.
 
@@ -613,7 +613,7 @@ Koden er MIT; dataene i [`employers/`](employers/) er under [CC BY 4.0](employer
   <a href="https://warpchart.dev/hq">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://warpchart.dev/api/chart?theme=dark&v=3">
-      <img alt="Live star telemetry of career-ops-hq/career-ops" src="https://warpchart.dev/api/chart?theme=light&v=3" loading="lazy">
+      <img alt="Live star telemetry of project-x-hq/project-x" src="https://warpchart.dev/api/chart?theme=light&v=3" loading="lazy">
     </picture>
   </a>
 </p>

@@ -224,7 +224,7 @@
 | Posting legitimacy | Block G 的評級 | `✅ High Confidence`；Proceed with Caution / Suspicious 渲染為 `⚠️ {tier} — {一句話原因}` |
 | Employment classification | Block G 內的僱用性質訊號 | 檢查已執行且無異常時 `✅ clear`；標記觸發時 `⚠️ contractor-style language: "{引用原文}"`；無法執行時 `— not evaluated` |
 | Culture screen | Block A 的文化篩查欄位 | `✅ pass`，或 `⚠️ caution — {證據}` / `⚠️ fail — {證據}`；未做篩查時 `— not evaluated` |
-| Interview red flags | `interview-prep/{company-slug}-redflags.md`（來自 `interview-redflag` 模式） | **交叉參照，不是複製：** 檔案存在時寫出其目前警告等級並附相對連結 —— `[{level}](../interview-prep/{company-slug}-redflags.md)`（相對於 `reports/`）；否則 `— no interview sessions yet`。**未經核實的檔案：** 若檔案包含標記 `<!-- career-ops:redflags-unverified -->`（`interview-redflag` 在沒有任何真實面試 session 支撐的情況下保留了該檔案），絕不寫出其警告等級：渲染為 `— not evaluated: [unverified analysis](../interview-prep/{company-slug}-redflags.md)`，`risk_summary.interview_redflags` 為 `not_evaluated`。只認標記，不認註記文字：註記以使用者的輸出語言書寫。 |
+| Interview red flags | `interview-prep/{company-slug}-redflags.md`（來自 `interview-redflag` 模式） | **交叉參照，不是複製：** 檔案存在時寫出其目前警告等級並附相對連結 —— `[{level}](../interview-prep/{company-slug}-redflags.md)`（相對於 `reports/`）；否則 `— no interview sessions yet`。**未經核實的檔案：** 若檔案包含標記 `<!-- project-x:redflags-unverified -->`（`interview-redflag` 在沒有任何真實面試 session 支撐的情況下保留了該檔案），絕不寫出其警告等級：渲染為 `— not evaluated: [unverified analysis](../interview-prep/{company-slug}-redflags.md)`，`risk_summary.interview_redflags` 為 `not_evaluated`。只認標記，不認註記文字：註記以使用者的輸出語言書寫。 |
 | AI claims vs. infrastructure | Block G 中的 AI／基礎設施一致性檢查（若存在） | 本報告包含該檢查時鏡射其結論（`✅ consistent` / `⚠️ {發現}`）；否則 `— not evaluated`。該檢查一旦存在此列自動啟用，無順序相依 |
 
 區塊格式：

@@ -105,10 +105,10 @@ function runCli(dataRoot, args) {
     timeout: 60_000,
     env: {
       ...process.env,
-      CAREER_OPS_ROOT: dataRoot,
-      CAREER_OPS_DATA_DIR: '',
-      CAREER_OPS_TRACKER: '',
-      CAREER_OPS_PROFILE: '',
+      PROJECT_X_ROOT: dataRoot,
+      PROJECT_X_DATA_DIR: '',
+      PROJECT_X_TRACKER: '',
+      PROJECT_X_PROFILE: '',
     },
   });
 }

@@ -18,7 +18,7 @@
 // hide the employer ("название скрыто", "our client"), or bundle several
 // vacancies are not emitted. Measured 2026-09-03 over 809 posts from 17
 // public channels, before hashtag-template support: 137 pass (25% of the
-// RU/CIS corpus, none of the EN one, whose channels mirror boards career-ops
+// RU/CIS corpus, none of the EN one, whose channels mirror boards project-x
 // already scans or link through
 // shorteners); every rejection is a post the policy could not attribute, not
 // a parser failure. Re-measured 2026-10-31 over 2,973 posts from 51 public
@@ -60,7 +60,7 @@ const FORM_HOSTS = /(^|\.)(forms\.gle|docs\.google\.com|forms\.yandex\.ru|typefo
 // round, every Habr Career vacancy link (all the Proglib channels link there)
 // was dropped as a blog link.
 const BOARD_HOSTS = /(^|\.)(getmatch\.ru|finder\.work|geekjob\.ru|geeklink\.io|linkedin\.com|hh\.ru|career\.habr\.com|djinni\.co|indeed\.com|glassdoor\.com|weworkremotely\.com|remoteok\.com|arbeitnow\.com|cryptojobslist\.com|relocate\.me|lemon\.io|ingamejob\.com)$/i;
-// Hosts channels link instead of the employer that career-ops does not read:
+// Hosts channels link instead of the employer that project-x does not read:
 // mirrors whose operator is not declared under the source policy yet
 // (remocate.app, offerclaw.app), a vacancy aggregator whose page the posts
 // carry in place of the employer's link (vseti.app; source rules 2 and 5),

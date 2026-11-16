@@ -57,7 +57,7 @@ function scan(jobs) {
     ].join('\n'));
     const r = spawnSync(NODE, ['--import', pathToFileURL(preload).href, join(ROOT, 'scan.mjs')], {
       cwd: dir, encoding: 'utf-8', timeout: 30000,
-      env: { ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_DATA_DIR: '', CAREER_OPS_PORTALS: portals },
+      env: { ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_DATA_DIR: '', PROJECT_X_PORTALS: portals },
     });
     assert.strictEqual(r.status, 0, `scan.mjs exited ${r.status}: ${r.stderr}`);
     const pipeline = join(dir, 'data', 'pipeline.md');

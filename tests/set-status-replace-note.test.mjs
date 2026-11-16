@@ -13,7 +13,7 @@ function reset(note, status = 'Applied') {
 }
 function run(args, state = 'Applied') {
   const r = spawnSync(NODE, [join(ROOT, 'set-status.mjs'), '--row', '1', state, '--json', ...args], {
-    encoding: 'utf8', env: { ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_DATA_DIR: dir, CAREER_OPS_TRACKER: tracker },
+    encoding: 'utf8', env: { ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_DATA_DIR: dir, PROJECT_X_TRACKER: tracker },
   });
   return { ...r, data: JSON.parse(r.stdout) };
 }

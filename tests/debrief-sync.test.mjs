@@ -38,11 +38,11 @@ function check(label, fn) {
 function childEnv(root, extraEnv = {}) {
   return {
     ...process.env,
-    CAREER_OPS_ROOT: root,
-    CAREER_OPS_DATA_DIR: '',
-    CAREER_OPS_TRACKER: '',
-    CAREER_OPS_FOLLOWUPS: '',
-    CAREER_OPS_PROFILE: '',
+    PROJECT_X_ROOT: root,
+    PROJECT_X_DATA_DIR: '',
+    PROJECT_X_TRACKER: '',
+    PROJECT_X_FOLLOWUPS: '',
+    PROJECT_X_PROFILE: '',
     ...extraEnv,
   };
 }
@@ -117,7 +117,7 @@ function writeFixture(root, {
 }
 
 function freshRoot() {
-  return mkdtempSync(join(tmpdir(), 'career-ops-debrief-'));
+  return mkdtempSync(join(tmpdir(), 'project-x-debrief-'));
 }
 
 function readRoot(root, rel) {
@@ -298,14 +298,14 @@ for (const [label, from, to] of [
   try {
     writeFixture(root);
     const result = run(root, ['--app', '7', '--next', FUTURE, '--why', 'panel debrief'], {
-      CAREER_OPS_FOLLOWUPS: custom,
+      PROJECT_X_FOLLOWUPS: custom,
     });
-    check('a CAREER_OPS_FOLLOWUPS pin is the file the cadence summary reads', () => {
+    check('a PROJECT_X_FOLLOWUPS pin is the file the cadence summary reads', () => {
       assert.equal(result.status, 0, describeSpawn(result));
       assert.match(readFileSync(custom, 'utf8'), new RegExp(`^- next #7 ${FUTURE} `, 'm'));
       assert.match(readRoot(root, 'data/follow-ups.md'), /2026-02-01/);
       const cadence = summary(root, 'followup-cadence.mjs', ['--summary'], {
-        CAREER_OPS_FOLLOWUPS: custom,
+        PROJECT_X_FOLLOWUPS: custom,
       });
       assert.equal(cadence.status, 0, describeSpawn(cadence));
       assert.ok(cadence.stdout.includes(FUTURE));
@@ -317,8 +317,8 @@ for (const [label, from, to] of [
 }
 
 {
-  const followups = join(tmpdir(), `career-ops-debrief-pin-${process.pid}.md`);
-  const lock = join(tmpdir(), `career-ops-followups-debrief-${process.pid}.lock`);
+  const followups = join(tmpdir(), `project-x-debrief-pin-${process.pid}.md`);
+  const lock = join(tmpdir(), `project-x-followups-debrief-${process.pid}.lock`);
   mkdirSync(lock, { recursive: true });
   writeFileSync(join(lock, 'owner.json'), JSON.stringify({
     pid: process.pid,
@@ -347,7 +347,7 @@ for (const [label, from, to] of [
 
 check('the override route keeps the web lock timeout', () => {
   const route = readFileSync(join(ROOT, 'web/src/app/api/followups/override/route.ts'), 'utf8');
-  assert.match(route, /CAREER_OPS_WEB_FOLLOWUPS_LOCK_TIMEOUT_MS/);
+  assert.match(route, /PROJECT_X_WEB_FOLLOWUPS_LOCK_TIMEOUT_MS/);
   assert.equal((route.match(/lockTimeoutMs: webLockTimeoutMs\(\)/g) || []).length, 2);
 });
 

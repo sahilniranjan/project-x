@@ -116,7 +116,7 @@ Herhangi bir şey kaydetmeden önce ve aşağıdaki her yazmadan (durum ve yanı
 Aday başvuruyu gönderdiğini onaylarsa:
 1. Durumu kanonik CLI ile `Applied` yap: `node set-status.mjs --report <report#> Applied` (`applications.md` tablosunu elle düzenleme)
 2. Final yanıtları raporun `## Application Answers` bölümüne `**State:** submitted` ile yaz: `node application-answers.mjs --report reports/NNN-company-role-date.md --input answers.json --state submitted` (JSON alanları için `node application-answers.mjs --help`). Blok G'ye (İlan Meşruiyeti) ve Blok H'ye (değerlendirmenin taslakları) dokunma.
-3. Sonraki adımı öner: İşe alım sorumlusuna LinkedIn erişimi için `/career-ops contacto`
+3. Sonraki adımı öner: İşe alım sorumlusuna LinkedIn erişimi için `/project-x contacto`
 
 ## Scroll Yönetimi
 

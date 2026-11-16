@@ -25,7 +25,7 @@ import { structuredFieldClaims, verifyFacts } from '../verify-cv-facts.mjs';
 import { describeSpawn } from './helpers/describe-spawn.mjs';
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
-const tmp = mkdtempSync(join(tmpdir(), 'career-ops-structured-facts-'));
+const tmp = mkdtempSync(join(tmpdir(), 'project-x-structured-facts-'));
 process.on('exit', () => rmSync(tmp, { recursive: true, force: true }));
 
 const CV = `# Jane Doe

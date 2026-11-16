@@ -7,7 +7,7 @@ import { parseArgs } from 'node:util';
 import { JSON_SCHEMA } from 'js-yaml';
 import { loadYaml } from './lib/yaml-document.mjs';
 import { machineSummaryStart } from './lib/machine-summary-section.mjs';
-import { getCareerOpsRoot } from './path-resolver.mjs';
+import { getProjectXRoot } from './path-resolver.mjs';
 import { acquireTrackerLock, trackerLockDirFor, renameSyncWithRetry } from './tracker-utils.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
 import { validateFlags } from './lib/cli-flags.mjs';
@@ -146,7 +146,7 @@ function reportRecord(path, identity, key) {
 }
 
 /** Read-only lookup. Call invalidateJobFacts on a confirmed liveness miss. */
-export async function lookupJobFacts({ reportsDir = join(getCareerOpsRoot(), 'reports'), fingerprint, liveness, now = Date.now() } = {}) {
+export async function lookupJobFacts({ reportsDir = join(getProjectXRoot(), 'reports'), fingerprint, liveness, now = Date.now() } = {}) {
   const { identity, key, failure } = await contextFor({ fingerprint, liveness, now });
   if (failure) return failure;
   if (liveness.result !== 'active') return miss(`liveness-${liveness.result}`);
@@ -165,7 +165,7 @@ export async function lookupJobFacts({ reportsDir = join(getCareerOpsRoot(), 're
 }
 
 /** Persist tombstones in all matching reports; no separate cache store. */
-export async function invalidateJobFacts({ reportsDir = join(getCareerOpsRoot(), 'reports'), fingerprint, liveness, now = Date.now() } = {}) {
+export async function invalidateJobFacts({ reportsDir = join(getProjectXRoot(), 'reports'), fingerprint, liveness, now = Date.now() } = {}) {
   const { identity, key, failure } = await contextFor({ fingerprint, liveness, now });
   if (failure) return failure;
   if (liveness.result !== 'expired' || !EXPLICIT_CLOSURE_CODES.has(liveness.code)) {
@@ -215,7 +215,7 @@ const USAGE = `Usage: node evaluation-cache.mjs --identity FILE --liveness FILE 
 Read local reports and print strictly allowlisted public job facts as JSON.
 --identity FILE  #1030 listing-fingerprint record (JSON)
 --liveness FILE  Current {url, listing_fingerprint, result, checked_at} (JSON)
---reports DIR    Defaults to reports/ under the resolved career-ops data root
+--reports DIR    Defaults to reports/ under the resolved project-x data root
 --invalidate     Record confirmed expired liveness in existing report metadata
 --help, -h       Show help
 

@@ -21,11 +21,11 @@ function trackerRoot(t) {
 }
 
 function run(root, script, args) {
-  const env = { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_DATA_DIR: root };
+  const env = { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_DATA_DIR: root };
   // A developer shell can point these at a real tracker. Sync would then
   // rewrite that index with the synthetic Lapsed row.
-  delete env.CAREER_OPS_TRACKER;
-  delete env.CAREER_OPS_TRACKER_DB;
+  delete env.PROJECT_X_TRACKER;
+  delete env.PROJECT_X_TRACKER_DB;
   return spawnSync(process.execPath, [join(ROOT, script), ...args], {
     env,
     encoding: 'utf8',

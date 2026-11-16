@@ -34,13 +34,13 @@ import { describeSpawn } from './helpers/describe-spawn.mjs';
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 
-// scan.mjs resolves CAREER_OPS_SCAN_HISTORY ONCE, at module evaluation, so the
+// scan.mjs resolves PROJECT_X_SCAN_HISTORY ONCE, at module evaluation, so the
 // sandbox has to be pointed at before the import below — not after. Getting
 // this backwards is how a module ends up reading the developer's real
 // data/scan-history.tsv while the test believes it is hermetic.
 const sandbox = mkdtempSync(join(tmpdir(), 'liveness-record-'));
 const historyPath = join(sandbox, 'scan-history.tsv');
-process.env.CAREER_OPS_SCAN_HISTORY = historyPath;
+process.env.PROJECT_X_SCAN_HISTORY = historyPath;
 
 const { planExpiredHistoryRows } = await import('../liveness-core.mjs');
 const { normalizeUrlForDedup, seenJobKey, shouldDedupScanHistoryRow } = await import('../scan.mjs');
@@ -357,7 +357,7 @@ test('the history read happens inside the lock, so a concurrent scan cannot caus
     const proc = execFile(
       process.execPath,
       ['--input-type=module', '-e', child, pathToFileURL(join(ROOT, 'check-liveness.mjs')).href, marker],
-      { env: { ...process.env, CAREER_OPS_SCAN_HISTORY: historyFixture }, encoding: 'utf-8' },
+      { env: { ...process.env, PROJECT_X_SCAN_HISTORY: historyFixture }, encoding: 'utf-8' },
     );
     const finished = new Promise((resolve, reject) => {
       proc.on('error', reject);

@@ -1,10 +1,10 @@
-# Konteks bersama -- career-ops (Bahasa Indonesia)
+# Konteks bersama -- project-x (Bahasa Indonesia)
 
 <!-- ============================================================
      PERSONALISASI FILE INI
      ============================================================
-     File ini berisi konteks bersama untuk semua mode career-ops
-     versi Bahasa Indonesia. Sebelum memakai career-ops, kamu HARUS:
+     File ini berisi konteks bersama untuk semua mode project-x
+     versi Bahasa Indonesia. Sebelum memakai project-x, kamu HARUS:
      1. Mengisi config/profile.yml dengan data pribadimu
      2. Membuat cv.md di root proyek (CV dalam format Markdown)
      3. (Opsional) Membuat article-digest.md berisi proof point-mu

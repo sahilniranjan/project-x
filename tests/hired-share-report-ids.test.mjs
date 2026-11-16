@@ -17,11 +17,11 @@ import { spawnSync } from 'node:child_process';
 import { ROOT, pass, fail } from './helpers.mjs';
 import { describeSpawn, exitedNonZero } from './helpers/describe-spawn.mjs';
 
-const root = mkdtempSync(join(tmpdir(), 'career-ops-hired-ids-'));
+const root = mkdtempSync(join(tmpdir(), 'project-x-hired-ids-'));
 mkdirSync(join(root, 'data'), { recursive: true });
 const tracker = join(root, 'data', 'applications.md');
 const statePath = join(root, 'data', '.hired-share-state.json');
-const env = { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_TRACKER: tracker };
+const env = { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_TRACKER: tracker };
 
 // One Hired row whose report link carries the padding: reports/012-acme.md.
 writeFileSync(tracker, '| # | Date | Company | Role | Score | Status | PDF | Report | Notes |\n'

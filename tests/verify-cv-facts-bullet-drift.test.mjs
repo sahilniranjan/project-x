@@ -172,7 +172,7 @@ check('prose outside a list is not anchored',
   drift('<p>Led a Kafka migration for the billing service.</p>').length === 0, null);
 
 // Through verifyFacts: blocking verdict, config, de-duplication, language skip.
-const tmp = mkdtempSync(join(tmpdir(), 'career-ops-bullet-drift-'));
+const tmp = mkdtempSync(join(tmpdir(), 'project-x-bullet-drift-'));
 try {
   const source = join(tmp, 'cv.md');
   const config = join(tmp, 'cv-facts.json');

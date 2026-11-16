@@ -8,7 +8,7 @@
 # whenever a release bumps the version. The Hired Wall badge is redrawn by the
 # hired-wall workflow, after each hire.
 #
-# Commits as @careerops-ledger (LEDGER_TOKEN), like the wall's bookkeeping.
+# Commits as @projectx-ledger (LEDGER_TOKEN), like the wall's bookkeeping.
 # A source or shields.io that does not answer keeps the last badge and warns.
 name: readme-badges
 on:
@@ -24,7 +24,7 @@ permissions:
 
 jobs:
   refresh:
-    if: github.repository == 'career-ops-hq/career-ops'
+    if: github.repository == 'project-x-hq/project-x'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     concurrency:
@@ -40,8 +40,8 @@ jobs:
         run: node .github/scripts/readme-badges.mjs discord npm
       - name: Commit
         run: |
-          git config user.name "careerops-ledger"
-          git config user.email "careerops-ledger@users.noreply.github.com"
+          git config user.name "projectx-ledger"
+          git config user.email "projectx-ledger@users.noreply.github.com"
           git add docs/discord-badge.svg docs/npm-badge.svg
           if git diff --cached --quiet; then echo "nothing to commit"; exit 0; fi
           git commit -m "chore(badges): redraw the README's Discord and npm badges"

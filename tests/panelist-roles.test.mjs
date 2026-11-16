@@ -203,12 +203,12 @@ eq('trimTitle: balanced parentheses kept', trimTitle('Director (Privacy)'), 'Dir
     const mine = JSON.parse(run([f, '--table', goodTable]).stdout);
     eq('cli: --table classification', mine.panelists[0].role, 'sec');
 
-    // relative --table falls back to the data root (CAREER_OPS_ROOT) when not in the cwd
+    // relative --table falls back to the data root (PROJECT_X_ROOT) when not in the cwd
     const root = join(dir, 'root');
     mkdirSync(join(root, 'config'), { recursive: true });
     copyFileSync(goodTable, join(root, 'config', 'panelist-roles.yml'));
-    const viaRoot = spawnSync(process.execPath, [SCRIPT, f, '--table', 'config/panelist-roles.yml'], { encoding: 'utf-8', cwd: dir, env: { ...process.env, CAREER_OPS_ROOT: root } });
-    eq('cli: relative --table resolved under CAREER_OPS_ROOT', JSON.parse(viaRoot.stdout).panelists[0].role, 'sec');
+    const viaRoot = spawnSync(process.execPath, [SCRIPT, f, '--table', 'config/panelist-roles.yml'], { encoding: 'utf-8', cwd: dir, env: { ...process.env, PROJECT_X_ROOT: root } });
+    eq('cli: relative --table resolved under PROJECT_X_ROOT', JSON.parse(viaRoot.stdout).panelists[0].role, 'sec');
 
     eq('cli: nothing written next to the input', readdirSync(dir).sort().filter((x) => !['bad.yml', 'mine.yml', 'root'].includes(x)), before);
   } finally {

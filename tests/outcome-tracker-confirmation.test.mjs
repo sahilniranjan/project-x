@@ -6,13 +6,13 @@ import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { ROOT, pass, fail } from './helpers.mjs';
 import { describeSpawn } from './helpers/describe-spawn.mjs';
-const root = mkdtempSync(join(tmpdir(), 'career-ops-outcome-commit-'));
+const root = mkdtempSync(join(tmpdir(), 'project-x-outcome-commit-'));
 mkdirSync(join(root, 'data'), { recursive: true });
 const tracker = join(root, 'data', 'applications.md');
 const initial = '| # | Date | Company | Role | Score | Status | PDF | Report | Notes |\n|---|---|---|---|---|---|---|---|---|\n| 1 | 2026-01-05 | Fictional | Engineer | 4/5 | Applied | — | — | notes |\n';
 writeFileSync(tracker, initial);
 writeFileSync(join(root, 'cv.md'), '# Fictional master CV\n');
-const env = { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_TRACKER: tracker, CAREER_OPS_TRACKER_LOCK_TIMEOUT_MS: '100', CAREER_OPS_TRACKER_LOCK_RETRY_MS: '10' };
+const env = { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_TRACKER: tracker, PROJECT_X_TRACKER_LOCK_TIMEOUT_MS: '100', PROJECT_X_TRACKER_LOCK_RETRY_MS: '10' };
 const run = args => spawnSync(process.execPath, [join(ROOT, 'outcome.mjs'), '1', 'hired', '--json', ...args], { env, encoding: 'utf8' });
 function check(label, fn) { try { fn(); pass(label); } catch (e) { fail(`${label}: ${e.message}`); process.exitCode = 1; } }
 

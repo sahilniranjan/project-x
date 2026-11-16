@@ -6,8 +6,8 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/santifer/career-ops/dashboard/internal/i18n"
-	"github.com/santifer/career-ops/dashboard/internal/model"
+	"github.com/santifer/project-x/dashboard/internal/i18n"
+	"github.com/santifer/project-x/dashboard/internal/model"
 )
 
 // CanonicalizeArchetype maps raw, noisy LLM-extracted archetype strings

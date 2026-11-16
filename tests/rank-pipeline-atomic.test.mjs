@@ -49,7 +49,7 @@ function scenario({ failure = '', linked = false, concurrent = false } = {}) {
       require('node:module').syncBuiltinESMExports();
     `);
     const result = spawnSync(process.execPath, ['--require', preload, join(ROOT, 'rank-pipeline.mjs'), '--cli', 'fixture-ranker', '--limit', '1'], {
-      env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_DATA_DIR: root },
+      env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_DATA_DIR: root },
       encoding: 'utf8', timeout: 30_000,
     });
     assert.equal(result.error, undefined, result.error?.message);

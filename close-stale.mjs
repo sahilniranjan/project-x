@@ -55,7 +55,7 @@
  *      node close-stale.mjs --confirm              (write)
  *      node close-stale.mjs --today 2026-10-17     (deterministic runs/tests)
  *
- * Paths follow CAREER_OPS_ROOT / CAREER_OPS_DATA_DIR / CAREER_OPS_TRACKER.
+ * Paths follow PROJECT_X_ROOT / PROJECT_X_DATA_DIR / PROJECT_X_TRACKER.
  */
 
 import { readFileSync, existsSync } from 'fs';
@@ -69,7 +69,7 @@ import {
   loadCanonicalStates, resolveCanonicalState, openTrackerTransaction, appendLedgerRows, cell,
   companiesMatchIgnoringCorporateForm,
 } from './tracker-utils.mjs';
-import { getCareerOpsRoot, resolveTrackerPath } from './path-resolver.mjs';
+import { getProjectXRoot, resolveTrackerPath } from './path-resolver.mjs';
 import { parseActiveInterviews, findColumn } from './process-quality.mjs';
 import {
   parseFollowups, parseNextOverrides, resolveNextOverride, parseClearedDirectives, isRetired,
@@ -334,7 +334,7 @@ function loadContext({ dataRoot, trackerPath, today, days, states }) {
   const interviewsPath = existsSync(join(dataRoot, 'data/active-interviews.md'))
     ? join(dataRoot, 'data/active-interviews.md')
     : join(dataRoot, 'active-interviews.md');
-  const followupsPath = process.env.CAREER_OPS_FOLLOWUPS || join(dataRoot, 'data/follow-ups.md');
+  const followupsPath = process.env.PROJECT_X_FOLLOWUPS || join(dataRoot, 'data/follow-ups.md');
   const followupsMd = readIfExists(followupsPath);
   return {
     today,
@@ -413,7 +413,7 @@ if (isMainModule(import.meta.url)) {
   if (targetStatus === 'Applied') fail('--status Applied would close nothing: pick the state to move stale rows into.');
 
   const confirm = hasFlag(args, '--confirm');
-  const dataRoot = getCareerOpsRoot();
+  const dataRoot = getProjectXRoot();
   const trackerPath = resolveTrackerPath(dataRoot);
   const tag = noteTag(today, days);
 

@@ -4,7 +4,7 @@
 //
 // Skill catalogs index any skill.md/SKILL.md with a frontmatter `name:`, so a
 // plugins/_template/skill.md was listed as an installable skill named
-// career-ops-plugin-{{NAME}}. The template now ships skill.md.template and
+// project-x-plugin-{{NAME}}. The template now ships skill.md.template and
 // scaffoldNew renames it on copy.
 //
 // HERMETIC: scaffolds into a temp root that holds only a copy of the template.
@@ -35,7 +35,7 @@ test('scaffoldNew turns skill.md.template into the skill.md the manifest names',
     assert.ok(existsSync(join(dest, 'skill.md')), 'scaffolded plugin has no skill.md');
     assert.ok(!existsSync(join(dest, 'skill.md.template')), 'scaffolded plugin kept skill.md.template');
     const skill = readFileSync(join(dest, 'skill.md'), 'utf8');
-    assert.match(skill, /^name: career-ops-plugin-my-plugin$/m);
+    assert.match(skill, /^name: project-x-plugin-my-plugin$/m);
     assert.doesNotMatch(skill, /\{\{NAME\}\}/);
   } finally {
     rmSync(root, { recursive: true, force: true });

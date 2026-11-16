@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// career-ops scaffolder — one-command install.
+// project-x scaffolder — one-command install.
 // Clones the repo at the latest release tag (or main, saying so, when no
 // release can be resolved) and installs dependencies.
 // It deliberately does NOT create cv.md / config/profile.yml / portals.yml:
@@ -14,9 +14,9 @@ import { ensureSkillEntrypoints } from "./skill-entrypoints.mjs";
 import { npmCommand } from "./npm-command.mjs";
 import { resolveReleaseTag } from "./release-tag.mjs";
 
-const REPO = "https://github.com/career-ops-hq/career-ops.git";
+const REPO = "https://github.com/project-x-hq/project-x.git";
 
-// career-ops is AI-agnostic: every one of these CLIs reads AGENTS.md and works
+// project-x is AI-agnostic: every one of these CLIs reads AGENTS.md and works
 // out of the box. We only detect them to tailor the final message — we never
 // install, configure, or remove anything per-CLI.
 const SUPPORTED_CLIS = [
@@ -32,13 +32,13 @@ const SUPPORTED_CLIS = [
   { name: "Oh My Pi", cmd: "omp" },
 ];
 
-const USAGE = `career-ops — set up an AI job search workspace.
+const USAGE = `project-x — set up an AI job search workspace.
 
 Usage:
-  npx @santifer/career-ops init [folder]    Create a new workspace (default: ./career-ops)
+  npx @santifer/project-x init [folder]    Create a new workspace (default: ./project-x)
 
 After setup, open your AI coding tool inside the folder and paste a job offer.
-Docs: https://github.com/career-ops-hq/career-ops`;
+Docs: https://github.com/project-x-hq/project-x`;
 
 function die(msg) {
   console.error(`\n✗ ${msg}\n`);
@@ -82,13 +82,13 @@ async function main() {
   }
   if (cmd !== "init") die(`Unknown command "${cmd}".\n${USAGE}`);
 
-  const target = dirArg || "career-ops";
+  const target = dirArg || "project-x";
   if (existsSync(target) && readdirSync(target).length > 0) {
     die(`Target folder "${target}" already exists and is not empty. Pick another name.`);
   }
   if (!has("git")) die("git is required but was not found on PATH. Install git and try again.");
 
-  // Pretty path for messages: "./career-ops" for relative, as-is for absolute.
+  // Pretty path for messages: "./project-x" for relative, as-is for absolute.
   const isAbsolute = target.startsWith("/") || /^[A-Za-z]:/.test(target);
   const display = isAbsolute ? target : `./${target}`;
 
@@ -96,12 +96,12 @@ async function main() {
   // default branch, and say so: main can carry unreleased changes.
   const { tag, reason } = await resolveReleaseTag();
   if (!tag) {
-    console.warn(`\n! Could not resolve the latest career-ops release: ${reason}.`);
+    console.warn(`\n! Could not resolve the latest project-x release: ${reason}.`);
     console.warn("  Installing the main branch instead, which can include changes not yet in a release.");
     console.warn(`  To install a release, delete ${display} and run this command again later.`);
   }
   const ref = tag || "main (unreleased)";
-  console.log(`\n→ Cloning career-ops @ ${ref} into ${display} ...`);
+  console.log(`\n→ Cloning project-x @ ${ref} into ${display} ...`);
   const cloneArgs = ["clone", "--depth=1"];
   if (tag) cloneArgs.push("--branch", tag);
   cloneArgs.push(REPO, target);
@@ -132,11 +132,11 @@ async function main() {
   // their absence is what triggers the agent's conversational onboarding on
   // first launch, which sets them up far better than copying placeholders.
   if (installed) {
-    console.log(`\n✓ career-ops @ ${ref} is ready in ${display}\n`);
+    console.log(`\n✓ project-x @ ${ref} is ready in ${display}\n`);
     console.log("Next steps:");
     console.log(`  1. cd ${target}`);
   } else {
-    console.log(`\n! career-ops @ ${ref} is cloned in ${display} but NOT ready: dependencies did not install.\n`);
+    console.log(`\n! project-x @ ${ref} is cloned in ${display} but NOT ready: dependencies did not install.\n`);
     console.log("Next steps:");
     console.log(`  1. cd ${target} && npm install   (then node doctor.mjs)`);
     process.exitCode = 1;
@@ -154,7 +154,7 @@ async function main() {
 
   console.log("\nOn first launch it walks you through setup — your CV, profile and target");
   console.log("roles — just by chatting. Nothing to configure by hand.");
-  console.log("\ncareer-ops is AI-agnostic — Claude Code, Codex, Qwen, OpenCode, Copilot, Antigravity and Grok all work.");
+  console.log("\nproject-x is AI-agnostic — Claude Code, Codex, Qwen, OpenCode, Copilot, Antigravity and Grok all work.");
   console.log("\nOptional (for PDF generation):");
   console.log("  npx playwright install chromium\n");
 }

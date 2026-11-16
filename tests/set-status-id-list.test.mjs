@@ -28,13 +28,13 @@ const TRACKER = [
 ].join('\n');
 
 function sandbox(body = TRACKER) {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-set-status-list-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-set-status-list-'));
   const tracker = join(dir, 'applications.md');
   writeFileSync(tracker, body);
   return {
     dir,
     tracker,
-    lock: join(dir, 'career-ops-merge-tracker-test.lock'),
+    lock: join(dir, 'project-x-merge-tracker-test.lock'),
   };
 }
 
@@ -45,11 +45,11 @@ function spawn(sb, args, { tracker = sb.tracker } = {}) {
     timeout: 30_000,
     env: {
       ...process.env,
-      CAREER_OPS_ROOT: sb.dir,
-      CAREER_OPS_DATA_DIR: '',
-      CAREER_OPS_TRACKER: tracker,
-      CAREER_OPS_TRACKER_DB: '',
-      CAREER_OPS_TRACKER_LOCK: sb.lock,
+      PROJECT_X_ROOT: sb.dir,
+      PROJECT_X_DATA_DIR: '',
+      PROJECT_X_TRACKER: tracker,
+      PROJECT_X_TRACKER_DB: '',
+      PROJECT_X_TRACKER_LOCK: sb.lock,
     },
   });
 }

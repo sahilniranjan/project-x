@@ -52,12 +52,12 @@ const { buildVisaFilter, visaFilterText, countryEligibilityText } =
 
 // ── End to end ──────────────────────────────────────────────────────
 const SCANNER_PATH_VARS = [
-  'CAREER_OPS_PORTALS',
-  'CAREER_OPS_PROFILE',
-  'CAREER_OPS_PIPELINE',
-  'CAREER_OPS_SCAN_HISTORY',
-  'CAREER_OPS_ROOT',
-  'CAREER_OPS_DATA_DIR',
+  'PROJECT_X_PORTALS',
+  'PROJECT_X_PROFILE',
+  'PROJECT_X_PIPELINE',
+  'PROJECT_X_SCAN_HISTORY',
+  'PROJECT_X_ROOT',
+  'PROJECT_X_DATA_DIR',
 ];
 
 function runScan(visaFilter) {
@@ -92,7 +92,7 @@ ${visaFilter}tracked_companies:
     for (const name of SCANNER_PATH_VARS) delete childEnv[name];
     const stdout = execFileSync(NODE, [join(ROOT, 'scan.mjs')], {
       cwd: dir,
-      env: { ...childEnv, CAREER_OPS_ROOT: dir, CAREER_OPS_PORTALS: portals },
+      env: { ...childEnv, PROJECT_X_ROOT: dir, PROJECT_X_PORTALS: portals },
       encoding: 'utf-8',
       timeout: 60_000,
       stdio: ['ignore', 'pipe', 'pipe'],

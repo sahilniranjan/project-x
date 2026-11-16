@@ -51,10 +51,10 @@ check('Step 1 checks for a stale -redflags.md when a company has only skipped fi
 check('Stale check matches the company by front matter, filename prefix only as fallback',
   /front matter `company`, slugified, equals the slug/.test(step1) && /filename starts with `\{company-slug\}-`/.test(step1),
   'company match still parsed from the filename');
-// /career-ops interview is the CV onboarding interview; debriefs come from interview/debrief.
-check('Onboarding messages point to /career-ops interview/debrief, not the CV interview',
-  (threshold.match(/`\/career-ops interview\/debrief`/g) || []).length === 2 && !/`\/career-ops interview`/.test(threshold),
-  'threshold messages still name /career-ops interview');
+// /project-x interview is the CV onboarding interview; debriefs come from interview/debrief.
+check('Onboarding messages point to /project-x interview/debrief, not the CV interview',
+  (threshold.match(/`\/project-x interview\/debrief`/g) || []).length === 2 && !/`\/project-x interview`/.test(threshold),
+  'threshold messages still name /project-x interview');
 check('Stale red-flag file is deleted only on the user\'s explicit yes',
   /offer to delete it/.test(step1) && /Delete it only on the user's explicit yes/.test(step1),
   'deletion not gated on consent');

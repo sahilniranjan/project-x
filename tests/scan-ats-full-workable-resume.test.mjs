@@ -26,7 +26,7 @@ const scanUrl = pathToFileURL(join(ROOT, 'scan-ats-full.mjs')).href;
 
 /** A sandbox data root with a portals.yml and a launcher that fails every DNS lookup. */
 function sandbox() {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-workable-resume-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-workable-resume-'));
   writeFileSync(join(dir, 'portals.yml'), 'title_filter:\n  positive:\n    - engineer\n', 'utf-8');
   mkdirSync(join(dir, 'data', 'cache', 'ats-companies'), { recursive: true });
   const lookups = join(dir, 'lookups.txt');
@@ -65,7 +65,7 @@ function writeCheckpoint(dir, fields) {
 function resume(dir) {
   const out = run(NODE, [join(dir, 'launch.mjs'), '--ats', 'workable', '--json', '--resume', '--dry-run'], {
     cwd: dir,
-    env: { ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_DATA_DIR: '', CAREER_OPS_DNS_LOOKUPS_PER_MIN: '0' },
+    env: { ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_DATA_DIR: '', PROJECT_X_DNS_LOOKUPS_PER_MIN: '0' },
     timeout: 120_000,
   });
   if (out === null) return null;
@@ -148,15 +148,15 @@ console.log('\nscan-ats-full — an in-progress Workable checkpoint stays under 
 function childEnv(dir) {
   const env = {
     ...process.env,
-    CAREER_OPS_ROOT: dir,
-    CAREER_OPS_DATA_DIR: '',
-    CAREER_OPS_PROFILE: '',
-    CAREER_OPS_PORTALS: '',
-    CAREER_OPS_PIPELINE: '',
-    CAREER_OPS_SCAN_HISTORY: '',
-    CAREER_OPS_TRACKER: '',
-    CAREER_OPS_DNS_LOOKUPS_PER_MIN: '0',
-    CAREER_OPS_TRUST_PROXY_EGRESS: '',
+    PROJECT_X_ROOT: dir,
+    PROJECT_X_DATA_DIR: '',
+    PROJECT_X_PROFILE: '',
+    PROJECT_X_PORTALS: '',
+    PROJECT_X_PIPELINE: '',
+    PROJECT_X_SCAN_HISTORY: '',
+    PROJECT_X_TRACKER: '',
+    PROJECT_X_DNS_LOOKUPS_PER_MIN: '0',
+    PROJECT_X_TRUST_PROXY_EGRESS: '',
   };
   for (const key of ['http_proxy', 'HTTP_PROXY', 'https_proxy', 'HTTPS_PROXY', 'all_proxy', 'ALL_PROXY']) {
     delete env[key];
@@ -183,7 +183,7 @@ function inProgressCheckpoint() {
 }
 
 function resumeInProgress(flag) {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-workable-open-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-workable-open-'));
   try {
     writeFileSync(join(dir, 'portals.yml'), 'title_filter:\n  positive:\n    - engineer\n', 'utf-8');
     mkdirSync(join(dir, 'data', 'cache'), { recursive: true });

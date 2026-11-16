@@ -1,7 +1,7 @@
 {
-  "name": "career-ops-plugin-exa",
+  "name": "project-x-plugin-exa",
   "id": "exa",
-  "repo": "https://github.com/Codexnever/career-ops-plugin-exa",
+  "repo": "https://github.com/Codexnever/project-x-plugin-exa",
   "author": "Codexnever",
   "hooks": ["search"],
   "description": "Find job postings beyond your tracked portals with Exa's semantic web search, one query at a time; you review every lead.",

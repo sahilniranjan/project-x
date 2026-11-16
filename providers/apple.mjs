@@ -51,7 +51,7 @@ const PAGE_SIZE = 20;
 
 // No UA override. An earlier version sent a Chrome string on the theory that
 // Apple 403s a bare UA; measured, it does not — the SSR route returns the same
-// 313,692-byte page carrying the same hydration blob to career-ops' own
+// 313,692-byte page carrying the same hydration blob to project-x' own
 // User-Agent, to a bare `node`, and to that Chrome string. `_http.mjs` sets the
 // shared identifying UA, which is what robots.txt rules and any rate limit
 // should be able to name (RFC 9110 §10.1.5, RFC 9309 §2.2.1).

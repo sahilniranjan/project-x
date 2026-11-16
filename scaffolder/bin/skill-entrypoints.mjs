@@ -1,36 +1,36 @@
 // Shared CLI skill entrypoint bootstrap — used by npx init and update-system.
-// Ensures every supported CLI gets .*/skills/career-ops/SKILL.md even when the
+// Ensures every supported CLI gets .*/skills/project-x/SKILL.md even when the
 // cloned release predates a CLI (e.g. Grok on v1.13.0). Materializes pointer
 // files to canonical content on filesystems without symlink support.
 import { readFileSync, writeFileSync, existsSync, mkdirSync, lstatSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 
-export const CANONICAL_SKILL_PATH = '.agents/skills/career-ops/SKILL.md';
+export const CANONICAL_SKILL_PATH = '.agents/skills/project-x/SKILL.md';
 
 export const SKILL_ENTRYPOINTS = [
   {
-    path: '.claude/skills/career-ops/SKILL.md',
-    pointer: '../../../.agents/skills/career-ops/SKILL.md',
+    path: '.claude/skills/project-x/SKILL.md',
+    pointer: '../../../.agents/skills/project-x/SKILL.md',
   },
   {
-    path: '.opencode/skills/career-ops/SKILL.md',
-    pointer: '../../../.agents/skills/career-ops/SKILL.md',
+    path: '.opencode/skills/project-x/SKILL.md',
+    pointer: '../../../.agents/skills/project-x/SKILL.md',
   },
   {
-    path: '.qwen/skills/career-ops/SKILL.md',
-    pointer: '../../../.agents/skills/career-ops/SKILL.md',
+    path: '.qwen/skills/project-x/SKILL.md',
+    pointer: '../../../.agents/skills/project-x/SKILL.md',
   },
   {
-    path: '.antigravitycli/skills/career-ops/SKILL.md',
-    pointer: '../../../.agents/skills/career-ops/SKILL.md',
+    path: '.antigravitycli/skills/project-x/SKILL.md',
+    pointer: '../../../.agents/skills/project-x/SKILL.md',
   },
   {
-    path: '.grok/skills/career-ops/SKILL.md',
-    pointer: '../../../.agents/skills/career-ops/SKILL.md',
+    path: '.grok/skills/project-x/SKILL.md',
+    pointer: '../../../.agents/skills/project-x/SKILL.md',
   },
   {
-    path: '.kimi/skills/career-ops/SKILL.md',
-    pointer: '../../../.agents/skills/career-ops/SKILL.md',
+    path: '.kimi/skills/project-x/SKILL.md',
+    pointer: '../../../.agents/skills/project-x/SKILL.md',
   },
 ];
 

@@ -24,7 +24,7 @@ const formats = [
 ];
 
 function check(label, fn) {
-  const root = mkdtempSync(join(tmpdir(), 'career-ops-cv-input-'));
+  const root = mkdtempSync(join(tmpdir(), 'project-x-cv-input-'));
   try { if (fn(root) !== false) pass(label); else warn(`${label}: case-sensitive filesystem, alias unavailable`); }
   catch (err) { fail(`${label}: ${err.message}`); process.exitCode = 1; }
   finally { rmSync(root, { recursive: true, force: true, maxRetries: 10 }); }
@@ -41,7 +41,7 @@ function run(root, format, args, zeroInode = false) {
     syncBuiltinESMExports();`;
   return spawnSync(process.execPath, [...(zeroInode ? ["--import", `data:text/javascript,${encodeURIComponent(preload)}`] : []), join(ROOT, format.script), ...args], {
     cwd: root, encoding: 'utf8', timeout: 15000,
-    env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_PROFILE: '' },
+    env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_PROFILE: '' },
   });
 }
 

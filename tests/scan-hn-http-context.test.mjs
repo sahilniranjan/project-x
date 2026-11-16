@@ -29,12 +29,12 @@ function runWithAlgolia(dir, behaviour) {
       throw new Error('network forbidden in test: ' + url);
     };
   `);
-  const env = { ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_DATA_DIR: '' };
-  delete env.CAREER_OPS_PORTALS; delete env.GEMINI_API_KEY; delete env.GEMINI_MODEL;
+  const env = { ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_DATA_DIR: '' };
+  delete env.PROJECT_X_PORTALS; delete env.GEMINI_API_KEY; delete env.GEMINI_MODEL;
   // With a trusted proxy the shared helper switches to undici's own fetch and skips the fixture.
   // Env names are case-insensitive on Windows, so drop every spelling of the flag.
   for (const key of Object.keys(env)) {
-    if (key.toUpperCase() === 'CAREER_OPS_TRUST_PROXY_EGRESS') delete env[key];
+    if (key.toUpperCase() === 'PROJECT_X_TRUST_PROXY_EGRESS') delete env[key];
   }
   const r = spawnSync(process.execPath, ['--require', preload, fileURLToPath(new URL('../scan-hn.mjs', import.meta.url))],
     { cwd: dir, encoding: 'utf8', timeout: 60000, env });
@@ -43,7 +43,7 @@ function runWithAlgolia(dir, behaviour) {
 }
 
 test('a 503 page from Algolia reports the HTTP status, not a JSON syntax error', () => {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-scanhn-http-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-scanhn-http-'));
   try {
     mkdirSync(join(dir, 'data'), { recursive: true });
     const { r } = runWithAlgolia(dir, `return new Response('<html><body>Service Unavailable</body></html>', { status: 503, headers: { 'content-type': 'text/html' } });`);
@@ -57,7 +57,7 @@ test('a 503 page from Algolia reports the HTTP status, not a JSON syntax error',
 });
 
 test('the redirect policy the hackernews provider asks for reaches fetch', () => {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-scanhn-http-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-scanhn-http-'));
   try {
     mkdirSync(join(dir, 'data'), { recursive: true });
     const { requests } = runWithAlgolia(dir, `return new Response('{}', { status: 200, headers: { 'content-type': 'application/json' } });`);

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * career-ops OpenRouter Runner
+ * project-x OpenRouter Runner
  * No Claude Code CLI required — uses OpenRouter free models with automatic fallback.
  *
  * Usage:
@@ -39,7 +39,7 @@ import {
 import { withPipelineLock } from './pipeline-lock.mjs';
 import { createAdmissionGate, formatSkipCounts } from './lib/admission-gate.mjs';
 import { localToday } from './lib/local-today.mjs';
-import { getCareerOpsRoot, getProfilePath } from './path-resolver.mjs';
+import { getProjectXRoot, getProfilePath } from './path-resolver.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
 import { withJdArchiveSection } from './lib/jd-archive-section.mjs';
 import { locateApplyReport } from './apply-scope.mjs';
@@ -66,7 +66,7 @@ let activeModel = null;
 // Lazy: only runs when this file is the CLI entry point (`node
 // openrouter-runner.mjs ...`). Importing the module (e.g. for buildSystemPrompt
 // in test-all.mjs) must NOT mutate process.env — a module-level loader here
-// leaked every .env key (including CAREER_OPS_CLI) into the importing process
+// leaked every .env key (including PROJECT_X_CLI) into the importing process
 // and broke later CLI-resolution tests.
 function loadEnvFile() {
   const envPath = path.join(__dirname, '.env');
@@ -98,7 +98,7 @@ const parseTimeoutOverride = (val) => {
 };
 // Resolved on each call (not at import) so overrides loaded later from .env apply.
 const getModelTimeoutMs = () =>
-  parseTimeoutOverride(process.env.CAREER_OPS_TIMEOUT_MS) ??
+  parseTimeoutOverride(process.env.PROJECT_X_TIMEOUT_MS) ??
   parseTimeoutOverride(process.env.OPENROUTER_TIMEOUT_MS) ??
   DEFAULT_MODEL_TIMEOUT_MS;
 
@@ -244,7 +244,7 @@ let modelIndex = 0;      // current position in rotation
 // Persistent blacklist file — survives process restarts. data/ is User Layer
 // (gitignored runtime state), so it follows the data root like every other
 // data/ path this runner touches.
-const BLACKLIST_DIR = path.join(getCareerOpsRoot(), 'data');
+const BLACKLIST_DIR = path.join(getProjectXRoot(), 'data');
 const BLACKLIST_FILE = path.join(BLACKLIST_DIR, 'model-blacklist.json');
 function loadPersistedBlacklist() {
   try {
@@ -334,14 +334,14 @@ async function cmdModels() {
 // ---------------------------------------------------------------------------
 // File helpers
 // ---------------------------------------------------------------------------
-// Anchored to the career-ops data root, not to __dirname. scan.mjs resolves
-// every path it touches through getCareerOpsRoot(), so with CAREER_OPS_DATA_DIR
+// Anchored to the project-x data root, not to __dirname. scan.mjs resolves
+// every path it touches through getProjectXRoot(), so with PROJECT_X_DATA_DIR
 // set this module was reading a DIFFERENT data/scan-history.tsv than the shared
 // writers it now delegates to — dedup would clear a URL the writer then found
 // present, or skip one it had never seen. The default is unchanged: with no
-// env and no .career-ops-data marker, getCareerOpsRoot() returns the same
+// env and no .project-x-data marker, getProjectXRoot() returns the same
 // directory __dirname did.
-const DATA_ROOT = getCareerOpsRoot();
+const DATA_ROOT = getProjectXRoot();
 // System-layer files ship with the code and never follow the data root: a data
 // root outside the checkout holds cv.md and modes/_profile.md, but no
 // modes/_shared.md or modes/oferta.md. Read through readFile() those came back
@@ -373,7 +373,7 @@ function writeFile(relPath, content) {
 
 function fileExists(relPath) {
   // Same root as readFile() above: a fileExists that disagrees with the reader
-  // is a split-brain waiting to happen under CAREER_OPS_DATA_DIR.
+  // is a split-brain waiting to happen under PROJECT_X_DATA_DIR.
   return fs.existsSync(path.join(DATA_ROOT, relPath));
 }
 
@@ -409,7 +409,7 @@ async function callOpenRouter(systemPrompt, userMessage) {
     );
   }
 
-  const pinnedModel = process.env.CAREER_OPS_MODEL;
+  const pinnedModel = process.env.PROJECT_X_MODEL;
   if (pinnedModel) {
     activeModel = pinnedModel;
     process.stdout.write(`[model] ${pinnedModel} (pinned) ... `);
@@ -433,8 +433,8 @@ async function callOpenRouter(systemPrompt, userMessage) {
         headers: {
           'Authorization': `Bearer ${key}`,
           'Content-Type': 'application/json',
-          'HTTP-Referer': 'https://github.com/career-ops-hq/career-ops',
-          'X-Title': 'career-ops',
+          'HTTP-Referer': 'https://github.com/project-x-hq/project-x',
+          'X-Title': 'project-x',
         },
         body,
         signal: ctrl.signal,
@@ -500,8 +500,8 @@ async function callOpenRouter(systemPrompt, userMessage) {
           headers: {
             'Authorization': `Bearer ${key}`,
             'Content-Type': 'application/json',
-            'HTTP-Referer': 'https://github.com/career-ops-hq/career-ops',
-            'X-Title': 'career-ops',
+            'HTTP-Referer': 'https://github.com/project-x-hq/project-x',
+            'X-Title': 'project-x',
           },
           body,
           signal: controller.signal,
@@ -818,7 +818,7 @@ export async function fetchJobPage(url, { fetchApi = fetchJdViaKnownApi } = {}) 
     }
   }
   let chromium;
-  if (!process.env.CAREER_OPS_NO_PLAYWRIGHT) {
+  if (!process.env.PROJECT_X_NO_PLAYWRIGHT) {
     try {
       ({ chromium } = await import('playwright'));
     } catch {
@@ -873,7 +873,7 @@ export async function fetchJobPage(url, { fetchApi = fetchJdViaKnownApi } = {}) 
 // field names as scan.mjs: `title_filter.positive/negative` + `tracked_companies`),
 // so it never drifts from the main scanner. The runner's no-CLI scan path covers
 // companies that expose a direct JSON `api:`; careers_url-only / Playwright /
-// search-query companies are handled by the full /career-ops scan pipeline.
+// search-query companies are handled by the full /project-x scan pipeline.
 // `rawOverride` lets tests feed YAML text directly (see test-all.mjs drift guard).
 // ---------------------------------------------------------------------------
 export function parsePortals(rawOverride) {
@@ -957,7 +957,7 @@ export async function markPipelineDone(url, { pipelinePath = path.join(DATA_ROOT
 // the defect #3240/#3241 fixed in the other scanners, which this module escaped
 // because that census finds scanners by looking for appendToScanHistory calls).
 //
-// It also picks up CAREER_OPS_DATA_DIR support for free: the shared paths are
+// It also picks up PROJECT_X_DATA_DIR support for free: the shared paths are
 // DATA_ROOT-anchored, while the __dirname-relative paths here ignored it.
 //
 // Admission goes through the shared gate (#5478): the seen set compares
@@ -1315,7 +1315,7 @@ if (invokedDirectly) loadEnvFile();
 const ctx = invokedDirectly ? loadContext() : null;
 
 // Load free models list before running any AI command (skip when a model is pinned)
-if (invokedDirectly && ['evaluate', 'eval', 'pipeline', 'apply', 'models'].includes(command) && !process.env.CAREER_OPS_MODEL) {
+if (invokedDirectly && ['evaluate', 'eval', 'pipeline', 'apply', 'models'].includes(command) && !process.env.PROJECT_X_MODEL) {
   await loadFreeModels();
 }
 
@@ -1355,7 +1355,7 @@ if (invokedDirectly) switch (command) {
 
   default: {
     const usage = `
-career-ops OpenRouter Runner
+project-x OpenRouter Runner
 Auto-fetches free models from OpenRouter API and rotates through them with fallback.
 
 COMMANDS:
@@ -1375,7 +1375,7 @@ SETUP:
 MODEL SELECTION:
   - Free models are fetched automatically via the OpenRouter API at runtime.
   - They are tried in sequence; if one fails the next is used automatically.
-  - Pin a model:  CAREER_OPS_MODEL=deepseek/deepseek-r1:free node openrouter-runner.mjs eval <url>
+  - Pin a model:  PROJECT_X_MODEL=deepseek/deepseek-r1:free node openrouter-runner.mjs eval <url>
 `;
     if (command === undefined || ['help', '--help', '-h'].includes(command)) {
       console.log(usage);
@@ -1388,6 +1388,6 @@ MODEL SELECTION:
 }
 
 if (invokedDirectly && ['scan', 'evaluate', 'eval', 'pipeline', 'apply'].includes(command)) {
-  const modelName = process.env.CAREER_OPS_MODEL || activeModel || 'free-rotation';
+  const modelName = process.env.PROJECT_X_MODEL || activeModel || 'free-rotation';
   console.log('\n' + formatBreakdown(tracker, modelName, 'openrouter'));
 }

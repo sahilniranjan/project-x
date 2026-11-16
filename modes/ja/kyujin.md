@@ -169,7 +169,7 @@ Job posting を分析し、real, active opening かどうかを示す signals �
 
 ## Cover Letter Draft (auto-generated after Block G)
 
-Report を保存し tracker に記録した後、report file に `## Cover Letter Draft` として cover letter draft を append する。これは starting point であり final letter ではない。ユーザーは `/career-ops cover {slug}` で完成させる。
+Report を保存し tracker に記録した後、report file に `## Cover Letter Draft` として cover letter draft を append する。これは starting point であり final letter ではない。ユーザーは `/project-x cover {slug}` で完成させる。
 
 **How to generate the draft:**
 
@@ -185,7 +185,7 @@ Report を保存し tracker に記録した後、report file に `## Cover Lette
 ```markdown
 ## Cover Letter Draft
 
-> Draft generated at evaluation time. Complete via `/career-ops cover {slug}` to fill in angles, confirm research, and generate the PDF.
+> Draft generated at evaluation time. Complete via `/project-x cover {slug}` to fill in angles, confirm research, and generate the PDF.
 > Gaps flagged below -- address them during the cover flow.
 
 ---
@@ -217,7 +217,7 @@ I am happy to discuss further at your convenience.
 {8-10 exact phrases from the JD}
 
 ---
-*Run `/career-ops cover {slug}` to complete angles, confirm company research, and generate the PDF.*
+*Run `/project-x cover {slug}` to complete angles, confirm company research, and generate the PDF.*
 ```
 
 `_writing.md` の Professional Writing section にある language rules を draft content にすべて適用する。No em dashes、no buzzwords、active voice、concrete claims only。
@@ -259,7 +259,7 @@ I am happy to discuss further at your convenience.
 | Posting legitimacy | ブロック G の評価ティア | `✅ High Confidence`。Proceed with Caution / Suspicious は `⚠️ {tier} — {一文の理由}` |
 | Employment classification | ブロック G 内の雇用形態シグナル | チェックが実行され問題がなければ `✅ clear`。フラグが立った場合は `⚠️ contractor-style language: "{引用した表現}"`。実行できなかった場合は `— not evaluated` |
 | Culture screen | ブロック A のカルチャースクリーン項目 | `✅ pass`、または `⚠️ caution — {根拠}` / `⚠️ fail — {根拠}`。スクリーンを実施していない場合は `— not evaluated` |
-| Interview red flags | `interview-prep/{company-slug}-redflags.md`（`interview-redflag` モード） | **コピーではなく相互参照：** ファイルが存在する場合は現在の警告レベルと相対リンクを記載 — `[{level}](../interview-prep/{company-slug}-redflags.md)`（`reports/` からの相対）。無ければ `— no interview sessions yet`。**未検証ファイル：** ファイルにマーカー `<!-- career-ops:redflags-unverified -->` が含まれる場合（実際の面接セッションの裏付けがないまま `interview-redflag` が残したファイル）、その警告レベルは決して記載しません。`— not evaluated: [unverified analysis](../interview-prep/{company-slug}-redflags.md)` と表記し、`risk_summary.interview_redflags` は `not_evaluated` とします。注記の文言ではなくマーカーで判定してください。注記はユーザーの出力言語で書かれています。 |
+| Interview red flags | `interview-prep/{company-slug}-redflags.md`（`interview-redflag` モード） | **コピーではなく相互参照：** ファイルが存在する場合は現在の警告レベルと相対リンクを記載 — `[{level}](../interview-prep/{company-slug}-redflags.md)`（`reports/` からの相対）。無ければ `— no interview sessions yet`。**未検証ファイル：** ファイルにマーカー `<!-- project-x:redflags-unverified -->` が含まれる場合（実際の面接セッションの裏付けがないまま `interview-redflag` が残したファイル）、その警告レベルは決して記載しません。`— not evaluated: [unverified analysis](../interview-prep/{company-slug}-redflags.md)` と表記し、`risk_summary.interview_redflags` は `not_evaluated` とします。注記の文言ではなくマーカーで判定してください。注記はユーザーの出力言語で書かれています。 |
 | AI claims vs. infrastructure | ブロック G の AI／インフラ整合性チェック（存在する場合） | 本レポートにそのチェックが含まれる場合は判定をミラーする（`✅ consistent` / `⚠️ {検出事項}`）。無ければ `— not evaluated`。チェックが存在すれば自動的に有効化され、順序依存はありません |
 
 ブロック形式：

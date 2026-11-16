@@ -79,7 +79,7 @@ Für jede Frage die Antwort nach folgendem Schema bauen:
 2. **Vorherige `## Application Answers` / Block H**: Wenn eine abgeschickte Antwort oder ein Draft existiert (abgeschickte Antwort zuerst), als Basis nehmen und nachschärfen
 3. **Ton "Ich entscheide mich für euch"**: gleiches Framework wie in der Auto-Pipeline — selbstbewusst, nicht bittend
 4. **Spezifität**: etwas Konkretes aus der sichtbaren Stellenanzeige zitieren
-5. **career-ops Proof Point**: in "Zusätzliche Informationen" einbauen, falls ein solches Feld existiert
+5. **project-x Proof Point**: in "Zusätzliche Informationen" einbauen, falls ein solches Feld existiert
 
 **Spezielle deutsche Formularfelder, die häufig auftauchen:**
 - **Gehaltsvorstellung (brutto, jährlich)** → Spanne aus `profile.yml`, in EUR, mit Hinweis "verhandelbar je nach Gesamtpaket"
@@ -120,7 +120,7 @@ Bevor etwas gespeichert wird, und erneut direkt vor jedem Schreibschritt unten (
 Wenn der Kandidat bestätigt, dass die Bewerbung raus ist:
 1. Status mit dem kanonischen CLI auf "Applied" setzen: `node set-status.mjs --report <report#> Applied` (die Tabelle in `applications.md` nie von Hand editieren)
 2. Den Abschnitt `## Application Answers` im Report mit den finalen Antworten und `**State:** submitted` aktualisieren (Format in `modes/apply.md` → Step 8). Block H bleibt der Entwurf der Bewertung und wird nicht geändert
-3. Nächsten Schritt vorschlagen: `/career-ops contacto` für LinkedIn-Outreach an den Personalleiter / Hiring Manager
+3. Nächsten Schritt vorschlagen: `/project-x contacto` für LinkedIn-Outreach an den Personalleiter / Hiring Manager
 
 ## Scroll-Handling
 

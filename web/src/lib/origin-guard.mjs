@@ -16,7 +16,7 @@
 //   Origin layer (F1): trust Sec-Fetch-Site when the browser sends it, fall
 //     back to comparing Origin against Host for older/non-browser clients.
 //   Host layer (F2): only answer on a loopback Host by default; extra hosts
-//     require an explicit opt-in (CAREER_OPS_WEB_ALLOWED_HOSTS).
+//     require an explicit opt-in (PROJECT_X_WEB_ALLOWED_HOSTS).
 
 /** Lowercase a Host/authority, drop the port, unwrap a bracketed IPv6 literal. */
 export function normalizeHost(hostHeader) {
@@ -70,7 +70,7 @@ export function checkRequest({ secFetchSite, origin, host, allowedHosts }) {
   const hostAllowed = isLoopbackHost(normalizedHost) || (allowedHosts && allowedHosts.has(normalizedHost));
   if (!hostAllowed) {
     return block(
-      "this host is not allowed; the dashboard serves loopback only unless CAREER_OPS_WEB_ALLOWED_HOSTS opts it in",
+      "this host is not allowed; the dashboard serves loopback only unless PROJECT_X_WEB_ALLOWED_HOSTS opts it in",
     );
   }
 

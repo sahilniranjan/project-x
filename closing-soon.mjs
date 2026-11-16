@@ -53,7 +53,7 @@ import { flagValue, hasFlag, validateFlags } from './lib/cli-flags.mjs';
 import { localToday } from './lib/local-today.mjs';
 import { parseDate } from './lib/parse-date.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
-import { getCareerOpsRoot, resolveTrackerPath } from './path-resolver.mjs';
+import { getProjectXRoot, resolveTrackerPath } from './path-resolver.mjs';
 import { parseActiveInterviews, findColumn } from './process-quality.mjs';
 
 const CODE_ROOT = dirname(fileURLToPath(import.meta.url));
@@ -466,7 +466,7 @@ function printSummary(report) {
   };
 
   console.log(`\n${'='.repeat(86)}`);
-  console.log('  Closing soon \u2014 career-ops');
+  console.log('  Closing soon \u2014 project-x');
   console.log(`  As of ${metadata.today} \u00b7 window ${metadata.within} day(s) \u00b7 status: ${metadata.statuses.join(', ')}`);
   console.log(`${'='.repeat(86)}\n`);
 
@@ -540,7 +540,7 @@ if (isMainModule(import.meta.url)) {
   }
 
 
-  const dataRoot = getCareerOpsRoot();
+  const dataRoot = getProjectXRoot();
   const trackerPath = valueOf('--tracker') || resolveTrackerPath(dataRoot);
   const jdsDir = valueOf('--jds') || join(dataRoot, 'jds');
 

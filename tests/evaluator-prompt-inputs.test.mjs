@@ -44,8 +44,8 @@ async function fixture(engine, scenario, check) {
     write(join(data, 'modes/_profile.md'), 'SYNTHETIC_PROFILE_TARGET: engineering roles.\n');
     write(join(data, 'modes/_custom.md'), 'SYNTHETIC_CUSTOM_RULE: use evidence.\n');
     const env = Object.fromEntries(Object.entries(process.env).filter(([key]) =>
-      !/^(CAREER_OPS_|OPENAI_|OLLAMA_|DOTENV_|NODE_OPTIONS$|NODE_PATH$|HTTPS?_PROXY$|ALL_PROXY$)/i.test(key)));
-    Object.assign(env, { HOME: sandbox, USERPROFILE: sandbox, CAREER_OPS_ROOT: data, OPENAI_API_KEY: '', OPENAI_TIMEOUT_MS: '10000',
+      !/^(PROJECT_X_|OPENAI_|OLLAMA_|DOTENV_|NODE_OPTIONS$|NODE_PATH$|HTTPS?_PROXY$|ALL_PROXY$)/i.test(key)));
+    Object.assign(env, { HOME: sandbox, USERPROFILE: sandbox, PROJECT_X_ROOT: data, OPENAI_API_KEY: '', OPENAI_TIMEOUT_MS: '10000',
       OLLAMA_TIMEOUT_MS: '10000', OLLAMA_NUM_CTX: '32768' });
     await scenario.setup?.({ code, data, env });
     server = createServer((req, res) => {
@@ -101,15 +101,15 @@ for (const engine of ['openai', 'ollama']) {
     await fixture(engine, { name, args: ['--no-save'], setup: ({ code, data, env }) => {
       if (name === 'absent optional profile') rmSync(join(data, 'modes/_profile.md'));
       if (name === 'profile override') {
-        env.CAREER_OPS_PROFILE = join(data, 'alternate-profile.yml');
-        write(env.CAREER_OPS_PROFILE, 'language:\n  output: en\nnorth_star: SYNTHETIC_YML_OVERRIDE\n');
+        env.PROJECT_X_PROFILE = join(data, 'alternate-profile.yml');
+        write(env.PROJECT_X_PROFILE, 'language:\n  output: en\nnorth_star: SYNTHETIC_YML_OVERRIDE\n');
       }
       if (name === 'compressed context') {
         write(join(code, 'modes/_shared.md'), '## Writing Style\n' + 'Optional style '.repeat(40000));
       }
       if (name === 'marker data root') {
-        delete env.CAREER_OPS_ROOT;
-        write(join(code, '.career-ops-data'), '../data\n');
+        delete env.PROJECT_X_ROOT;
+        write(join(code, '.project-x-data'), '../data\n');
       }
     } }, ({ code, stdout, stderr, requests }) => {
       assert.equal(code, 0, stderr);

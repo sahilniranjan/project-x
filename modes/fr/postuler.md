@@ -79,7 +79,7 @@ Pour chaque question, construire la reponse selon ce schema :
 2. **`## Application Answers` / Bloc H precedents** : Si une reponse envoyee ou un brouillon existe (reponse envoyee d'abord), le prendre comme base et affiner
 3. **Ton "Je vous choisis"** : meme framework que dans l'auto-pipeline -- confiant, pas suppliant
 4. **Specificite** : citer quelque chose de concret de l'offre visible a l'ecran
-5. **career-ops proof point** : inclure dans "Informations complementaires" si un tel champ existe
+5. **project-x proof point** : inclure dans "Informations complementaires" si un tel champ existe
 
 **Champs specifiques aux formulaires francais courants :**
 - **Pretentions salariales (brut annuel)** -> Fourchette depuis `profile.yml`, en EUR, avec mention "negociable selon le package global"
@@ -120,7 +120,7 @@ Avant d'enregistrer quoi que ce soit, et de nouveau juste avant chaque ecriture 
 Si le candidat confirme que la candidature est envoyee :
 1. Mettre a jour le statut vers "Applied" via le CLI canonique : `node set-status.mjs --report <report#> Applied` (ne pas editer la table `applications.md` a la main)
 2. Mettre a jour la section `## Application Answers` du report avec les reponses finales et `**State:** submitted` (format dans `modes/apply.md` -> Step 8). Le Bloc H reste le brouillon de l'evaluation et n'est pas modifie
-3. Suggerer l'etape suivante : `/career-ops contacto` pour du LinkedIn outreach vers le hiring manager
+3. Suggerer l'etape suivante : `/project-x contacto` pour du LinkedIn outreach vers le hiring manager
 
 ## Gestion du defilement
 

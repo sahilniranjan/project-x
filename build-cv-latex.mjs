@@ -11,7 +11,7 @@ import { stripEmptySections } from './cv-sections-core.mjs';
 import { hasRequiredFields, hasText, validatePayload } from './lib/cv-payload-schema.mjs';
 import { latexPayloadFactHtml } from './lib/cv-payload-facts.mjs';
 import { resolvePageFormat } from './lib/page-format.mjs';
-import { getCareerOpsRoot, getProfilePath } from './path-resolver.mjs';
+import { getProjectXRoot, getProfilePath } from './path-resolver.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const TEMPLATE_PATH = resolve(__dirname, 'templates', 'cv-template.tex');
@@ -229,7 +229,7 @@ async function main() {
   let factCheck = { verdict: 'skipped', reason: 'structured fact gate supports bundled LaTeX templates only' };
   const bundledTemplates = [TEMPLATE_PATH, resolve(__dirname, 'templates', 'cv-template.cjk.tex')];
   if (bundledTemplates.includes(resolve(TEMPLATE_PATH_RESOLVED))) {
-    const root = getCareerOpsRoot();
+    const root = getProjectXRoot();
     if (!existsSync(join(root, 'cv.md'))) {
       factCheck = { verdict: 'skipped', reason: `no cv.md in ${root}` };
     } else {

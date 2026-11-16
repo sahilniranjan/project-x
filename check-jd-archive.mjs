@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * check-jd-archive.mjs — JD Archival Validator for career-ops
+ * check-jd-archive.mjs — JD Archival Validator for project-x
  *
  * A report's `**URL:**` header is a live pointer, not an archive — it rots
  * the day a posting closes or gets taken down, which reliably happens
@@ -70,7 +70,7 @@
  * `jd-archive-review-due` alone never fails the run (matches
  * check-table-freshness.mjs's `review-due`).
  *
- * Issue #2789 — github.com/santifer/career-ops
+ * Issue #2789 — github.com/santifer/project-x
  */
 
 import { readFileSync, readdirSync, existsSync, mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'fs';
@@ -79,18 +79,18 @@ import { tmpdir } from 'os';
 import { fileURLToPath } from 'url';
 import { flagValue } from './lib/cli-flags.mjs';
 import { findCaptureForReport } from './jd-capture.mjs';
-import { getCareerOpsRoot } from './path-resolver.mjs';
+import { getProjectXRoot } from './path-resolver.mjs';
 import { resolveColumns, parseTrackerRow, extractTrackerReportNumbers } from './tracker-parse.mjs';
 import { loadCanonicalStates, resolveCanonicalState, resolveTrackerPath } from './tracker-utils.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
 import { JD_ARCHIVE_HEADING, JD_HEADING_RE, NEXT_REPORT_SECTION_RE } from './lib/jd-archive-section.mjs';
 
-const CAREER_OPS = dirname(fileURLToPath(import.meta.url));
-const DATA_ROOT = getCareerOpsRoot();
+const PROJECT_X = dirname(fileURLToPath(import.meta.url));
+const DATA_ROOT = getProjectXRoot();
 const DEFAULT_REPORTS_DIR = join(DATA_ROOT, 'reports');
 const DEFAULT_JDS_DIR = join(DATA_ROOT, 'jds');
 const DEFAULT_TRACKER_PATH = resolveTrackerPath(DATA_ROOT);
-const STATES_FILE = join(CAREER_OPS, 'templates/states.yml');
+const STATES_FILE = join(PROJECT_X, 'templates/states.yml');
 
 // The retroactive-enforcement terminal set (PR #2791, santifer 2026-08-17:
 // "build the state-based split you described" — Schlaflied 2026-08-16).
@@ -225,7 +225,7 @@ export function collectTemplatePlaceholders(modesDir) {
 const BATCH_TEMPLATE_PLACEHOLDER_RE = /^\{the JD text from .+ pasted here verbatim\}$/i;
 let templatePlaceholders = null;
 function isUnfilledTemplatePlaceholder(strippedSection) {
-  templatePlaceholders ??= collectTemplatePlaceholders(join(CAREER_OPS, 'modes'));
+  templatePlaceholders ??= collectTemplatePlaceholders(join(PROJECT_X, 'modes'));
   const withoutPostedLine = strippedSection.replace(POSTED_LINE_RE, '');
   return templatePlaceholders.has(normalizePlaceholder(withoutPostedLine))
     || BATCH_TEMPLATE_PLACEHOLDER_RE.test(withoutPostedLine.replace(/^-{3,}\s*$/gm, '').trim().replace(/\s+/g, ' '));
@@ -702,7 +702,7 @@ export function findUnarchivedApplications(trackerPath, reportsDir, jdsDir, stat
 function printSummary(result) {
   const { reportsScanned, findings, warnings } = result;
   console.log(`\n${'='.repeat(78)}`);
-  console.log('  JD Archive Coverage — career-ops');
+  console.log('  JD Archive Coverage — project-x');
   console.log(`  reports scanned: ${reportsScanned}`);
   console.log(`${'='.repeat(78)}\n`);
 

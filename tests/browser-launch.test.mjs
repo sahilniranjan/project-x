@@ -4,7 +4,7 @@
 // PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH as the explicit override (the variable the
 // PDF path already used) and adds two things: the data-root .env is read, since
 // most commands never load it, and an installed browser can be auto-detected
-// when CAREER_OPS_BROWSER_AUTODETECT is on.
+// when PROJECT_X_BROWSER_AUTODETECT is on.
 //
 // The load-bearing assertion is the negative control: with nothing configured
 // the launch options come back unchanged, so the bundled Chromium is launched
@@ -29,14 +29,14 @@ if (/import\s*\{[^}]*\bbrowserLaunchOptions\b[^}]*\}\s*from\s*['"]\.\/lib\/brows
     && /export\s+async\s+function\s+launchChromium\b/.test(generatePdfSource)
     && /const\s*\{\s*projectRoot\s*,\s*\.\.\.launchOptions\s*\}\s*=\s*options/.test(generatePdfSource)
     && /chromium\.launch\(browserLaunchOptions\(launchOptions,\s*\{\s*projectRoot\s*\}\)\)/.test(generatePdfSource)
-    && /projectRoot:\s*opts\.workspaceRoot\s*\|\|\s*getCareerOpsRoot\(\)/.test(generatePdfSource)) {
+    && /projectRoot:\s*opts\.workspaceRoot\s*\|\|\s*getProjectXRoot\(\)/.test(generatePdfSource)) {
   pass('generate-pdf delegates launch options and defaults browser settings to the data root');
 } else {
   fail('generate-pdf launchChromium is not backed by the data-root-aware shared browser resolver');
 }
 
 const scanSource = readFileSync(new URL('../scan.mjs', import.meta.url), 'utf8');
-if (/export\s+const\s+DATA_ROOT\s*=\s*getCareerOpsRoot\(\)/.test(scanSource)
+if (/export\s+const\s+DATA_ROOT\s*=\s*getProjectXRoot\(\)/.test(scanSource)
     && /export\s+const\s+BROWSER_PROCESS_ENV\s*=\s*snapshotBrowserProcessEnv\(\)/.test(scanSource)
     && /browserLaunchOptions\([\s\S]*?\{\s*projectRoot:\s*DATA_ROOT,\s*processEnv:\s*BROWSER_PROCESS_ENV\s*\}/.test(scanSource)
     && /createHeadedPageProvider\(chromium,\s*\{\s*projectRoot:\s*DATA_ROOT,\s*processEnv:\s*BROWSER_PROCESS_ENV,?\s*\}/.test(scanSource)) {
@@ -69,12 +69,12 @@ if (/const\s+browserProcessEnv\s*=\s*snapshotBrowserProcessEnv\(\);[\s\S]*?resol
 }
 
 const pdfServerSource = readFileSync(new URL('../lib/pdf-server.mjs', import.meta.url), 'utf8');
-if (/sharedPdfSocketPath\([\s\S]*?workspaceRoot\s*=\s*getCareerOpsRoot\(\),[\s\S]*?browserRoot\s*=\s*getCareerOpsRoot\(\)/.test(pdfServerSource)
+if (/sharedPdfSocketPath\([\s\S]*?workspaceRoot\s*=\s*getProjectXRoot\(\),[\s\S]*?browserRoot\s*=\s*getProjectXRoot\(\)/.test(pdfServerSource)
     && /resolveBrowserExecutable\(\{\s*projectRoot:\s*browserRoot\s*\}\)/.test(pdfServerSource)
-    && /CAREER_OPS_PDF_BROWSER_ROOT:\s*browserRoot/.test(pdfServerSource)
-    && /ensureSharedPdfServer\([\s\S]*?opts\.workspaceRoot\s*\|\|\s*getCareerOpsRoot\(\),\s*browserRoot/.test(pdfServerSource)
-    && /renderViaSharedPdfServer\([\s\S]*?fileURLToPath\(import\.meta\.url\),\s*getCareerOpsRoot\(\)/.test(generatePdfSource)
-    && /projectRoot:\s*process\.env\.CAREER_OPS_PDF_BROWSER_ROOT\s*\|\|\s*getCareerOpsRoot\(\)/.test(generatePdfSource)) {
+    && /PROJECT_X_PDF_BROWSER_ROOT:\s*browserRoot/.test(pdfServerSource)
+    && /ensureSharedPdfServer\([\s\S]*?opts\.workspaceRoot\s*\|\|\s*getProjectXRoot\(\),\s*browserRoot/.test(pdfServerSource)
+    && /renderViaSharedPdfServer\([\s\S]*?fileURLToPath\(import\.meta\.url\),\s*getProjectXRoot\(\)/.test(generatePdfSource)
+    && /projectRoot:\s*process\.env\.PROJECT_X_PDF_BROWSER_ROOT\s*\|\|\s*getProjectXRoot\(\)/.test(generatePdfSource)) {
   pass('shared PDF painters keep render workspace and browser setting roots separate');
 } else {
   fail('shared PDF painters conflate the render workspace with browser settings');
@@ -98,11 +98,11 @@ if (/const\s+BROWSER_PROCESS_ENV\s*=\s*snapshotBrowserProcessEnv\(\);[\s\S]*?awa
 
 const windowsSnapshot = snapshotBrowserProcessEnv({
   playwright_chromium_executable_path: 'C:\\Browsers\\brave.exe',
-  career_ops_browser_autodetect: '',
+  project_x_browser_autodetect: '',
   UNRELATED: 'ignored',
 }, 'win32');
 if (windowsSnapshot.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH === 'C:\\Browsers\\brave.exe'
-    && windowsSnapshot.CAREER_OPS_BROWSER_AUTODETECT === ''
+    && windowsSnapshot.PROJECT_X_BROWSER_AUTODETECT === ''
     && Object.keys(windowsSnapshot).length === 2) {
   pass('the pre-dotenv snapshot keeps Windows case-insensitive browser settings');
 } else {
@@ -133,9 +133,9 @@ if (fixtureWithoutBrowserHelper.length === 0) {
 }
 
 const EXE = 'PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH';
-const AUTO = 'CAREER_OPS_BROWSER_AUTODETECT';
+const AUTO = 'PROJECT_X_BROWSER_AUTODETECT';
 const SAVED = Object.fromEntries(
-  [EXE, AUTO, 'CAREER_OPS_ROOT', 'CAREER_OPS_DATA_DIR'].map(k => [k, process.env[k]]),
+  [EXE, AUTO, 'PROJECT_X_ROOT', 'PROJECT_X_DATA_DIR'].map(k => [k, process.env[k]]),
 );
 
 // Each case starts from a known environment: the data root points at a temp dir
@@ -144,8 +144,8 @@ const SAVED = Object.fromEntries(
 function setEnv({ exe, auto, root }) {
   if (exe === undefined) delete process.env[EXE]; else process.env[EXE] = exe;
   if (auto === undefined) delete process.env[AUTO]; else process.env[AUTO] = auto;
-  process.env.CAREER_OPS_ROOT = root;
-  delete process.env.CAREER_OPS_DATA_DIR;
+  process.env.PROJECT_X_ROOT = root;
+  delete process.env.PROJECT_X_DATA_DIR;
   __resetBrowserLaunchCacheForTest();
 }
 
@@ -205,7 +205,7 @@ try {
 
   // Commands such as doctor --target diagnose a checkout other than the
   // process-wide data root. Their explicit root must control both the resolver
-  // result and the launch options, without mutating CAREER_OPS_ROOT.
+  // result and the launch options, without mutating PROJECT_X_ROOT.
   setEnv({ root: emptyRoot });
   const fromTarget = resolveBrowserExecutable({ projectRoot: envRoot });
   const targetOpts = browserLaunchOptions({ headless: true }, { projectRoot: envRoot });
@@ -246,7 +246,7 @@ try {
 
   // A shell variable that is present but empty switches off what .env sets.
   process.env[EXE] = '';
-  process.env.CAREER_OPS_ROOT = envRoot;
+  process.env.PROJECT_X_ROOT = envRoot;
   __resetBrowserLaunchCacheForTest();
   if (resolveBrowserExecutable() === null) {
     pass('an empty shell variable overrides and disables the .env value');

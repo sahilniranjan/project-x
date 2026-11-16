@@ -6,7 +6,7 @@
 
 Report it privately through either channel:
 
-- **GitHub:** open the **Security** tab and click **Report a vulnerability**, or go to https://github.com/career-ops-hq/career-ops/security/advisories/new. The report stays between you and the maintainers, and you can follow its status on GitHub.
+- **GitHub:** open the **Security** tab and click **Report a vulnerability**, or go to https://github.com/project-x-hq/project-x/security/advisories/new. The report stays between you and the maintainers, and you can follow its status on GitHub.
 - **Email:** **hi@santifer.io**
 
 Include:
@@ -34,9 +34,9 @@ Security issues in the following are in scope:
 - Issues in third-party dependencies (report upstream)
 - Issues requiring physical access to the user's machine
 - Social engineering attacks
-- Attacks on hosted infrastructure — career-ops runs locally, so there is no server of ours to attack
+- Attacks on hosted infrastructure — project-x runs locally, so there is no server of ours to attack
 
-**"Local" does not mean "unreachable".** The web dashboard is a local HTTP server, and a local server is still reachable by a cross-origin page the user happens to visit and by any device on the same network. If an issue needs nothing more than the user running career-ops and browsing normally, it is in scope — please report it rather than assuming the local-tool line excludes it.
+**"Local" does not mean "unreachable".** The web dashboard is a local HTTP server, and a local server is still reachable by a cross-origin page the user happens to visit and by any device on the same network. If an issue needs nothing more than the user running project-x and browsing normally, it is in scope — please report it rather than assuming the local-tool line excludes it.
 
 ## Disclosure Policy
 

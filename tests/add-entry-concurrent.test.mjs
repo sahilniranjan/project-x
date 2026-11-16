@@ -13,7 +13,7 @@ const payload = name => ({
 });
 
 async function race({ alias = false, duplicate = false, only, missingDigest = false } = {}) {
-  const root = mkdtempSync(join(tmpdir(), 'career-ops-add-race-'));
+  const root = mkdtempSync(join(tmpdir(), 'project-x-add-race-'));
   const cv = join(root, 'cv.md');
   const digest = join(root, 'article-digest.md');
   const marker = join(root, 'read');
@@ -63,7 +63,7 @@ syncBuiltinESMExports();
     if (only === 'digest') delete data.cv;
     writeFileSync(input, JSON.stringify(data));
     const child = spawn(process.execPath, [...(paused ? ['--import', pathToFileURL(preload).href] : []), cli, input], {
-      env: { ...process.env, CAREER_OPS_ROOT: join(root, id), CAREER_OPS_CV: id === 'b' ? otherCv : cv, CAREER_OPS_ARTICLE_DIGEST: digest },
+      env: { ...process.env, PROJECT_X_ROOT: join(root, id), PROJECT_X_CV: id === 'b' ? otherCv : cv, PROJECT_X_ARTICLE_DIGEST: digest },
       stdio: ['ignore', 'pipe', 'pipe'],
     });
     children.push(child);

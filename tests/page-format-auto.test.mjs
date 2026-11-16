@@ -32,7 +32,7 @@ after(() => {
 });
 
 function workspace(pageFormat) {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-page-format-auto-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-page-format-auto-'));
   workspaces.push(dir);
   for (const sub of ['config', 'data', 'output']) mkdirSync(join(dir, sub), { recursive: true });
   writeFileSync(
@@ -47,8 +47,8 @@ const profileOf = (dir) => join(dir, 'config', 'profile.yml');
 function workspaceEnv(dir) {
   return {
     ...process.env,
-    CAREER_OPS_ROOT: dir,
-    CAREER_OPS_TRACKER: join(dir, 'data', 'applications.md'),
+    PROJECT_X_ROOT: dir,
+    PROJECT_X_TRACKER: join(dir, 'data', 'applications.md'),
   };
 }
 

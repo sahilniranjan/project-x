@@ -8,7 +8,7 @@ import { ROOT } from './helpers.mjs';
 
 for (const kind of ['direct', 'file', 'directory']) {
   test(`batch sync appends through a ${kind} path when the target parent is read-only`, { skip: process.platform === 'win32' || process.getuid?.() === 0 }, () => {
-    const root = realpathSync(mkdtempSync(join(tmpdir(), 'career-ops-batch-readonly-')));
+    const root = realpathSync(mkdtempSync(join(tmpdir(), 'project-x-batch-readonly-')));
     const directory = join(root, 'batch');
     mkdirSync(directory);
     try {
@@ -24,7 +24,7 @@ for (const kind of ['direct', 'file', 'directory']) {
       assert.throws(() => mkdirSync(join(directory, 'permission-probe')), { code: 'EACCES' });
       const path = kind === 'direct' ? input : kind === 'file' ? alias : join(alias, 'input.tsv');
       const run = () => spawnSync(process.execPath, [join(ROOT, 'sync-batch-input.mjs'), '--pipeline', pipeline, '--input', path, '--state', join(root, 'state.tsv')], {
-        env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_PIPELINE_LOCK_TIMEOUT_MS: '200', CAREER_OPS_PIPELINE_LOCK_MAX_WAIT_MS: '400' }, encoding: 'utf8', timeout: 10000,
+        env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_PIPELINE_LOCK_TIMEOUT_MS: '200', PROJECT_X_PIPELINE_LOCK_MAX_WAIT_MS: '400' }, encoding: 'utf8', timeout: 10000,
       });
       const result = run();
       assert.equal(result.error, undefined);

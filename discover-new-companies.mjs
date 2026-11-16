@@ -27,24 +27,24 @@
  * renders per-company evidence cards; it never emits a discover-ats input, so
  * the two are complementary rather than overlapping.
  *
- * Issue #4181 — github.com/career-ops-hq/career-ops
+ * Issue #4181 — github.com/project-x-hq/project-x
  */
 
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import * as yaml from 'js-yaml';
 import { loadYaml } from './lib/yaml-document.mjs';
-import { getCareerOpsRoot } from './path-resolver.mjs';
+import { getProjectXRoot } from './path-resolver.mjs';
 import { buildCompanyCanonicalizer, findBlacklistEntry, loadBlacklist } from './scan.mjs';
 import { parseScanHistoryLine, scanHistoryLineHasColumn } from './lib/scan-history-columns.mjs';
 import { atsFromUrl } from './coverage-check.mjs';
 import { flagValue, hasFlag, validateFlags } from './lib/cli-flags.mjs';
 import { localToday } from './lib/local-today.mjs';
 
-const DATA_ROOT = getCareerOpsRoot();
-const HISTORY_PATH = process.env.CAREER_OPS_SCAN_HISTORY || join(DATA_ROOT, 'data', 'scan-history.tsv');
-const PORTALS_PATH = process.env.CAREER_OPS_PORTALS || join(DATA_ROOT, 'portals.yml');
-const BLACKLIST_PATH = process.env.CAREER_OPS_BLACKLIST || join(DATA_ROOT, 'data', 'blacklist.md');
+const DATA_ROOT = getProjectXRoot();
+const HISTORY_PATH = process.env.PROJECT_X_SCAN_HISTORY || join(DATA_ROOT, 'data', 'scan-history.tsv');
+const PORTALS_PATH = process.env.PROJECT_X_PORTALS || join(DATA_ROOT, 'portals.yml');
+const BLACKLIST_PATH = process.env.PROJECT_X_BLACKLIST || join(DATA_ROOT, 'data', 'blacklist.md');
 
 const USAGE = `Usage: node discover-new-companies.mjs [options]
 

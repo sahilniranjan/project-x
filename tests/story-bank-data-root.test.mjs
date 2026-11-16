@@ -6,13 +6,13 @@
 //
 //   match-star.mjs:22               'interview-prep/story-bank.md'          -> cwd
 //   story-provenance-check.mjs:162  'interview-prep/story-bank.md'          -> cwd
-//   negotiation-roi.mjs:70          join(CAREER_OPS, 'interview-prep', ...) -> CODE root
+//   negotiation-roi.mjs:70          join(PROJECT_X, 'interview-prep', ...) -> CODE root
 //
 // The negotiation-roi case is the sharp one. Both roots were already defined in
 // that file, and its v1 SAFETY GATE compares the two files — a claim survives
 // only if its number also appears verbatim in cv.md:
 //
-//   const STORY_BANK_PATH = join(CAREER_OPS, ...)   // CODE root
+//   const STORY_BANK_PATH = join(PROJECT_X, ...)   // CODE root
 //   const CV_PATH         = join(DATA_ROOT, 'cv.md') // DATA root
 //
 // Two halves of one comparison, pointed at two different installs. For any
@@ -54,8 +54,8 @@ const STORY_BANK = [
 const CV = '# CV\n\n- Cut deploy time by 40 minutes per release.\n';
 
 function fixture() {
-  const dataRoot = mkdtempSync(join(tmpdir(), 'career-ops-storybank-'));
-  const decoyCwd = mkdtempSync(join(tmpdir(), 'career-ops-storydecoy-'));
+  const dataRoot = mkdtempSync(join(tmpdir(), 'project-x-storybank-'));
+  const decoyCwd = mkdtempSync(join(tmpdir(), 'project-x-storydecoy-'));
   mkdirSync(join(dataRoot, 'interview-prep'), { recursive: true });
   writeFileSync(join(dataRoot, 'interview-prep', 'story-bank.md'), STORY_BANK);
   writeFileSync(join(dataRoot, 'cv.md'), CV);
@@ -69,7 +69,7 @@ const cleanup = (f) => {
 function run(script, args, f) {
   const r = spawnSync(process.execPath, [join(ROOT, script), ...args], {
     cwd: f.decoyCwd, encoding: 'utf-8', timeout: 60_000,
-    env: { ...process.env, CAREER_OPS_ROOT: f.dataRoot, CAREER_OPS_DATA_DIR: '' },
+    env: { ...process.env, PROJECT_X_ROOT: f.dataRoot, PROJECT_X_DATA_DIR: '' },
   });
   assert.equal(r.error, undefined, `spawn failed: ${r.error?.message}`);
   return { ...r, all: `${r.stdout ?? ''}${r.stderr ?? ''}` };
@@ -135,7 +135,7 @@ test('--story-bank and --cv still override', () => {
   // story-provenance-check documents both flags; anchoring the DEFAULT must not
   // take the explicit path away.
   const f = fixture();
-  const other = mkdtempSync(join(tmpdir(), 'career-ops-storyalt-'));
+  const other = mkdtempSync(join(tmpdir(), 'project-x-storyalt-'));
   try {
     writeFileSync(join(other, 'sb.md'), STORY_BANK);
     writeFileSync(join(other, 'cv.md'), CV);
@@ -144,7 +144,7 @@ test('--story-bank and --cv still override', () => {
       '--story-bank', join(other, 'sb.md'), '--cv', join(other, 'cv.md'),
     ], {
       cwd: f.decoyCwd, encoding: 'utf-8', timeout: 60_000,
-      env: { ...process.env, CAREER_OPS_ROOT: f.dataRoot, CAREER_OPS_DATA_DIR: '' },
+      env: { ...process.env, PROJECT_X_ROOT: f.dataRoot, PROJECT_X_DATA_DIR: '' },
     });
     assert.equal(r.status, 0, describeSpawn(r, `explicit paths were not honoured`));
   } finally {
@@ -155,7 +155,7 @@ test('--story-bank and --cv still override', () => {
 
 // Structural, in the spirit of #3511's check 6. Two things kept this from
 // covering "the next reader, not just today's three": it walked a hard-coded
-// list of those three files, and its join rule keyed on CAREER_OPS and
+// list of those three files, and its join rule keyed on PROJECT_X and
 // CODE_ROOT, the name negotiation-roi.mjs used when it had the bug. None of
 // the three declares either name today, so a regression spelled
 // join(__dirname, …), join(ROOT, …) or join(process.cwd(), …) passed unseen.
@@ -189,7 +189,7 @@ test('the off-root detector catches each spelling and passes the data root', () 
   assert.equal(flagged("const P = 'interview-prep/story-bank.md';"), 1);
   assert.equal(flagged("const CV = join(__dirname, 'cv.md');"), 1);
   assert.equal(flagged("const P = join(DATA_ROOT, 'interview-prep', 'story-bank.md');"), 0);
-  assert.equal(flagged("const P = join(getCareerOpsRoot(), 'interview-prep', 'story-bank.md');"), 0);
+  assert.equal(flagged("const P = join(getProjectXRoot(), 'interview-prep', 'story-bank.md');"), 0);
   assert.equal(flagged("// join(__dirname, 'interview-prep', 'story-bank.md') was the bug"), 0);
 });
 

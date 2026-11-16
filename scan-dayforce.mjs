@@ -87,7 +87,7 @@ import {
   PORTALS_PATH,
 } from './scan.mjs';
 import { normalizeCompany } from './tracker-utils.mjs';
-import { getCareerOpsRoot } from './path-resolver.mjs';
+import { getProjectXRoot } from './path-resolver.mjs';
 import { localToday } from './lib/local-today.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
 import { htmlToText } from './providers/_html-to-text.mjs';
@@ -106,7 +106,7 @@ const DEFAULT_JOB_BOARD_ID = '1';
 const MAX_PAGES_PER_BOARD = 200; // 25/page observed → 5000 postings ceiling; a real cap, not a magic number
 const RETRY_DELAY_MS = 3000;
 
-const DATA_ROOT = getCareerOpsRoot();
+const DATA_ROOT = getProjectXRoot();
 
 // Alphanumeric + `_`/`-` only — same discipline as providers/_trust-validator.mjs
 // and the SSRF/injection guard every other provider in this codebase applies
@@ -751,7 +751,7 @@ async function main() {
     }
   }
 
-  console.log('\n→ Run /career-ops pipeline to evaluate new offers.');
+  console.log('\n→ Run /project-x pipeline to evaluate new offers.');
 }
 
 // Guarded like every sibling scanner (scan-hn.mjs, scan-interamt.mjs,

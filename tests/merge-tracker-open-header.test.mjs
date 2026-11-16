@@ -33,7 +33,7 @@ function merge(header, rows, additions) {
     for (const [name, line] of Object.entries(additions)) writeFileSync(join(adds, name), `${TSV_HEADER}\n${line}\n`);
     const r = spawnSync(NODE, [join(ROOT, 'merge-tracker.mjs')], {
       encoding: 'utf-8', timeout: 30000,
-      env: { ...process.env, CAREER_OPS_TRACKER: tracker, CAREER_OPS_ADDITIONS: adds, CAREER_OPS_BATCH_STATE: join(work, 'no-batch-state.tsv') },
+      env: { ...process.env, PROJECT_X_TRACKER: tracker, PROJECT_X_ADDITIONS: adds, PROJECT_X_BATCH_STATE: join(work, 'no-batch-state.tsv') },
     });
     assert.strictEqual(r.status, 0, `merge-tracker exited ${r.status}: ${r.stdout}${r.stderr}`);
     return readFileSync(tracker, 'utf-8').split('\n')

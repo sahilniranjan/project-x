@@ -22,7 +22,7 @@ const DONE_URL = 'https://jobs.example.test/4521';
 const SCANNED_URL = 'https://jobs.example.test/9001';
 
 test('an offer appended under the lock during a reconcile run survives it', async (t) => {
-  const root = mkdtempSync(join(tmpdir(), 'career-ops-reconcile-lock-'));
+  const root = mkdtempSync(join(tmpdir(), 'project-x-reconcile-lock-'));
   t.after(() => rmSync(root, { recursive: true, force: true }));
   for (const dir of ['data', 'batch', 'reports']) mkdirSync(join(root, dir));
   const pipeline = join(root, 'data', 'pipeline.md');
@@ -40,7 +40,7 @@ test('an offer appended under the lock during a reconcile run survives it', asyn
 
     child = spawn(process.execPath, [SCRIPT, '--pipeline', pipeline, '--state', state], {
       cwd: root,
-      env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_DATA_DIR: root, CAREER_OPS_TRACKER: '' },
+      env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_DATA_DIR: root, PROJECT_X_TRACKER: '' },
     });
     let output = '';
     child.stdout.on('data', (d) => { output += d; });

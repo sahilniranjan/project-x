@@ -145,7 +145,7 @@ export function reportUrlToken(reportPath) {
  *
  * @param {string} reportCell - Raw Report cell value.
  * @param {string|string[]} trackerDir - Directory (or directories) containing the tracker file.
- * @param {string} dataRoot - Data root (getCareerOpsRoot()).
+ * @param {string} dataRoot - Data root (getProjectXRoot()).
  * @param {{onInspectionError?: Function, stat?: Function}} [options]
  * @returns {string|null} The unresolved link target, or null when there is no link,
  *   it resolves, or its targets could not be inspected conclusively.
@@ -381,12 +381,12 @@ export function cell(v) {
  * Resolve the tracker file path for the current workspace.
  *
  * Supports both layouts: `data/applications.md` (boilerplate) and
- * `applications.md` (original root layout). The `CAREER_OPS_TRACKER` env var
+ * `applications.md` (original root layout). The `PROJECT_X_TRACKER` env var
  * overrides the path (used by tests and non-standard layouts). The result is
  * canonicalized so every script that locks or hashes the tracker path agrees
  * on one spelling.
  *
- * @param {string} rootDir - The career-ops repository root.
+ * @param {string} rootDir - The project-x repository root.
  * @returns {string} Absolute canonical tracker path.
  */
 export { resolveTrackerPath } from './path-resolver.mjs';
@@ -397,7 +397,7 @@ export { resolveTrackerPath } from './path-resolver.mjs';
  * the tracker's own directory in the root `applications.md` layout.
  *
  * Derive sibling paths from THIS rather than from a script's own location, so
- * that pointing `CAREER_OPS_TRACKER` at another workspace moves the whole set
+ * that pointing `PROJECT_X_TRACKER` at another workspace moves the whole set
  * together. A script that mixes the two (tracker from the env, manifest from
  * its own directory) reads one workspace and writes another — which is how the
  * merge-tracker suite came to read a developer's real `data/pdf-index.tsv`
@@ -416,7 +416,7 @@ export function resolveWorkspaceRoot(trackerPath) {
  * *uncanonicalized* tracker path. Unlike `resolveWorkspaceRoot(resolveTrackerPath(rootDir))`,
  * this does not realpath the tracker first, so a workspace that only symlinks its
  * `data/` directory (the natural workaround for #524) still resolves to the repo
- * rather than the symlink's target (#3169). Pointing `CAREER_OPS_TRACKER` at a
+ * rather than the symlink's target (#3169). Pointing `PROJECT_X_TRACKER` at a
  * genuinely external workspace keeps moving the whole set together (#2471), since
  * the raw path is then the external tracker itself.
  *
@@ -425,7 +425,7 @@ export function resolveWorkspaceRoot(trackerPath) {
  * spelling the module's containment checks compare against (they realpath both
  * sides themselves for the symlinked-ancestor case, e.g. /tmp -> /private/tmp).
  *
- * @param {string} rootDir - The career-ops data root directory.
+ * @param {string} rootDir - The project-x data root directory.
  * @returns {string} Absolute workspace root directory.
  */
 export function resolveWorkspaceRootFor(rootDir) {
@@ -443,7 +443,7 @@ export function resolveWorkspaceRootFor(rootDir) {
  * target's folder flagged every live link as missing (#5374). Same raw-path idea
  * as resolveWorkspaceRootFor (#3169); the lock key keeps the canonical path.
  *
- * @param {string} rootDir - The career-ops data root directory.
+ * @param {string} rootDir - The project-x data root directory.
  * @returns {string[]} One or two absolute directories.
  */
 export function trackerLinkDirsFor(rootDir) {
@@ -453,20 +453,20 @@ export function trackerLinkDirsFor(rootDir) {
 
 /**
  * Resolve the PDF manifest (`data/pdf-index.tsv`) for the workspace that owns
- * a tracker. `CAREER_OPS_PDF_INDEX` overrides it explicitly.
+ * a tracker. `PROJECT_X_PDF_INDEX` overrides it explicitly.
  *
  * One definition for every reader, because the manifest path was previously
  * rebuilt from a literal in each script — and each picked its own base
  * directory, so `merge-tracker.mjs` derived it from the tracker while
  * `sync-pdf-flags.mjs` and `find.mjs` used their own install directory. Scripts
- * that resolve the tracker from `CAREER_OPS_TRACKER` then read one workspace's
+ * that resolve the tracker from `PROJECT_X_TRACKER` then read one workspace's
  * manifest against another's tracker (#2471).
  *
  * @param {string} trackerPath - Tracker path, typically from resolveTrackerPath().
  * @returns {string} Absolute path to the PDF manifest.
  */
 export function resolvePdfIndexPath(trackerPath) {
-  return process.env.CAREER_OPS_PDF_INDEX
+  return process.env.PROJECT_X_PDF_INDEX
     || join(resolveWorkspaceRoot(trackerPath), 'data', 'pdf-index.tsv');
 }
 
@@ -569,10 +569,10 @@ export function pathIsInsideCanonical(childPath, parentDir) {
  *
  * The lock name is derived from a hash of the canonical tracker path, so every
  * writer (`merge-tracker.mjs`, `set-status.mjs`) that targets the same tracker
- * contends on the same lock. `CAREER_OPS_TRACKER_LOCK` exists for tests and
+ * contends on the same lock. `PROJECT_X_TRACKER_LOCK` exists for tests and
  * unusual local layouts, but lock directories are removed recursively, so
  * env-provided paths must be absolute, live under the OS temp directory, and
- * use the career-ops lock-name prefix. Invalid values are ignored and the
+ * use the project-x lock-name prefix. Invalid values are ignored and the
  * deterministic temp-dir default is used instead.
  *
  * @param {string} appsFile - Canonical tracker path (see canonicalizeTrackerPath).
@@ -586,8 +586,8 @@ export function trackerLockDirFor(appsFile) {
   // or the two languages lock different directories (#4957).
   const lockKey = createHash('sha256').update(storedSpelling(appsFile)).digest('hex').slice(0, 16);
   const tmpRoot = storedSpelling(realpathSync(tmpdir()));
-  const fallback = join(tmpRoot, `career-ops-merge-tracker-${lockKey}.lock`);
-  const envValue = process.env.CAREER_OPS_TRACKER_LOCK;
+  const fallback = join(tmpRoot, `project-x-merge-tracker-${lockKey}.lock`);
+  const envValue = process.env.PROJECT_X_TRACKER_LOCK;
   if (!envValue || !isAbsolute(envValue)) return fallback;
 
   const candidate = resolve(envValue);
@@ -596,7 +596,7 @@ export function trackerLockDirFor(appsFile) {
   // EvalSymlinks fails.
   const canonicalParent = existsSync(parentDir) ? storedSpelling(realpathSync(parentDir)) : resolve(parentDir);
   if (!pathIsInside(canonicalParent, tmpRoot)) return fallback;
-  if (!basename(candidate).startsWith('career-ops-merge-tracker-')) return fallback;
+  if (!basename(candidate).startsWith('project-x-merge-tracker-')) return fallback;
   return candidate;
 }
 
@@ -629,7 +629,7 @@ export async function acquireTrackerLock(lockDir, options = {}) {
   // sampling a sub-millisecond window. Production callers have no marker path
   // and keep the existing lock behavior.
   const testWaitingMarker = process.env.NODE_ENV === 'test'
-    ? process.env.CAREER_OPS_TRACKER_TEST_LOCK_WAIT_MARKER
+    ? process.env.PROJECT_X_TRACKER_TEST_LOCK_WAIT_MARKER
     : undefined;
   return acquireDirLock(lockDir, {
     timeoutMs: options.timeoutMs ?? 60_000,
@@ -660,9 +660,9 @@ export async function openTrackerTransaction(appsFile, options = {}) {
   const trackerPath = canonicalizeTrackerPath(appsFile);
   const { lockDir = trackerLockDirFor(trackerPath), ...lockOptions } = options;
   const lock = await acquireTrackerLock(lockDir, {
-    timeoutMs: Number(process.env.CAREER_OPS_TRACKER_LOCK_TIMEOUT_MS) || 60_000,
-    retryMs: Number(process.env.CAREER_OPS_TRACKER_LOCK_RETRY_MS) || 75,
-    staleMs: Number(process.env.CAREER_OPS_TRACKER_LOCK_STALE_MS) || 10 * 60_000,
+    timeoutMs: Number(process.env.PROJECT_X_TRACKER_LOCK_TIMEOUT_MS) || 60_000,
+    retryMs: Number(process.env.PROJECT_X_TRACKER_LOCK_RETRY_MS) || 75,
+    staleMs: Number(process.env.PROJECT_X_TRACKER_LOCK_STALE_MS) || 10 * 60_000,
     tracker: trackerPath,
     ...lockOptions,
   });
@@ -1153,9 +1153,9 @@ export async function acquireTrackerLockForCli(appsFile, { dryRun, failWith }) {
   let lock;
   try {
     lock = await acquireTrackerLock(trackerLockDirFor(appsFile), {
-      timeoutMs: Number(process.env.CAREER_OPS_TRACKER_LOCK_TIMEOUT_MS) || 60_000,
-      retryMs: Number(process.env.CAREER_OPS_TRACKER_LOCK_RETRY_MS) || 75,
-      staleMs: Number(process.env.CAREER_OPS_TRACKER_LOCK_STALE_MS) || 10 * 60_000,
+      timeoutMs: Number(process.env.PROJECT_X_TRACKER_LOCK_TIMEOUT_MS) || 60_000,
+      retryMs: Number(process.env.PROJECT_X_TRACKER_LOCK_RETRY_MS) || 75,
+      staleMs: Number(process.env.PROJECT_X_TRACKER_LOCK_STALE_MS) || 10 * 60_000,
       tracker: appsFile,
     });
   } catch (err) {

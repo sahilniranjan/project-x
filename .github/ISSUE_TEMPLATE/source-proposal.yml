@@ -7,7 +7,7 @@ body:
     attributes:
       value: |
         Thanks for proposing a source! This form walks the six rules of the
-        [Source Indexing Policy](https://github.com/career-ops-hq/career-ops/blob/main/CONTRIBUTING.md#source-indexing-policy).
+        [Source Indexing Policy](https://github.com/project-x-hq/project-x/blob/main/CONTRIBUTING.md#source-indexing-policy).
         Operators proposing their own board are welcome — that's what rule-based gates are for.
         You don't need code to propose a source; if you already have a provider PR, link it below.
   - type: input
@@ -69,7 +69,7 @@ body:
     id: rule6
     attributes:
       label: "Rule 6: read like a visitor"
-      description: "Can a visitor read the listings and each posting without signing in? Is there a CAPTCHA in the way? Has the source's operator asked career-ops not to read it? Since 2026-11-08 robots.txt is not a gate: mention it only if it states a Crawl-delay."
+      description: "Can a visitor read the listings and each posting without signing in? Is there a CAPTCHA in the way? Has the source's operator asked project-x not to read it? Since 2026-11-08 robots.txt is not a gate: mention it only if it states a Crawl-delay."
     validations:
       required: true
   - type: input

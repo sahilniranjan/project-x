@@ -21,7 +21,7 @@
  */
 
 import { readFileSync, writeFileSync, existsSync } from 'fs';
-import { getCareerOpsRoot, resolveTrackerPath } from './path-resolver.mjs';
+import { getProjectXRoot, resolveTrackerPath } from './path-resolver.mjs';
 import { openTrackerTransaction, findDeadReportLink, trackerLinkDirsFor } from './tracker-utils.mjs';
 import { resolveColumns, parseTrackerRow, firstLinkTarget, soleMarkdownLink } from './tracker-parse.mjs';
 import { validateFlags } from './lib/cli-flags.mjs';
@@ -116,8 +116,8 @@ const args = process.argv.slice(2);
 validateFlags(args, KNOWN_FLAGS, USAGE);
 
 const DRY_RUN = args.includes('--dry-run');
-const CAREER_OPS = getCareerOpsRoot();
-const APPS_FILE = resolveTrackerPath(CAREER_OPS);
+const PROJECT_X = getProjectXRoot();
+const APPS_FILE = resolveTrackerPath(PROJECT_X);
 
 if (!existsSync(APPS_FILE)) {
   console.log('No applications.md found. Nothing to fix.');
@@ -138,7 +138,7 @@ if (!DRY_RUN) {
 }
 try {
 const content = trackerTransaction ? trackerTransaction.read() : readFileSync(APPS_FILE, 'utf-8');
-const result = fixReportLinks(content.split('\n'), trackerLinkDirsFor(CAREER_OPS), CAREER_OPS);
+const result = fixReportLinks(content.split('\n'), trackerLinkDirsFor(PROJECT_X), PROJECT_X);
 
 if (!result.hasReportColumn) {
   console.log('The tracker has no Report column. Nothing to fix.');
@@ -171,7 +171,7 @@ if (DRY_RUN) {
 } else if (result.changed.length > 0) {
   // Backup first. Written from the bytes this run parsed (read inside the
   // lock), next to the transaction's canonical path: copying APPS_FILE again
-  // would follow a CAREER_OPS_TRACKER symlink and put the .bak beside the
+  // would follow a PROJECT_X_TRACKER symlink and put the .bak beside the
   // link, or capture an edit made by a writer that bypasses the lock.
   const backupPath = `${trackerTransaction.path}.bak`;
   writeFileSync(backupPath, content);

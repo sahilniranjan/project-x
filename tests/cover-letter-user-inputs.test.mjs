@@ -159,7 +159,7 @@ test('the block message names letter answers and does not send a plan to cv.md',
 });
 
 test('the fact-check CLI names only the files it read', () => {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-cover-advice-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-cover-advice-'));
   try {
     const probe = join(dir, 'probe.html');
     writeFileSync(probe, `<p>${PLAN}</p>`);
@@ -168,7 +168,7 @@ test('the fact-check CLI names only the files it read', () => {
       cwd: dir,
       encoding: 'utf-8',
       timeout: 30_000,
-      env: { ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_DATA_DIR: '' },
+      env: { ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_DATA_DIR: '' },
     });
     const text = `${result.stdout ?? ''}${result.stderr ?? ''}`;
     assert.equal(result.status, 1, describeSpawn(result, text));
@@ -181,7 +181,7 @@ test('the fact-check CLI names only the files it read', () => {
 });
 
 function runCover(payload) {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-cover-inputs-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-cover-inputs-'));
   mkdirSync(join(dir, 'output'));
   writeFileSync(join(dir, 'cv.md'), 'Avery Quinn builds ledger services.\n');
   const payloadPath = join(dir, 'payload.json');
@@ -194,7 +194,7 @@ function runCover(payload) {
     cwd: dir,
     encoding: 'utf-8',
     timeout: 60_000,
-    env: { ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_DATA_DIR: '' },
+    env: { ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_DATA_DIR: '' },
   });
   rmSync(dir, { recursive: true, force: true });
   return { ...result, text: `${result.stdout ?? ''}${result.stderr ?? ''}` };

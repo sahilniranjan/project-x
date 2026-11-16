@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { execFile } from "node:child_process";
 import fs from "node:fs";
-import { careerOpsRoot, rootScript } from "@/lib/career-ops";
+import { projectXRoot, rootScript } from "@/lib/project-x";
 import { canonicalizeStatus } from "@/lib/core/states";
 import { parseCliJson, trackerRowArg, clientErrorMessage } from "@/lib/status-cli.mjs";
 
@@ -45,9 +45,9 @@ const LOCK_WAIT_DEFAULT_MS = 10_000;
 const LOCK_WAIT_CEILING_MS = SET_STATUS_TIMEOUT_MS - 5_000;
 
 function boundedLockWait(): Record<string, string> {
-  const raw = Number(process.env.CAREER_OPS_TRACKER_LOCK_TIMEOUT_MS);
+  const raw = Number(process.env.PROJECT_X_TRACKER_LOCK_TIMEOUT_MS);
   const requested = Number.isFinite(raw) && raw > 0 ? raw : LOCK_WAIT_DEFAULT_MS;
-  return { CAREER_OPS_TRACKER_LOCK_TIMEOUT_MS: String(Math.min(requested, LOCK_WAIT_CEILING_MS)) };
+  return { PROJECT_X_TRACKER_LOCK_TIMEOUT_MS: String(Math.min(requested, LOCK_WAIT_CEILING_MS)) };
 }
 
 // set-status.mjs exit codes (CLI_EXIT in tracker-utils.mjs) → HTTP.
@@ -74,7 +74,7 @@ function runSetStatus(args: string[]): Promise<CliResult> {
       process.execPath,
       [rootScript("set-status"), ...args],
       {
-        cwd: careerOpsRoot(),
+        cwd: projectXRoot(),
         timeout: SET_STATUS_TIMEOUT_MS,
         env: { ...process.env, ...boundedLockWait() },
       },
@@ -138,7 +138,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "n must be a tracker row number" }, { status: 400 });
   }
 
-  // The web can run against a CAREER_OPS_ROOT that holds data and no scripts.
+  // The web can run against a PROJECT_X_ROOT that holds data and no scripts.
   // Delegation needs a defined answer there, and "spawn it and see" is not one:
   // the child's failure is a Node module-resolution stack trace, which is both
   // useless to the caller and an absolute-path disclosure if echoed. Same
@@ -147,7 +147,7 @@ export async function POST(req: Request) {
   if (!fs.existsSync(script)) {
     return NextResponse.json(
       {
-        error: "status updates need the career-ops scripts; this root has data only",
+        error: "status updates need the project-x scripts; this root has data only",
         code: "core-script-missing",
       },
       { status: 503 },

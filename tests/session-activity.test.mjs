@@ -22,7 +22,7 @@ import {
 import { describeSpawn } from './helpers/describe-spawn.mjs';
 
 // Every test gets its own scratch dir passed as `activityDir`, so nothing here
-// ever touches the real repo's .career-ops-locks/.
+// ever touches the real repo's .project-x-locks/.
 function sandbox() {
   return mkdtempSync(join(tmpdir(), 'session-activity-'));
 }

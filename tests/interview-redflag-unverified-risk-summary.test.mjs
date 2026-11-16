@@ -44,7 +44,7 @@ const [markerLine = '', noteLine = ''] = noteBlock.split('\n');
 const MARKER = markerLine.trim();
 
 check('Step 1 note block opens with a fixed HTML-comment marker',
-  /^<!-- career-ops:[a-z-]+ -->$/.test(MARKER), `first line was ${JSON.stringify(markerLine)}`);
+  /^<!-- project-x:[a-z-]+ -->$/.test(MARKER), `first line was ${JSON.stringify(markerLine)}`);
 check('the marker sits outside the translated sentence, which stays in {language.output}',
   /^> \[Render in \{language\.output\}: "Unverified:/.test(noteLine) && !noteLine.includes('<!--'),
   `note line was ${JSON.stringify(noteLine)}`);
@@ -57,7 +57,7 @@ check('Step 1 adds the marker to a note written before the marker existed',
   'an older unmarked note stays invisible to the Risk Summary');
 const template = fence(step5);
 check('Step 5 output template carries a Warning level line and no marker (a rewrite drops it)',
-  /\*\*Warning level:\*\* \{emoji\} \{label\}/.test(template) && !template.includes('career-ops:'),
+  /\*\*Warning level:\*\* \{emoji\} \{label\}/.test(template) && !template.includes('project-x:'),
   'template missing the level line or carrying a marker');
 check('Step 5 says a rewritten file never carries the marker',
   step5.includes(`never carries the \`${MARKER}\` marker`), 'rewrite rule missing');

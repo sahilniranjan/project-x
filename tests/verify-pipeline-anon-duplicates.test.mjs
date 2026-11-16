@@ -37,8 +37,8 @@ try {
     writeFileSync(tracker, table, "utf-8");
     const env = {
       ...process.env,
-      CAREER_OPS_TRACKER: tracker,
-      CAREER_OPS_REPORTS: reports,
+      PROJECT_X_TRACKER: tracker,
+      PROJECT_X_REPORTS: reports,
     };
     try {
       const out = execFileSync(NODE, [join(ROOT, "verify-pipeline.mjs")], {

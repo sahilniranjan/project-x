@@ -11,7 +11,7 @@
 // unfillable placeholder must stay too: erasing an `N/A` says less than the row
 // did.
 //
-// Driven through the CLI with the CAREER_OPS_TRACKER / CAREER_OPS_ADDITIONS
+// Driven through the CLI with the PROJECT_X_TRACKER / PROJECT_X_ADDITIONS
 // overrides, like merge-tracker-backfill-row-width.test.mjs.
 import { pass, fail, NODE, ROOT, isolatedBatchStatePath, rmSync } from './helpers.mjs';
 import assert from 'node:assert';
@@ -35,7 +35,7 @@ function backfill(rows, reports) {
     writeFileSync(tracker, ['# Applications Tracker', '', HEADER, SEP, ...rows, ''].join('\n'));
     const output = execFileSync(NODE, [join(ROOT, 'merge-tracker.mjs'), '--backfill-urls'], {
       cwd: dir, encoding: 'utf-8',
-      env: { ...process.env, CAREER_OPS_TRACKER: tracker, CAREER_OPS_ADDITIONS: join(dir, 'none'), CAREER_OPS_BATCH_STATE: isolatedBatchStatePath(join(dir, 'none')) },
+      env: { ...process.env, PROJECT_X_TRACKER: tracker, PROJECT_X_ADDITIONS: join(dir, 'none'), PROJECT_X_BATCH_STATE: isolatedBatchStatePath(join(dir, 'none')) },
     });
     const text = readFileSync(tracker, 'utf-8');
     const urlCell = (n) => (text.split('\n').find((l) => l.startsWith(`| ${n} |`)) || '').split('|').map((c) => c.trim())[10];

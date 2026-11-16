@@ -54,7 +54,7 @@ fsp.writeFile = async (file, data, options) => interrupted(file, data, options) 
 require('node:module').syncBuiltinESMExports();
 `);
     const result = spawnSync(process.execPath, ['--require', hook, cli, source, patches, output], {
-      encoding: 'utf8', env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_DATA_DIR: '', LATEX_FAIL_TARGET: destination === 'success' ? '' : output },
+      encoding: 'utf8', env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_DATA_DIR: '', LATEX_FAIL_TARGET: destination === 'success' ? '' : output },
     });
     assert.equal(result.error, undefined);
     if (destination === 'success') {

@@ -1,5 +1,5 @@
 // tests/doctor-skill-entrypoint-stubs.test.mjs — doctor.mjs's skill-entrypoint
-// stub warning (career-ops#4589).
+// stub warning (project-x#4589).
 //
 // A checkout without symlink support (core.symlinks=false) writes each per-CLI
 // SKILL.md entrypoint as a regular file holding only the symlink target text.
@@ -15,9 +15,9 @@ import { dirname, join } from 'path';
 console.log('\ndoctor.mjs — skill entrypoint stubs');
 
 const DOCTOR = join(ROOT, 'doctor.mjs');
-const POINTER = '../../../.agents/skills/career-ops/SKILL.md';
-const CLAUDE = '.claude/skills/career-ops/SKILL.md';
-const OPENCODE = '.opencode/skills/career-ops/SKILL.md';
+const POINTER = '../../../.agents/skills/project-x/SKILL.md';
+const CLAUDE = '.claude/skills/project-x/SKILL.md';
+const OPENCODE = '.opencode/skills/project-x/SKILL.md';
 
 function runDoctor(cwd) {
   try {
@@ -88,13 +88,13 @@ function skillWarning(state) {
 //     shell, so each case names its own: sh/PowerShell must not expand $HOME or
 //     $(...) or break on a quote; cmd must not trip on & or ^ (and a path with %
 //     cannot be made literal there, so doctor prints no cmd form for it).
-const CANONICAL = '---\nname: career-ops\n---\nrouter body\n';
+const CANONICAL = '---\nname: project-x\n---\nrouter body\n';
 
 function repairCase(label, dirPrefix, pickCommand, run) {
   const dir = mkdtempSync(join(tmpdir(), dirPrefix));
   const elsewhere = mkdtempSync(join(tmpdir(), 'co-skill-elsewhere-'));
   try {
-    put(dir, '.agents/skills/career-ops/SKILL.md', CANONICAL);
+    put(dir, '.agents/skills/project-x/SKILL.md', CANONICAL);
     const mod = join(dir, 'scaffolder', 'bin', 'skill-entrypoints.mjs');
     mkdirSync(dirname(mod), { recursive: true });
     copyFileSync(join(ROOT, 'scaffolder', 'bin', 'skill-entrypoints.mjs'), mod);
@@ -158,7 +158,7 @@ if (process.platform !== 'win32') {
 {
   const dir = mkdtempSync(join(tmpdir(), 'co-skill-stub-2-'));
   try {
-    put(dir, CLAUDE, '---\nname: career-ops\n---\nrouter body\n');
+    put(dir, CLAUDE, '---\nname: project-x\n---\nrouter body\n');
     const state = runDoctor(dir);
     if (state._error) fail(`real file run: doctor crashed: ${state._error}`);
     else if (!skillWarning(state)) pass('an entrypoint holding real skill content raises no warning');
@@ -190,7 +190,7 @@ if (process.platform !== 'win32') {
 {
   const dir = mkdtempSync(join(tmpdir(), 'co-skill-stub-4-'));
   try {
-    put(dir, '.agents/skills/career-ops/SKILL.md', 'router body\n');
+    put(dir, '.agents/skills/project-x/SKILL.md', 'router body\n');
     const link = join(dir, ...CLAUDE.split('/'));
     mkdirSync(dirname(link), { recursive: true });
     let linked = true;

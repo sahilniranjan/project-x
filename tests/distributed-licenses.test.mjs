@@ -5,7 +5,7 @@
 //   - fonts/ ships OFL 1.1 font binaries (embedded in every rendered CV via
 //     templates/resume-template.html). OFL 1.1 requires the license to
 //     accompany redistribution, so every family in fonts/ needs an OFL file.
-//   - scaffolder/ is published to npm as @santifer/career-ops with
+//   - scaffolder/ is published to npm as @santifer/project-x with
 //     "license": "MIT". MIT requires the notice to ship with the copy; npm
 //     packs a LICENSE file automatically regardless of `files`, so the file
 //     only has to exist — and must not drift from the root LICENSE.

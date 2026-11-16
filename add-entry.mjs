@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * add-entry.mjs — Deterministic dedup + insertion for `/career-ops add`.
+ * add-entry.mjs — Deterministic dedup + insertion for `/project-x add`.
  *
  * The `add` mode (agent) does the fetching, extraction, ATS-bullet writing,
  * preview, and confirm-before-write gate. This helper does ONE thing: take a
@@ -45,24 +45,24 @@
  * hard error (bad/empty payload, a requested target file missing, unwritable,
  * or an update whose entry is not in article-digest.md or is there twice).
  *
- * Test isolation: CAREER_OPS_CV / CAREER_OPS_ARTICLE_DIGEST override the target
+ * Test isolation: PROJECT_X_CV / PROJECT_X_ARTICLE_DIGEST override the target
  * files so tests never touch a real user CV.
  */
 
 import { readFileSync, existsSync, realpathSync } from 'fs';
 import { join, dirname, basename } from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
-import { getCareerOpsRoot } from './path-resolver.mjs';
+import { getProjectXRoot } from './path-resolver.mjs';
 import { normalizeTextKey } from './tracker-parse.mjs';
 import { replaceUserFile, userFileWriteTarget } from './tracker-utils.mjs';
 import { acquireDirLock, releaseOrWarn } from './lib/dir-lock.mjs';
 import { validateFlags } from './lib/cli-flags.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
 
-const CAREER_OPS = getCareerOpsRoot();
+const PROJECT_X = getProjectXRoot();
 
-const CV_FILE = process.env.CAREER_OPS_CV || join(CAREER_OPS, 'cv.md');
-const ARTICLE_DIGEST_FILE = process.env.CAREER_OPS_ARTICLE_DIGEST || join(CAREER_OPS, 'article-digest.md');
+const CV_FILE = process.env.PROJECT_X_CV || join(PROJECT_X, 'cv.md');
+const ARTICLE_DIGEST_FILE = process.env.PROJECT_X_ARTICLE_DIGEST || join(PROJECT_X, 'article-digest.md');
 
 const KNOWN_FLAGS = ['--dry-run', '--stdin', '--help', '-h'];
 
@@ -268,7 +268,7 @@ export function applyAdd(payload, { cvText = null, articleText = null } = {}) {
     if (!normalizeKey(dedupKey)) throw new Error('payload.articleDigest requires a non-empty dedupKey (used for dedup/idempotency)');
     // article-digest.md is optional; create it from a header when missing.
     const current = articleText === null
-      ? '# Article Digest -- Proof Points\n\nCompact proof points from portfolio projects. Read by career-ops at evaluation time.\n'
+      ? '# Article Digest -- Proof Points\n\nCompact proof points from portfolio projects. Read by project-x at evaluation time.\n'
       : articleText;
     if (articleDigestHasEntry(current, dedupKey)) {
       result.articleDigest = { status: 'duplicate' };

@@ -51,17 +51,17 @@ function workdir(t) {
   return dir;
 }
 
-// Every path the evaluators resolve, pinned to `dir`. CAREER_OPS_ROOT outranks
-// CAREER_OPS_DATA_DIR, and test-all.mjs sets it in its own process, so an
+// Every path the evaluators resolve, pinned to `dir`. PROJECT_X_ROOT outranks
+// PROJECT_X_DATA_DIR, and test-all.mjs sets it in its own process, so an
 // inherited value would send the report somewhere this test never looks.
 function envFor(dir, extra) {
   return {
     ...process.env,
-    CAREER_OPS_ROOT: dir,
-    CAREER_OPS_DATA_DIR: dir,
-    CAREER_OPS_REPORTS_DIR: join(dir, 'reports'),
-    CAREER_OPS_TRACKER: join(dir, 'data', 'applications.md'),
-    CAREER_OPS_BATCH_STATE: join(dir, 'batch-state.tsv'),
+    PROJECT_X_ROOT: dir,
+    PROJECT_X_DATA_DIR: dir,
+    PROJECT_X_REPORTS_DIR: join(dir, 'reports'),
+    PROJECT_X_TRACKER: join(dir, 'data', 'applications.md'),
+    PROJECT_X_BATCH_STATE: join(dir, 'batch-state.tsv'),
     ...extra,
   };
 }
@@ -168,7 +168,7 @@ test('openrouter-runner archives the pasted JD over a model-written paraphrase',
   const stub = writeFetchStub(dir, reply);
   const r = spawnSync(process.execPath, ['--import', pathToFileURL(stub).href, join(ROOT, 'openrouter-runner.mjs'), 'evaluate', JD], {
     cwd: dir, encoding: 'utf-8', timeout: 90_000,
-    env: envFor(dir, { OPENROUTER_API_KEY: 'test-key', CAREER_OPS_MODEL: 'test/model' }),
+    env: envFor(dir, { OPENROUTER_API_KEY: 'test-key', PROJECT_X_MODEL: 'test/model' }),
   });
   const report = onlyReport(dir, `${r.stdout}${r.stderr}`);
   assertArchivesJd(report, JD);

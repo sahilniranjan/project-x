@@ -20,7 +20,7 @@ const CAPTURE = pathToFileURL(join(ROOT, 'tests', 'fixtures', 'cover-pdf-capture
 
 /** Runs the script on a letter. `html` is what reached the renderer, if anything did. */
 function letter(fields, { cv = 'Jane Doe builds systems.\n', facts, inputs } = {}) {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-cover-ats-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-cover-ats-'));
   try {
     mkdirSync(join(dir, 'output'));
     writeFileSync(join(dir, 'cv.md'), cv);
@@ -47,8 +47,8 @@ function letter(fields, { cv = 'Jane Doe builds systems.\n', facts, inputs } = {
       // A tracker or PDF-index override set in the developer's shell would place
       // the run's output/ in that workspace instead of this fixture.
       env: {
-        ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_DATA_DIR: '', CAREER_OPS_PROFILE: '', CAREER_OPS_TRACKER: '',
-        CAREER_OPS_PDF_INDEX: '', CAREER_OPS_PDF_SHARED: '', COVER_HTML_CAPTURE: capture,
+        ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_DATA_DIR: '', PROJECT_X_PROFILE: '', PROJECT_X_TRACKER: '',
+        PROJECT_X_PDF_INDEX: '', PROJECT_X_PDF_SHARED: '', COVER_HTML_CAPTURE: capture,
       },
     });
     return { run, html: existsSync(capture) ? readFileSync(capture, 'utf-8') : null };

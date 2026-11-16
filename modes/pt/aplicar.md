@@ -79,7 +79,7 @@ Para cada pergunta, gerar a resposta seguindo:
 2. **`## Application Answers` / Bloco H anteriores**: Se existe uma resposta enviada ou um rascunho (resposta enviada primeiro), usar como base e refinar
 3. **Tom "Estou escolhendo vocês"**: Mesmo framework da auto-pipeline — confiante, não suplicante
 4. **Especificidade**: Referenciar algo concreto do JD visível na tela
-5. **career-ops proof point**: Incluir em "Informações adicionais" se houver campo para isso
+5. **project-x proof point**: Incluir em "Informações adicionais" se houver campo para isso
 
 **Campos específicos do mercado brasileiro que aparecem com frequência:**
 - **Pretensão salarial (bruto, mensal ou anual)** → Faixa de `profile.yml`, em BRL, com nota "negociável conforme pacote total"
@@ -120,7 +120,7 @@ Antes de salvar qualquer coisa, e de novo logo antes de cada escrita abaixo (sta
 Se o candidato confirmar que enviou a candidatura:
 1. Atualizar status para "Applied" com o CLI canônico: `node set-status.mjs --report <report#> Applied` (não editar a tabela de `applications.md` manualmente)
 2. Atualizar a seção `## Application Answers` do report com as respostas finais e `**State:** submitted` (formato em `modes/apply.md` → Step 8). O Bloco H continua sendo o rascunho da avaliação e não é alterado
-3. Sugerir próximo passo: `/career-ops contacto` para LinkedIn outreach
+3. Sugerir próximo passo: `/project-x contacto` para LinkedIn outreach
 
 ## Scroll handling
 

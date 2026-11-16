@@ -21,7 +21,7 @@ try {
   const run = (...args) => {
     const r = spawnSync(NODE, [join(ROOT, 'agent-inbox.mjs'), ...args], {
       cwd: dir, encoding: 'utf-8', timeout: 30000,
-      env: { ...process.env, CAREER_OPS_INBOX: inbox },
+      env: { ...process.env, PROJECT_X_INBOX: inbox },
     });
     return { status: r.status, stdout: r.stdout, stderr: r.stderr };
   };

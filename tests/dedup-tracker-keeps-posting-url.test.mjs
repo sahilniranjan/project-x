@@ -30,7 +30,7 @@ function dedup(rows) {
   const tracker = join(dir, 'applications.md');
   try {
     writeFileSync(tracker, ['# Applications Tracker', '', HEADER, SEP, ...rows, ''].join('\n'));
-    execFileSync(process.execPath, [DEDUP], { encoding: 'utf-8', env: { ...process.env, CAREER_OPS_TRACKER: tracker } });
+    execFileSync(process.execPath, [DEDUP], { encoding: 'utf-8', env: { ...process.env, PROJECT_X_TRACKER: tracker } });
     return readFileSync(tracker, 'utf-8').split('\n').filter(l => /^\|\s*\d+\s*\|/.test(l)).map(l => l.split('|').map(c => c.trim()));
   } finally {
     rmSync(dir, { recursive: true, force: true });

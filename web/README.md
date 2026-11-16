@@ -1,13 +1,13 @@
-# career-ops web (alpha)
+# project-x web (alpha)
 
-An **experimental, opt-in web UI** for career-ops. It is a local-first *view* over
+An **experimental, opt-in web UI** for project-x. It is a local-first *view* over
 the exact same files the CLI reads and writes (`data/pipeline.md`,
 `data/applications.md`, `reports/`, `config/`): no parallel engine, no separate
 database, no server. If you never run it, nothing about your CLI workflow changes.
 
 > **Status: alpha.** Expect rough edges. Feedback →
-> [Discussion #1142](https://github.com/career-ops-hq/career-ops/discussions/1142) ·
-> roadmap context → [Discussion #156](https://github.com/career-ops-hq/career-ops/discussions/156).
+> [Discussion #1142](https://github.com/project-x-hq/project-x/discussions/1142) ·
+> roadmap context → [Discussion #156](https://github.com/project-x-hq/project-x/discussions/156).
 
 ## Quick start
 
@@ -19,7 +19,7 @@ npm ci
 npm run dev
 ```
 
-Open http://localhost:3000. The app reads the career-ops checkout it lives in
+Open http://localhost:3000. The app reads the project-x checkout it lives in
 (the parent directory) — your existing CV, pipeline and reports appear as-is.
 
 ## What works today
@@ -61,8 +61,8 @@ npx tsc --noEmit     # typecheck
 npm run build        # production build
 ```
 
-Set `CAREER_OPS_ROOT=/path/to/checkout` in `web/.env.local` to point the app at
-a different career-ops directory (useful for testing against sample data).
+Set `PROJECT_X_ROOT=/path/to/checkout` in `web/.env.local` to point the app at
+a different project-x directory (useful for testing against sample data).
 
 ### Tests
 
@@ -89,10 +89,10 @@ Three constraints follow from all this:
 - **Web suites use `node:test`; core suites don't.** Here you write
   `import { test } from "node:test"` with `node:assert/strict`. The root
   `tests/` suite deliberately uses neither — it has its own `pass`/`fail`
-  helpers, because [#1440](https://github.com/career-ops-hq/career-ops/issues/1440)
+  helpers, because [#1440](https://github.com/project-x-hq/project-x/issues/1440)
   requires the core suite to run on a bare clone with "no framework, not even
   `node:test`". Don't carry either style across the boundary.
 
 `tests/web-test-layout.test.mjs` in the **root** suite enforces all of the above
 on every PR, including that `npm test` never goes back to listing suites by name
-([#2360](https://github.com/career-ops-hq/career-ops/issues/2360)).
+([#2360](https://github.com/project-x-hq/project-x/issues/2360)).

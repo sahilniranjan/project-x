@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * detect-reposts.mjs — Repost Detector for career-ops
+ * detect-reposts.mjs — Repost Detector for project-x
  *
  * Reads data/scan-history.tsv, groups rows by company, groups role titles by
  * title identity (see titleIdentityKey), and flags any company+role that
@@ -76,7 +76,7 @@
  *      node detect-reposts.mjs --self-test
  *      node detect-reposts.mjs --help
  *
- * Issue #1205 — github.com/career-ops-hq/career-ops
+ * Issue #1205 — github.com/project-x-hq/project-x
  */
 
 import { readFileSync, existsSync, writeFileSync, mkdtempSync, rmSync } from 'fs';
@@ -88,7 +88,7 @@ import { fileURLToPath } from 'url';
 import { loadYaml } from './lib/yaml-document.mjs';
 
 import { roleFuzzyMatch } from './role-matcher.mjs';
-import { getCareerOpsRoot } from './path-resolver.mjs';
+import { getProjectXRoot } from './path-resolver.mjs';
 import { normalizeCompanyName } from './invite-match.mjs';
 import { flagValue, validateFlags, safeIntFlag } from './lib/cli-flags.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
@@ -98,16 +98,16 @@ import { parseScanHistoryLine, scanHistoryLineHasColumn } from './lib/scan-histo
 import { withPipelineLock } from './pipeline-lock.mjs';
 import { writeFileAtomic } from './tracker-utils.mjs';
 
-const CAREER_OPS = getCareerOpsRoot();
+const PROJECT_X = getProjectXRoot();
 // Same resolution scan.mjs uses, lane override included (scan.mjs's
 // SCAN_HISTORY_PATH). This matters more here than it used to: reading the wrong
 // lane only misreported, but a retention pass that ignored the override would
 // DELETE rows from the default lane while leaving the selected one untouched.
-// docs/SCRIPTS.md gives a lane its own CAREER_OPS_SCAN_HISTORY for exactly this
+// docs/SCRIPTS.md gives a lane its own PROJECT_X_SCAN_HISTORY for exactly this
 // reason, since the file is the dedup source.
-const SCAN_HISTORY_PATH = process.env.CAREER_OPS_SCAN_HISTORY || join(CAREER_OPS, 'data/scan-history.tsv');
+const SCAN_HISTORY_PATH = process.env.PROJECT_X_SCAN_HISTORY || join(PROJECT_X, 'data/scan-history.tsv');
 // Same resolution scan.mjs uses, so a sandboxed run overrides both together.
-const PORTALS_PATH = process.env.CAREER_OPS_PORTALS || join(CAREER_OPS, 'portals.yml');
+const PORTALS_PATH = process.env.PROJECT_X_PORTALS || join(PROJECT_X, 'portals.yml');
 const DEFAULT_WINDOW_DAYS = 90;
 
 // Smallest first_seen span a cluster may have and still count as a repost.
@@ -701,7 +701,7 @@ function buildRepostCluster(clusterRows, windowDays, minSpan = MIN_REPOST_SPAN_D
 // --- Summary mode ---
 function printSummary(clusters, aggregatorCount = 0) {
   console.log(`\n${'='.repeat(78)}`);
-  console.log('  Repost Detector — career-ops');
+  console.log('  Repost Detector — project-x');
   console.log(`  window: ${windowDays} days | min span: ${minSpanDays} day(s) | aggregators skipped: ${aggregatorCount} | clusters: ${clusters.length}`);
   console.log(`${'='.repeat(78)}\n`);
 

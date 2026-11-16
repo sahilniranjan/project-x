@@ -24,7 +24,7 @@ function trackerRoot(t) {
 
 function query(root, args) {
   return spawnSync(process.execPath, [join(ROOT, 'tracker.mjs'), 'query', ...args], {
-    env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_DATA_DIR: root, CAREER_OPS_TRACKER: '', CAREER_OPS_TRACKER_DB: '' },
+    env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_DATA_DIR: root, PROJECT_X_TRACKER: '', PROJECT_X_TRACKER_DB: '' },
     encoding: 'utf8',
     timeout: 20_000,
   });

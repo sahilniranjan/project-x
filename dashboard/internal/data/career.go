@@ -15,7 +15,7 @@ import (
 	"time"
 	"unicode"
 
-	"github.com/santifer/career-ops/dashboard/internal/model"
+	"github.com/santifer/project-x/dashboard/internal/model"
 )
 
 var (
@@ -39,25 +39,25 @@ var (
 )
 
 // resolveReportPath converts a report link from the tracker into a path
-// relative to careerOpsPath. Links are normally relative to the tracker
+// relative to projectXPath. Links are normally relative to the tracker
 // file's own directory (see merge-tracker.mjs link normalization, #760);
 // legacy trackers may still carry root-relative links, so fall back to the
 // raw link when the tracker-relative resolution does not exist on disk.
-func resolveReportPath(careerOpsPath, trackerPath, link string) string {
+func resolveReportPath(projectXPath, trackerPath, link string) string {
 	resolved := filepath.Join(filepath.Dir(trackerPath), link)
 	if _, err := os.Stat(resolved); err != nil {
-		legacy := filepath.Join(careerOpsPath, link)
+		legacy := filepath.Join(projectXPath, link)
 		if _, err2 := os.Stat(legacy); err2 == nil {
 			resolved = legacy
 		}
 	}
-	if rel, err := filepath.Rel(careerOpsPath, resolved); err == nil {
+	if rel, err := filepath.Rel(projectXPath, resolved); err == nil {
 		return rel
 	}
 	return link
 }
 
-// repoRootMarker identifies a career-ops checkout. path-resolver.mjs is chosen
+// repoRootMarker identifies a project-x checkout. path-resolver.mjs is chosen
 // because that file IS the Node implementation of this same resolution, so the
 // two cannot disagree about which directory is the root.
 const repoRootMarker = "path-resolver.mjs"
@@ -87,11 +87,11 @@ func ancestorWithMarker(start string) (string, error) {
 	}
 }
 
-// FindRepoRoot locates the career-ops checkout independent of the working
+// FindRepoRoot locates the project-x checkout independent of the working
 // directory, or "" when it cannot be found.
 //
-// AGENTS.md and DATA_CONTRACT.md both say a relative CAREER_OPS_ROOT /
-// CAREER_OPS_TRACKER is "resolved relative to the repository root", and
+// AGENTS.md and DATA_CONTRACT.md both say a relative PROJECT_X_ROOT /
+// PROJECT_X_TRACKER is "resolved relative to the repository root", and
 // path-resolver.mjs does that with no reference to cwd at all — it resolves
 // against its own __dirname.
 //
@@ -102,7 +102,7 @@ func ancestorWithMarker(start string) (string, error) {
 //	ancestors                 outside it, which cwd cannot answer
 //
 // Exported so main.go uses this one rather than keeping a second search of its
-// own: CAREER_OPS_TRACKER resolves through here, and two walkers that disagree
+// own: PROJECT_X_TRACKER resolves through here, and two walkers that disagree
 // would let the dashboard and its tracker land on different roots.
 func FindRepoRoot() (string, error) {
 	if cwd, err := os.Getwd(); err == nil {
@@ -141,14 +141,14 @@ func getRepoRoot() string {
 	return cwd
 }
 
-func resolveTrackerPath(careerOpsPath string) string {
-	if envTracker := strings.TrimSpace(os.Getenv("CAREER_OPS_TRACKER")); envTracker != "" {
+func resolveTrackerPath(projectXPath string) string {
+	if envTracker := strings.TrimSpace(os.Getenv("PROJECT_X_TRACKER")); envTracker != "" {
 		if filepath.IsAbs(envTracker) {
 			return filepath.Clean(envTracker)
 		}
 		return filepath.Clean(filepath.Join(getRepoRoot(), envTracker))
 	}
-	dataPath := filepath.Clean(filepath.Join(careerOpsPath, "data", "applications.md"))
+	dataPath := filepath.Clean(filepath.Join(projectXPath, "data", "applications.md"))
 	// Fall back ONLY when data/applications.md is genuinely absent. Any other
 	// stat failure means the canonical tracker IS there and could not be
 	// examined, and falling back then sends the reader to a legacy path that
@@ -163,7 +163,7 @@ func resolveTrackerPath(careerOpsPath string) string {
 		// a second error channel for a path it only computes.
 		return dataPath
 	}
-	return filepath.Clean(filepath.Join(careerOpsPath, "applications.md"))
+	return filepath.Clean(filepath.Join(projectXPath, "applications.md"))
 }
 
 // reportHeaderBytes is how much of a report the URL enrichment scans.
@@ -197,8 +197,8 @@ func readFileHead(path string, n int) ([]byte, error) {
 // Callers should branch on errors.Is(err, fs.ErrNotExist). Same rule the rest
 // of the project follows for user-layer reads: ENOENT is the only failure that
 // legitimately means empty.
-func ParseApplications(careerOpsPath string) ([]model.CareerApplication, error) {
-	filePath := resolveTrackerPath(careerOpsPath)
+func ParseApplications(projectXPath string) ([]model.CareerApplication, error) {
+	filePath := resolveTrackerPath(projectXPath)
 	content, err := os.ReadFile(filePath)
 	if err != nil {
 		return nil, fmt.Errorf("read tracker %s: %w", filePath, err)
@@ -284,12 +284,12 @@ func ParseApplications(careerOpsPath string) ([]model.CareerApplication, error) 
 		// Parse report link. Tracker links are written relative to the
 		// tracker file itself (e.g. ../reports/... when the tracker lives in
 		// data/), so resolve against the tracker's directory and normalize
-		// back to a careerOpsPath-relative path, which is what every
+		// back to a projectXPath-relative path, which is what every
 		// consumer joins against. Legacy root-relative links are kept as a
 		// fallback when the resolved file does not exist.
 		if link, ok := firstNumberedLink(at("report")); ok {
 			app.ReportNumber = link.label
-			app.ReportPath = resolveReportPath(careerOpsPath, filePath, link.target)
+			app.ReportPath = resolveReportPath(projectXPath, filePath, link.target)
 		}
 
 		// Notes column, when present.
@@ -309,8 +309,8 @@ func ParseApplications(careerOpsPath string) ([]model.CareerApplication, error) 
 	// 3. report_num -> batch-state completed mapping (legacy)
 	// 4. scan-history.tsv (pipeline scan entries matched by company+role)
 	// 5. company name fallback from batch-input.tsv
-	inputPath := batchFilePath(careerOpsPath, "batch-input.tsv")
-	statePath := batchFilePath(careerOpsPath, "batch-state.tsv")
+	inputPath := batchFilePath(projectXPath, "batch-input.tsv")
+	statePath := batchFilePath(projectXPath, "batch-state.tsv")
 	batchURLs := loadBatchInputURLs(inputPath)
 	reportNumURLs := loadJobURLs(inputPath, statePath)
 
@@ -321,7 +321,7 @@ func ParseApplications(careerOpsPath string) ([]model.CareerApplication, error) 
 		if apps[i].ReportPath == "" {
 			continue
 		}
-		fullReport := filepath.Join(careerOpsPath, apps[i].ReportPath)
+		fullReport := filepath.Join(projectXPath, apps[i].ReportPath)
 		// Only the header (first 1000 bytes) is scanned, so only that much is
 		// read. This runs on every reload, including after each status change,
 		// and reading whole reports to keep 1000 bytes of each scaled with the
@@ -356,7 +356,7 @@ func ParseApplications(careerOpsPath string) ([]model.CareerApplication, error) 
 	}
 
 	// Strategy 4: scan-history.tsv (pipeline scan entries matched by company+role)
-	enrichFromScanHistory(careerOpsPath, apps)
+	enrichFromScanHistory(projectXPath, apps)
 
 	// Strategy 5: company name fallback from batch-input.tsv
 	enrichAppURLsByCompany(inputPath, apps)
@@ -368,7 +368,7 @@ func ParseApplications(careerOpsPath string) ([]model.CareerApplication, error) 
 // batch-input.tsv or batch-state.tsv.
 //
 // The runner keeps both beside itself in the checkout, even when
-// CAREER_OPS_ROOT, CAREER_OPS_DATA_DIR or a .career-ops-data marker put the
+// PROJECT_X_ROOT, PROJECT_X_DATA_DIR or a .project-x-data marker put the
 // data root somewhere else (#5115, #5116). Reading them only from the data
 // root found nothing under that layout, so rows that rely on the batch tiers
 // lost their job URL. The checkout's copy wins when it exists. Only when it
@@ -379,14 +379,14 @@ func ParseApplications(careerOpsPath string) ([]model.CareerApplication, error) 
 //
 // A FindRepoRoot error is not reported here: main.go already warns about it
 // at startup, and the data root is the path this read used before.
-func batchFilePath(careerOpsPath, name string) string {
+func batchFilePath(projectXPath, name string) string {
 	if root, err := FindRepoRoot(); err == nil && root != "" {
 		checkoutPath := filepath.Join(root, "batch", name)
 		if _, statErr := os.Stat(checkoutPath); !errors.Is(statErr, fs.ErrNotExist) {
 			return checkoutPath
 		}
 	}
-	return filepath.Join(careerOpsPath, "batch", name)
+	return filepath.Join(projectXPath, "batch", name)
 }
 
 // loadBatchInputURLs reads batch-input.tsv and returns a map of batch ID -> job URL.
@@ -505,8 +505,8 @@ func loadJobURLs(inputPath, statePath string) map[string]string {
 }
 
 // enrichFromScanHistory fills JobURL from scan-history.tsv by matching company name.
-func enrichFromScanHistory(careerOpsPath string, apps []model.CareerApplication) {
-	scanPath := filepath.Join(careerOpsPath, "scan-history.tsv")
+func enrichFromScanHistory(projectXPath string, apps []model.CareerApplication) {
+	scanPath := filepath.Join(projectXPath, "scan-history.tsv")
 	scanData, err := os.ReadFile(scanPath)
 	if err != nil {
 		return
@@ -730,8 +730,8 @@ func NormalizeStatus(raw string) string {
 }
 
 // LoadReportSummary extracts key fields from a report file.
-func LoadReportSummary(careerOpsPath, reportPath string) (archetype, tldr, remote, comp string) {
-	fullPath := filepath.Join(careerOpsPath, reportPath)
+func LoadReportSummary(projectXPath, reportPath string) (archetype, tldr, remote, comp string) {
+	fullPath := filepath.Join(projectXPath, reportPath)
 	content, err := os.ReadFile(fullPath)
 	if err != nil {
 		return
@@ -867,7 +867,7 @@ type markdownLink struct {
 // firstNumberedLink returns the first link in a Report cell whose label is a
 // report number (`[61](../reports/061-….md)`). It walks parseMarkdownLinks so
 // a target with parentheses, such as `001-acme-(berlin)-….md`, survives whole
-// (career-ops-hq/career-ops#5482).
+// (project-x-hq/project-x#5482).
 func firstNumberedLink(cell string) (markdownLink, bool) {
 	for _, link := range parseMarkdownLinks(cell) {
 		if reReportLabel.MatchString(link.label) {
@@ -1061,15 +1061,15 @@ func resolveTrackerColumns(lines []string) map[string]int {
 	return legacyTrackerColumns
 }
 
-func UpdateApplicationStatus(careerOpsPath string, app model.CareerApplication, newStatus string) error {
-	return UpdateApplicationStatusAndNotes(careerOpsPath, app, newStatus, "")
+func UpdateApplicationStatus(projectXPath string, app model.CareerApplication, newStatus string) error {
+	return UpdateApplicationStatusAndNotes(projectXPath, app, newStatus, "")
 }
 
 // UpdateApplicationStatusAndNotes delegates to the canonical writer so status,
 // notes, the transition ledger and Applied follow-up seeding share one path.
 // Notes use the CLI's idempotent "; " separator; empty notes are unchanged.
 // Only the child takes the tracker lock: holding it here would deadlock.
-func UpdateApplicationStatusAndNotes(careerOpsPath string, app model.CareerApplication, newStatus, notesAppend string) error {
+func UpdateApplicationStatusAndNotes(projectXPath string, app model.CareerApplication, newStatus, notesAppend string) error {
 	if strings.ContainsAny(notesAppend, "|\r\n\t") {
 		return fmt.Errorf("notes cannot contain table delimiters or line breaks")
 	}
@@ -1079,7 +1079,7 @@ func UpdateApplicationStatusAndNotes(careerOpsPath string, app model.CareerAppli
 	if app.ReportNumber == "" {
 		return fmt.Errorf("application has no report identity; use set-status.mjs --row to select a tracker row")
 	}
-	return runStatusWriter(careerOpsPath, app.ReportNumber, newStatus, notesAppend)
+	return runStatusWriter(projectXPath, app.ReportNumber, newStatus, notesAppend)
 }
 
 // IsCanonicalStatusName reports whether status is one of the states.yml
@@ -1318,7 +1318,7 @@ func safePct(part, whole int) float64 {
 }
 
 // LoadReportDiscardReasons parses predicted discard reasons from a report file.
-func LoadReportDiscardReasons(careerOpsPath, reportPath string) []string {
+func LoadReportDiscardReasons(projectXPath, reportPath string) []string {
 	if reportPath == "" {
 		return nil
 	}
@@ -1328,7 +1328,7 @@ func LoadReportDiscardReasons(careerOpsPath, reportPath string) []string {
 		p = p[idx+2:]
 		p = strings.TrimSuffix(p, ")")
 	}
-	fullPath := filepath.Join(careerOpsPath, p)
+	fullPath := filepath.Join(projectXPath, p)
 	content, err := os.ReadFile(fullPath)
 	if err != nil {
 		return nil
@@ -1349,8 +1349,8 @@ func LoadReportDiscardReasons(careerOpsPath, reportPath string) []string {
 }
 
 // SaveAnonymousStat records an anonymized win stat to data/reported-hires.tsv.
-func SaveAnonymousStat(careerOpsPath string, role string, weeks int) error {
-	dirPath := filepath.Join(careerOpsPath, "data")
+func SaveAnonymousStat(projectXPath string, role string, weeks int) error {
+	dirPath := filepath.Join(projectXPath, "data")
 	if err := os.MkdirAll(dirPath, 0755); err != nil {
 		return err
 	}

@@ -55,7 +55,7 @@ function workspace(rows = '') {
       }
       const r = spawnSync(NODE, [join(ROOT, 'merge-tracker.mjs')], {
         encoding: 'utf-8', timeout: 30000,
-        env: { ...process.env, CAREER_OPS_TRACKER: join(work, 'applications.md'), CAREER_OPS_ADDITIONS: adds, CAREER_OPS_BATCH_STATE: state },
+        env: { ...process.env, PROJECT_X_TRACKER: join(work, 'applications.md'), PROJECT_X_ADDITIONS: adds, PROJECT_X_BATCH_STATE: state },
       });
       const merged = join(adds, 'merged');
       return {

@@ -108,7 +108,7 @@ function collect() {
 
 function render(report) {
   const lines = [];
-  lines.push('career-ops privacy guard — status');
+  lines.push('project-x privacy guard — status');
   lines.push('');
   lines.push(`  state            ${report.state}`);
   lines.push(`  config file      ${report.configPath}`);

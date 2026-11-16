@@ -33,8 +33,8 @@ provider.fetch = async entry => {
 globalThis.fetch = async () => { throw new Error('Unexpected network request'); };
 `);
     const env = { ...process.env };
-    for (const name of ['CAREER_OPS_DATA_DIR', 'CAREER_OPS_PROFILE', 'CAREER_OPS_TRACKER', 'CAREER_OPS_PIPELINE', 'CAREER_OPS_SCAN_HISTORY']) delete env[name];
-    Object.assign(env, { CAREER_OPS_ROOT: root, CAREER_OPS_PORTALS: join(root, 'portals.yml'), CAREER_OPS_HTTP_CACHE: '0' });
+    for (const name of ['PROJECT_X_DATA_DIR', 'PROJECT_X_PROFILE', 'PROJECT_X_TRACKER', 'PROJECT_X_PIPELINE', 'PROJECT_X_SCAN_HISTORY']) delete env[name];
+    Object.assign(env, { PROJECT_X_ROOT: root, PROJECT_X_PORTALS: join(root, 'portals.yml'), PROJECT_X_HTTP_CACHE: '0' });
     const result = spawnSync(process.execPath, ['--import', pathToFileURL(preload).href, join(ROOT, 'scan.mjs'), '--json', ...(dryRun ? ['--dry-run'] : [])], {
       cwd: root, env, windowsHide: true, encoding: 'utf8', timeout: 30000,
     });

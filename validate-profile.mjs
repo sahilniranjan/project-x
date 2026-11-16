@@ -16,7 +16,7 @@
  * the default tier. The user's only signal is noticing the wrong language in
  * finished work.
  *
- * Unknown keys WARN, never FAIL. career-ops is meant to work out of the box
+ * Unknown keys WARN, never FAIL. project-x is meant to work out of the box
  * and an unknown key is not a broken install. It is almost always a typo,
  * and the right response is to name it, not to refuse to run. A known key
  * set to a value its reader ignores is an error: spend_tier, language.output,
@@ -44,7 +44,7 @@ import { readFileSync, existsSync } from 'fs';
 import { join, dirname, relative, sep } from 'path';
 import { fileURLToPath } from 'url';
 import { hasYamlContent, loadYaml } from './lib/yaml-document.mjs';
-import { getCareerOpsRoot, getProfilePath } from './path-resolver.mjs';
+import { getProjectXRoot, getProfilePath } from './path-resolver.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
 import { flagValue, validateFlags } from './lib/cli-flags.mjs';
 
@@ -207,7 +207,7 @@ function checkKnownValues(parsed, findings, file) {
 // The CLI passes the real path. Library callers (doctor) get the resolved
 // profile relative to the data root, so an overridden profile path is named
 // as it is, not as the default. Forward slashes on every platform.
-const DEFAULT_PROFILE_LABEL = relative(getCareerOpsRoot(), DEFAULT_PROFILE_PATH).split(sep).join('/') || DEFAULT_PROFILE_PATH;
+const DEFAULT_PROFILE_LABEL = relative(getProjectXRoot(), DEFAULT_PROFILE_PATH).split(sep).join('/') || DEFAULT_PROFILE_PATH;
 
 export function validateProfile(profileText, exampleText, profileLabel = DEFAULT_PROFILE_LABEL) {
   const findings = [];

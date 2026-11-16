@@ -30,7 +30,7 @@ test('empty summary points at interview notes and the scan command', () => {
   assert.match(out, /No interviews recorded/);
   assert.match(out, /interview-prep\/sessions/);
   assert.match(out, /data\/pipeline\.md/);
-  assert.match(out, /CAREER_OPS_PIPELINE/);
+  assert.match(out, /PROJECT_X_PIPELINE/);
   // --dry-run saves nothing, so it is not the command to suggest here.
   assert.match(out, /Example: node scan\.mjs$/m);
 });

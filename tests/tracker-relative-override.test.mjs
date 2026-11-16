@@ -14,7 +14,7 @@ const external = join(sandbox, 'external');
 const cwdA = join(sandbox, 'a');
 const cwdB = join(sandbox, 'b');
 const childEnv = Object.fromEntries(Object.entries(process.env).filter(([key]) =>
-  !/^(CAREER_OPS_|DOTENV_|NODE_OPTIONS$|NODE_PATH$)/i.test(key),
+  !/^(PROJECT_X_|DOTENV_|NODE_OPTIONS$|NODE_PATH$)/i.test(key),
 ));
 
 function write(path, text) {
@@ -33,9 +33,9 @@ function tracker(company) {
 }
 
 function run(script, args, cwd, override, codeRoot = code) {
-  const env = { ...childEnv, CAREER_OPS_ROOT: data, CAREER_OPS_PROFILE: 'profiles/lane.yml' };
-  if (codeRoot != null) env.CAREER_OPS_CODE_ROOT = codeRoot;
-  if (override !== undefined) env.CAREER_OPS_TRACKER = override;
+  const env = { ...childEnv, PROJECT_X_ROOT: data, PROJECT_X_PROFILE: 'profiles/lane.yml' };
+  if (codeRoot != null) env.PROJECT_X_CODE_ROOT = codeRoot;
+  if (override !== undefined) env.PROJECT_X_TRACKER = override;
   return execFileSync(NODE, [join(code, script), ...args], {
     cwd, env, encoding: 'utf-8', timeout: 30000, stdio: ['pipe', 'pipe', 'pipe'],
   });
@@ -65,10 +65,10 @@ try {
   write(join(code, 'probe.mjs'), `
     import assert from 'node:assert/strict';
     import { readFileSync, existsSync } from 'node:fs';
-    import { getCareerOpsRoot, getProfilePath, rawTrackerPath, resolveTrackerPath, resolveTrackerPathForWrite } from './path-resolver.mjs';
+    import { getProjectXRoot, getProfilePath, rawTrackerPath, resolveTrackerPath, resolveTrackerPathForWrite } from './path-resolver.mjs';
     import { resolveWorkspaceRootFor, trackerLinkDirsFor } from './tracker-utils.mjs';
     import { resolveTrackerPath as webResolve, trackerLinkDirs as webLinkDirs, readTrackerFile } from './web/src/lib/core/tracker-files.mjs';
-    const root = getCareerOpsRoot();
+    const root = getProjectXRoot();
     assert.equal(webResolve(root), resolveTrackerPath(root));
     assert.deepEqual(webLinkDirs(root), trackerLinkDirsFor(root));
     assert.equal(readTrackerFile(root), existsSync(resolveTrackerPath(root)) ? readFileSync(resolveTrackerPath(root), 'utf8') : null);
@@ -78,9 +78,9 @@ try {
     }));
   `);
   write(join(code, 'web-read.mjs'), `
-    import { getCareerOpsRoot } from './path-resolver.mjs';
+    import { getProjectXRoot } from './path-resolver.mjs';
     import { readTrackerFile } from './web/src/lib/core/tracker-files.mjs';
-    console.log(JSON.stringify({ tracker: readTrackerFile(getCareerOpsRoot()), ledger: readTrackerFile(getCareerOpsRoot(), 'status-log.tsv') }));
+    console.log(JSON.stringify({ tracker: readTrackerFile(getProjectXRoot()), ledger: readTrackerFile(getProjectXRoot(), 'status-log.tsv') }));
   `);
 
   const relativeTracker = join(code, 'custom/data/applications.md');
@@ -93,7 +93,7 @@ try {
     // A web deployment normally runs from <checkout>/web; an external one
     // selects its engine explicitly, independently of the configured data root.
     const webCwd = join(code, 'web');
-    // null leaves CAREER_OPS_CODE_ROOT unset (the run helper defaults to code).
+    // null leaves PROJECT_X_CODE_ROOT unset (the run helper defaults to code).
     for (const codeRoot of [null, '..']) {
       const actual = JSON.parse(run('probe.mjs', [], webCwd, 'custom/data/applications.md', codeRoot));
       assert.equal(actual.read, realpathSync(relativeTracker));

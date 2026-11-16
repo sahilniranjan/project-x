@@ -48,7 +48,7 @@ import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { loadYaml } from './lib/yaml-document.mjs';
 import { LIVENESS_CONTEXT_OPTIONS, rejectPrivateOrInvalid } from './liveness-browser.mjs';
-import { getCareerOpsRoot, getProfilePath } from './path-resolver.mjs';
+import { getProjectXRoot, getProfilePath } from './path-resolver.mjs';
 import { resolveAtsApi, JD_TEXT_API_ATS } from './liveness-api.mjs';
 import { classifyLiveness, cloudflareInterstitial } from './liveness-core.mjs';
 import { decodeEntities } from './providers/_html-entities.mjs';
@@ -62,7 +62,7 @@ import { flagValue, hasFlag, validateFlags } from './lib/cli-flags.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
 import { browserLaunchOptions } from './lib/browser-launch.mjs';
 
-const CAREER_OPS = getCareerOpsRoot();
+const PROJECT_X = getProjectXRoot();
 
 const DEFAULT_TIMEOUT_MS = 15_000;
 const HYDRATION_WAIT_MS = 2_000;

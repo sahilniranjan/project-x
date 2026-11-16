@@ -60,7 +60,7 @@ try {
   const result = JSON.parse(execFileSync(NODE, [join(ROOT, 'analyze-patterns.mjs'), '--min-threshold', '1'], {
     encoding: 'utf-8',
     timeout: 60000,
-    env: { ...process.env, CAREER_OPS_TRACKER: '', CAREER_OPS_ROOT: '', CAREER_OPS_DATA_DIR: work },
+    env: { ...process.env, PROJECT_X_TRACKER: '', PROJECT_X_ROOT: '', PROJECT_X_DATA_DIR: work },
   }));
   const count = (rows, key, value) => (rows || []).find((p) => p[key] === value)?.total ?? 0;
 

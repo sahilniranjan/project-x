@@ -28,7 +28,7 @@ import {
 import { randomUUID } from 'crypto';
 import { dirname, join, resolve } from 'path';
 import { fileURLToPath } from 'url';
-import { getCareerOpsRoot, resolveBatchStatePaths } from './path-resolver.mjs';
+import { getProjectXRoot, resolveBatchStatePaths } from './path-resolver.mjs';
 import {
   extractTrackerReportNumbers, parseTrackerRow, resolveColumns,
 } from './tracker-parse.mjs';
@@ -37,11 +37,11 @@ import {
 } from './tracker-utils.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
 
-const ROOT = getCareerOpsRoot();
+const ROOT = getProjectXRoot();
 const MAX_SENTINEL_AGE_MS = 4 * 60 * 60 * 1000;
 const MAX_RETRIES = 50;
 const MAX_COUNT = 50;
-const RESERVATION_TOKEN = Symbol('career-ops-report-reservation-token');
+const RESERVATION_TOKEN = Symbol('project-x-report-reservation-token');
 const USAGE_LINES = [
   'Usage: node reserve-report-num.mjs [--count <1-N>] [--release <NNN>[-<MMM>]] [--gc]',
   '',
@@ -62,7 +62,7 @@ export function formatReportNumber(num) {
 
 function reportsDirFor(options = {}) {
   return resolve(options.reportsDir
-    || process.env.CAREER_OPS_REPORTS_DIR
+    || process.env.PROJECT_X_REPORTS_DIR
     || join(options.rootDir || ROOT, 'reports'));
 }
 
@@ -77,7 +77,7 @@ function trackerPathFor(options = {}) {
 // reservation made by hand read a file that never exists and handed out
 // numbers the runner recorded as failed.
 function batchStateFilesFor(options = {}) {
-  const explicit = options.batchStateFile || process.env.CAREER_OPS_BATCH_STATE;
+  const explicit = options.batchStateFile || process.env.PROJECT_X_BATCH_STATE;
   return explicit ? [resolve(explicit)] : resolveBatchStatePaths(options.rootDir || ROOT);
 }
 
@@ -172,10 +172,10 @@ function ledgerPathsFor(trackerPath, options = {}) {
     // Every place a follow-up can land. A status change seeds it beside the
     // tracker (lib/status-hooks.mjs seedFollowupOnApplied); followup-seed and
     // the readers default to the data root's data/follow-ups.md or honor
-    // CAREER_OPS_FOLLOWUPS. These are one file in the default layout and
+    // PROJECT_X_FOLLOWUPS. These are one file in the default layout and
     // split when the tracker lives elsewhere, so count each distinct one.
     followups: [...new Set([
-      process.env.CAREER_OPS_FOLLOWUPS,
+      process.env.PROJECT_X_FOLLOWUPS,
       join(dataDir, 'follow-ups.md'),
       join(dirname(trackerPath), 'follow-ups.md'),
     ].filter(Boolean).map(p => resolve(p)))],
@@ -308,9 +308,9 @@ export async function reserveReportNumbers(count = 1, options = {}) {
   mkdirSync(reportsDir, { recursive: true });
 
   const lock = await acquireTrackerLock(trackerLockDirFor(trackerPath), {
-    timeoutMs: Number(process.env.CAREER_OPS_TRACKER_LOCK_TIMEOUT_MS) || 60_000,
-    retryMs: Number(process.env.CAREER_OPS_TRACKER_LOCK_RETRY_MS) || 75,
-    staleMs: Number(process.env.CAREER_OPS_TRACKER_LOCK_STALE_MS) || 10 * 60_000,
+    timeoutMs: Number(process.env.PROJECT_X_TRACKER_LOCK_TIMEOUT_MS) || 60_000,
+    retryMs: Number(process.env.PROJECT_X_TRACKER_LOCK_RETRY_MS) || 75,
+    staleMs: Number(process.env.PROJECT_X_TRACKER_LOCK_STALE_MS) || 10 * 60_000,
     tracker: trackerPath,
     ...options.lockOptions,
   });
@@ -371,9 +371,9 @@ export async function releaseReportNumbers(numbers, options = {}) {
 
   const trackerPath = trackerPathFor(options);
   const lock = await acquireTrackerLock(trackerLockDirFor(trackerPath), {
-    timeoutMs: Number(process.env.CAREER_OPS_TRACKER_LOCK_TIMEOUT_MS) || 60_000,
-    retryMs: Number(process.env.CAREER_OPS_TRACKER_LOCK_RETRY_MS) || 75,
-    staleMs: Number(process.env.CAREER_OPS_TRACKER_LOCK_STALE_MS) || 10 * 60_000,
+    timeoutMs: Number(process.env.PROJECT_X_TRACKER_LOCK_TIMEOUT_MS) || 60_000,
+    retryMs: Number(process.env.PROJECT_X_TRACKER_LOCK_RETRY_MS) || 75,
+    staleMs: Number(process.env.PROJECT_X_TRACKER_LOCK_STALE_MS) || 10 * 60_000,
     tracker: trackerPath,
     ...options.lockOptions,
   });
@@ -394,9 +394,9 @@ export async function gcStaleReportReservations(options = {}) {
 
   const trackerPath = trackerPathFor(options);
   const lock = await acquireTrackerLock(trackerLockDirFor(trackerPath), {
-    timeoutMs: Number(process.env.CAREER_OPS_TRACKER_LOCK_TIMEOUT_MS) || 60_000,
-    retryMs: Number(process.env.CAREER_OPS_TRACKER_LOCK_RETRY_MS) || 75,
-    staleMs: Number(process.env.CAREER_OPS_TRACKER_LOCK_STALE_MS) || 10 * 60_000,
+    timeoutMs: Number(process.env.PROJECT_X_TRACKER_LOCK_TIMEOUT_MS) || 60_000,
+    retryMs: Number(process.env.PROJECT_X_TRACKER_LOCK_RETRY_MS) || 75,
+    staleMs: Number(process.env.PROJECT_X_TRACKER_LOCK_STALE_MS) || 10 * 60_000,
     tracker: trackerPath,
     ...options.lockOptions,
   });

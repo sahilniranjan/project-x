@@ -15,17 +15,17 @@ Adayın (candidate) e-posta istemcisine yapıştırabileceği resmi bir başvuru
 
 Desteklenen girdiler (inputs):
 
-1. `/career-ops email {report-number-or-slug}`
+1. `/project-x email {report-number-or-slug}`
    - Eşleşen `reports/{NNN}-*.md` dosyasını yükle.
    - Rapor başlığını (header), puanını (score), arketipini (archetype), PDF durumunu ve değerlendirme (evaluation) içeriğini kullan.
-   - Eğer `data/pdf-index.tsv` içerisinde o rapor için bir PDF varsa, bundan CV eki adayı olarak bahset. Eğer indekslenmiş bir PDF yoksa, öncelikle `/career-ops pdf {slug}` ile CV'nin oluşturulması veya manuel olarak eklenmesi gerektiğini söyle.
+   - Eğer `data/pdf-index.tsv` içerisinde o rapor için bir PDF varsa, bundan CV eki adayı olarak bahset. Eğer indekslenmiş bir PDF yoksa, öncelikle `/project-x pdf {slug}` ile CV'nin oluşturulması veya manuel olarak eklenmesi gerektiğini söyle.
 
-2. `/career-ops email {pasted JD}`
+2. `/project-x email {pasted JD}`
    - Yapıştırılan iş tanımını (JD) doğrudan kullan.
    - Rapor, takipçi (tracker) satırı, PDF veya ön yazı oluşturma.
    - Eğer JD'de şirket adı eksikse ve aksi takdirde e-posta çok genel geçer (generic) duracaksa şirket adını sor.
 
-3. `/career-ops email`
+3. `/project-x email`
    - Eğer en son değerlendirilen (evaluated) bir takipçi satırı varsa, taslağı o satırdan oluşturmayı teklif et.
    - Kullanılabilir bir bağlam yoksa, bir rapor numarası, slug veya JD iste.
 
@@ -97,7 +97,7 @@ Yalnızca tek-gerçek-kaynak dosyalarındaki gerçekleri (facts) kullan. JD'deki
 Eğer raporun bir puanı (score) varsa:
 - `>= 4.5`: kendine güvenen (confident), öncelikli (priority) başvuru.
 - `4.0-4.4`: iyi eşleşme, başvurmaya değer.
-- `< 4.0`: ölçülü (restrained); abartarak satmaya (oversell) çalışma. 4.0'ın altındaysa, taslağı hazırlamadan önce career-ops'un normalde başvurmamayı önerdiği konusunda kullanıcıyı uyar.
+- `< 4.0`: ölçülü (restrained); abartarak satmaya (oversell) çalışma. 4.0'ın altındaysa, taslağı hazırlamadan önce project-x'un normalde başvurmamayı önerdiği konusunda kullanıcıyı uyar.
 
 ---
 

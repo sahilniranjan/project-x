@@ -1,6 +1,6 @@
 // Doctor must see plugins in the code checkout, and config in the data root.
 //
-// Under a split install (CAREER_OPS_ROOT points at the user's files, the
+// Under a split install (PROJECT_X_ROOT points at the user's files, the
 // checkout holds plugins/), doctor used to look for plugins inside the data
 // root and print "Plugins: none installed". `node plugins.mjs list` on the
 // same install listed them, including one switched on with keys missing.
@@ -28,11 +28,11 @@ function dataRootWith(yaml) {
 function doctorEnv(dataRoot) {
   const env = { NO_COLOR: '1' };
   for (const [key, value] of Object.entries(process.env)) {
-    if (key.startsWith('CAREER_OPS_')) continue;
+    if (key.startsWith('PROJECT_X_')) continue;
     if (key === 'NOTION_ACCESS_TOKEN' || key === 'NOTION_PARENT_PAGE_ID') continue;
     env[key] = value;
   }
-  env.CAREER_OPS_ROOT = dataRoot;
+  env.PROJECT_X_ROOT = dataRoot;
   return env;
 }
 

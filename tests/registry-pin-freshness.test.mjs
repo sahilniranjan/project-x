@@ -45,8 +45,8 @@ function makeRegistry(entries) {
 
 const entry = (id, sha) => ({
   id,
-  name: `career-ops-plugin-${id}`,
-  repo: `https://github.com/someone/career-ops-plugin-${id}`,
+  name: `project-x-plugin-${id}`,
+  repo: `https://github.com/someone/project-x-plugin-${id}`,
   version: '0.1.0',
   license: 'MIT',
   description: `${id} test entry`,
@@ -237,7 +237,7 @@ test('fetchLatestRelease resolves a release to the commit its tag points at', as
     '/releases/latest': { status: 200, body: { tag_name: 'v1.2.3' } },
     '/commits/': { status: 200, body: { sha: COMMIT_SHA } },
   });
-  const rel = await fetchLatestRelease('https://github.com/o/career-ops-plugin-x', { fetchImpl: t.fetchImpl });
+  const rel = await fetchLatestRelease('https://github.com/o/project-x-plugin-x', { fetchImpl: t.fetchImpl });
   assert.deepEqual(rel, { tag: 'v1.2.3', sha: COMMIT_SHA });
 });
 
@@ -249,7 +249,7 @@ test('an ANNOTATED tag resolves to the wrapped commit, not the tag object SHA', 
     '/releases/latest': { status: 200, body: { tag_name: 'v2.0.0', target_commitish: TAG_OBJECT } },
     '/commits/': { status: 200, body: { sha: COMMIT_SHA } },
   });
-  const rel = await fetchLatestRelease('https://github.com/o/career-ops-plugin-x', { fetchImpl: t.fetchImpl });
+  const rel = await fetchLatestRelease('https://github.com/o/project-x-plugin-x', { fetchImpl: t.fetchImpl });
   assert.equal(rel.sha, COMMIT_SHA);
   assert.notEqual(rel.sha, TAG_OBJECT);
   assert.ok(t.calls.some(u => u.includes('/commits/v2.0.0')), 'must resolve through /commits/<tag>');
@@ -258,9 +258,9 @@ test('an ANNOTATED tag resolves to the wrapped commit, not the tag object SHA', 
 test('no release + repo reachable is a genuine no-release (null)', async () => {
   const t = transport({
     '/releases/latest': { status: 404, body: {} },
-    '/repos/o/career-ops-plugin-x': { status: 200, body: { full_name: 'o/career-ops-plugin-x' } },
+    '/repos/o/project-x-plugin-x': { status: 200, body: { full_name: 'o/project-x-plugin-x' } },
   });
-  const rel = await fetchLatestRelease('https://github.com/o/career-ops-plugin-x', { fetchImpl: t.fetchImpl });
+  const rel = await fetchLatestRelease('https://github.com/o/project-x-plugin-x', { fetchImpl: t.fetchImpl });
   assert.equal(rel, null);
 });
 
@@ -269,10 +269,10 @@ test('no release + repo NOT reachable throws, and never reads as no-release', as
   // deleted plugin repo surfaced as the benign `no-release` state.
   const t = transport({
     '/releases/latest': { status: 404, body: {} },
-    '/repos/o/career-ops-plugin-gone': { status: 404, body: {} },
+    '/repos/o/project-x-plugin-gone': { status: 404, body: {} },
   });
   await assert.rejects(
-    () => fetchLatestRelease('https://github.com/o/career-ops-plugin-gone', { fetchImpl: t.fetchImpl }),
+    () => fetchLatestRelease('https://github.com/o/project-x-plugin-gone', { fetchImpl: t.fetchImpl }),
     /not reachable|inaccessible|404/i,
   );
 });
@@ -282,9 +282,9 @@ test('a rate-limited repo probe throws rather than guessing no-release', async (
   // not an absence. Guessing either way here would be inventing a fact.
   const t = transport({
     '/releases/latest': { status: 404, body: {} },
-    '/repos/o/career-ops-plugin-x': { status: 403, body: {} },
+    '/repos/o/project-x-plugin-x': { status: 403, body: {} },
   });
-  await assert.rejects(() => fetchLatestRelease('https://github.com/o/career-ops-plugin-x', { fetchImpl: t.fetchImpl }));
+  await assert.rejects(() => fetchLatestRelease('https://github.com/o/project-x-plugin-x', { fetchImpl: t.fetchImpl }));
 });
 
 test('a release whose tag will not resolve to a commit throws', async () => {
@@ -293,7 +293,7 @@ test('a release whose tag will not resolve to a commit throws', async () => {
     '/commits/': { status: 404, body: {} },
   });
   await assert.rejects(
-    () => fetchLatestRelease('https://github.com/o/career-ops-plugin-x', { fetchImpl: t.fetchImpl }),
+    () => fetchLatestRelease('https://github.com/o/project-x-plugin-x', { fetchImpl: t.fetchImpl }),
     /resolves to no commit/,
   );
 });
@@ -305,7 +305,7 @@ test('the repo probe runs only on the 404 path, not on every lookup', async () =
     '/releases/latest': { status: 200, body: { tag_name: 'v1.0.0' } },
     '/commits/': { status: 200, body: { sha: COMMIT_SHA } },
   });
-  await fetchLatestRelease('https://github.com/o/career-ops-plugin-x', { fetchImpl: t.fetchImpl });
+  await fetchLatestRelease('https://github.com/o/project-x-plugin-x', { fetchImpl: t.fetchImpl });
   const repoProbes = t.calls.filter(u => /\/repos\/[^/]+\/[^/]+$/.test(u));
   assert.equal(repoProbes.length, 0, 'no bare /repos/{slug} probe on the happy path');
 });
@@ -316,10 +316,10 @@ test('a 200 release response with no tag_name is an error, not an absence', asyn
   // the probe would always pass, so the anomaly would vanish silently.
   const t = transport({
     '/releases/latest': { status: 200, body: { name: 'untagged somehow' } },
-    '/repos/o/career-ops-plugin-x': { status: 200, body: {} },
+    '/repos/o/project-x-plugin-x': { status: 200, body: {} },
   });
   await assert.rejects(
-    () => fetchLatestRelease('https://github.com/o/career-ops-plugin-x', { fetchImpl: t.fetchImpl }),
+    () => fetchLatestRelease('https://github.com/o/project-x-plugin-x', { fetchImpl: t.fetchImpl }),
     /no tag_name/,
   );
   assert.ok(!t.calls.some(u => /\/repos\/[^/]+\/[^/]+$/.test(u)), 'must not probe reachability for a malformed 200');
@@ -365,15 +365,15 @@ test('fetchPinPosition compares release...pin and returns the status', async () 
   const t = transport({
     '/compare/': { status: 200, body: { status: 'ahead', ahead_by: 2, behind_by: 0 } },
   });
-  const pos = await fetchPinPosition('https://github.com/o/career-ops-plugin-x', SHA_B, SHA_A, { fetchImpl: t.fetchImpl });
+  const pos = await fetchPinPosition('https://github.com/o/project-x-plugin-x', SHA_B, SHA_A, { fetchImpl: t.fetchImpl });
   assert.deepEqual(pos, { status: 'ahead', aheadBy: 2 });
-  assert.ok(t.calls[0].endsWith(`/repos/o/career-ops-plugin-x/compare/${SHA_B}...${SHA_A}`), t.calls[0]);
+  assert.ok(t.calls[0].endsWith(`/repos/o/project-x-plugin-x/compare/${SHA_B}...${SHA_A}`), t.calls[0]);
 });
 
 test('fetchPinPosition throws when the pinned commit is not in the repo', async () => {
   const t = transport({ '/compare/': { status: 404, body: {} } });
   await assert.rejects(
-    () => fetchPinPosition('https://github.com/o/career-ops-plugin-x', SHA_B, SHA_A, { fetchImpl: t.fetchImpl }),
+    () => fetchPinPosition('https://github.com/o/project-x-plugin-x', SHA_B, SHA_A, { fetchImpl: t.fetchImpl }),
     /not found/,
   );
 });
@@ -381,7 +381,7 @@ test('fetchPinPosition throws when the pinned commit is not in the repo', async 
 test('fetchPinPosition throws on a compare answer with no status', async () => {
   const t = transport({ '/compare/': { status: 200, body: { ahead_by: 2 } } });
   await assert.rejects(
-    () => fetchPinPosition('https://github.com/o/career-ops-plugin-x', SHA_B, SHA_A, { fetchImpl: t.fetchImpl }),
+    () => fetchPinPosition('https://github.com/o/project-x-plugin-x', SHA_B, SHA_A, { fetchImpl: t.fetchImpl }),
     /no status/,
   );
 });
@@ -391,7 +391,7 @@ test('fetchPinPosition throws on a status GitHub does not document', async () =>
   // would print "pin trails" with nothing behind it. It must be an error.
   const t = transport({ '/compare/': { status: 200, body: { status: 'sideways', ahead_by: 0, behind_by: 0 } } });
   await assert.rejects(
-    () => fetchPinPosition('https://github.com/o/career-ops-plugin-x', SHA_B, SHA_A, { fetchImpl: t.fetchImpl }),
+    () => fetchPinPosition('https://github.com/o/project-x-plugin-x', SHA_B, SHA_A, { fetchImpl: t.fetchImpl }),
     /unknown status "sideways"/,
   );
 });
@@ -401,7 +401,7 @@ test('fetchPinPosition throws on ahead with no integer ahead_by', async () => {
   for (const ahead_by of [undefined, '2', 1.5]) {
     const t = transport({ '/compare/': { status: 200, body: { status: 'ahead', ahead_by } } });
     await assert.rejects(
-      () => fetchPinPosition('https://github.com/o/career-ops-plugin-x', SHA_B, SHA_A, { fetchImpl: t.fetchImpl }),
+      () => fetchPinPosition('https://github.com/o/project-x-plugin-x', SHA_B, SHA_A, { fetchImpl: t.fetchImpl }),
       /ahead with no ahead_by/,
       `ahead_by ${JSON.stringify(ahead_by)} must be refused`,
     );
@@ -411,7 +411,7 @@ test('fetchPinPosition throws on ahead with no integer ahead_by', async () => {
 test('fetchPinPosition accepts every documented status', async () => {
   for (const status of ['ahead', 'behind', 'diverged', 'identical']) {
     const t = transport({ '/compare/': { status: 200, body: { status, ahead_by: 1, behind_by: 1 } } });
-    const pos = await fetchPinPosition('https://github.com/o/career-ops-plugin-x', SHA_B, SHA_A, { fetchImpl: t.fetchImpl });
+    const pos = await fetchPinPosition('https://github.com/o/project-x-plugin-x', SHA_B, SHA_A, { fetchImpl: t.fetchImpl });
     assert.equal(pos.status, status);
   }
 });

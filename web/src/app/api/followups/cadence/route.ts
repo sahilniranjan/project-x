@@ -2,7 +2,7 @@ import { execFile } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import * as yaml from "js-yaml";
-import { careerOpsRoot, rootScript } from "@/lib/career-ops";
+import { projectXRoot, rootScript } from "@/lib/project-x";
 import { atomicWriteWithBackup } from "@/lib/core/safe-write";
 import { PROFILE_CADENCE_KEYS, type ProfileCadenceKey } from "@/lib/followups";
 
@@ -39,7 +39,7 @@ async function readCoreDefaults(): Promise<Partial<Record<ProfileCadenceKey, num
   const script = rootScript("followup-cadence");
   if (!fs.existsSync(script)) return null;
   const stdout = await new Promise<string>((resolve) => {
-    execFile("node", [script, "--json"], { cwd: careerOpsRoot(), timeout: 12_000 }, (_e, out) => resolve(out || ""));
+    execFile("node", [script, "--json"], { cwd: projectXRoot(), timeout: 12_000 }, (_e, out) => resolve(out || ""));
   });
   try {
     const start = stdout.indexOf("{");
@@ -67,7 +67,7 @@ async function readCoreDefaults(): Promise<Partial<Record<ProfileCadenceKey, num
 }
 
 export async function GET() {
-  const file = path.join(careerOpsRoot(), "config", "profile.yml");
+  const file = path.join(projectXRoot(), "config", "profile.yml");
   const overrides: Partial<Record<ProfileCadenceKey, number>> = {};
   if (fs.existsSync(file)) {
     let profile: Record<string, unknown> = {};
@@ -109,7 +109,7 @@ export async function POST(req: Request) {
   }
   if (Object.keys(cadence).length === 0) return Response.json({ error: "nothing to write" }, { status: 400 });
 
-  const root = careerOpsRoot();
+  const root = projectXRoot();
   const file = path.join(root, "config", "profile.yml");
   let base: Record<string, unknown> = {};
   if (!fs.existsSync(file)) {

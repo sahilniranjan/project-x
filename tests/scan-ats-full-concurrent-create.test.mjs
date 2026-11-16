@@ -57,7 +57,7 @@ syncBuiltinESMExports();
     lock = await acquirePipelineLock(pipeline);
     child = spawn(process.execPath, ['--import', pathToFileURL(preload).href, fileURLToPath(new URL('../scan-ats-full.mjs', import.meta.url)), '--ats', 'greenhouse', '--json'], {
       cwd: root,
-      env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_DATA_DIR: '', TEST_PIPELINE: pipeline, TEST_GATE: gate, CAREER_OPS_DNS_LOOKUPS_PER_MIN: '0' },
+      env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_DATA_DIR: '', TEST_PIPELINE: pipeline, TEST_GATE: gate, PROJECT_X_DNS_LOOKUPS_PER_MIN: '0' },
       stdio: ['ignore', 'pipe', 'pipe', 'ipc'],
     });
     let output = '';

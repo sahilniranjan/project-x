@@ -44,7 +44,7 @@ function run(company) {
       '--tracker', join(dir, 'applications.md'),
       '--file', join(dir, 'active-interviews.md'),
       '--today', '2026-10-26',
-    ], { encoding: 'utf-8', env: { ...process.env, CAREER_OPS_ROOT: dir } });
+    ], { encoding: 'utf-8', env: { ...process.env, PROJECT_X_ROOT: dir } });
     assert.equal(r.status, 0, r.stderr);
     return JSON.parse(r.stdout);
   } finally {

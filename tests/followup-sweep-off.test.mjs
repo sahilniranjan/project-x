@@ -43,7 +43,7 @@ function checkOffRun(label, command, args) {
     const bin = join(dir, 'bin');
     mkdirSync(bin);
     const claudeStub = join(bin, 'claude');
-    writeFileSync(claudeStub, '#!/bin/sh\necho CLAUDE_RAN > "$CAREER_OPS_ROOT/output/claude-ran"\nexit 0\n');
+    writeFileSync(claudeStub, '#!/bin/sh\necho CLAUDE_RAN > "$PROJECT_X_ROOT/output/claude-ran"\nexit 0\n');
     chmodSync(claudeStub, 0o755);
 
     const result = spawnSync(command, args, {
@@ -51,10 +51,10 @@ function checkOffRun(label, command, args) {
       env: {
         ...process.env,
         PATH: `${bin}:${process.env.PATH}`,
-        CAREER_OPS_ROOT: dir,
-        CAREER_OPS_TRACKER: join(dir, 'data', 'applications.md'),
-        CAREER_OPS_FOLLOWUPS: join(dir, 'data', 'follow-ups.md'),
-        CAREER_OPS_PROFILE: join(dir, 'config', 'profile.yml'),
+        PROJECT_X_ROOT: dir,
+        PROJECT_X_TRACKER: join(dir, 'data', 'applications.md'),
+        PROJECT_X_FOLLOWUPS: join(dir, 'data', 'follow-ups.md'),
+        PROJECT_X_PROFILE: join(dir, 'config', 'profile.yml'),
         ZDOTDIR: join(dir, 'zdotdir'),
       },
       encoding: 'utf8',

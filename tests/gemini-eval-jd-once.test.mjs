@@ -52,7 +52,7 @@ globalThis.fetch = async (url, init) => {
   ], {
     cwd: dir, encoding: 'utf-8', timeout: 60_000,
     env: {
-      PATH: process.env.PATH, HOME: dir, CAREER_OPS_ROOT: dir, GEMINI_API_KEY: 'test-key-not-real',
+      PATH: process.env.PATH, HOME: dir, PROJECT_X_ROOT: dir, GEMINI_API_KEY: 'test-key-not-real',
       MODEL_REPLY: REPLY, CAPTURE: captured,
     },
   });

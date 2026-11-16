@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * backup.mjs — copy your career-ops User Layer to a backup folder (zero-token).
+ * backup.mjs — copy your project-x User Layer to a backup folder (zero-token).
  *
  * Copies the User Layer (the paths in USER_PATHS, update-system.mjs: CV,
  * profile, portals, tracker and everything under data/, reports/, output/,
@@ -18,9 +18,9 @@
  *
  * Nothing is chosen for you: say where the backup goes. First match wins:
  *   1. --dest <dir>                 exactly this folder
- *   2. CAREER_OPS_BACKUP_DIR        exactly this folder
+ *   2. PROJECT_X_BACKUP_DIR        exactly this folder
  *   3. --provider google-drive | dropbox | onedrive | icloud
- *      the drive folder found on this machine, plus Backups/career-ops
+ *      the drive folder found on this machine, plus Backups/project-x
  *
  * Files are copied whole. rsync's delta mode maps the old copy into memory,
  * which Google Drive's file-system layer refuses ("mmap: Resource deadlock
@@ -46,7 +46,7 @@ import { flagValue, hasFlag, validateFlags } from './lib/cli-flags.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
 import { walkTree } from './lib/walk-tree.mjs';
 import { kebab, loadProfileDefault } from './cv-templates.mjs';
-import { getCareerOpsRoot, getProfilePath, hasProfileOverride } from './path-resolver.mjs';
+import { getProjectXRoot, getProfilePath, hasProfileOverride } from './path-resolver.mjs';
 import {
   LOCAL_PATHS_FILE,
   USER_PATHS,
@@ -57,9 +57,9 @@ import {
 
 const CODE_ROOT = dirname(fileURLToPath(import.meta.url));
 
-export const DEFAULT_FOLDER = join('Backups', 'career-ops');
+export const DEFAULT_FOLDER = join('Backups', 'project-x');
 export const PROVIDERS = ['google-drive', 'dropbox', 'onedrive', 'icloud'];
-export const MANIFEST_NAME = '.career-ops-backup.json';
+export const MANIFEST_NAME = '.project-x-backup.json';
 // Where --include-claude-memory puts the memory files at the destination. Not
 // a User Layer path, so it cannot collide with one.
 export const CLAUDE_MEMORY_FOLDER = 'claude-memory';
@@ -96,13 +96,13 @@ export function backupPaths(dataRoot, warnings = [], failed = []) {
  * as the updater does.
  */
 function templateUserFiles(dataRoot, warnings, failed) {
-  // Both the data-root profile and the CAREER_OPS_PROFILE override can select a
+  // Both the data-root profile and the PROJECT_X_PROFILE override can select a
   // variant; a file either one selects is yours (DATA_CONTRACT.md).
   const variants = {};
   const profiles = new Set([getProfilePath(dataRoot), ...(hasProfileOverride() ? [getProfilePath()] : [])]);
   if (hasProfileOverride()) {
     if (!within(resolve(getProfilePath()), resolve(dataRoot))) {
-      warnings.push(`CAREER_OPS_PROFILE points at ${getProfilePath()}, outside the data root; it is not copied. Back that profile up separately.`);
+      warnings.push(`PROJECT_X_PROFILE points at ${getProfilePath()}, outside the data root; it is not copied. Back that profile up separately.`);
     }
   }
   for (const profile of profiles) {
@@ -238,19 +238,19 @@ export function providerRoots(provider, { home = homedir(), platform = osPlatfor
 
 /**
  * Work out the backup folder. Nothing is the default: with no `dest`, no
- * CAREER_OPS_BACKUP_DIR and no `provider` it throws. Returns `{ dest, source }`
+ * PROJECT_X_BACKUP_DIR and no `provider` it throws. Returns `{ dest, source }`
  * or throws an Error whose message says what to pass instead (the CLI turns it
  * into exit 2).
  */
 export function resolveDestination({ dest, provider, account, folder, env = process.env, ...machine } = {}) {
-  const exact = (dest ?? '').trim() || (env.CAREER_OPS_BACKUP_DIR ?? '').trim();
+  const exact = (dest ?? '').trim() || (env.PROJECT_X_BACKUP_DIR ?? '').trim();
   if (exact) {
-    return { dest: resolve(exact), source: dest?.trim() ? '--dest' : 'CAREER_OPS_BACKUP_DIR' };
+    return { dest: resolve(exact), source: dest?.trim() ? '--dest' : 'PROJECT_X_BACKUP_DIR' };
   }
   const name = (provider ?? '').trim();
   if (!name) {
     throw new Error(
-      'No backup destination chosen. Pass --dest <dir> (or set CAREER_OPS_BACKUP_DIR), ' +
+      'No backup destination chosen. Pass --dest <dir> (or set PROJECT_X_BACKUP_DIR), ' +
       `or name a drive with --provider ${PROVIDERS.join(' | ')}.`,
     );
   }
@@ -265,7 +265,7 @@ export function resolveDestination({ dest, provider, account, folder, env = proc
   if (roots.length === 0) {
     throw new Error(
       `No ${name} folder found on this machine. Install and sign in to its desktop app, ` +
-      'or choose the folder yourself with --dest <dir> (or CAREER_OPS_BACKUP_DIR).',
+      'or choose the folder yourself with --dest <dir> (or PROJECT_X_BACKUP_DIR).',
     );
   }
   if (account) {
@@ -333,7 +333,7 @@ export function assertSafeDestination(dest, dataRoot, codeRoot = CODE_ROOT) {
   const d = canonical(dest);
   for (const base of [dataRoot, codeRoot]) {
     if (within(d, canonical(base))) {
-      throw new Error(`Backup folder ${dest} is inside ${base}. Choose a folder outside your career-ops files.`);
+      throw new Error(`Backup folder ${dest} is inside ${base}. Choose a folder outside your project-x files.`);
     }
   }
   // A destination that holds the data root would map a backed-up file onto the
@@ -642,16 +642,16 @@ const VALUE_FLAGS = ['--dest', '--provider', '--account', '--folder', '--claude-
 
 const USAGE = `Usage:
   node backup.mjs --dest <dir>             # back up to exactly this folder
-  node backup.mjs --provider google-drive  # <drive>/Backups/career-ops; also dropbox | onedrive | icloud
+  node backup.mjs --provider google-drive  # <drive>/Backups/project-x; also dropbox | onedrive | icloud
   node backup.mjs --provider <name> --account <text>   # pick one drive when several are signed in
-  node backup.mjs --provider <name> --folder <relative/path>   # folder under the drive (default Backups/career-ops)
+  node backup.mjs --provider <name> --folder <relative/path>   # folder under the drive (default Backups/project-x)
   node backup.mjs ... --include-contacts # also copy Connections.csv, contacts.tsv, reply-candidates.json, output/contacts.vcf and any other .vcf (other people's contact details); not with --provider. A --dest inside a recognized sync folder is refused too, but verify yourself that the destination is not synced
   node backup.mjs ... --include-claude-memory # also copy Claude Code's auto-memory for this checkout (~/.claude/projects/<checkout>/memory/) into claude-memory/
   node backup.mjs ... --claude-memory-dir <dir> # the same, from a memory folder you name (when Claude Code keeps it elsewhere)
   node backup.mjs ... --dry-run            # show what would be copied, copy nothing
   node backup.mjs ... --json | --quiet     # machine-readable result | errors only
-  CAREER_OPS_BACKUP_DIR=<dir>              # same as --dest
-Nothing is chosen for you: pass --dest, set CAREER_OPS_BACKUP_DIR, or name a drive with --provider.`;
+  PROJECT_X_BACKUP_DIR=<dir>              # same as --dest
+Nothing is chosen for you: pass --dest, set PROJECT_X_BACKUP_DIR, or name a drive with --provider.`;
 
 function main(args) {
   // Exit 1 means "a file failed", so a mistyped command is 2.
@@ -682,7 +682,7 @@ function main(args) {
   let dataRoot;
   let target;
   try {
-    dataRoot = getCareerOpsRoot();
+    dataRoot = getProjectXRoot();
     target = resolveDestination({
       dest: flagValue(args, '--dest'),
       provider: flagValue(args, '--provider'),
@@ -693,7 +693,7 @@ function main(args) {
     assertContactsNotSynced(target.dest, includeContacts);
     if (includeClaudeMemory) assertMemoryApartFromDestination(target.dest, memoryDir);
     // A provider destination only needs its drive to be there: runBackup creates
-    // Backups/career-ops under it. --dest and CAREER_OPS_BACKUP_DIR need their parent.
+    // Backups/project-x under it. --dest and PROJECT_X_BACKUP_DIR need their parent.
     const mustExist = target.base ?? dirname(target.dest);
     if (!existsSync(mustExist)) {
       throw new Error(`${mustExist} does not exist (is the drive mounted?). Nothing was created.`);
@@ -717,7 +717,7 @@ function main(args) {
     for (const w of result.warnings) console.error(`backup: ${w}`);
     for (const f of result.failed) console.error(`backup: failed ${f.path}: ${f.error}`);
     if (empty) {
-      console.error(`backup: found nothing to back up under ${dataRoot}. Is CAREER_OPS_ROOT (or the data root) the right folder?`);
+      console.error(`backup: found nothing to back up under ${dataRoot}. Is PROJECT_X_ROOT (or the data root) the right folder?`);
     } else if (!quiet) {
       const mb = (result.bytes / 1048576).toFixed(1);
       console.log(`${dryRun ? 'Would copy' : 'Copied'} ${result.copied} file(s) (${mb} MB), ${result.unchanged} unchanged -> ${target.dest} [${target.source}]`);

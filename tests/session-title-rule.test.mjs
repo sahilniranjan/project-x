@@ -3,7 +3,7 @@
 // evaluations.
 //
 // Hosts that title sessions automatically name them after the invocation, so a
-// week of `/career-ops <url>` runs leaves a sidebar of identical "Career ops
+// week of `/project-x <url>` runs leaves a sidebar of identical "Project x
 // LinkedIn job" titles. The router tells an interactive single-posting mode to
 // rename the session `{Role}, {Company}` once the JD is read. A scan or a single
 // evaluation also shows its stage, and a scan a `{remaining}/{found}` counter.
@@ -23,7 +23,7 @@ console.log('\nRouter session-title rule (#5303)');
 const read = (path) => readFileSync(join(ROOT, path), 'utf-8').replace(/\r\n/g, '\n');
 const check = (label, cond) => (cond ? pass(label) : fail(label));
 
-const skill = read('.agents/skills/career-ops/SKILL.md');
+const skill = read('.agents/skills/project-x/SKILL.md');
 const section = skill.split('## Session Title (host-optional, #5303)')[1]?.split('\n---')[0] ?? '';
 
 check('router has a Session Title section', section.length > 0);
@@ -66,12 +66,12 @@ check('a subagent or headless run has no session of its own and returns its valu
 // so a rewording that loses one changes what the user sees in the sidebar.
 const single = bullet('Single evaluation');
 const scan = bullet('Scan');
-for (const title of ['`Career-ops eval (fetching)`', '`{Role}, {Company} (evaluating)`', '`{Role}, {Company} (CV)`',
+for (const title of ['`Project-x eval (fetching)`', '`{Role}, {Company} (evaluating)`', '`{Role}, {Company} (CV)`',
   'end on plain `{Role}, {Company}`', '`{Role}, {Company} (on hold)`']) {
   check(`single evaluation title ${title}`, single.includes(title));
 }
-for (const title of ['`Career-ops scan (scanning)`', '`{remaining}/{found}`', '`Career-ops scan (checking, 5/15)`',
-  '`Career-ops scan (evaluating, 3/15)`', '`Career-ops scan (none left, 0/15)`', '`Career-ops scan (3/15)`']) {
+for (const title of ['`Project-x scan (scanning)`', '`{remaining}/{found}`', '`Project-x scan (checking, 5/15)`',
+  '`Project-x scan (evaluating, 3/15)`', '`Project-x scan (none left, 0/15)`', '`Project-x scan (3/15)`']) {
   check(`scan title ${title}`, scan.includes(title));
 }
 const foundRule = scan.match(/^  - `found` .*$/m)?.[0] ?? '';
@@ -132,7 +132,7 @@ for (const mode of ['modes/auto-pipeline.md', 'modes/oferta.md']) {
   const pointer = read(mode).match(/^\*\*Session title:\*\*.*$/m)?.[0] ?? '';
   check(`${mode} points at the router rule`, pointer.includes('**Session Title** rule'));
   check(`${mode} names the progress titles`,
-    pointer.includes('`Career-ops eval (fetching)`') && pointer.includes('`{Role}, {Company} (evaluating)`')
+    pointer.includes('`Project-x eval (fetching)`') && pointer.includes('`{Role}, {Company} (evaluating)`')
       && pointer.includes('`(on hold)`'));
   check(`${mode} defers an agency title to the confirmation handoff`,
     pointer.includes('`{Role}, via {Agency}`') && pointer.includes('**Agency confirmation handoff**'));

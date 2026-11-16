@@ -80,15 +80,15 @@ export function createRunnerSandbox(prefix) {
       writeFileSync(at, body.join('\n') + '\n', 'utf-8');
     },
 
-    /** Run the sandboxed runner. CAREER_OPS_TEST_JOBS is blank unless a case sets it. */
+    /** Run the sandboxed runner. PROJECT_X_TEST_JOBS is blank unless a case sets it. */
     runner(args, env = {}) {
       const r = spawnSync(NODE, [join(sandbox, 'test-all.mjs'), ...args], {
         cwd: sandbox,
         encoding: 'utf-8',
         timeout: 120_000,
-        // CAREER_OPS_TEST_QUEUE=0: a fixture run must not wait behind a real
+        // PROJECT_X_TEST_QUEUE=0: a fixture run must not wait behind a real
         // full run in another session (lib/test-queue.mjs).
-        env: { ...process.env, CAREER_OPS_TEST_JOBS: '', CAREER_OPS_TEST_QUEUE: '0', ...env },
+        env: { ...process.env, PROJECT_X_TEST_JOBS: '', PROJECT_X_TEST_QUEUE: '0', ...env },
       });
       // The runner names a suite by its path relative to the repo, in the
       // platform's own spelling: `tests\order\a.test.mjs` on Windows. The

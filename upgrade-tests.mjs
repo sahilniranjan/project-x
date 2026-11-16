@@ -36,16 +36,16 @@ import { seedFixture, loadExpectations } from './seed-fixture.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
-const CANONICAL = 'https://github.com/career-ops-hq/career-ops.git';
-// Tags cut before the move to career-ops-hq ship an updater that still
+const CANONICAL = 'https://github.com/project-x-hq/project-x.git';
+// Tags cut before the move to project-x-hq ship an updater that still
 // fetches the old address; both must resolve to the local mirror or an
 // upgrade-from-old-tag scenario silently reaches the real network.
-const CANONICAL_LEGACY = 'https://github.com/santifer/career-ops.git';
+const CANONICAL_LEGACY = 'https://github.com/santifer/project-x.git';
 const GITHUB_API_HOST = 'api.github.com';
 // What apply() prints when its cross-check against the GitHub ref API gets no
 // answer, so a leg can tell that the API stayed out of reach (see runLeg).
 const REF_API_UNREACHED = 'could not reach the GitHub ref API';
-const TAG_RE = /^career-ops-v(\d+)\.(\d+)\.(\d+)$/;
+const TAG_RE = /^project-x-v(\d+)\.(\d+)\.(\d+)$/;
 
 function git(cwd, ...args) {
   return execFileSync('git', args, { cwd, encoding: 'utf-8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
@@ -53,7 +53,7 @@ function git(cwd, ...args) {
 
 const semverKey = (t) => TAG_RE.exec(t).slice(1).map(Number);
 export function releaseTags(cwd = ROOT) {
-  return git(cwd, 'tag', '--list', 'career-ops-v*').split('\n').filter((t) => TAG_RE.test(t))
+  return git(cwd, 'tag', '--list', 'project-x-v*').split('\n').filter((t) => TAG_RE.test(t))
     .sort((a, b) => { const [x, y] = [semverKey(a), semverKey(b)];
       return x[0] - y[0] || x[1] - y[1] || x[2] - y[2]; });
 }
@@ -67,7 +67,7 @@ export function releaseTags(cwd = ROOT) {
 export function fixtureStateFor(tag) {
   const [maj, min] = semverKey(tag);
   if (maj > 1 || (maj === 1 && min >= 18)) return 'state-v1.18';
-  throw new Error(`no upgrade fixture state for ${tag}: fixtures start at career-ops-v1.18.0`);
+  throw new Error(`no upgrade fixture state for ${tag}: fixtures start at project-x-v1.18.0`);
 }
 
 function sha256(path) { return createHash('sha256').update(readFileSync(path)).digest('hex'); }
@@ -84,7 +84,7 @@ function buildMirror(work, targetSha) {
 function writeGitConfig(work, mirror) {
   const cfg = join(work, 'gitconfig');
   const url = pathToFileURL(mirror).href;
-  writeFileSync(cfg, `[user]\n\tname = upgrade-tests\n\temail = upgrade-tests@career-ops.test\n[url "${url}"]\n\tinsteadOf = ${CANONICAL}\n\tinsteadOf = ${CANONICAL_LEGACY}\n[safe]\n\tdirectory = *\n`);
+  writeFileSync(cfg, `[user]\n\tname = upgrade-tests\n\temail = upgrade-tests@project-x.test\n[url "${url}"]\n\tinsteadOf = ${CANONICAL}\n\tinsteadOf = ${CANONICAL_LEGACY}\n[safe]\n\tdirectory = *\n`);
   // Read by curl through CURL_HOME (see hermeticEnv): sends api.github.com to a
   // closed local port, so the ref API cannot answer. Only that host, and only
   // curl: apply() also runs npm, which the leg needs and which curl config
@@ -126,7 +126,7 @@ function hermeticEnv(cfg) {
     // hermetically") and it is the only channel the mirror can actually serve.
     // Production behaviour is untouched: this pins the harness, not
     // resolveTargetRef().
-    CAREER_OPS_UPDATE_CHANNEL: 'main',
+    PROJECT_X_UPDATE_CHANNEL: 'main',
     // The 'main' channel still curls. #3805 made apply() read main's SHA from
     // the GitHub ref API and refuse a target that does not descend from it.
     // The mirror's main is the commit under test, so once real main moves on
@@ -251,7 +251,7 @@ export function runLeg({ oldTag, targetSha, label = oldTag, mutateMirror = null,
         // the upgrade CI job configures no author identity — so relying on
         // ambient config passes on a developer box and aborts the leg with
         // "Author identity unknown" on a clean runner, before apply() ever runs.
-        git(install, '-c', 'user.name=upgrade-tests', '-c', 'user.email=upgrade-tests@career-ops.test',
+        git(install, '-c', 'user.name=upgrade-tests', '-c', 'user.email=upgrade-tests@project-x.test',
           '-c', 'commit.gpgsign=false', 'commit', '-qm', 'legacy: track the dismiss marker');
       }
     }
@@ -270,7 +270,7 @@ export function runLeg({ oldTag, targetSha, label = oldTag, mutateMirror = null,
     // stderr, which execFileSync drops when the run succeeds.
     const run = spawnSync(process.execPath, ['update-system.mjs', 'apply', '--confirm'], {
       cwd: install, encoding: 'utf-8', timeout: 300000,
-      env: { ...hermeticEnv(cfg), CAREER_OPS_UPDATE_CONFIRM: '1' },
+      env: { ...hermeticEnv(cfg), PROJECT_X_UPDATE_CONFIRM: '1' },
     });
     const exitCode = run.status ?? 1;
     const output = `${run.stdout ?? ''}${run.stderr ?? ''}${run.error ? `\n${run.error.message}` : ''}`;
@@ -479,7 +479,7 @@ function localPathsLeg() {
   const work = realpathSync(mkdtempSync(join(tmpdir(), 'upgrade-localpaths-')));
   const failures = [];
   const ok = (cond, msg) => { console.log(`  ${cond ? 'PASS' : 'FAIL'} [local-paths] ${msg}`); if (!cond) failures.push(msg); };
-  const commit = (cwd, msg) => git(cwd, '-c', 'user.name=upgrade-tests', '-c', 'user.email=upgrade-tests@career-ops.test', 'commit', '-qm', msg);
+  const commit = (cwd, msg) => git(cwd, '-c', 'user.name=upgrade-tests', '-c', 'user.email=upgrade-tests@project-x.test', 'commit', '-qm', msg);
 
   try {
     const mirror = buildMirror(work, baseSha);
@@ -578,7 +578,7 @@ function userLayerRefusalLeg() {
     writeFileSync(join(wt, USER_FILE), '# UPSTREAM VERSION — must never land on top of the user\n');
     const manifestFile = injectManifestEntry(wt, USER_FILE);
     git(wt, 'add', '-f', USER_FILE, manifestFile);
-    git(wt, '-c', 'user.name=upgrade-tests', '-c', 'user.email=upgrade-tests@career-ops.test', 'commit', '-qm', 'poison: manifest names the user layer');
+    git(wt, '-c', 'user.name=upgrade-tests', '-c', 'user.email=upgrade-tests@project-x.test', 'commit', '-qm', 'poison: manifest names the user layer');
     const targetSha = git(wt, 'rev-parse', 'HEAD');
     git(mirror, 'worktree', 'remove', '--force', wt);
     git(mirror, 'update-ref', 'refs/heads/main', targetSha);
@@ -699,7 +699,7 @@ function failedInstallLeg() {
 
     const failing = join(work, 'stubs-failing');
     writeNpmStubs(failing, { npmFails: true });
-    applied = run(install, withStubs({ ...hermeticEnv(cfg), CAREER_OPS_UPDATE_CONFIRM: '1' }, failing), 'apply', '--confirm');
+    applied = run(install, withStubs({ ...hermeticEnv(cfg), PROJECT_X_UPDATE_CONFIRM: '1' }, failing), 'apply', '--confirm');
     ok(applied.exitCode !== 0, `apply exits non-zero when npm install fails (got ${applied.exitCode})`);
     ok(applied.output.includes('npm install failed: npm error code ENOTFOUND'), "apply reports npm's own error");
     ok(!applied.output.includes('Update complete'), 'apply does not print "Update complete"');
@@ -768,7 +768,7 @@ function localEditLeg({ invertForce = false } = {}) {
   const work = realpathSync(mkdtempSync(join(tmpdir(), 'upgrade-localedit-')));
   const failures = [];
   const ok = (cond, msg) => { console.log(`  ${cond ? 'PASS' : 'FAIL'} [${label}] ${msg}`); if (!cond) failures.push(msg); };
-  const commit = (cwd, msg) => git(cwd, '-c', 'user.name=upgrade-tests', '-c', 'user.email=upgrade-tests@career-ops.test',
+  const commit = (cwd, msg) => git(cwd, '-c', 'user.name=upgrade-tests', '-c', 'user.email=upgrade-tests@project-x.test',
     '-c', 'commit.gpgsign=false', 'commit', '-qm', msg);
   const outputs = [];
 
@@ -813,7 +813,7 @@ function localEditLeg({ invertForce = false } = {}) {
 
       const run = spawnSync(process.execPath, ['update-system.mjs', 'apply', ...(force ? ['--force'] : []), '--confirm'], {
         cwd: install, encoding: 'utf-8', timeout: 300000,
-        env: { ...hermeticEnv(cfg), CAREER_OPS_UPDATE_CONFIRM: '1' },
+        env: { ...hermeticEnv(cfg), PROJECT_X_UPDATE_CONFIRM: '1' },
       });
       const exitCode = run.status ?? 1;
       const output = `${run.stdout ?? ''}${run.stderr ?? ''}${run.error ? `\n${run.error.message}` : ''}`;

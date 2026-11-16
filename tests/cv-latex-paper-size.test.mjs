@@ -30,7 +30,7 @@ const BASE = {
   experience: [{ company: 'Test Corp', role: 'Engineer', location: 'Remote', dates: '2024', bullets: ['Did work'] }],
 };
 
-// getProfilePath() honors CAREER_OPS_PROFILE, which is how a test supplies a
+// getProfilePath() honors PROJECT_X_PROFILE, which is how a test supplies a
 // profile without writing into the repo's own config/.
 function build(payload, { profileYaml } = {}) {
   const dir = mkdtempSync(join(tmpdir(), 'cv-paper-'));
@@ -42,10 +42,10 @@ function build(payload, { profileYaml } = {}) {
   if (profileYaml !== undefined) {
     const profile = join(dir, 'profile.yml');
     writeFileSync(profile, profileYaml);
-    env.CAREER_OPS_PROFILE = profile;
+    env.PROJECT_X_PROFILE = profile;
   } else {
     // No profile at all: a stray real one must not decide this test.
-    env.CAREER_OPS_PROFILE = join(dir, 'absent.yml');
+    env.PROJECT_X_PROFILE = join(dir, 'absent.yml');
   }
 
   execFileSync(process.execPath, [join(ROOT, 'build-cv-latex.mjs'), input, out], {
@@ -98,7 +98,7 @@ test('page_format on a tex payload is recognized, not reported as an unread key'
   writeFileSync(input, JSON.stringify({ ...BASE, page_format: 'a4' }));
   const run = spawnSync(process.execPath, [join(ROOT, 'build-cv-latex.mjs'), input, out], {
     cwd: ROOT, encoding: 'utf-8',
-    env: { ...process.env, CAREER_OPS_PROFILE: join(dir, 'absent.yml') },
+    env: { ...process.env, PROJECT_X_PROFILE: join(dir, 'absent.yml') },
     maxBuffer: 10 * 1024 * 1024,
   });
   assert.equal(run.status, 0, run.stderr);
@@ -116,7 +116,7 @@ test('the CJK template honors page_format too', () => {
     cwd: ROOT, encoding: 'utf-8',
     // An empty root too: with the user's real cv.md the fact gate would run
     // against unrelated data and could fail this synthetic payload.
-    env: { ...process.env, CAREER_OPS_PROFILE: join(dir, 'absent.yml'), CAREER_OPS_ROOT: dir },
+    env: { ...process.env, PROJECT_X_PROFILE: join(dir, 'absent.yml'), PROJECT_X_ROOT: dir },
     maxBuffer: 10 * 1024 * 1024,
   });
   const tex = readFileSync(out, 'utf-8');

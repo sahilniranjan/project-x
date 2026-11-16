@@ -10,7 +10,7 @@ const cli = fileURLToPath(new URL('../add-entry.mjs', import.meta.url));
 
 for (const failure of ['missing-parent', 'second-lock']) {
   test(`add-entry reports ${failure} errors without changing user files or leaving locks`, () => {
-    const root = realpathSync(mkdtempSync(join(tmpdir(), 'career-ops-add-lock-error-')));
+    const root = realpathSync(mkdtempSync(join(tmpdir(), 'project-x-add-lock-error-')));
     const cv = join(root, 'cv.md');
     const digest = join(root, 'article-digest.md');
     const payload = join(root, 'payload.json');
@@ -45,7 +45,7 @@ syncBuiltinESMExports();
         ...(failure === 'second-lock' ? ['--import', pathToFileURL(preload).href] : []),
         cli, payload,
       ], {
-        env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_CV: failure === 'missing-parent' ? join(root, 'missing', 'cv.md') : cv, CAREER_OPS_ARTICLE_DIGEST: digest },
+        env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_CV: failure === 'missing-parent' ? join(root, 'missing', 'cv.md') : cv, PROJECT_X_ARTICLE_DIGEST: digest },
         encoding: 'utf8', timeout: 10000,
       });
       assert.equal(result.error, undefined);

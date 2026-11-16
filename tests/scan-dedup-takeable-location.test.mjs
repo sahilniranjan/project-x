@@ -41,9 +41,9 @@ function pipelineUrls(dir) {
 }
 
 function runScan(dir, portalsPath) {
-  const env = { ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_PORTALS: portalsPath };
+  const env = { ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_PORTALS: portalsPath };
   for (const key of Object.keys(env)) {
-    if (key.startsWith('CAREER_OPS_') && key !== 'CAREER_OPS_ROOT' && key !== 'CAREER_OPS_PORTALS') delete env[key];
+    if (key.startsWith('PROJECT_X_') && key !== 'PROJECT_X_ROOT' && key !== 'PROJECT_X_PORTALS') delete env[key];
   }
   execFileSync(NODE, [join(ROOT, 'scan.mjs'), '--quiet'], {
     cwd: ROOT,

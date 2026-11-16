@@ -95,7 +95,7 @@ type ExploreCtx = {
 // Deep enough to scroll back through a stall, shallow enough to stay cheap.
 const SCAN_TRACE_MAX = 120;
 // Running background scan, so a reload re-attaches instead of starting over.
-const JOB_KEY = "career-ops:explore-job";
+const JOB_KEY = "project-x:explore-job";
 const POLL_MS = 1200;
 
 const Ctx = createContext<ExploreCtx | null>(null);
@@ -108,7 +108,7 @@ export function useExplore(): ExploreCtx {
 // Explore results are expensive (a scan walks the ATS network; an AI search spends
 // tokens). Persist the SETTLED result set per-tab so a reload or a mode toggle never
 // throws the work away (disc#5 — "came back to explore, work is lost").
-const RESULTS_KEY = "career-ops:explore-results";
+const RESULTS_KEY = "project-x:explore-results";
 type ResultSnapshot = {
   v: number;
   mode: ExploreMode;
@@ -558,7 +558,7 @@ export function ExploreProvider({ children }: { children: React.ReactNode }) {
     if (!intent) return;
     let cliId: string | null = null;
     try {
-      cliId = JSON.parse(localStorage.getItem("career-ops:config") || "{}").cliId || null;
+      cliId = JSON.parse(localStorage.getItem("project-x:config") || "{}").cliId || null;
     } catch {
       cliId = null;
     }

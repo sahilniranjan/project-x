@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { resolveCli } from "@/lib/clis";
-import { careerOpsRoot, readMemory } from "@/lib/career-ops";
+import { projectXRoot, readMemory } from "@/lib/project-x";
 import { getSession } from "@/lib/apply/session";
 import { buildAnswerPrompt } from "@/lib/apply/answer-prompt.mjs";
 import { runPlanner } from "@/lib/apply/planner";
@@ -15,7 +15,7 @@ export const maxDuration = 320;
 // browser access) drafts an answer per field from cv.md / profile / the job's
 // report. We stream a live diagnostic log of every step (spawn, heartbeats,
 // exit code/signal, parse outcome) so a stuck/empty prefill is observable on the
-// page AND written to <root>/.career-ops-web/apply-prefill.log for debugging.
+// page AND written to <root>/.project-x-web/apply-prefill.log for debugging.
 export async function POST(req: Request) {
   let body: { sessionId?: string; cliId?: string };
   try {
@@ -26,7 +26,7 @@ export async function POST(req: Request) {
   const { sessionId, cliId } = body;
   const t0 = Date.now();
   const encoder = new TextEncoder();
-  const logPath = path.join(careerOpsRoot(), ".career-ops-web", "apply-prefill.log");
+  const logPath = path.join(projectXRoot(), ".project-x-web", "apply-prefill.log");
   try {
     fs.mkdirSync(path.dirname(logPath), { recursive: true });
   } catch {
@@ -80,7 +80,7 @@ export async function POST(req: Request) {
         binPath,
         prompt,
         fieldCount: s.fields.length,
-        cwd: careerOpsRoot(),
+        cwd: projectXRoot(),
         t0,
         log,
       });

@@ -10,14 +10,14 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
-const OVERRIDES = ['CAREER_OPS_DATA_DIR', 'CAREER_OPS_TRACKER', 'CAREER_OPS_PIPELINE', 'CAREER_OPS_SCAN_HISTORY', 'CAREER_OPS_PORTALS', 'CAREER_OPS_PROFILE', 'CAREER_OPS_FOLLOWUPS', 'CAREER_OPS_REPORTS', 'CAREER_OPS_CV', 'CAREER_OPS_JDS', 'CAREER_OPS_ADDITIONS'];
+const OVERRIDES = ['PROJECT_X_DATA_DIR', 'PROJECT_X_TRACKER', 'PROJECT_X_PIPELINE', 'PROJECT_X_SCAN_HISTORY', 'PROJECT_X_PORTALS', 'PROJECT_X_PROFILE', 'PROJECT_X_FOLLOWUPS', 'PROJECT_X_REPORTS', 'PROJECT_X_CV', 'PROJECT_X_JDS', 'PROJECT_X_ADDITIONS'];
 
 // An empty data root: with no portals.yml a run that gets past the flags stops
 // there, before any network.
 function scan(...args) {
   const root = mkdtempSync(join(tmpdir(), 'scan-throttle-'));
   try {
-    const env = { ...process.env, CAREER_OPS_ROOT: root };
+    const env = { ...process.env, PROJECT_X_ROOT: root };
     for (const key of OVERRIDES) env[key] = '';
     const r = spawnSync(process.execPath, [join(ROOT, 'scan.mjs'), ...args], { cwd: root, encoding: 'utf8', timeout: 30000, env });
     return { status: r.status, error: r.error, output: `${r.stdout ?? ''}\n${r.stderr ?? ''}` };

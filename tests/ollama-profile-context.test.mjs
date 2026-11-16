@@ -2,7 +2,7 @@
 //
 // Run the real CLI from an isolated fixture root and capture its request with a
 // mock Ollama server. This proves profile content reaches the model without
-// touching a contributor's local career-ops data.
+// touching a contributor's local project-x data.
 import { execFile } from 'node:child_process';
 import { createServer } from 'node:http';
 import {
@@ -47,7 +47,7 @@ for (const relativePath of [
   // a fixture that carries tracker-utils has to carry its import too.
   'pipeline-lock.mjs',
   // ollama-eval/reserve-report-num resolve user-layer paths via
-  // path-resolver.mjs (CAREER_OPS_ROOT), so the fixture carries that too.
+  // path-resolver.mjs (PROJECT_X_ROOT), so the fixture carries that too.
   'path-resolver.mjs',
   'utils/token-tracker.mjs',
 ]) {

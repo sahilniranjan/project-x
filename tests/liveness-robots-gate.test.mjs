@@ -45,7 +45,7 @@ test('an allowing gate lets the headed retry run', async () => {
   const gated = [];
   const result = await checkUrlLivenessWithFallback(challengePage(), URL, {
     getHeadedPage: h.getHeadedPage,
-    robotsGate: async (url) => { gated.push(url); return { allowed: true, code: 'robots_allowed', reason: 'permits /jobs/1004870954 for career-ops' }; },
+    robotsGate: async (url) => { gated.push(url); return { allowed: true, code: 'robots_allowed', reason: 'permits /jobs/1004870954 for project-x' }; },
   });
   assert.equal(result.result, 'active');
   assert.deepEqual(gated, [URL]);
@@ -56,12 +56,12 @@ test('a disallowing gate skips the retry before a headed page is asked for', asy
   const h = headed();
   const result = await checkUrlLivenessWithFallback(challengePage(), URL, {
     getHeadedPage: h.getHeadedPage,
-    robotsGate: async () => ({ allowed: false, code: 'robots_disallowed', reason: 'disallows /jobs/1004870954 for career-ops' }),
+    robotsGate: async () => ({ allowed: false, code: 'robots_disallowed', reason: 'disallows /jobs/1004870954 for project-x' }),
   });
   assert.equal(h.state.asked, 0, 'no headed Chromium is launched for a skipped retry');
   assert.equal(result.result, 'uncertain', 'a skip is never expired');
   assert.equal(result.code, 'bot_challenge', 'the headless code is kept');
-  assert.match(result.reason, /\(headed retry skipped: robots\.txt disallows \/jobs\/1004870954 for career-ops\)$/);
+  assert.match(result.reason, /\(headed retry skipped: robots\.txt disallows \/jobs\/1004870954 for project-x\)$/);
 });
 
 test('a gate that throws, or answers nothing usable, counts as a skip', async () => {
@@ -113,7 +113,7 @@ test('the real robotsAllows works as the gate, end to end', async () => {
   });
   assert.equal(h.state.asked, 0);
   assert.equal(result.code, 'bot_challenge');
-  assert.match(result.reason, /headed retry skipped: robots\.txt disallows \/jobs\/1004870954 for career-ops/);
+  assert.match(result.reason, /headed retry skipped: robots\.txt disallows \/jobs\/1004870954 for project-x/);
 });
 
 test('both real callers pass the gate', () => {

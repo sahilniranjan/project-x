@@ -37,7 +37,7 @@ function buildWith(inputPayload, profilePhoto) {
   const output = join(dir, 'output.html');
   writeFileSync(input, JSON.stringify(inputPayload));
   const result = spawnSync(process.execPath, ['build-cv-html.mjs', input, output, TEMPLATE], {
-    cwd: ROOT, encoding: 'utf8', env: { ...process.env, CAREER_OPS_ROOT: root },
+    cwd: ROOT, encoding: 'utf8', env: { ...process.env, PROJECT_X_ROOT: root },
   });
   return { result, output };
 }
@@ -65,7 +65,7 @@ function render(inputPayload, { preview = false, profilePhoto } = {}) {
   if (preview || profilePhoto !== undefined) {
     previewRoot = join(dir, 'data-root');
     mkdirSync(join(previewRoot, 'output'), { recursive: true });
-    env.CAREER_OPS_ROOT = previewRoot;
+    env.PROJECT_X_ROOT = previewRoot;
   }
   if (profilePhoto !== undefined) writeProfile(previewRoot, profilePhoto);
 
@@ -95,7 +95,7 @@ test('project-relative image is validated and inlined', () => {
 
 // The profile is a user-layer file, so a relative photo path in it is read
 // from the data root. It resolved against the checkout, so with the user layer
-// moved out (CAREER_OPS_ROOT) the photo kept next to the profile was never
+// moved out (PROJECT_X_ROOT) the photo kept next to the profile was never
 // found and the build failed.
 function dataRootPhotoBuild(relPhoto, bytes) {
   const dir = mkdtempSync(join(tmpdir(), 'photo-data-root-'));
@@ -107,7 +107,7 @@ function dataRootPhotoBuild(relPhoto, bytes) {
   const output = join(dir, 'output.html');
   writeFileSync(input, JSON.stringify(payload(relPhoto)));
   const result = spawnSync(process.execPath, ['build-cv-html.mjs', input, output, TEMPLATE], {
-    cwd: ROOT, encoding: 'utf8', env: { ...process.env, CAREER_OPS_ROOT: root },
+    cwd: ROOT, encoding: 'utf8', env: { ...process.env, PROJECT_X_ROOT: root },
   });
   return { result, html: existsSync(output) ? readFileSync(output, 'utf8') : '' };
 }
@@ -135,7 +135,7 @@ test('single-letter Windows drive paths reach local file handling', () => {
   writeFileSync(input, JSON.stringify(payload(winPath)));
   const root = mkdtempSync(join(tmpdir(), 'photo-windows-root-'));
   writeProfile(root, winPath);
-  const result = spawnSync(process.execPath, ['build-cv-html.mjs', input, output, TEMPLATE], { cwd: ROOT, encoding: 'utf8', env: { ...process.env, CAREER_OPS_ROOT: root } });
+  const result = spawnSync(process.execPath, ['build-cv-html.mjs', input, output, TEMPLATE], { cwd: ROOT, encoding: 'utf8', env: { ...process.env, PROJECT_X_ROOT: root } });
   assert.ok(exitedNonZero(result), describeSpawn(result, 'expected a non-zero exit'));
   assert.doesNotMatch(result.stderr, /Unsupported profile photo URL scheme/);
   assert.match(result.stderr, /not found or unreadable/);
@@ -197,7 +197,7 @@ test('missing, unsupported, and invalid-style photos fail clearly', () => {
     writeFileSync(input, JSON.stringify(value));
     const root = mkdtempSync(join(tmpdir(), 'photo-fail-root-'));
     writeProfile(root, value.candidate.photo);
-    const result = spawnSync(process.execPath, ['build-cv-html.mjs', input, output, TEMPLATE], { cwd: ROOT, encoding: 'utf8', env: { ...process.env, CAREER_OPS_ROOT: root } });
+    const result = spawnSync(process.execPath, ['build-cv-html.mjs', input, output, TEMPLATE], { cwd: ROOT, encoding: 'utf8', env: { ...process.env, PROJECT_X_ROOT: root } });
     assert.ok(exitedNonZero(result), describeSpawn(result, 'an invalid profile photo must fail the build'));
     assert.match(result.stderr, expected);
     assert.equal(existsSync(output), false);

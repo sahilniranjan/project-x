@@ -42,7 +42,7 @@ const STORY_BANK = [
 
 /** Runs match-star in a fresh data root holding the story bank and a JD. */
 function run(args) {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-match-star-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-match-star-'));
   try {
     mkdirSync(join(dir, 'interview-prep'));
     mkdirSync(join(dir, 'jds'));
@@ -50,7 +50,7 @@ function run(args) {
     writeFileSync(join(dir, 'jds', 'acme.md'), 'We are moving our Postgres databases. Migration experience required.\n');
     const r = spawnSync(process.execPath, [join(ROOT, 'match-star.mjs'), ...args], {
       cwd: dir, encoding: 'utf-8', timeout: 60_000,
-      env: { ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_DATA_DIR: '' },
+      env: { ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_DATA_DIR: '' },
     });
     assert.equal(r.error, undefined, `spawn failed: ${r.error?.message}`);
     return r;

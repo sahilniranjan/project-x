@@ -14,7 +14,7 @@ function cvWarning(t, cv) {
   t.after(() => rmSync(dir, { recursive: true, force: true }));
   writeFileSync(join(dir, 'cv.md'), cv);
   const r = spawnSync(process.execPath, [join(ROOT, 'doctor.mjs'), '--json', '--target', dir], {
-    cwd: dir, encoding: 'utf-8', timeout: 60_000, env: { ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_DATA_DIR: '' },
+    cwd: dir, encoding: 'utf-8', timeout: 60_000, env: { ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_DATA_DIR: '' },
   });
   assert.equal(r.status, 0, describeSpawn(r));
   return JSON.parse(r.stdout).warnings.find((w) => w.startsWith('cv.md:'));

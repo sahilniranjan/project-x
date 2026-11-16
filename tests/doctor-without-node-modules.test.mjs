@@ -27,7 +27,7 @@ function doctorCheckout(t, { packageJson, nodeModules }) {
 function runDoctor(dir, args) {
   const run = spawnSync(process.execPath, [join(dir, 'doctor.mjs'), ...args], {
     cwd: dir, encoding: 'utf-8', timeout: 60_000,
-    env: { ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_DATA_DIR: '', NODE_PATH: '' },
+    env: { ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_DATA_DIR: '', NODE_PATH: '' },
   });
   return { ...run, output: run.stdout + run.stderr };
 }
@@ -48,13 +48,13 @@ for (const args of [[], ['--json']]) {
 
 test('doctor --json still reports when only a package doctor does not load is missing', (t) => {
   const manifest = JSON.parse(realPackageJson);
-  manifest.dependencies = { ...manifest.dependencies, 'career-ops-test-absent': '1.0.0' };
+  manifest.dependencies = { ...manifest.dependencies, 'project-x-test-absent': '1.0.0' };
   const dir = doctorCheckout(t, { packageJson: JSON.stringify(manifest), nodeModules: true });
   const json = runDoctor(dir, ['--json']);
   assert.equal(json.status, 0, json.output);
   assert.doesNotThrow(() => JSON.parse(json.stdout), json.output);
   const human = runDoctor(dir, []);
-  assert.match(human.output, /Dependencies missing: career-ops-test-absent/);
+  assert.match(human.output, /Dependencies missing: project-x-test-absent/);
 });
 
 test('doctor reports a missing package.json as a failed check when packages are installed', (t) => {

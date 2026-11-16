@@ -4,8 +4,8 @@
  * generate-pdf.mjs — HTML → PDF via Playwright
  *
  * Usage:
- *   node career-ops/generate-pdf.mjs <input.html> <output.pdf> [--format=letter|a4] [--country=XX] [--report=NNN] [--kind=cv|cover] [--allow-reorder] [--allow-nonchronological] [--max-pages=N] [--strict-pages] [--strict-fact-check] [--skip-fact-check]
- *   node career-ops/generate-pdf.mjs --batch=<manifest.json> [--format=letter|a4] [--country=XX] [--allow-reorder] [--allow-nonchronological] [--max-pages=N] [--strict-pages] [--strict-fact-check] [--skip-fact-check]
+ *   node project-x/generate-pdf.mjs <input.html> <output.pdf> [--format=letter|a4] [--country=XX] [--report=NNN] [--kind=cv|cover] [--allow-reorder] [--allow-nonchronological] [--max-pages=N] [--strict-pages] [--strict-fact-check] [--skip-fact-check]
+ *   node project-x/generate-pdf.mjs --batch=<manifest.json> [--format=letter|a4] [--country=XX] [--allow-reorder] [--allow-nonchronological] [--max-pages=N] [--strict-pages] [--strict-fact-check] [--skip-fact-check]
  *
  * --batch renders every document in a JSON manifest (an array of
  * {input, output, format?, reportNum?}) through ONE shared Chromium instead of
@@ -65,7 +65,7 @@ import { readFile } from 'fs/promises';
 import { existsSync, lstatSync, mkdirSync, readFileSync, realpathSync, writeFileSync } from 'fs';
 import { fileURLToPath, pathToFileURL } from 'url';
 import { randomUUID } from 'node:crypto';
-import { getCareerOpsRoot, getProfilePath, hasProfileOverride } from './path-resolver.mjs';
+import { getProjectXRoot, getProfilePath, hasProfileOverride } from './path-resolver.mjs';
 import { readStyleTokens, injectThemeStyle, readCvSectionOrder, readLockedSections, readCvPageBudget } from './theme-style.mjs';
 import { validateCvExperienceOrder } from './cv-experience-order.mjs';
 import { resolvePdfIndexPath, resolveTrackerPath, resolveWorkspaceRootFor, writeFileAtomic } from './tracker-utils.mjs';
@@ -77,20 +77,20 @@ import { PAGE_CSS_SIZE, PAGE_FORMATS, normalizePageFormat, pageFormatForCountry,
 import { browserLaunchOptions } from './lib/browser-launch.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const trackerPath = resolveTrackerPath(getCareerOpsRoot());
+const trackerPath = resolveTrackerPath(getProjectXRoot());
 // Derive the workspace root from the uncanonicalized tracker path (#3169): a
 // repo that symlinks only its data/ out (the #524 workaround) must still resolve
 // cv.md, config/ and output/ inside the repo, not follow data/ to the symlink
 // target. resolveWorkspaceRootFor canonicalizes the derived root itself, so the
 // spelling the rest of the module compares against stays canonical as before.
-const workspaceRoot = resolveWorkspaceRootFor(getCareerOpsRoot());
+const workspaceRoot = resolveWorkspaceRootFor(getProjectXRoot());
 const PDF_PAGE_MARGIN = '0.6in';
 
 /**
  * The profile a render reads. An explicit root is the workspace the caller
- * named, so the environment does not redirect it. Otherwise CAREER_OPS_PROFILE
+ * named, so the environment does not redirect it. Otherwise PROJECT_X_PROFILE
  * names the file outright, and without it the profile sits in the workspace
- * (which CAREER_OPS_TRACKER can move off the data root, #2471).
+ * (which PROJECT_X_TRACKER can move off the data root, #2471).
  */
 function workspaceProfilePath(explicitRoot) {
   if (explicitRoot) return getProfilePath(explicitRoot);
@@ -99,11 +99,11 @@ function workspaceProfilePath(explicitRoot) {
 
 // Canonical tracker workspace: realpath so a symlinked ancestor (e.g. macOS
 // /var -> /private/var) is compared like-for-like by assertInsideWorkspace.
-// When CAREER_OPS_TRACKER points at another workspace, that workspace—not the
+// When PROJECT_X_TRACKER points at another workspace, that workspace—not the
 // installed script directory—is the safe boundary for input and output.
 //
 // Derived at USE time, not frozen at import (#3162, root-caused occurrence 6):
-// the root reads CAREER_OPS_TRACKER, and a sibling test that legitimately sets
+// the root reads PROJECT_X_TRACKER, and a sibling test that legitimately sets
 // that variable for its own fixture — and correctly restores it afterwards —
 // still poisoned this module for the whole process if the import happened to
 // land inside that window. A `const` cannot un-read an env var, so the guard
@@ -115,23 +115,23 @@ let __rootCache = { key: null, root: null, canonical: null };
 function refreshRootCache() {
   // Derive the root on EVERY call and key the cache on the resolved value.
   //
-  // The root can move three ways: CAREER_OPS_TRACKER, CAREER_OPS_ROOT /
-  // CAREER_OPS_DATA_DIR, and the .career-ops-data marker file. Keying on the
+  // The root can move three ways: PROJECT_X_TRACKER, PROJECT_X_ROOT /
+  // PROJECT_X_DATA_DIR, and the .project-x-data marker file. Keying on the
   // environment alone misses the marker, which is a file on disk and can change
   // while the environment does not, so the cache would keep serving a stale
   // workspace. The resolved root is the one value that captures all three, and
   // what is memoised is only realpathSync(), the syscall worth avoiding.
   //
-  // getCareerOpsRoot(), not __dirname: the data root is the env vars, then a
-  // .career-ops-data marker, then the repo, and only the last of those is the
+  // getProjectXRoot(), not __dirname: the data root is the env vars, then a
+  // .project-x-data marker, then the repo, and only the last of those is the
   // script's own directory. With the user layer outside the checkout this
   // derived the workspace from the CODE directory, so every path under the
   // real data root read as an escape and the PDF was refused (#4389). Line 49
-  // already used getCareerOpsRoot(), so the two disagreed inside one module.
+  // already used getProjectXRoot(), so the two disagreed inside one module.
   //
   // Same #3169 derivation as the import-time const: resolveWorkspaceRootFor works
   // from the uncanonicalized tracker so a symlinked data/ stays in the repo.
-  const root = resolveWorkspaceRootFor(getCareerOpsRoot());
+  const root = resolveWorkspaceRootFor(getProjectXRoot());
   if (__rootCache.key !== root) {
     __rootCache = { key: root, root, canonical: realpathSync(root) };
   }
@@ -206,7 +206,7 @@ function assertInsideWorkspace(absPath, label) {
  * A relative path that already lands inside the workspace keeps the current
  * directory, so launching from the repo is unchanged. A relative path that
  * would land outside is read from the workspace root instead. That is the
- * split-layout case: the shell is in the checkout, CAREER_OPS_ROOT points at
+ * split-layout case: the shell is in the checkout, PROJECT_X_ROOT points at
  * the data directory, and `output/cv.html` means the workspace file. An
  * absolute path is unchanged. The containment guard below still runs on the
  * result, so a `..` segment cannot escape.
@@ -1568,7 +1568,7 @@ export function injectPrintPageCss(html, format, country) {
   // hardcoded value would silently win the cascade and make style.margin
   // ineffective (#1837 review). PDF_PAGE_MARGIN is only the fallback for a
   // template that never declares --page-margin at all.
-  const pageStyle = `<style id="career-ops-page-setup">\n@page { size: ${pageSize}; margin: var(--page-margin, ${PDF_PAGE_MARGIN}); }\n</style>`;
+  const pageStyle = `<style id="project-x-page-setup">\n@page { size: ${pageSize}; margin: var(--page-margin, ${PDF_PAGE_MARGIN}); }\n</style>`;
 
   if (/<\/head>/i.test(html)) {
     // Replacer function, matching the <html> branch just below. `pageStyle`
@@ -1818,7 +1818,7 @@ async function runFactGate(html, label, rawHtml = html, { strictFactCheck = fals
  * config/cv-facts.json. This module reads cv.md (the probe that decides
  * whether the gate runs, and the section-order and locked-section guards) and
  * config/profile.yml from workspaceRoot, which is a different directory
- * whenever CAREER_OPS_TRACKER points outside the data root (#2471, #3169). With
+ * whenever PROJECT_X_TRACKER points outside the data root (#2471, #3169). With
  * the defaults one render read two cv.md files: the guards and the run-or-skip
  * decision used the workspace's, the fact check the data root's, so a number
  * absent from the CV this render validated could still pass.
@@ -2029,7 +2029,7 @@ async function generatePDF() {
     console.error('This script only converts an already-built HTML file to PDF.');
     console.error('The input HTML is produced by the pdf mode: the agent fills cv-template.html');
     console.error('with content tailored to the specific job (see modes/pdf.md) — there is no');
-    console.error('mechanical markdown-to-HTML step by design. Run `/career-ops pdf` in your AI');
+    console.error('mechanical markdown-to-HTML step by design. Run `/project-x pdf` in your AI');
     console.error('CLI to drive the full flow end to end.');
     process.exit(1);
   }
@@ -2103,7 +2103,7 @@ async function generatePDF() {
   // before the guard runs, so the guard judges the document that will be
   // printed. Anchored to workspaceRoot, NOT __dirname: readStyleTokens() reads
   // the same file from workspaceRoot, and cv.md is read from there too, so an
-  // __dirname anchor made CAREER_OPS_TRACKER split one logical profile across
+  // __dirname anchor made PROJECT_X_TRACKER split one logical profile across
   // two files — style from the workspace, section order from the checkout —
   // and validated the workspace's CV against the checkout's declared order.
   html = reorderCvSections(html, readCvSectionOrder(workspaceProfilePath()));
@@ -2488,8 +2488,8 @@ export async function renderHtmlToPdf(html, outputPath, opts = {}) {
   // The shared painter is only for the batch, which opts in with the env var,
   // and the painter process itself must not dial its own socket.
   if (!opts.launchBrowser
-    && process.env.CAREER_OPS_PDF_SHARED === '1'
-    && process.env.CAREER_OPS_PDF_SERVER_PROCESS !== '1') {
+    && process.env.PROJECT_X_PDF_SHARED === '1'
+    && process.env.PROJECT_X_PDF_SERVER_PROCESS !== '1') {
     try {
       const { renderViaSharedPdfServer } = await import('./lib/pdf-server.mjs');
       const result = await renderViaSharedPdfServer(
@@ -2497,7 +2497,7 @@ export async function renderHtmlToPdf(html, outputPath, opts = {}) {
         outputPath,
         { ...opts, workspaceRoot: opts.workspaceRoot || workspaceRoot },
         fileURLToPath(import.meta.url),
-        getCareerOpsRoot(),
+        getProjectXRoot(),
       );
       // The painter's own output goes nowhere, so repeat it here. A strict
       // overflow already came back as an error. A warn-only one comes back
@@ -2521,7 +2521,7 @@ export async function renderHtmlToPdf(html, outputPath, opts = {}) {
   }
   const launchBrowser = opts.launchBrowser || ((options) => launchChromium({
     ...options,
-    projectRoot: opts.workspaceRoot || getCareerOpsRoot(),
+    projectRoot: opts.workspaceRoot || getProjectXRoot(),
   }));
   let browser = null;
   try {
@@ -2572,7 +2572,7 @@ async function renderInPage(browser, html, outputPath, opts = {}) {
   // keep the render workspace-owned while still allowing the input itself to
   // be read.
   const baseDir = isWorkspaceOutputPath(
-    resolve(requestedBaseDir, '.career-ops-render-anchor'),
+    resolve(requestedBaseDir, '.project-x-render-anchor'),
     outputRoot,
   ) ? requestedBaseDir : resolve(outputRoot);
   const reportNum = opts.reportNum || '';
@@ -2616,7 +2616,7 @@ async function renderInPage(browser, html, outputPath, opts = {}) {
 
   // Write HTML to a temp file in baseDir so page.goto() gives a file://
   // origin that can load local images, fonts, and other resources.
-  const tmpHtmlPath = resolve(baseDir, `.career-ops-render-${randomUUID()}.html`);
+  const tmpHtmlPath = resolve(baseDir, `.project-x-render-${randomUUID()}.html`);
   const { writeFile, unlink } = await import('fs/promises');
   await writeFile(tmpHtmlPath, html, 'utf-8');
 
@@ -2811,7 +2811,7 @@ async function runPdfServer() {
     rootDir: __dirname,
     launchBrowser: (options) => launchChromium({
       ...options,
-      projectRoot: process.env.CAREER_OPS_PDF_BROWSER_ROOT || getCareerOpsRoot(),
+      projectRoot: process.env.PROJECT_X_PDF_BROWSER_ROOT || getProjectXRoot(),
     }),
     render: (browser, html, outputPath, opts) => renderInPage(browser, html, outputPath, opts),
   });

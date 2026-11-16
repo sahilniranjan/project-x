@@ -81,7 +81,7 @@ Block D 和 Block G 合计的硬性上限：
 - 不要派生子 agent 或把调研转交给另一个 agent。
 - 到达查询上限后不要再继续调研；总结已掌握的证据，并明确把缺失的数据标注为 unavailable。
 
-如果更深入的公司调研确实有用，评估完成后另外推荐候选人跑 `/career-ops deep`。
+如果更深入的公司调研确实有用，评估完成后另外推荐候选人跑 `/project-x deep`。
 
 ## 步骤 0 — 画像识别
 
@@ -583,7 +583,7 @@ CV Top 5 修改 + LinkedIn Top 5 修改，用来最大化匹配。
 | Posting legitimacy | Block G 评级 | `✅ High Confidence`；Proceed with Caution / Suspicious 渲染为 `⚠️ {tier} — {一句话原因}` |
 | Employment classification | Block G 中的用工性质信号 | 检查已运行且无异常时 `✅ clear`；标记触发时 `⚠️ contractor-style language: “{引用原文}”`；无法运行时 `— not evaluated` |
 | Culture screen | Block A 的 Culture screen 字段 | `✅ pass`，或 `⚠️ caution — {证据}` / `⚠️ fail — {证据}`；未筛查时 `— not evaluated` |
-| Interview red flags | `interview-prep/{company-slug}-redflags.md`（来自 `interview-redflag` 模式） | **交叉引用，不是复制：** 文件存在时写出其当前警告级别并附相对链接 —— `[{level}](../interview-prep/{company-slug}-redflags.md)`（相对于 `reports/`）；否则 `— no interview sessions yet`。**未经核实的文件：** 若文件包含标记 `<!-- career-ops:redflags-unverified -->`（`interview-redflag` 在没有任何真实面试 session 支撑的情况下保留了该文件），绝不写出其警告级别：渲染为 `— not evaluated: [unverified analysis](../interview-prep/{company-slug}-redflags.md)`，`risk_summary.interview_redflags` 为 `not_evaluated`。只认标记，不认注释文字：注释按用户的输出语言书写。 |
+| Interview red flags | `interview-prep/{company-slug}-redflags.md`（来自 `interview-redflag` 模式） | **交叉引用，不是复制：** 文件存在时写出其当前警告级别并附相对链接 —— `[{level}](../interview-prep/{company-slug}-redflags.md)`（相对于 `reports/`）；否则 `— no interview sessions yet`。**未经核实的文件：** 若文件包含标记 `<!-- project-x:redflags-unverified -->`（`interview-redflag` 在没有任何真实面试 session 支撑的情况下保留了该文件），绝不写出其警告级别：渲染为 `— not evaluated: [unverified analysis](../interview-prep/{company-slug}-redflags.md)`，`risk_summary.interview_redflags` 为 `not_evaluated`。只认标记，不认注释文字：注释按用户的输出语言书写。 |
 | AI claims vs. infrastructure | Block G 中的 AI/基础设施一致性检查（若存在） | 本报告包含该检查时镜像其结论（`✅ consistent` / `⚠️ {发现}`）；否则 `— not evaluated`。该检查一旦存在此行自动启用，无顺序依赖 |
 | AI-screening disclosure | Block G 中的 AI-screening disclosure 信号（Signal 15，若存在） | 本报告包含该检查时：(a) 触发写 `✅ discloses AI use`；仅 (b) 触发写 `ℹ️ {jurisdiction_name} requires disclosure; posting is silent`（仅为印证，不是合规判定）；两者都未触发且候选人法域无条目写 `— no jurisdiction match`；其他写 `— not evaluated`。无顺序依赖 |
 | Fixed-term contract | Block G 中的 Fixed-term disclosure 信号（Signal 16） | 存在明确固定期限表述时 `ℹ️ fixed term — “{引用原文}”`；否则 `✅ no fixed term disclosed`；只有在没有 JD 文本可读时 `— not evaluated` |
@@ -619,7 +619,7 @@ CV Top 5 修改 + LinkedIn Top 5 修改，用来最大化匹配。
 
 ## 自荐信草稿（Block G 之后自动生成）
 
-报告保存并记录到 tracker 之后，在报告文件末尾追加 `## Cover Letter Draft`。这是起点，不是最终文。用户通过 `/career-ops cover {slug}` 补全。
+报告保存并记录到 tracker 之后，在报告文件末尾追加 `## Cover Letter Draft`。这是起点，不是最终文。用户通过 `/project-x cover {slug}` 补全。
 
 **如何生成草稿：**
 
@@ -635,7 +635,7 @@ CV Top 5 修改 + LinkedIn Top 5 修改，用来最大化匹配。
 ```markdown
 ## Cover Letter Draft
 
-> Draft generated at evaluation time. Complete via `/career-ops cover {slug}` to fill in angles, confirm research, and generate the PDF.
+> Draft generated at evaluation time. Complete via `/project-x cover {slug}` to fill in angles, confirm research, and generate the PDF.
 > Gaps flagged below — address them during the cover flow.
 
 ---
@@ -667,7 +667,7 @@ I am happy to discuss further at your convenience.
 {8-10 exact phrases from the JD}
 
 ---
-*Run `/career-ops cover {slug}` to complete angles, confirm company research, and generate the PDF.*
+*Run `/project-x cover {slug}` to complete angles, confirm company research, and generate the PDF.*
 ```
 
 对草稿内容应用 `_writing.md` Professional Writing 一节的全部语言规则。No em dashes、no buzzwords、active voice、concrete claims only。

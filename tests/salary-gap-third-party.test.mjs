@@ -63,7 +63,7 @@ assert(Object.keys(adv(r)).sort().join() === 'currency,date,period,postingLocati
     ].join(String.fromCharCode(10)) + String.fromCharCode(10));
     writeFileSync(join(root, 'data', 'salary-observations.tsv'), ['1', '2026-07-01', 'advertised', '80-90k', 'USD', 'third-party', 'est'].join(String.fromCharCode(9)) + String.fromCharCode(10));
     const script = join(dirname(fileURLToPath(import.meta.url)), '..', 'salary-gap.mjs');
-    const out = spawnSync(process.execPath, [script, '--summary'], { encoding: 'utf-8', env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_TRACKER: '' } });
+    const out = spawnSync(process.execPath, [script, '--summary'], { encoding: 'utf-8', env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_TRACKER: '' } });
     const line = (out.stdout || '').split(String.fromCharCode(10)).find(l => l.trim().startsWith('advertised')) || '';
     assert(out.status === 0 && line.includes('~ 85k USD') && line.includes('[unverified estimate]'),
       '--summary shows the third-party advertised value with ~ and [unverified estimate]');

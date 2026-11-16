@@ -87,7 +87,7 @@ const isAbort = (err) => { const e = err?.cause ?? err; return e?.name === 'Abor
   else fail(`fetchJson happy path broken: ${JSON.stringify(ok)}`);
 }
 
-// 4. CAREER_OPS_HTTP_TIMEOUT_MS overrides the default budget.
+// 4. PROJECT_X_HTTP_TIMEOUT_MS overrides the default budget.
 // A board that returns its whole catalogue in one response can outlast the 10s
 // default, and the abort surfaces as an unreachable portal rather than as a
 // timeout — so the board reads as broken instead of slow. Raising the budget is
@@ -113,7 +113,7 @@ const isAbort = (err) => { const e = err?.cause ?? err; return e?.name === 'Abor
     ['Infinity', 'Infinity'], ['NaN', 'NaN'],
     ['0.5', 'sub-millisecond'], ['2147483648', 'timer overflow'],
   ]) {
-    eq(`CAREER_OPS_HTTP_TIMEOUT_MS ${label} → 10s default`, resolveDefaultTimeoutMs(raw), 10_000);
+    eq(`PROJECT_X_HTTP_TIMEOUT_MS ${label} → 10s default`, resolveDefaultTimeoutMs(raw), 10_000);
   }
 
   // The bounds are inclusive: both edges are delays setTimeout honors as written.
@@ -131,22 +131,22 @@ const isAbort = (err) => { const e = err?.cause ?? err; return e?.name === 'Abor
 // disconnected, the request waits out the 10s default and the hard timeout below
 // fails the test.
 {
-  const prev = process.env.CAREER_OPS_HTTP_TIMEOUT_MS;
-  process.env.CAREER_OPS_HTTP_TIMEOUT_MS = '300';
+  const prev = process.env.PROJECT_X_HTTP_TIMEOUT_MS;
+  process.env.PROJECT_X_HTTP_TIMEOUT_MS = '300';
   try {
     const t0 = Date.now();
     try {
       await hardTimeout(viaLocal(() => fetchJson(`${base}/stall`)), 4_000, 'fetchJson /stall with env budget');
-      fail('fetchJson resolved on a stalled body under CAREER_OPS_HTTP_TIMEOUT_MS');
+      fail('fetchJson resolved on a stalled body under PROJECT_X_HTTP_TIMEOUT_MS');
     } catch (err) {
       const elapsed = Date.now() - t0;
-      if (!isAbort(err)) fail(`CAREER_OPS_HTTP_TIMEOUT_MS=300 did not set the request budget: ${err?.message}`);
-      else if (elapsed < MAX_ABORT_MS) pass(`CAREER_OPS_HTTP_TIMEOUT_MS=300 aborted a request with no timeoutMs in ${elapsed}ms`);
-      else fail(`CAREER_OPS_HTTP_TIMEOUT_MS=300 took ${elapsed}ms to abort (env budget not applied)`);
+      if (!isAbort(err)) fail(`PROJECT_X_HTTP_TIMEOUT_MS=300 did not set the request budget: ${err?.message}`);
+      else if (elapsed < MAX_ABORT_MS) pass(`PROJECT_X_HTTP_TIMEOUT_MS=300 aborted a request with no timeoutMs in ${elapsed}ms`);
+      else fail(`PROJECT_X_HTTP_TIMEOUT_MS=300 took ${elapsed}ms to abort (env budget not applied)`);
     }
   } finally {
-    if (prev === undefined) delete process.env.CAREER_OPS_HTTP_TIMEOUT_MS;
-    else process.env.CAREER_OPS_HTTP_TIMEOUT_MS = prev;
+    if (prev === undefined) delete process.env.PROJECT_X_HTTP_TIMEOUT_MS;
+    else process.env.PROJECT_X_HTTP_TIMEOUT_MS = prev;
   }
 }
 
@@ -157,7 +157,7 @@ const isAbort = (err) => { const e = err?.cause ?? err; return e?.name === 'Abor
 {
   const dataRoot = mkdtempSync(join(tmpdir(), 'co-http-timeout-env-'));
   try {
-    writeFileSync(join(dataRoot, '.env'), 'CAREER_OPS_HTTP_TIMEOUT_MS=300\n');
+    writeFileSync(join(dataRoot, '.env'), 'PROJECT_X_HTTP_TIMEOUT_MS=300\n');
     const script = `
       await import(${JSON.stringify(pathToFileURL(join(ROOT, 'scan.mjs')).href)});
       const { fetchJson } = await import(${JSON.stringify(pathToFileURL(join(ROOT, 'providers/_http.mjs')).href)});
@@ -180,12 +180,12 @@ const isAbort = (err) => { const e = err?.cause ?? err; return e?.name === 'Abor
       if (error?.name !== 'AbortError') throw new Error('expected an abort, got: ' + (error?.message ?? 'no error'));
       console.log(elapsed);
     `;
-    const env = { ...process.env, CAREER_OPS_ROOT: dataRoot };
-    delete env.CAREER_OPS_HTTP_TIMEOUT_MS;
+    const env = { ...process.env, PROJECT_X_ROOT: dataRoot };
+    delete env.PROJECT_X_HTTP_TIMEOUT_MS;
     const child = spawnSync(process.execPath, ['--input-type=module', '-e', script], { encoding: 'utf8', env, timeout: 30_000 });
     const elapsed = Number(child.stdout.trim().split('\n').pop());
-    if (child.status === 0 && elapsed < 5_000) pass(`CAREER_OPS_HTTP_TIMEOUT_MS from .env aborted a request in ${elapsed}ms`);
-    else fail(`CAREER_OPS_HTTP_TIMEOUT_MS from .env not applied: status ${child.status}, elapsed ${elapsed}ms, ${child.stderr}`);
+    if (child.status === 0 && elapsed < 5_000) pass(`PROJECT_X_HTTP_TIMEOUT_MS from .env aborted a request in ${elapsed}ms`);
+    else fail(`PROJECT_X_HTTP_TIMEOUT_MS from .env not applied: status ${child.status}, elapsed ${elapsed}ms, ${child.stderr}`);
   } finally {
     rmSync(dataRoot, { recursive: true, force: true });
   }

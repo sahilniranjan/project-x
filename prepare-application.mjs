@@ -25,11 +25,11 @@ import { readFileSync, existsSync, statSync } from 'fs';
 import { basename, resolve, dirname, relative, isAbsolute } from 'path';
 import { fileURLToPath } from 'url';
 import { loadYaml } from './lib/yaml-document.mjs';
-import { getCareerOpsRoot, getProfilePath } from './path-resolver.mjs';
+import { getProjectXRoot, getProfilePath } from './path-resolver.mjs';
 import { flagValue } from './lib/cli-flags.mjs';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
-const DATA_ROOT = getCareerOpsRoot();
+const DATA_ROOT = getProjectXRoot();
 
 const ALLOWED_HOSTS = new Set([
   'boards.greenhouse.io',

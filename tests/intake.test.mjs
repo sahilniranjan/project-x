@@ -72,8 +72,8 @@ const intake = await import(pathToFileURL(join(ROOT, 'intake.mjs')).href);
   writeFileSync(join(docsDir, 'unknown.docx'), 'binaryish');
   const env = {
     ...process.env,
-    CAREER_OPS_DOCUMENTS_DIR: docsDir,
-    CAREER_OPS_INTAKE_STATE: stateFile,
+    PROJECT_X_DOCUMENTS_DIR: docsDir,
+    PROJECT_X_INTAKE_STATE: stateFile,
   };
 
   try {
@@ -179,10 +179,10 @@ const intake = await import(pathToFileURL(join(ROOT, 'intake.mjs')).href);
   const v2 = '# Avery Quinn\n\n## Experience\n\n### Example Co\n\n- Built a metric layer\n- Led SQL reviews\n- Mentored two analysts\n- Shipped alerting\n';
   writeFileSync(join(docsDir, 'cv', 'master.md'), v1);
   // A data root of its own, so the "never under the data root" check below
-  // neither reads the developer's checkout nor inherits their CAREER_OPS_ROOT.
+  // neither reads the developer's checkout nor inherits their PROJECT_X_ROOT.
   const otherRoot = join(tmp, 'other-root');
   mkdirSync(otherRoot, { recursive: true });
-  const env = { ...process.env, CAREER_OPS_ROOT: otherRoot, CAREER_OPS_DOCUMENTS_DIR: docsDir, CAREER_OPS_INTAKE_STATE: stateFile };
+  const env = { ...process.env, PROJECT_X_ROOT: otherRoot, PROJECT_X_DOCUMENTS_DIR: docsDir, PROJECT_X_INTAKE_STATE: stateFile };
   const snapFor = (rel) => join(snapDir, intake.snapshotFileName(rel));
 
   try {
@@ -301,8 +301,8 @@ const intake = await import(pathToFileURL(join(ROOT, 'intake.mjs')).href);
   mkdirSync(outsideDir, { recursive: true });
   const env = {
     ...process.env,
-    CAREER_OPS_DOCUMENTS_DIR: docsDir,
-    CAREER_OPS_INTAKE_STATE: join(tmp, 'intake-state.json'),
+    PROJECT_X_DOCUMENTS_DIR: docsDir,
+    PROJECT_X_INTAKE_STATE: join(tmp, 'intake-state.json'),
   };
 
   try {
@@ -393,8 +393,8 @@ if (process.platform !== 'win32' && process.getuid?.() !== 0) {
   writeFileSync(join(docsDir, 'cv', 'master.md'), '# CV\n');
   const env = {
     ...process.env,
-    CAREER_OPS_DOCUMENTS_DIR: docsDir,
-    CAREER_OPS_INTAKE_STATE: join(tmp, 'intake-state.json'),
+    PROJECT_X_DOCUMENTS_DIR: docsDir,
+    PROJECT_X_INTAKE_STATE: join(tmp, 'intake-state.json'),
   };
 
   try {

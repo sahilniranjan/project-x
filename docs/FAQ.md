@@ -1,12 +1,12 @@
 # Frequently Asked Questions
 
-Common questions from the community, answered in one place. For setup details see [docs/SETUP.md](SETUP.md). For anything not covered here, ask in [Discord](https://discord.gg/8pRpHETxa4) or open a [GitHub Discussion](https://github.com/career-ops-hq/career-ops/discussions).
+Common questions from the community, answered in one place. For setup details see [docs/SETUP.md](SETUP.md). For anything not covered here, ask in [Discord](https://discord.gg/8pRpHETxa4) or open a [GitHub Discussion](https://github.com/project-x-hq/project-x/discussions).
 
 ---
 
 ## 1. Skills aren't loading on Windows — symlink error on install
 
-Windows does not create symlinks by default, so Git checks out the CLI skill entrypoints (`.claude/skills/`, `.opencode/skills/`, etc.) as plain pointer files instead of real symlinks. The installer and updater both detect this automatically: run `node update-system.mjs apply --confirm` (or `npx @santifer/career-ops init` on a fresh install) and the `materializeSkillEntrypoints` step will replace the pointer files with the full canonical skill content. From a linked Git worktree, `apply` makes this repair in your `main` checkout; run `git merge main` in the worktree to pick it up (new worktrees get it automatically). With `CAREER_OPS_UPDATE_IN_WORKTREE=1` set, `apply` repairs only that worktree's branch instead, and `main` stays unrepaired. No manual `mklink` or Developer Mode changes are needed.
+Windows does not create symlinks by default, so Git checks out the CLI skill entrypoints (`.claude/skills/`, `.opencode/skills/`, etc.) as plain pointer files instead of real symlinks. The installer and updater both detect this automatically: run `node update-system.mjs apply --confirm` (or `npx @santifer/project-x init` on a fresh install) and the `materializeSkillEntrypoints` step will replace the pointer files with the full canonical skill content. From a linked Git worktree, `apply` makes this repair in your `main` checkout; run `git merge main` in the worktree to pick it up (new worktrees get it automatically). With `PROJECT_X_UPDATE_IN_WORKTREE=1` set, `apply` repairs only that worktree's branch instead, and `main` stays unrepaired. No manual `mklink` or Developer Mode changes are needed.
 
 ## 2. What is the difference between `scan` and `scan:full`?
 
@@ -16,11 +16,11 @@ Windows does not create symlinks by default, so Git checks out the CLI skill ent
 
 Pass `--limit <N>` to `batch-runner.sh` to cap the number of offers processed in a single run (e.g. `./batch/batch-runner.sh --limit 5`) — this lets you inspect output quality before committing to a larger run. If a run stops part-way, do not start over. Run the same command again: the runner keeps each offer's state in `batch/batch-state.tsv`, skips offers that already completed, and picks up the rest, retrying a failed offer up to `--max-retries` (default 2). A run that hit a Claude session or usage limit is different: it marks the offer that hit the limit `paused_rate_limit` and stops scheduling new ones. After the limit resets, `./batch/batch-runner.sh --resume-paused` re-runs only those paused offers, so follow it with a plain run for the offers that had not started yet.
 
-## 4. Can I run career-ops on a cheaper or local model?
+## 4. Can I run project-x on a cheaper or local model?
 
-Yes — career-ops is fully AI-agnostic and works with any AI coding CLI or standalone script. See [docs/RUNNING_ON_A_BUDGET.md](RUNNING_ON_A_BUDGET.md) for a full guide covering OpenCode, Qwen CLI, DeepSeek, OpenRouter, Ollama, and other local or low-cost providers, along with recommended model sizes and token-saving best practices.
+Yes — project-x is fully AI-agnostic and works with any AI coding CLI or standalone script. See [docs/RUNNING_ON_A_BUDGET.md](RUNNING_ON_A_BUDGET.md) for a full guide covering OpenCode, Qwen CLI, DeepSeek, OpenRouter, Ollama, and other local or low-cost providers, along with recommended model sizes and token-saving best practices.
 
-**For zero cost specifically**, see [docs/FREE_TIER.md](FREE_TIER.md): career-ops runs on Antigravity CLI's free tier with no API key and no paid subscription, within Google's daily caps.
+**For zero cost specifically**, see [docs/FREE_TIER.md](FREE_TIER.md): project-x runs on Antigravity CLI's free tier with no API key and no paid subscription, within Google's daily caps.
 
 **And if you already pay for a plan but are being billed per token anyway**, that is usually an `ANTHROPIC_API_KEY` in your environment taking precedence over your subscription: see [the subscription section of the budget guide](RUNNING_ON_A_BUDGET.md#2b-already-paying-for-a-subscription-make-sure-you-are-using-it).
 
@@ -46,17 +46,17 @@ it means the job description text of two listings from **different companies** i
 
 ## 6. Can I use my own CV template?
 
-Yes. Set `cv.template` (and/or `cover_letter.template`) in `config/profile.yml` to the kebab-case name of a template file in `templates/` — a value of `modern` resolves to `templates/cv-template.modern.html` (cover letters use `templates/cover-letter-template.<name>.html`). Leave the field unset and career-ops falls back to the built-in default template (`templates/cv-template.html`). You can also pick a template per generation just by asking (e.g. "use the modern template"). See the commented `cv.template` / `cover_letter.template` fields in `config/profile.example.yml` for the full reference.
+Yes. Set `cv.template` (and/or `cover_letter.template`) in `config/profile.yml` to the kebab-case name of a template file in `templates/` — a value of `modern` resolves to `templates/cv-template.modern.html` (cover letters use `templates/cover-letter-template.<name>.html`). Leave the field unset and project-x falls back to the built-in default template (`templates/cv-template.html`). You can also pick a template per generation just by asking (e.g. "use the modern template"). See the commented `cv.template` / `cover_letter.template` fields in `config/profile.example.yml` for the full reference.
 
 ## Can every CV be one page?
 
 Yes. Set `cv.max_pages: 1` in `config/profile.yml`, and add `cv.strict_pages: true` if a CV that runs over should fail instead of only warning. Every CV render then uses that budget: the `pdf` mode, auto-pipeline, batch workers and the web UI. Cover letters ignore the `cv.*` keys and keep their flag-or-default budget. Students, new graduates and early-career candidates usually want this. Without the setting a CV may run to 2 pages. A CV that runs over its budget is saved as a sibling `{name}.overflow.pdf` draft instead of the real PDF path, with a warning by default or as a failed render with `cv.strict_pages: true`. A `--max-pages` or `--strict-pages` flag on `generate-pdf.mjs` still wins for a single render. A typo in either value stops the CV render with a message naming the key, instead of quietly falling back to 2 pages, unless a flag passed for that render overrides the key. Onboarding offers this setting when your answers or your CV show under 2 years of experience, or when you target entry-level roles.
 
-## Why does career-ops refuse to use a number from my story bank?
+## Why does project-x refuse to use a number from my story bank?
 
 Because a plausible number is not necessarily a verified one. Interview-prep documents are often drafted to match a particular job description, and their phrasing can later be absorbed into `interview-prep/story-bank.md`. Without a provenance check, a figure invented in one prep session can be repeated in the next, gradually turning into an apparent fact.
 
-career-ops therefore uses two trust tiers:
+project-x therefore uses two trust tiers:
 
 - **Primary, user-authored sources** such as `cv.md`, `article-digest.md`, `config/profile.yml`, `modes/_profile.md`, and `writing-samples/` are the ground truth for factual claims.
 - **Derived, accumulated sources** such as the story bank and company-specific interview prep can supply narrative and phrasing, but a quantified claim must trace back to a primary source or carry a supported marker: `**Provenance:** user-stated YYYY-MM-DD` or `**Provenance:** source: cv.md` counts as verified; `**Provenance:** derived-unverified`, `**Provenance:** user-cannot-confirm`, and arbitrary values do not.
@@ -99,13 +99,13 @@ Chromium only launches with `--verify`. A normal scan reads public ATS APIs and 
 
 ## Why does every company in a scan fail with `fetch failed`, or every posting come back `uncertain`?
 
-Usually a DNS filter. Sandboxed agent environments, and some corporate or home DNS filters, answer `0.0.0.0` or `::` for any host outside their allowlist. career-ops refuses to connect to a non-public address, so a scan lists each filtered company under `Network errors` as `fetch failed`, and with `--verify` a posting whose own host is filtered reads `uncertain` (`dns_sinkhole`) and is kept (see [liveness](SCRIPTS.md#liveness)). To check, resolve a board host: if `node -e "require('dns').lookup('boards-api.greenhouse.io', console.log)"` prints `0.0.0.0` or `::`, the lookup is being filtered. Run the scan from a normal shell, or allow the board hosts in your sandbox or filter.
+Usually a DNS filter. Sandboxed agent environments, and some corporate or home DNS filters, answer `0.0.0.0` or `::` for any host outside their allowlist. project-x refuses to connect to a non-public address, so a scan lists each filtered company under `Network errors` as `fetch failed`, and with `--verify` a posting whose own host is filtered reads `uncertain` (`dns_sinkhole`) and is kept (see [liveness](SCRIPTS.md#liveness)). To check, resolve a board host: if `node -e "require('dns').lookup('boards-api.greenhouse.io', console.log)"` prints `0.0.0.0` or `::`, the lookup is being filtered. Run the scan from a normal shell, or allow the board hosts in your sandbox or filter.
 
-## Can I run career-ops in Docker / self-hosted?
+## Can I run project-x in Docker / self-hosted?
 
-Yes: there's a `Dockerfile` and `docker-compose.yml` in the repo root. Note that career-ops is local-first and human-in-the-loop, so Docker packages the environment: it does not turn career-ops into a service that runs on its own or applies to jobs for you.
+Yes: there's a `Dockerfile` and `docker-compose.yml` in the repo root. Note that project-x is local-first and human-in-the-loop, so Docker packages the environment: it does not turn project-x into a service that runs on its own or applies to jobs for you.
 
-## Does career-ops sync across devices?
+## Does project-x sync across devices?
 
 No. Everything is files in your checkout, and there is no cloud component. People who want this put the directory in a synced folder.
 
@@ -113,6 +113,6 @@ No. Everything is files in your checkout, and there is no cloud component. Peopl
 
 Comment on it and we'll assign it (this is in CONTRIBUTING.md). A PR with no prior issue is welcome for bug fixes, zero-auth scanner providers, docs and translations. Issue-first applies only to new features, new modes and architecture changes.
 
-## Can I use career-ops without a terminal?
+## Can I use project-x without a terminal?
 
 Yes: see [`docs/COWORK.md`](COWORK.md) which covers running it inside Claude Cowork, verified end to end. One step people trip on: Cowork's shell has no npm network access, so clone and `npm install` in a terminal *before* opening the folder.

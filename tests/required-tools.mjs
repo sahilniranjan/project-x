@@ -21,8 +21,8 @@
 
 /** Each tool, and the variable that turns its absence into a failure. */
 export const REQUIRED_TOOL_ENV = Object.freeze({
-  browser: 'CAREER_OPS_REQUIRE_BROWSER',
-  latex: 'CAREER_OPS_REQUIRE_LATEX',
+  browser: 'PROJECT_X_REQUIRE_BROWSER',
+  latex: 'PROJECT_X_REQUIRE_LATEX',
 });
 
 // One fixed pattern per tool, never a RegExp built from the name: `--needs`

@@ -1,9 +1,9 @@
-# Shared context -- career-ops (Austria)
+# Shared context -- project-x (Austria)
 
 <!-- ============================================================
      PERSONALIZING THIS FILE
      ============================================================
-     This file holds the shared context for the career-ops Austria
+     This file holds the shared context for the project-x Austria
      market modes. It is a system file: an update replaces it.
      Personal targeting (archetypes, comp targets, narrative) goes in
      config/profile.yml and modes/_profile.md, never here.

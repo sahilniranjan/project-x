@@ -22,7 +22,7 @@ import { pass, fail, NODE, ROOT } from './helpers.mjs';
 // children get them blanked in their own env; peek() passes explicit paths and
 // blanks the one with no option for the duration of the call only, because
 // test-all imports suites in-process and shares process.env with later ones.
-const PATH_OVERRIDES = ['CAREER_OPS_REPORTS_DIR', 'CAREER_OPS_FOLLOWUPS', 'CAREER_OPS_BATCH_STATE'];
+const PATH_OVERRIDES = ['PROJECT_X_REPORTS_DIR', 'PROJECT_X_FOLLOWUPS', 'PROJECT_X_BATCH_STATE'];
 
 const HEADER = '# Applications Tracker\n\n'
   + '| # | Date | Company | Role | Score | Status | PDF | Report | Notes |\n'
@@ -45,15 +45,15 @@ async function peek(dir, { trackerPath = join(dir, 'data/applications.md') } = {
     trackerPath,
     batchStateFile: join(dir, 'batch/batch-state.tsv'),
   };
-  const saved = process.env.CAREER_OPS_FOLLOWUPS;
-  process.env.CAREER_OPS_FOLLOWUPS = '';
+  const saved = process.env.PROJECT_X_FOLLOWUPS;
+  process.env.PROJECT_X_FOLLOWUPS = '';
   try {
     const nums = await reserveReportNumbers(1, opts);
     await releaseReportNumbers(nums, opts);
     return nums[0];
   } finally {
-    if (saved === undefined) delete process.env.CAREER_OPS_FOLLOWUPS;
-    else process.env.CAREER_OPS_FOLLOWUPS = saved;
+    if (saved === undefined) delete process.env.PROJECT_X_FOLLOWUPS;
+    else process.env.PROJECT_X_FOLLOWUPS = saved;
   }
 }
 
@@ -64,8 +64,8 @@ function run(dir, args) {
     env: {
       ...process.env,
       ...Object.fromEntries(PATH_OVERRIDES.map(name => [name, ''])),
-      CAREER_OPS_ROOT: dir,
-      CAREER_OPS_TRACKER: '',
+      PROJECT_X_ROOT: dir,
+      PROJECT_X_TRACKER: '',
     },
   });
 }
@@ -204,7 +204,7 @@ async function check(name, dir, expect, peekOpts) {
   }
 }
 
-// A tracker outside the data root's data/ (CAREER_OPS_TRACKER): a status change
+// A tracker outside the data root's data/ (PROJECT_X_TRACKER): a status change
 // seeds its follow-up beside that tracker, not in data/follow-ups.md.
 {
   const dir = scratchRoot([], { reports: ['001-acme-2026-10-01.md'] });

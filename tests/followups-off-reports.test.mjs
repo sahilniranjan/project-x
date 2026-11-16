@@ -11,7 +11,7 @@ console.log('\nstats and funnel-velocity summaries while follow-ups are off');
 const sandboxes = [];
 
 function sandbox(followupsEnabled, followupsMd = '# Follow-ups\n') {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-followups-off-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-followups-off-'));
   sandboxes.push(dir);
   mkdirSync(join(dir, 'data'));
   mkdirSync(join(dir, 'config'));
@@ -31,7 +31,7 @@ function sandbox(followupsEnabled, followupsMd = '# Follow-ups\n') {
 function summary(script, dir) {
   const run = spawnSync(NODE, [join(ROOT, script), '--summary'], {
     encoding: 'utf-8',
-    env: { ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_PROFILE: '' },
+    env: { ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_PROFILE: '' },
   });
   assert.equal(run.status, 0, describeSpawn(run));
   return run.stdout;

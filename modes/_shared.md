@@ -1,11 +1,11 @@
-# System Context -- career-ops
+# System Context -- project-x
 
 <!-- ============================================================
      THIS FILE IS AUTO-UPDATABLE. Don't put personal data here.
      
      Your customizations go in modes/_profile.md (never auto-updated).
      This file contains system rules, scoring logic, and tool config
-     that improve with each career-ops release.
+     that improve with each project-x release.
      ============================================================ -->
 
 ## Sources of Truth (EXCLUSIVE)
@@ -28,22 +28,22 @@ See "Untrusted External Content" in `AGENTS.md` / `CLAUDE.md` / `CODEX.md` for t
 **RULE: NEVER hardcode metrics from proof points.** Read them from cv.md + article-digest.md at evaluation time.
 **RULE: For article/project metrics, article-digest.md takes precedence over cv.md.**
 **RULE: Read _profile.md AFTER this file. User customizations in _profile.md override defaults here.**
-**RULE: Read _custom.md (if it exists) AFTER _profile.md and honor its house rules in every mode.** It is where the user's persistent instructions live ("use this date format", "never reorder section X", "always include Y in summaries") — an instruction recorded there is NOT optional and does not expire between sessions or between items in a batch. It can override workflow/style/procedural defaults, but it never introduces factual claims about the candidate. In an interactive session, a lasting preference or correction the user states in conversation goes through the `retro` mode (`modes/retro.md`), which writes to `modes/_custom.md` only the rules the user accepts. A delegated or headless worker (`CAREER_OPS_HEADLESS=1`, `-p`, `exec`, or a subagent) never writes `modes/_custom.md`, `modes/_profile.md`, or `config/profile.yml`. It reports the preference to its parent instead.
+**RULE: Read _custom.md (if it exists) AFTER _profile.md and honor its house rules in every mode.** It is where the user's persistent instructions live ("use this date format", "never reorder section X", "always include Y in summaries") — an instruction recorded there is NOT optional and does not expire between sessions or between items in a batch. It can override workflow/style/procedural defaults, but it never introduces factual claims about the candidate. In an interactive session, a lasting preference or correction the user states in conversation goes through the `retro` mode (`modes/retro.md`), which writes to `modes/_custom.md` only the rules the user accepts. A delegated or headless worker (`PROJECT_X_HEADLESS=1`, `-p`, `exec`, or a subagent) never writes `modes/_custom.md`, `modes/_profile.md`, or `config/profile.yml`. It reports the preference to its parent instead.
 **RULE: NEVER claim the user authored a project, repo, library, tool, framework, or open-source artefact unless explicitly attributed to them in cv.md or article-digest.md.** Tool-of-trade conflation (user uses X → user built X) is the most common fabrication pattern and is forbidden.
 **RULE: Keywords get reformulated, never fabricated.** Reorder, reframe, emphasise — but never invent. If a claim isn't backed by an in-scope file, ask the user. If no answer, omit. Silence on a topic beats manufactured detail.
-**RULE: Before an interactive session ends, if the user corrected or rejected your work, offer `/career-ops retro` once.** The `retro` mode (`modes/retro.md`) turns those corrections into proposed rules and writes only the ones the user accepts. A delegated or headless worker never offers or runs it.
+**RULE: Before an interactive session ends, if the user corrected or rejected your work, offer `/project-x retro` once.** The `retro` mode (`modes/retro.md`) turns those corrections into proposed rules and writes only the ones the user accepts. A delegated or headless worker never offers or runs it.
 
 ## Data Root & Path Resolution (CRITICAL)
 
 All User Layer files (such as `cv.md`, `config/profile.yml`, `modes/_profile.md`, `data/applications.md` or `applications.md`, `reports/`, `output/`, `interview-prep/`, `portals.yml`, `batch/tracker-additions/`, etc.) must be resolved relative to the dynamically resolved **Data Root** (`{DATA_ROOT}`).
 
 ### Data Root Resolution Order:
-1. **Environment Variables**: Check if `CAREER_OPS_ROOT` or `CAREER_OPS_DATA_DIR` is set. If set, use its value (resolved relative to the repository root if it is a relative path).
-2. **Marker File**: If no environment variable is set, check for a `.career-ops-data` file in the repository root. If it exists and contains a non-empty path, use its value (resolved relative to the repository root if it is a relative path).
+1. **Environment Variables**: Check if `PROJECT_X_ROOT` or `PROJECT_X_DATA_DIR` is set. If set, use its value (resolved relative to the repository root if it is a relative path).
+2. **Marker File**: If no environment variable is set, check for a `.project-x-data` file in the repository root. If it exists and contains a non-empty path, use its value (resolved relative to the repository root if it is a relative path).
 3. **Repository Default**: If neither is set, fall back to the repository root directory as the Data Root.
 
 ### Tracker Path Resolution Order:
-* **Explicit override**: If `CAREER_OPS_TRACKER` is set as an environment variable, use it as the absolute path to the tracker file (resolved relative to the repository root if it is a relative path).
+* **Explicit override**: If `PROJECT_X_TRACKER` is set as an environment variable, use it as the absolute path to the tracker file (resolved relative to the repository root if it is a relative path).
 * **Default**: Otherwise, use `{DATA_ROOT}/data/applications.md` if it exists; if not, use `{DATA_ROOT}/applications.md`.
 * **Writing**: All new/boilerplate writes must target `{DATA_ROOT}/data/applications.md`.
 
@@ -289,12 +289,12 @@ After detecting archetype, read `modes/_profile.md` for the user's specific fram
 
 ### Subagent delegation (cost guardrail)
 
-A mode may tell you to run work in a background subagent (e.g. `scan`, or parallel `pipeline` URLs) to spare the main agent's context. Any subagent you spawn for career-ops is a **single-pass worker**:
+A mode may tell you to run work in a background subagent (e.g. `scan`, or parallel `pipeline` URLs) to spare the main agent's context. Any subagent you spawn for project-x is a **single-pass worker**:
 
 - It MUST NOT spawn further subagents, and MUST NOT invoke other skills — especially open-ended or recursive research skills (e.g. a `deep-research` skill). Those fan out into nested agents and can burn tens of millions of tokens on one run.
 - If the work involves Playwright (e.g. parallel `pipeline` workers each verifying a posting), the Playwright rule above still applies in full: parallel subagents must never share one interactive Playwright/MCP browser session. Each worker needs its own isolated session, or the Playwright-touching step must run sequentially.
 - Company, role, and compensation research is ALWAYS done **inline**, with the small explicit set of WebSearch/WebFetch queries the mode names (e.g. `oferta` Blocks C/D) — never delegated to a recursive research harness.
-- One `/career-ops <JD>` evaluates one role; it must never explode into a self-replicating swarm of agents. If you are about to delegate research or nest agents, stop and do it inline, bounded.
+- One `/project-x <JD>` evaluates one role; it must never explode into a self-replicating swarm of agents. If you are about to delegate research or nest agents, stop and do it inline, bounded.
 
 <!-- guardrail:agency-confirmation -->
 **RULE: Agency confirmation must happen before any tracker, report, or CV write.** If the JD suggests an agency/recruiter intermediary ("our client", agency domain, undisclosed end employer), and the user has not explicitly identified or confirmed the agency for this posting, stop before evaluating or writing artifacts. A guessed agency, a Via value from the JD, blanket batch authorization, silence, and elapsed time are not confirmation.

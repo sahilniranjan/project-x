@@ -2,7 +2,7 @@
 // its own Playwright browser.
 //
 // A headless apply run searched the home directory, read a different
-// career-ops install, and read the user's Chrome DevToolsActivePort. A second
+// project-x install, and read the user's Chrome DevToolsActivePort. A second
 // run tried remote debugging. The mode text told it to read the active Chrome
 // tab, and the apply command followed an absolute report path out of the
 // project. These checks lock the boundary the agent and the command share.
@@ -106,26 +106,26 @@ test('resolveInsideProject accepts a file inside the root and rejects escapes', 
 test('allowed roots are this checkout and the configured data root only', async () => {
   const { projectRoot, allowedRoots } = await import('../apply-scope.mjs');
   assert.equal(projectRoot(), ROOT);
-  const previous = process.env.CAREER_OPS_ROOT;
-  const previousData = process.env.CAREER_OPS_DATA_DIR;
+  const previous = process.env.PROJECT_X_ROOT;
+  const previousData = process.env.PROJECT_X_DATA_DIR;
   const data = scratch();
   try {
-    // Named rather than cleared: with both variables empty, a .career-ops-data
+    // Named rather than cleared: with both variables empty, a .project-x-data
     // marker in the checkout still names a data root.
-    process.env.CAREER_OPS_ROOT = '';
-    process.env.CAREER_OPS_DATA_DIR = ROOT;
+    process.env.PROJECT_X_ROOT = '';
+    process.env.PROJECT_X_DATA_DIR = ROOT;
     assert.deepEqual(allowedRoots(), [ROOT]);
 
-    process.env.CAREER_OPS_DATA_DIR = data;
+    process.env.PROJECT_X_DATA_DIR = data;
     const roots = allowedRoots();
     assert.ok(roots.includes(ROOT));
     assert.ok(roots.includes(resolve(data)));
     assert.equal(roots.length, 2);
   } finally {
-    if (previous === undefined) delete process.env.CAREER_OPS_ROOT;
-    else process.env.CAREER_OPS_ROOT = previous;
-    if (previousData === undefined) delete process.env.CAREER_OPS_DATA_DIR;
-    else process.env.CAREER_OPS_DATA_DIR = previousData;
+    if (previous === undefined) delete process.env.PROJECT_X_ROOT;
+    else process.env.PROJECT_X_ROOT = previous;
+    if (previousData === undefined) delete process.env.PROJECT_X_DATA_DIR;
+    else process.env.PROJECT_X_DATA_DIR = previousData;
     rmSync(data, { recursive: true, force: true });
   }
 });
@@ -225,10 +225,10 @@ test('apply command refuses a report path outside the project', () => {
         cwd: ROOT,
         env: {
           ...process.env,
-          CAREER_OPS_ROOT: '',
-          CAREER_OPS_DATA_DIR: '',
-          CAREER_OPS_TRACKER: '',
-          CAREER_OPS_MODEL: 'offline-test',
+          PROJECT_X_ROOT: '',
+          PROJECT_X_DATA_DIR: '',
+          PROJECT_X_TRACKER: '',
+          PROJECT_X_MODEL: 'offline-test',
           OPENROUTER_API_KEY: '',
         },
         encoding: 'utf8',
@@ -274,7 +274,7 @@ test('check-path and launch-options stay inside the project browser', () => {
   const rootRun = spawnSync(NODE, [join(ROOT, 'apply-scope.mjs'), 'root'], {
     cwd: ROOT,
     // The data root is named for the same reason as in the allowedRoots test above.
-    env: { ...process.env, CAREER_OPS_ROOT: '', CAREER_OPS_DATA_DIR: ROOT },
+    env: { ...process.env, PROJECT_X_ROOT: '', PROJECT_X_DATA_DIR: ROOT },
     encoding: 'utf8',
   });
   assert.equal(rootRun.status, 0, describeSpawn(rootRun));
@@ -292,7 +292,7 @@ test('check-path and launch-options stay inside the project browser', () => {
 
   const help = spawnSync(NODE, [join(ROOT, 'apply-scope.mjs'), '--help'], {
     cwd: ROOT,
-    env: { ...process.env, CAREER_OPS_ROOT: '', CAREER_OPS_DATA_DIR: '' },
+    env: { ...process.env, PROJECT_X_ROOT: '', PROJECT_X_DATA_DIR: '' },
     encoding: 'utf8',
   });
   assert.equal(help.status, 0, describeSpawn(help));
@@ -304,7 +304,7 @@ test('check-path and launch-options stay inside the project browser', () => {
   try {
     const checked = spawnSync(NODE, [join(ROOT, 'apply-scope.mjs'), 'check-path', outside], {
       cwd: ROOT,
-      env: { ...process.env, CAREER_OPS_ROOT: '', CAREER_OPS_DATA_DIR: '' },
+      env: { ...process.env, PROJECT_X_ROOT: '', PROJECT_X_DATA_DIR: '' },
       encoding: 'utf8',
     });
     assert.equal(checked.status, 1, describeSpawn(checked));
@@ -314,7 +314,7 @@ test('check-path and launch-options stay inside the project browser', () => {
     symlinkSync(outside, link, process.platform === 'win32' ? 'junction' : 'dir');
     const escaped = spawnSync(NODE, [join(ROOT, 'apply-scope.mjs'), 'check-path', join(link, 'new.md')], {
       cwd: ROOT,
-      env: { ...process.env, CAREER_OPS_ROOT: '', CAREER_OPS_DATA_DIR: data },
+      env: { ...process.env, PROJECT_X_ROOT: '', PROJECT_X_DATA_DIR: data },
       encoding: 'utf8',
     });
     assert.equal(escaped.status, 1, describeSpawn(escaped));
@@ -324,7 +324,7 @@ test('check-path and launch-options stay inside the project browser', () => {
     danglingLink(join(outside, 'not-yet'), dangling);
     const danglingCheck = spawnSync(NODE, [join(ROOT, 'apply-scope.mjs'), 'check-path', dangling], {
       cwd: ROOT,
-      env: { ...process.env, CAREER_OPS_ROOT: '', CAREER_OPS_DATA_DIR: data },
+      env: { ...process.env, PROJECT_X_ROOT: '', PROJECT_X_DATA_DIR: data },
       encoding: 'utf8',
     });
     assert.equal(danglingCheck.status, 1, describeSpawn(danglingCheck));

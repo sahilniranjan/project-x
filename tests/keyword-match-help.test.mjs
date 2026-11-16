@@ -44,7 +44,7 @@ test('a missing report names the file and the example to run', (t) => {
     cwd,
     encoding: 'utf8',
     timeout: 20000,
-    env: { ...process.env, CAREER_OPS_ROOT: dataRoot },
+    env: { ...process.env, PROJECT_X_ROOT: dataRoot },
   });
   const example = join(dataRoot, 'reports', '001-role.md').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   assert.equal(result.status, 1, result.stderr);
@@ -65,7 +65,7 @@ test('a data root with a space is one quoted argument in the example', (t) => {
     cwd,
     encoding: 'utf8',
     timeout: 20000,
-    env: { ...process.env, CAREER_OPS_ROOT: dataRoot },
+    env: { ...process.env, PROJECT_X_ROOT: dataRoot },
   });
   const quoted = `'${join(dataRoot, 'reports', '001-role.md').replace(/'/g, "'\\''")}'`;
   const pattern = quoted.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

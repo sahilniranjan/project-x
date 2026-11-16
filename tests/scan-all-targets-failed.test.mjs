@@ -44,13 +44,13 @@ function runScan(portalsYml, args = []) {
   mkdirSync(join(dir, 'config'), { recursive: true });
   writeFileSync(join(dir, 'config', 'profile.yml'), '{}\n');
   writeFileSync(join(dir, 'portals.yml'), portalsYml);
-  // Dropped by prefix, so a CAREER_OPS_* override added later cannot point the
+  // Dropped by prefix, so a PROJECT_X_* override added later cannot point the
   // run at the developer's real data.
   const env = { ...process.env };
-  for (const name of Object.keys(env)) if (name.toUpperCase().startsWith('CAREER_OPS_')) delete env[name];
+  for (const name of Object.keys(env)) if (name.toUpperCase().startsWith('PROJECT_X_')) delete env[name];
   const result = spawnSync(process.execPath, [SCAN, '--quiet', ...args], {
     cwd: dir,
-    env: { ...env, CAREER_OPS_ROOT: dir, CAREER_OPS_PORTALS: join(dir, 'portals.yml') },
+    env: { ...env, PROJECT_X_ROOT: dir, PROJECT_X_PORTALS: join(dir, 'portals.yml') },
     encoding: 'utf-8',
   });
   return { dir, result };

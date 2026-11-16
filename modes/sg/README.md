@@ -1,4 +1,4 @@
-# career-ops -- Singapore market mode (`modes/sg/`)
+# project-x -- Singapore market mode (`modes/sg/`)
 
 English-language modes with Singapore market rules for candidates targeting
 software/AI engineering roles in Singapore.

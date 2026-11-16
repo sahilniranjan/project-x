@@ -8,9 +8,9 @@ Interactive mode for filling out an application form. Open the form in a Playwri
 
 ## Scope
 
-Work only inside this checkout. Run `node apply-scope.mjs root` and read or search only the directories it prints. That list is this checkout, plus the data root when `CAREER_OPS_ROOT` or `CAREER_OPS_DATA_DIR` is set.
+Work only inside this checkout. Run `node apply-scope.mjs root` and read or search only the directories it prints. That list is this checkout, plus the data root when `PROJECT_X_ROOT` or `PROJECT_X_DATA_DIR` is set.
 
-Do not search the home directory. Do not grep or open another career-ops install.
+Do not search the home directory. Do not grep or open another project-x install.
 
 Open the form in a Playwright browser this project launches. Run `node apply-scope.mjs launch-options` and pass that object to `chromium.launch`. Do not call `chromium.connect` or `connectOverCDP`. Do not read `DevToolsActivePort`. Do not pass a remote-debugging port or a Chrome user-data directory.
 
@@ -312,7 +312,7 @@ For each question, generate the response following:
 2. **Previous Section H / Application Answers**: If a draft or final response exists, use it as a base and refine
 3. **"I'm choosing you" tone**: Same auto-pipeline framework
 4. **Specificity**: Reference something specific from the JD visible on screen
-5. **career-ops proof point**: Include in "Additional info" if there is a field for it
+5. **project-x proof point**: Include in "Additional info" if there is a field for it
 6. **Recruiter-side risk map**: Use `modes/heuristics/recruiter-side.md` to identify what doubt the question is trying to resolve (motivation, stack fit, logistics, comp, work-auth, availability, seniority) and answer that doubt directly.
 7. **Disclosure discipline**: Answer logistics questions truthfully when asked, but do not volunteer sensitive or HR-only details in unrelated motivation/fit answers.
 
@@ -425,7 +425,7 @@ If the candidate confirms that they submitted the application:
 1. Update status to Applied via the canonical CLI: `node set-status.mjs --report <report#> Applied` (never hand-edit the table). If the candidate submitted on a different day than today, add `--on YYYY-MM-DD` with the actual submission date — the status-log ledger should record when it happened, not when it was typed in.
 2. Seed the follow-up schedule: run `node followup-seed.mjs {num} --json` (where `{num}` is the tracker row number). If the candidate applied on a different day than today, pass `--date YYYY-MM-DD` with the actual submission date. It's idempotent, so re-running is safe. (`--on` and `--date` are the same concept — the real submission date — each under its own script's flag name; pass the same value to both.) Skip this step when `config/profile.yml` sets `follow_ups.enabled: false`.
 3. Refresh the report's `## Application Answers` section with the final field values and `**State:** submitted`
-4. Suggest next step: run the `contacto` mode (`/career-ops contacto` where available) for LinkedIn outreach. This is a first outreach, not a follow-up, so suggest it even when `follow_ups.enabled` is `false`.
+4. Suggest next step: run the `contacto` mode (`/project-x contacto` where available) for LinkedIn outreach. This is a first outreach, not a follow-up, so suggest it even when `follow_ups.enabled` is `false`.
 
 **Confirmed resume-verification failure at this vendor? Check the rest of the pipeline (#1870).** If the candidate confirms the ATS silently dropped or altered resume content that they had submitted (see the SuccessFactors-family quirk below), don't treat it as a one-off. Tracker rows in `data/applications.md` don't carry a canonical ATS-vendor field, so don't grep the tracker text for a vendor name — it will miss rows silently. Instead, resolve the vendor per row from its linked report's `**URL:**` field:
 - For clean-fingerprint vendors (Greenhouse, Lever, Ashby, Workday, iCIMS), match the URL's hostname the same way `detectVendor()` in `analyze-patterns.mjs` does — reuse that function/pattern rather than re-deriving it, so the two stay in sync.
@@ -511,6 +511,6 @@ Field-tested across ~12 Playwright-driven applications (Ashby, Greenhouse, Lever
 
 ### SuccessFactors-family — uploaded resume can silently diverge from the stored profile (#1870)
 
-- **Symptom:** Some ATS portals (SuccessFactors-family confirmed; likely others) parse and store an uploaded resume once and don't reliably re-parse it on a later re-upload or profile edit. The portal's internal record can silently drift from the file the candidate believes they submitted — especially for work-history entries added *after* the initial profile was created. There is no error, no warning, and no diff shown to the candidate; the loss surfaces only if someone downstream (a recruiter reading the stored profile back on a call, for example) notices the gap. This is distinct from #1560 (career-ops reading a careers board) and #1741 (recovering a stuck pipeline) — this is the employer's own system corrupting what was submitted.
+- **Symptom:** Some ATS portals (SuccessFactors-family confirmed; likely others) parse and store an uploaded resume once and don't reliably re-parse it on a later re-upload or profile edit. The portal's internal record can silently drift from the file the candidate believes they submitted — especially for work-history entries added *after* the initial profile was created. There is no error, no warning, and no diff shown to the candidate; the loss surfaces only if someone downstream (a recruiter reading the stored profile back on a call, for example) notices the gap. This is distinct from #1560 (project-x reading a careers board) and #1741 (recovering a stuck pipeline) — this is the employer's own system corrupting what was submitted.
 - **Agent:** After a submission through one of these portals, if the portal exposes any "preview my profile," "view submitted resume," or "review application" step, surface it to the candidate as a **required check** before closing out the apply flow — don't stop at confirming the upload succeeded. If the candidate later confirms a truncation or mismatch at a given vendor, flag it in the report and prompt them to spot-check other still-active applications through that same vendor (see the apply-mode checklist below) — one confirmed case raises the prior for the rest of that vendor's in-flight applications.
 - **Candidate:** If a profile/resume preview step exists, use it and compare against your actual work history before considering the application done. If no preview step exists, there is currently no way to verify what the portal actually stored — treat this as a known blind spot rather than assuming silence means success.

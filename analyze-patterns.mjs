@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * analyze-patterns.mjs — Rejection Pattern Detector for career-ops
+ * analyze-patterns.mjs — Rejection Pattern Detector for project-x
  *
  * Parses applications.md + all linked reports, extracts dimensions
  * (archetype, seniority, remote, gaps, scores), classifies outcomes,
@@ -21,32 +21,32 @@ import { isMainModule } from './lib/is-main-module.mjs';
 import { loadYaml } from './lib/yaml-document.mjs';
 import { machineSummarySection } from './lib/machine-summary-section.mjs';
 import { resolveColumns, parseTrackerRow, normalizeVia, firstLinkTarget } from './tracker-parse.mjs';
-import { getCareerOpsRoot, resolveTrackerPath } from './path-resolver.mjs';
+import { getProjectXRoot, resolveTrackerPath } from './path-resolver.mjs';
 import { loadCanonicalStates, resolveCanonicalStateId, foldStatusInput, trackerLinkDirsFor, resolveWorkspaceRoot, resolveWorkspaceRootFor } from './tracker-utils.mjs';
 import { atsVendorOf } from './ats-vendor.mjs';
 import { parseStatusLogStages, recoverFunnelStages } from './funnel-stages.mjs';
 import { flagValue, hasFlag, validateFlags } from './lib/cli-flags.mjs';
 import { localToday } from './lib/local-today.mjs';
 
-const CAREER_OPS = getCareerOpsRoot();
-const APPS_FILE = resolveTrackerPath(CAREER_OPS);
+const PROJECT_X = getProjectXRoot();
+const APPS_FILE = resolveTrackerPath(PROJECT_X);
 // Report links resolve from the same directories verify-pipeline.mjs checks:
 // the tracker's folder as realpathed and as spelled (a symlinked tracker FILE
 // writes links relative to its target; a symlinked data root, or macOS's
 // /var -> /private/var tmpdir, needs the spelled form, since withinReports()
 // compares lexically), then the data root.
-const TRACKER_DIRS = trackerLinkDirsFor(CAREER_OPS);
-// A CAREER_OPS_TRACKER that points at another workspace brings that
+const TRACKER_DIRS = trackerLinkDirsFor(PROJECT_X);
+// A PROJECT_X_TRACKER that points at another workspace brings that
 // workspace's reports/ with it (see resolveWorkspaceRoot): the workspace of
 // the tracker as spelled, and of its target when the tracker is a symlink into
 // another workspace. The data root's own reports/ stays allowed for a tracker
 // kept apart from its reports.
 const REPORTS_ROOTS = [...new Set([
-  join(CAREER_OPS, 'reports'),
-  join(resolveWorkspaceRootFor(CAREER_OPS), 'reports'),
+  join(PROJECT_X, 'reports'),
+  join(resolveWorkspaceRootFor(PROJECT_X), 'reports'),
   join(resolveWorkspaceRoot(APPS_FILE), 'reports'),
 ])];
-const REPORTS_DIR = join(CAREER_OPS, 'reports');
+const REPORTS_DIR = join(PROJECT_X, 'reports');
 
 const MACHINE_SUMMARY_FIELDS = new Set([
   'company',
@@ -833,14 +833,14 @@ requirement_importance:
   // traversal link escapes root and must be rejected before parseReport. join()
   // collapses '..' at the call site, so the candidate is already absolute here.
   {
-    const legit = join(CAREER_OPS, 'reports', '042-acme-2026-01-01.md');
+    const legit = join(PROJECT_X, 'reports', '042-acme-2026-01-01.md');
     if (!withinReports(legit)) failures.push('containment: legit reports/ path wrongly rejected');
-    const escape = join(CAREER_OPS, 'reports/../../../etc/passwd');
+    const escape = join(PROJECT_X, 'reports/../../../etc/passwd');
     if (withinReports(escape)) failures.push('containment: traversal path escaped reports/ (path-traversal guard broken)');
-    const sibling = join(CAREER_OPS, 'reports-evil', 'x.md');
+    const sibling = join(PROJECT_X, 'reports-evil', 'x.md');
     if (withinReports(sibling)) failures.push('containment: reports-prefixed sibling dir wrongly accepted');
     // The same lexical guard against a workspace's reports root (REPORTS_ROOTS).
-    const otherRoot = join(CAREER_OPS, 'workspace', 'reports');
+    const otherRoot = join(PROJECT_X, 'workspace', 'reports');
     if (withinReports(join(otherRoot, '..', '..', 'reports', 'x.md'), otherRoot)) failures.push('containment: traversal escaped a workspace reports root');
     if (withinReports(join(otherRoot, '..', 'reports-evil', 'x.md'), otherRoot)) failures.push('containment: sibling of a workspace reports root wrongly accepted');
     if (withinReports(otherRoot, otherRoot)) failures.push('containment: a reports root itself wrongly accepted as a report');
@@ -852,7 +852,7 @@ requirement_importance:
   // reports/ still passes and a missing candidate degrades gracefully (the
   // downstream read returns null) rather than throwing.
   {
-    const reportsDir = join(CAREER_OPS, 'reports');
+    const reportsDir = join(PROJECT_X, 'reports');
     if (existsSync(reportsDir)) {
       const tag = `__co2655-${process.pid}-${Date.now()}`;
       const realReport = join(reportsDir, `${tag}-real.md`);
@@ -945,7 +945,7 @@ function parseTracker() {
 // missing root means there are simply no reports. Only genuinely unexpected
 // errors rethrow, matching readTextIfExists. The same guard as upskill.mjs's,
 // with the reports root as a parameter.
-function withinReports(candidate, reportsRoot = join(CAREER_OPS, 'reports')) {
+function withinReports(candidate, reportsRoot = join(PROJECT_X, 'reports')) {
   const rootRelative = relative(reportsRoot, candidate);
   if (!rootRelative || isAbsolute(rootRelative) || rootRelative.includes('..')) return false;
   let realRoot;
@@ -1245,7 +1245,7 @@ function recordedDiscardReasons(entry) {
 }
 
 // The vocabulary ships with the code, not with the user's data, so it resolves
-// from this file's directory rather than CAREER_OPS_ROOT.
+// from this file's directory rather than PROJECT_X_ROOT.
 const DISCARD_REASONS_FILE = join(dirname(fileURLToPath(import.meta.url)), 'templates/discard-reasons.yml');
 
 /**
@@ -1562,7 +1562,7 @@ export function analyze(entries = parseTracker(), { statusLogContent } = {}) {
     if (reportTarget != null) {
       const candidates = new Set([
         ...TRACKER_DIRS.map((dir) => join(dir, reportTarget)),
-        join(CAREER_OPS, reportTarget),
+        join(PROJECT_X, reportTarget),
       ]);
       for (const candidate of candidates) {
         if (!REPORTS_ROOTS.some((root) => withinReports(candidate, root))) continue;

@@ -31,7 +31,7 @@ JSON çıktısını ayrıştır. Şunları içerir:
 | `cadenceConfig` | Ritim kuralları (başvuruldu: 7 gün, yanıtlandı: 3 gün, mülakat: 1 gün) |
 
 Eğer eyleme dönüştürülebilir giriş yoksa, kullanıcıya şunu söyle:
-> "Takip edilecek aktif başvuru yok. Önce `/career-ops` ile bazı rollere başvurun ve beklemeye geçtiklerinde tekrar gelin."
+> "Takip edilecek aktif başvuru yok. Önce `/project-x` ile bazı rollere başvurun ve beklemeye geçtiklerinde tekrar gelin."
 
 ## Adım 2 — Kontrol Panelini Göster
 
@@ -92,7 +92,7 @@ Yalnızca her **gecikmiş (overdue)** veya **acil (urgent)** giriş için:
 
 `contacto` çerçevesini yeniden kullan: 3 cümle, maksimum 300 karakter.
 - Şirkete özel kanca (hook) → kanıt noktası → yumuşak istek
-- Önce doğru kişiyi bulması için kullanıcıya `/career-ops contacto {company}` komutunu çalıştırmasını öner
+- Önce doğru kişiyi bulması için kullanıcıya `/project-x contacto {company}` komutunu çalıştırmasını öner
 
 ### İkinci Takip (followupCount == 1)
 
@@ -106,7 +106,7 @@ Yalnızca her **gecikmiş (overdue)** veya **acil (urgent)** giriş için:
 Başka bir takip taslağı OLUŞTURMA. Bunun yerine şunu öner:
 > "Bu başvuruya yanıt alınamayan {N} adet takip yapıldı. Şunları düşünebilirsiniz:
 > - Rol dolmuş gibi görünüyorsa durumu `Discarded` olarak güncellemek
-> - `/career-ops contacto` üzerinden farklı bir kişi denemek
+> - `/project-x contacto` üzerinden farklı bir kişi denemek
 > - `Applied` durumunda bırakıp ancak önceliğini düşürmek"
 
 ## Adım 4 — Taslakları Sun
@@ -116,7 +116,7 @@ Her taslak için şunu göster:
 ```
 ## Takip: {Company} — {Role} (#{num})
 
-**Kime:** {e-posta veya "Kişi bulunamadı — önce `/career-ops contacto` çalıştırın"}
+**Kime:** {e-posta veya "Kişi bulunamadı — önce `/project-x contacto` çalıştırın"}
 **Konu:** {konu satırı}
 **Başvurudan itibaren geçen gün:** {N}
 **Gönderilen takipler:** {N}

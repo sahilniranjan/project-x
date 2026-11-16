@@ -8,13 +8,13 @@ import { checkRequest, parseAllowedHosts } from "@/lib/origin-guard.mjs";
 // the two-layer rationale (F1 drive-by CSRF, F2 LAN reachability).
 //
 // Opt in to extra hosts (e.g. a trusted LAN box) with a comma/space separated
-// CAREER_OPS_WEB_ALLOWED_HOSTS; unset means loopback only.
+// PROJECT_X_WEB_ALLOWED_HOSTS; unset means loopback only.
 export function proxy(req: NextRequest) {
   const decision = checkRequest({
     secFetchSite: req.headers.get("sec-fetch-site"),
     origin: req.headers.get("origin"),
     host: req.headers.get("host"),
-    allowedHosts: parseAllowedHosts(process.env.CAREER_OPS_WEB_ALLOWED_HOSTS),
+    allowedHosts: parseAllowedHosts(process.env.PROJECT_X_WEB_ALLOWED_HOSTS),
   });
   if (!decision.ok) {
     return NextResponse.json({ error: decision.reason }, { status: decision.status });

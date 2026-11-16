@@ -13,14 +13,14 @@ import { resolvePdfIndexPath } from "@/lib/core/pdf-index";
 import { pdfIndexEntryForReport } from "@/lib/apply/cv-selection.mjs";
 
 /**
- * Resolve the career-ops "home" — the directory holding the user's sibling
+ * Resolve the project-x "home" — the directory holding the user's sibling
  * files (cv.md, data/, reports/). In production the web/ app lives inside the
- * career-ops checkout, so the home is its parent (..). Dev overrides via
- * CAREER_OPS_ROOT to read the user's real (gitignored) data from a separate
+ * project-x checkout, so the home is its parent (..). Dev overrides via
+ * PROJECT_X_ROOT to read the user's real (gitignored) data from a separate
  * checkout — see web/.env.local.
  */
-export function careerOpsRoot(): string {
-  const env = process.env.CAREER_OPS_ROOT?.trim();
+export function projectXRoot(): string {
+  const env = process.env.PROJECT_X_ROOT?.trim();
   if (env) return env;
   return path.resolve(process.cwd(), "..");
 }
@@ -34,7 +34,7 @@ export function careerOpsRoot(): string {
 export function rootScript(nameNoExt: string): string {
   // The core checkout is selected at runtime and must not be bundled into the
   // web server output when Turbopack sees this dynamic script path.
-  return path.join(/* turbopackIgnore: true */ careerOpsRoot(), `${nameNoExt}.mjs`);
+  return path.join(/* turbopackIgnore: true */ projectXRoot(), `${nameNoExt}.mjs`);
 }
 
 // Feature-detect the core's `tracker.mjs delete --num` row-delete (#1200) by probing
@@ -50,7 +50,7 @@ export function trackerCanDelete(): boolean {
 
 function read(rel: string): string | null {
   try {
-    return fs.readFileSync(path.join(careerOpsRoot(), rel), "utf8");
+    return fs.readFileSync(path.join(projectXRoot(), rel), "utf8");
   } catch {
     return null;
   }
@@ -155,7 +155,7 @@ export type Application = {
 export function readApplications(): Application[] {
   const md = read("data/applications.md");
   if (!md) return [];
-  return parseApplications(md, careerOpsRoot());
+  return parseApplications(md, projectXRoot());
 }
 
 /** Resolve the report-number cell in data/pdf-index.tsv for a given report id.
@@ -185,7 +185,7 @@ export type PdfPathForReportResult =
  *  two applications at the same company have two different tailored CVs.
  *
  *  The manifest path comes from the core's resolvePdfIndexPath (ACL, honors
- *  CAREER_OPS_PDF_INDEX) rather than a hardcoded "data/pdf-index.tsv" literal
+ *  PROJECT_X_PDF_INDEX) rather than a hardcoded "data/pdf-index.tsv" literal
  *  — the exact class of bug that #2471 fixed in the core, once, for every
  *  reader. The parsing itself is pdfIndexEntryForReport, a pure function
  *  shared with the apply flow's own CV resolver (cv-selection.mjs) so there
@@ -201,14 +201,14 @@ export async function pdfPathStatusForReport(n: string): Promise<PdfPathForRepor
   } catch {
     return { status: "not-found" };
   }
-  const root = careerOpsRoot();
+  const root = projectXRoot();
   const entry = pdfIndexEntryForReport(tsv, target);
   if (!entry.found) return { status: "not-found" };
   if (!entry.path) return { status: "rejected" };
   // The manifest is a user-layer file (generate-pdf.mjs writes it, but nothing
   // stops a hand edit) turned into a filesystem read that this route then
   // serves — the path must be contained BY CONSTRUCTION, not by trusting the
-  // writer. Rows are written relative to the WORKSPACE root (careerOpsRoot()),
+  // writer. Rows are written relative to the WORKSPACE root (projectXRoot()),
   // not to the manifest's own data/ directory — same base the pre-ACL version
   // of this function used — and must stay under the project's output/ tree.
   const abs = path.resolve(root, entry.path);
@@ -256,7 +256,7 @@ export function doctorState(): {
 } {
   const has = (rel: string) => {
     try {
-      return fs.existsSync(path.join(careerOpsRoot(), rel));
+      return fs.existsSync(path.join(projectXRoot(), rel));
     } catch {
       return false;
     }
@@ -283,7 +283,7 @@ export type PipelineSummary = {
 };
 
 export function pipelineSummary(): PipelineSummary {
-  const root = careerOpsRoot();
+  const root = projectXRoot();
   const scanDates = readScanDates();
   return {
     root,
@@ -320,7 +320,7 @@ export type ReportData = { content: string; file: string };
 export function findReportFile(n: string): string | null {
   const target = parseInt(n, 10);
   if (Number.isNaN(target)) return null;
-  const root = careerOpsRoot();
+  const root = projectXRoot();
   const app = readApplications().find((a) => parseInt(a.n, 10) === target);
   const linked = app?.report.match(/\]\(([^)]+)\)/)?.[1];
   if (linked) {
@@ -382,7 +382,7 @@ export function findApplication(n: string): Application | null {
  *  web assistant learns go HERE (single source of truth) inside a managed marker
  *  block — so the CLI sees them too. No web-only memory store (that would drift). */
 export function profilePath(): string {
-  return path.join(careerOpsRoot(), "modes", "_profile.md");
+  return path.join(projectXRoot(), "modes", "_profile.md");
 }
 
 const NOTES_START = "<!-- co-web-notes:start -->";
@@ -401,7 +401,7 @@ export function readMemory(): string {
     /* no _profile.md yet */
   }
   try {
-    return fs.readFileSync(path.join(careerOpsRoot(), ".career-ops-web", "memory.md"), "utf8").trim();
+    return fs.readFileSync(path.join(projectXRoot(), ".project-x-web", "memory.md"), "utf8").trim();
   } catch {
     return "";
   }
@@ -515,7 +515,7 @@ function resolveEvalModeFile(root: string, modesDir: string): string {
  * should degrade the market vocabulary, not block every evaluation.
  */
 export function readLanguageConfig(): LanguageConfig {
-  const root = careerOpsRoot();
+  const root = projectXRoot();
   let modesDir = "modes";
   let output = "en";
   try {

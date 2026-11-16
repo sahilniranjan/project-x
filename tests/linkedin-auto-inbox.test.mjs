@@ -10,15 +10,15 @@ import { importMailDrop } from '../lib/linkedin-mail-drop.mjs';
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const JOB_ID = '5151515151';
 
-// The env for a spawned runner. Every CAREER_OPS_* value inherited from a
+// The env for a spawned runner. Every PROJECT_X_* value inherited from a
 // developer shell is removed, then the fixture root is set. One leftover, such
-// as CAREER_OPS_SCHEDULED_JOBS_PATH, would make the child claim a real job.
+// as PROJECT_X_SCHEDULED_JOBS_PATH, would make the child claim a real job.
 function runnerEnv(root) {
   const env = { ...process.env, NO_COLOR: '1' };
   for (const key of Object.keys(env)) {
-    if (key.startsWith('CAREER_OPS_')) delete env[key];
+    if (key.startsWith('PROJECT_X_')) delete env[key];
   }
-  env.CAREER_OPS_ROOT = root;
+  env.PROJECT_X_ROOT = root;
   return env;
 }
 
@@ -26,11 +26,11 @@ function runnerEnv(root) {
 // so nothing lands in this checkout's data/. It passes the scan history path to
 // scan.mjs per call, so a later test does not reuse the first test's path.
 function withDataEnv(root, fn) {
-  const keys = ['CAREER_OPS_SCAN_HISTORY', 'CAREER_OPS_PIPELINE', 'CAREER_OPS_TRACKER'];
+  const keys = ['PROJECT_X_SCAN_HISTORY', 'PROJECT_X_PIPELINE', 'PROJECT_X_TRACKER'];
   const saved = Object.fromEntries(keys.map((key) => [key, process.env[key]]));
-  process.env.CAREER_OPS_SCAN_HISTORY = join(root, 'data', 'scan-history.tsv');
-  process.env.CAREER_OPS_PIPELINE = '';
-  process.env.CAREER_OPS_TRACKER = '';
+  process.env.PROJECT_X_SCAN_HISTORY = join(root, 'data', 'scan-history.tsv');
+  process.env.PROJECT_X_PIPELINE = '';
+  process.env.PROJECT_X_TRACKER = '';
   return Promise.resolve().then(fn).finally(() => {
     for (const key of keys) {
       if (saved[key] === undefined) delete process.env[key];
@@ -97,7 +97,7 @@ test('an alert email keeps the title and company above the job link', async () =
   }
 });
 
-test('a dry run says nothing was saved, names a file too large to read, and honors CAREER_OPS_PIPELINE', async () => {
+test('a dry run says nothing was saved, names a file too large to read, and honors PROJECT_X_PIPELINE', async () => {
   const root = mkdtempSync(join(tmpdir(), 'linkedin-drop-dry-'));
   const dir = join(root, 'data', 'linkedin-alerts');
   mkdirSync(dir, { recursive: true });
@@ -107,7 +107,7 @@ test('a dry run says nothing was saved, names a file too large to read, and hono
   writeFileSync(join(dir, 'big.mbox'), 'x'.repeat(2_000_001));
   try {
     await withDataEnv(root, async () => {
-      process.env.CAREER_OPS_PIPELINE = lane;
+      process.env.PROJECT_X_PIPELINE = lane;
       const result = await importMailDrop({ root, dir, dryRun: true });
       assert.equal(result.added, 1);
       assert.equal(result.already, 1);
@@ -444,19 +444,19 @@ test('a file that cannot fit the character limit is skipped before it is read', 
   }
 });
 
-test('runnerEnv drops every inherited CAREER_OPS path', () => {
-  const keys = ['CAREER_OPS_SCHEDULED_JOBS_PATH', 'CAREER_OPS_DATA_DIR', 'CAREER_OPS_PIPELINE', 'CAREER_OPS_ROOT'];
+test('runnerEnv drops every inherited PROJECT_X path', () => {
+  const keys = ['PROJECT_X_SCHEDULED_JOBS_PATH', 'PROJECT_X_DATA_DIR', 'PROJECT_X_PIPELINE', 'PROJECT_X_ROOT'];
   const saved = Object.fromEntries(keys.map((key) => [key, process.env[key]]));
-  process.env.CAREER_OPS_SCHEDULED_JOBS_PATH = '/tmp/not-the-fixture.json';
-  process.env.CAREER_OPS_DATA_DIR = '/tmp/not-the-fixture';
-  process.env.CAREER_OPS_PIPELINE = '/tmp/not-the-fixture.md';
-  process.env.CAREER_OPS_ROOT = '/tmp/not-the-fixture';
+  process.env.PROJECT_X_SCHEDULED_JOBS_PATH = '/tmp/not-the-fixture.json';
+  process.env.PROJECT_X_DATA_DIR = '/tmp/not-the-fixture';
+  process.env.PROJECT_X_PIPELINE = '/tmp/not-the-fixture.md';
+  process.env.PROJECT_X_ROOT = '/tmp/not-the-fixture';
   try {
     const env = runnerEnv('/tmp/fixture-root');
-    assert.equal(env.CAREER_OPS_ROOT, '/tmp/fixture-root');
-    assert.equal(env.CAREER_OPS_SCHEDULED_JOBS_PATH, undefined);
-    assert.equal(env.CAREER_OPS_DATA_DIR, undefined);
-    assert.equal(env.CAREER_OPS_PIPELINE, undefined);
+    assert.equal(env.PROJECT_X_ROOT, '/tmp/fixture-root');
+    assert.equal(env.PROJECT_X_SCHEDULED_JOBS_PATH, undefined);
+    assert.equal(env.PROJECT_X_DATA_DIR, undefined);
+    assert.equal(env.PROJECT_X_PIPELINE, undefined);
   } finally {
     for (const key of keys) {
       if (saved[key] === undefined) delete process.env[key];

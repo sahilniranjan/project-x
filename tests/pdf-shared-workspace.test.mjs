@@ -33,7 +33,7 @@ const painterSource = String.raw`
 `;
 
 async function painter(t, env) {
-  const childEnv = { ...process.env, ...env, CAREER_OPS_PDF_SHARED: '', CAREER_OPS_PDF_SOCKET: '' };
+  const childEnv = { ...process.env, ...env, PROJECT_X_PDF_SHARED: '', PROJECT_X_PDF_SOCKET: '' };
   const child = spawn(process.execPath, ['--input-type=module', '-e', painterSource], {
     cwd: ROOT, env: childEnv, stdio: ['ignore', 'pipe', 'pipe', 'ipc'],
   });
@@ -70,9 +70,9 @@ for (const selection of ['data roots', 'trackers', 'PDF indices']) {
     const servers = [];
     for (let i = 0; i < 2; i++) {
       servers.push(await painter(t, {
-        CAREER_OPS_ROOT: selection === 'trackers' ? dir : roots[i], CAREER_OPS_DATA_DIR: '',
-        CAREER_OPS_TRACKER: selection === 'trackers' ? join(roots[i], 'data', 'applications.md') : '',
-        CAREER_OPS_PROFILE: '', CAREER_OPS_PDF_INDEX: selection === 'PDF indices' ? indices[i] : '',
+        PROJECT_X_ROOT: selection === 'trackers' ? dir : roots[i], PROJECT_X_DATA_DIR: '',
+        PROJECT_X_TRACKER: selection === 'trackers' ? join(roots[i], 'data', 'applications.md') : '',
+        PROJECT_X_PROFILE: '', PROJECT_X_PDF_INDEX: selection === 'PDF indices' ? indices[i] : '',
       }));
       const outputPath = join(roots[i], 'output', `cv-${i}.pdf`);
       const result = await requestPdfRender(servers[i].socketPath, {

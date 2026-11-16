@@ -46,7 +46,7 @@ function build(t, change = {}, { source = CV, config = {}, template = '', custom
   writeFileSync(input, JSON.stringify({ ...TRUE, ...change }));
   const result = spawnSync(process.execPath, [fileURLToPath(new URL('../build-cv-latex.mjs', import.meta.url)), input, output,
     ...(template ? [`--template=${template}`] : [])], {
-    encoding: 'utf8', env: { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_DATA_DIR: '', CAREER_OPS_PROFILE: join(root, 'config', 'profile.yml') },
+    encoding: 'utf8', env: { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_DATA_DIR: '', PROJECT_X_PROFILE: join(root, 'config', 'profile.yml') },
   });
   return { ...result, output, report: result.stdout.trim() ? JSON.parse(result.stdout) : null };
 }

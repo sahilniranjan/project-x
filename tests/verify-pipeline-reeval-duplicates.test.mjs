@@ -4,7 +4,7 @@
 // process.
 //
 // Same fixture shape as tests/verify-pipeline-duplicate-report-urls.test.mjs:
-// only the tracker and reports dir are fixtures, CAREER_OPS_ROOT stays the
+// only the tracker and reports dir are fixtures, PROJECT_X_ROOT stays the
 // checkout.
 import { mkdirSync, mkdtempSync, writeFileSync } from 'fs';
 import { tmpdir } from 'os';
@@ -18,7 +18,7 @@ try {
   const vpReports = join(vpTmp, 'reports');
   mkdirSync(vpReports, { recursive: true });
   const vpTracker = join(vpTmp, 'applications.md');
-  const vpEnv = { ...process.env, CAREER_OPS_TRACKER: vpTracker, CAREER_OPS_REPORTS: vpReports };
+  const vpEnv = { ...process.env, PROJECT_X_TRACKER: vpTracker, PROJECT_X_REPORTS: vpReports };
 
   const report = (company, role) =>
     `# Evaluación: ${company} — ${role}\n\n## Machine Summary\n\n\`\`\`yaml\ncompany: "${company}"\nrole: "${role}"\nscore: 4.2\n\`\`\`\n`;

@@ -46,7 +46,7 @@ import { fileURLToPath } from 'url';
 import { loadYaml } from './lib/yaml-document.mjs';
 import { flagValue, validateFlags } from './lib/cli-flags.mjs';
 import { isMainModule } from './lib/is-main-module.mjs';
-import { getCareerOpsRoot } from './path-resolver.mjs';
+import { getProjectXRoot } from './path-resolver.mjs';
 import { unfoldLines, parseContentLine, unescapeText } from './ics-interview.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -355,7 +355,7 @@ function positionalOperand(args) {
 }
 
 function printSummary(r) {
-  console.log(`\n${'='.repeat(70)}\n  Panelist roles - career-ops\n${'='.repeat(70)}\n`);
+  console.log(`\n${'='.repeat(70)}\n  Panelist roles - project-x\n${'='.repeat(70)}\n`);
   if (r.panelists.length === 0) console.log('  No panelists found.');
   for (const p of r.panelists) {
     const who = p.name ?? '(name not given)';
@@ -369,13 +369,13 @@ function printSummary(r) {
 
 /**
  * An explicit --table: absolute paths as given; a relative path is read from
- * the working directory, else from the data root (CAREER_OPS_ROOT), so the
+ * the working directory, else from the data root (PROJECT_X_ROOT), so the
  * documented `config/panelist-roles.yml` works from anywhere. Never implicit:
  * only a path the caller named is looked up.
  */
 function resolveTablePath(p) {
   if (isAbsolute(p) || existsSync(p)) return p;
-  const underRoot = join(getCareerOpsRoot(), p);
+  const underRoot = join(getProjectXRoot(), p);
   return existsSync(underRoot) ? underRoot : p;
 }
 

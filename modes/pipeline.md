@@ -1,12 +1,12 @@
 # Mode: pipeline — URL Inbox (Second Brain)
 
-Process job URLs stored in the inbox, `data/pipeline.md` by default. The user adds URLs at any time and then executes `/career-ops pipeline` to process them all.
+Process job URLs stored in the inbox, `data/pipeline.md` by default. The user adds URLs at any time and then executes `/project-x pipeline` to process them all.
 
 ## Which inbox
 
 Resolve the inbox file once, before the liveness sweep, and use it for every search and edit in this mode. Throughout this file, `{INBOX}` means that file.
 
-1. A file the user names in the request (`/career-ops pipeline data/pipeline.bridge.md`, "run pipeline mode for data/pipeline.bridge.md") is the inbox.
+1. A file the user names in the request (`/project-x pipeline data/pipeline.bridge.md`, "run pipeline mode for data/pipeline.bridge.md") is the inbox.
 2. Otherwise, the inbox is the file `scan.mjs` writes to. Ask it, so the mode and the scanner resolve the path the same way:
 
    ```bash
@@ -15,7 +15,7 @@ Resolve the inbox file once, before the liveness sweep, and use it for every sea
 
    Run it from `PROJECT_ROOT`, like every other script: `./scan.mjs` resolves against the working directory, and a session started outside the checkout (a plugin install) has a different one. If the command fails, say so and stop; do not guess the inbox.
 
-   It prints `CAREER_OPS_PIPELINE` when that is set, in the shell or in the data root's `.env` (the parallel search lane, #2271), and the data root's `data/pipeline.md` otherwise. Do not read the variable from the shell alone: `scan.mjs` also loads the data root's `.env`, so a lane set only there would be missed and the lane's postings would stay `- [ ]`.
+   It prints `PROJECT_X_PIPELINE` when that is set, in the shell or in the data root's `.env` (the parallel search lane, #2271), and the data root's `data/pipeline.md` otherwise. Do not read the variable from the shell alone: `scan.mjs` also loads the data root's `.env`, so a lane set only there would be missed and the lane's postings would stay `- [ ]`.
 
 Name the inbox in your first line of output (`Inbox: data/pipeline.bridge.md`) when it is not `data/pipeline.md`, so the user can see which lane is being processed. If that file does not exist, say so and stop. Do not fall back to `data/pipeline.md`: that is the other lane's inbox.
 
@@ -60,9 +60,9 @@ Read `spend_tier` from `config/profile.yml` (see `modes/_shared.md` -- Spend Tie
 
    **Choosing the CV output:** This step is `modes/auto-pipeline.md` → Step 3, not a second rule. Read `config/profile.yml` → `cv.output_format` and route on it: `"latex"` → `modes/latex.md`, `"text"` → `modes/text.md`, otherwise (default) → `modes/pdf.md`. The `latex` and `text` routes never produce HTML or a PDF, whatever the score — mark PDF ❌ in the tracker and the summary table. The PDF gate below narrows the default route only; it is not a way to override the format the candidate configured.
 
-   **About the PDF gate (configurable, default route only):** Read `config/profile.yml` → `auto_pdf_score_threshold`. If the key does not exist, default to `3.0` (`PDF_GATE_DEFAULT` in `lib/score-action.mjs`, the floor of the Maybe band). If the evaluation score is less than the threshold, skip PDF generation: write the report normally, show in the header `**PDF:** not generated — run /career-ops pdf {company-slug} to create on demand`, and mark PDF ❌ in the tracker. If the score is ≥ threshold, generate the PDF as usual.
+   **About the PDF gate (configurable, default route only):** Read `config/profile.yml` → `auto_pdf_score_threshold`. If the key does not exist, default to `3.0` (`PDF_GATE_DEFAULT` in `lib/score-action.mjs`, the floor of the Maybe band). If the evaluation score is less than the threshold, skip PDF generation: write the report normally, show in the header `**PDF:** not generated — run /project-x pdf {company-slug} to create on demand`, and mark PDF ❌ in the tracker. If the score is ≥ threshold, generate the PDF as usual.
 
-   **Tuning it:** Generating a tailored PDF costs ~30–60s per entry (Playwright launch + HTML render) and produces files that often go unused — most roles score in the 2.x/3.x range and never reach the application stage. Raise `auto_pdf_score_threshold` (e.g. `4.0`) to write only the report for marginal offers and produce the PDF on demand via `/career-ops pdf {slug}`; set `0` to generate one for every offer. Both modes (Path A `/career-ops pipeline` and Path B `batch/batch-runner.sh`) read the same key, so behavior is identical regardless of which path processes an offer.
+   **Tuning it:** Generating a tailored PDF costs ~30–60s per entry (Playwright launch + HTML render) and produces files that often go unused — most roles score in the 2.x/3.x range and never reach the application stage. Raise `auto_pdf_score_threshold` (e.g. `4.0`) to write only the report for marginal offers and produce the PDF on demand via `/project-x pdf {slug}`; set `0` to generate one for every offer. Both modes (Path A `/project-x pipeline` and Path B `batch/batch-runner.sh`) read the same key, so behavior is identical regardless of which path processes an offer.
 3. **Concurrency is conditional on the extraction tool.** If the surviving URLs will use browser-backed Playwright/MCP (`browser_navigate` + `browser_snapshot`), process them **one at a time**: multiple workers must never share one browser session, because navigation and snapshots can cross-contaminate and evaluate the wrong posting. If every worker uses the isolated CLI extractor or non-browser fallback, **and** the orchestrator can guarantee independent process/session state, 3+ URLs may use `run_in_background`, at most one URL per worker. Each worker is a **single-pass worker**: it evaluates its one URL and must **not** spawn further subagents or invoke other skills; its company/comp research stays inline and bounded (see `modes/_shared.md` → Subagent delegation). When in doubt, use the sequential path.
 4. **At the end**, show summary table:
 
@@ -78,7 +78,7 @@ List `unreadable` items separately too, with URL and a reason code, when the JD 
 
 ## Format of pipeline.md
 
-Every inbox file, `data/pipeline.md` or a lane's `CAREER_OPS_PIPELINE` file, uses this format.
+Every inbox file, `data/pipeline.md` or a lane's `PROJECT_X_PIPELINE` file, uses this format.
 
 ```markdown
 ## Pending

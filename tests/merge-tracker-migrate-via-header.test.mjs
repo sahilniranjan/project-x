@@ -23,7 +23,7 @@ function migrate(header) {
       '| 1 | 2026-10-01 | Acme | Engineer | 4.0/5 | Applied | ❌ | — | n |', ''].join('\n'));
     const run = () => spawnSync(NODE, [join(ROOT, 'merge-tracker.mjs'), '--migrate-via'], {
       cwd: dir, encoding: 'utf-8', timeout: 30000,
-      env: { ...process.env, CAREER_OPS_TRACKER: tracker, CAREER_OPS_ADDITIONS: join(dir, 'none'), CAREER_OPS_BATCH_STATE: isolatedBatchStatePath(join(dir, 'none')) },
+      env: { ...process.env, PROJECT_X_TRACKER: tracker, PROJECT_X_ADDITIONS: join(dir, 'none'), PROJECT_X_BATCH_STATE: isolatedBatchStatePath(join(dir, 'none')) },
     });
     const first = run();
     assert.strictEqual(first.status, 0, `${first.stdout}${first.stderr}`);

@@ -12,7 +12,7 @@ import { fileURLToPath } from 'node:url';
 import { describeSpawn, exitedNonZero } from './helpers/describe-spawn.mjs';
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
-const OVERRIDES = ['CAREER_OPS_DATA_DIR', 'CAREER_OPS_TRACKER', 'CAREER_OPS_PIPELINE', 'CAREER_OPS_SCAN_HISTORY', 'CAREER_OPS_PORTALS', 'CAREER_OPS_PROFILE', 'CAREER_OPS_FOLLOWUPS', 'CAREER_OPS_REPORTS', 'CAREER_OPS_CV', 'CAREER_OPS_JDS', 'CAREER_OPS_ADDITIONS'];
+const OVERRIDES = ['PROJECT_X_DATA_DIR', 'PROJECT_X_TRACKER', 'PROJECT_X_PIPELINE', 'PROJECT_X_SCAN_HISTORY', 'PROJECT_X_PORTALS', 'PROJECT_X_PROFILE', 'PROJECT_X_FOLLOWUPS', 'PROJECT_X_REPORTS', 'PROJECT_X_CV', 'PROJECT_X_JDS', 'PROJECT_X_ADDITIONS'];
 
 function withStaleSentinel(fn) {
   const root = mkdtempSync(join(tmpdir(), 'verify-pipeline-flags-'));
@@ -30,7 +30,7 @@ function withStaleSentinel(fn) {
     writeFileSync(sentinel, 'reserved\n');
     const longAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
     utimesSync(sentinel, longAgo, longAgo);
-    const env = { ...process.env, CAREER_OPS_ROOT: root };
+    const env = { ...process.env, PROJECT_X_ROOT: root };
     for (const key of OVERRIDES) env[key] = '';
     fn(sentinel, (...args) => spawnSync(process.execPath, [join(ROOT, 'verify-pipeline.mjs'), ...args], { cwd: root, encoding: 'utf8', timeout: 30000, env }));
   } finally {

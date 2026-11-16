@@ -10,7 +10,7 @@
  * Rows the tracker already holds (same posting URL, or same company and role)
  * are skipped, so running it twice adds nothing the second time. Stages that
  * mean "not applied yet" (Bookmarked, Wishlist, Saved) are left out: in
- * career-ops those postings belong in the pipeline, where they get evaluated.
+ * project-x those postings belong in the pipeline, where they get evaluated.
  *
  * Dry run by default. Nothing is written unless `--confirm` is passed.
  *
@@ -29,7 +29,7 @@ import { parseCsv } from './linkedin-join.mjs';
 import { resolveColumns, parseTrackerRow, normalizeTextKey } from './tracker-parse.mjs';
 import { loadCanonicalStates, resolveCanonicalState } from './tracker-utils.mjs';
 import { normalizeUrl } from './url-key.mjs';
-import { getCareerOpsRoot, resolveTrackerPath, resolveTrackerPathForWrite } from './path-resolver.mjs';
+import { getProjectXRoot, resolveTrackerPath, resolveTrackerPathForWrite } from './path-resolver.mjs';
 import { reserveReportNumbers, releaseReportNumbers } from './reserve-report-num.mjs';
 import { tsvSafe, slugifyCompany, isPostingUrl } from './lib/tracker-addition.mjs';
 import { hasFlag, validateFlags } from './lib/cli-flags.mjs';
@@ -321,8 +321,8 @@ function createTracker(path, withUrl) {
 // Root and tracker overrides resolve against the code root; batch-state
 // resolves against the working directory. Pin the tracker and batch-state
 // paths here so the printed command preserves each override's target.
-const RETRY_ENV = ['CAREER_OPS_ROOT', 'CAREER_OPS_DATA_DIR', 'CAREER_OPS_TRACKER', 'CAREER_OPS_BATCH_STATE'];
-const RETRY_CWD_PATHS = new Set(['CAREER_OPS_BATCH_STATE']);
+const RETRY_ENV = ['PROJECT_X_ROOT', 'PROJECT_X_DATA_DIR', 'PROJECT_X_TRACKER', 'PROJECT_X_BATCH_STATE'];
+const RETRY_CWD_PATHS = new Set(['PROJECT_X_BATCH_STATE']);
 const shellQuote = (value) => (/^[A-Za-z0-9._@+/:=-]+$/.test(value) ? value : `'${value.replaceAll("'", "'\\''")}'`);
 
 function retryCommand(additionsDir, env = process.env) {
@@ -330,17 +330,17 @@ function retryCommand(additionsDir, env = process.env) {
     .filter((name) => env[name]?.trim())
     .map((name) => {
       const value = env[name].trim();
-      const target = name === 'CAREER_OPS_TRACKER' ? resolve(CODE_ROOT, value)
+      const target = name === 'PROJECT_X_TRACKER' ? resolve(CODE_ROOT, value)
         : RETRY_CWD_PATHS.has(name) ? resolve(value) : value;
       return `${name}=${shellQuote(target)} `;
     })
     .join('');
-  return `${overrides}CAREER_OPS_ADDITIONS=${shellQuote(additionsDir)} node ${shellQuote(join(CODE_ROOT, 'merge-tracker.mjs'))}`;
+  return `${overrides}PROJECT_X_ADDITIONS=${shellQuote(additionsDir)} node ${shellQuote(join(CODE_ROOT, 'merge-tracker.mjs'))}`;
 }
 
 async function writeImport(entries, { colmap }) {
   // Private directory: --confirm must not merge or delete TSVs that were already waiting,
-  // and CAREER_OPS_ADDITIONS must not point merge at a different directory than these files.
+  // and PROJECT_X_ADDITIONS must not point merge at a different directory than these files.
   const additionsDir = mkdtempSync(join(tmpdir(), 'import-tracker-'));
   const shape = { locationColumn: colmap?.location != null, urlColumn: colmap?.url != null };
   const reservations = [];
@@ -357,7 +357,7 @@ async function writeImport(entries, { colmap }) {
     }
     const merge = spawnSync(process.execPath, [join(CODE_ROOT, 'merge-tracker.mjs')], {
       stdio: 'inherit',
-      env: { ...process.env, CAREER_OPS_ADDITIONS: additionsDir },
+      env: { ...process.env, PROJECT_X_ADDITIONS: additionsDir },
     });
     // merge-tracker leaves a TSV it refused (or could not apply) where it was,
     // and a refusal alone still exits 0. Those rows are not in the tracker, so
@@ -386,7 +386,7 @@ if (isMainModule(import.meta.url)) {
   const fail = (msg) => { console.error(`import-tracker: ${msg}`); process.exit(1); };
   const named = args.find((a) => !a.startsWith('-'));
   if (!named) fail('name the CSV file to import. See --help.');
-  const dataRoot = getCareerOpsRoot();
+  const dataRoot = getProjectXRoot();
   const file = isAbsolute(named) ? named : join(dataRoot, named);
   if (!existsSync(file)) fail(`no such file: ${file}`);
 

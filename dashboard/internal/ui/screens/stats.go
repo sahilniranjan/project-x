@@ -9,10 +9,10 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	"github.com/charmbracelet/x/ansi"
 
-	"github.com/santifer/career-ops/dashboard/internal/data"
-	"github.com/santifer/career-ops/dashboard/internal/i18n"
-	"github.com/santifer/career-ops/dashboard/internal/model"
-	"github.com/santifer/career-ops/dashboard/internal/theme"
+	"github.com/santifer/project-x/dashboard/internal/data"
+	"github.com/santifer/project-x/dashboard/internal/i18n"
+	"github.com/santifer/project-x/dashboard/internal/model"
+	"github.com/santifer/project-x/dashboard/internal/theme"
 )
 
 // StatsClosedMsg is emitted when the stats screen is dismissed.
@@ -672,7 +672,7 @@ func (m StatsModel) renderHelp() string {
 
 	keyStyle := lipgloss.NewStyle().Bold(true).Foreground(m.theme.Text)
 	descStyle := lipgloss.NewStyle().Foreground(m.theme.Subtext)
-	brandPlain := "career-ops by santifer.io"
+	brandPlain := "project-x by santifer.io"
 	brand := lipgloss.NewStyle().Foreground(m.theme.Overlay).Render(brandPlain)
 	budget := m.width - 2
 	if budget < 1 {

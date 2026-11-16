@@ -45,7 +45,7 @@ for (const template of templates) {
         execFileSync(process.execPath, ['build-cv-html.mjs', input, html, template.path], {
           cwd: ROOT,
           // Isolate even the fallback configuration lookup from real user data.
-          env: { ...process.env, CAREER_OPS_ROOT: temp, CAREER_OPS_DATA_DIR: temp },
+          env: { ...process.env, PROJECT_X_ROOT: temp, PROJECT_X_DATA_DIR: temp },
         });
         writeFileSync(html, injectPrintPageCss(readFileSync(html, 'utf8'), 'a4'));
         // Fixtures and shipped templates must be self-contained; never fetch a

@@ -275,20 +275,20 @@ try {
   // isolated tmp cwd, never this checkout's own config/profile.yml. ──
   {
     const withTmpCwd = async (setup, run) => {
-      const tmp = mkdtempSync(join(tmpdir(), 'career-ops-platsbanken-fallback-'));
+      const tmp = mkdtempSync(join(tmpdir(), 'project-x-platsbanken-fallback-'));
       const cwdBefore = process.cwd();
-      const rootEnvBefore = { root: process.env.CAREER_OPS_ROOT, dir: process.env.CAREER_OPS_DATA_DIR };
+      const rootEnvBefore = { root: process.env.PROJECT_X_ROOT, dir: process.env.PROJECT_X_DATA_DIR };
       try {
         setup(tmp);
         process.chdir(tmp);
-        process.env.CAREER_OPS_ROOT = tmp;
-        process.env.CAREER_OPS_DATA_DIR = '';
+        process.env.PROJECT_X_ROOT = tmp;
+        process.env.PROJECT_X_DATA_DIR = '';
         return await run();
       } finally {
-        if (rootEnvBefore.root === undefined) delete process.env.CAREER_OPS_ROOT;
-        else process.env.CAREER_OPS_ROOT = rootEnvBefore.root;
-        if (rootEnvBefore.dir === undefined) delete process.env.CAREER_OPS_DATA_DIR;
-        else process.env.CAREER_OPS_DATA_DIR = rootEnvBefore.dir;
+        if (rootEnvBefore.root === undefined) delete process.env.PROJECT_X_ROOT;
+        else process.env.PROJECT_X_ROOT = rootEnvBefore.root;
+        if (rootEnvBefore.dir === undefined) delete process.env.PROJECT_X_DATA_DIR;
+        else process.env.PROJECT_X_DATA_DIR = rootEnvBefore.dir;
         process.chdir(cwdBefore);
         rmSync(tmp, { recursive: true, force: true });
       }

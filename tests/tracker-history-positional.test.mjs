@@ -32,7 +32,7 @@ try {
 const SQLITE = { skip: sqlite ? false : 'node:sqlite unavailable' };
 
 function sandbox() {
-  const dir = mkdtempSync(join(tmpdir(), 'career-ops-history-positional-'));
+  const dir = mkdtempSync(join(tmpdir(), 'project-x-history-positional-'));
   mkdirSync(join(dir, 'data'), { recursive: true });
   const tracker = join(dir, 'data', 'applications.md');
   writeFileSync(tracker, TRACKER);
@@ -46,10 +46,10 @@ function spawn(sb, args) {
     timeout: 60_000,
     env: {
       ...process.env,
-      CAREER_OPS_ROOT: sb.dir,
-      CAREER_OPS_DATA_DIR: '',
-      CAREER_OPS_TRACKER: '',
-      CAREER_OPS_TRACKER_DB: '',
+      PROJECT_X_ROOT: sb.dir,
+      PROJECT_X_DATA_DIR: '',
+      PROJECT_X_TRACKER: '',
+      PROJECT_X_TRACKER_DB: '',
     },
   });
 }

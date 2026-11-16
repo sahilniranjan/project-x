@@ -1,5 +1,5 @@
 /**
- * utils/token-tracker.mjs — Token tracking and cost estimation for career-ops
+ * utils/token-tracker.mjs — Token tracking and cost estimation for project-x
  */
 
 export const RATES = {
@@ -52,7 +52,7 @@ export function normalizeOpenAIUsage(usage) {
 
 export function estimateCost(model, usage, provider) {
   if (provider === 'ollama') return 0;
-  if (provider === 'openrouter' && !process.env.CAREER_OPS_MODEL) {
+  if (provider === 'openrouter' && !process.env.PROJECT_X_MODEL) {
     // OpenRouter free rotation models are free
     return 0;
   }

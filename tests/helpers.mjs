@@ -8,7 +8,7 @@ import { basename, join, dirname, resolve, sep, delimiter } from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
 import { isNestedCheckout, trackedFiles } from '../lib/mjs-files.mjs';
 import { localToday } from '../lib/local-today.mjs';
-import { getCareerOpsRoot } from '../path-resolver.mjs';
+import { getProjectXRoot } from '../path-resolver.mjs';
 import { describeDrift, diffSnapshots, snapshotDataRoot } from './data-root-guard.mjs';
 import { REQUIRED_TOOL_ENV, toolRequired } from './required-tools.mjs';
 
@@ -18,7 +18,7 @@ export const QUICK = process.argv.includes('--quick');
 export const NODE = process.execPath;
 
 // The suite must never follow a developer's own tracker override into their
-// real data. CAREER_OPS_TRACKER outranks the CAREER_OPS_ROOT that fixtures pin,
+// real data. PROJECT_X_TRACKER outranks the PROJECT_X_ROOT that fixtures pin,
 // so with it set in the shell a test that runs normalize-statuses.mjs against
 // its fixture root rewrote the developer's tracker instead (and left a .bak
 // beside it), and a dozen checks failed on rows that were not theirs.
@@ -28,48 +28,48 @@ export const NODE = process.execPath;
 // a suite that imports these helpers is covered when run on its own as well.
 // Blanked rather than deleted: every reader trims the value and treats an empty
 // one as unset, which is also how the Go tests neutralise it
-// (`t.Setenv("CAREER_OPS_TRACKER", "")`), and a variable that is set is not
+// (`t.Setenv("PROJECT_X_TRACKER", "")`), and a variable that is set is not
 // overwritten by a later .env load (#4707 did the same for one test and
-// CAREER_OPS_PIPELINE). A test that needs the override sets its own.
-process.env.CAREER_OPS_TRACKER = '';
+// PROJECT_X_PIPELINE). A test that needs the override sets its own.
+process.env.PROJECT_X_TRACKER = '';
 
 // The same discipline for browser auto-detection (lib/browser-launch.mjs). A
-// developer's data-root .env may switch it on so career-ops runs on an OS the
+// developer's data-root .env may switch it on so project-x runs on an OS the
 // bundled Chromium has dropped — correct for their own use, wrong for the
 // suite, where doctor's bundled-Chromium checks would then probe that system
 // browser instead and the result would vary by machine. Blanked rather than
 // deleted because the resolver treats a PRESENT-but-empty shell variable as
 // "off" and does not fall through to .env. PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
 // is deliberately left alone: the tests that care set it themselves.
-process.env.CAREER_OPS_BROWSER_AUTODETECT = '';
+process.env.PROJECT_X_BROWSER_AUTODETECT = '';
 
 // A shell that opted into the shared PDF painter must not make the suite
 // attach to that painter or start one. Blanked rather than deleted, same as
 // the tracker override above. A test that wants the painter sets it itself.
-process.env.CAREER_OPS_PDF_SHARED = '';
+process.env.PROJECT_X_PDF_SHARED = '';
 
 // The same rule for the data root itself, which is where everything else a
 // script reads and writes is resolved from (#5113). Left alone, the suite ran
-// against whatever the shell pointed at: with CAREER_OPS_ROOT exported the way
+// against whatever the shell pointed at: with PROJECT_X_ROOT exported the way
 // the README suggests, the script smoke tests appended a fixture row to the
 // developer's real data/assessments.tsv on every run, and with nothing
 // exported, three suites overwrote live files in the checkout's own data/ and
 // restored them from memory — so an interrupted run left a three-row fixture
 // where the tracker had been, in a directory git does not track.
 //
-// So the suite gets a data root of its own. Pinned through CAREER_OPS_ROOT
-// because that outranks both CAREER_OPS_DATA_DIR and the `.career-ops-data`
+// So the suite gets a data root of its own. Pinned through PROJECT_X_ROOT
+// because that outranks both PROJECT_X_DATA_DIR and the `.project-x-data`
 // marker (path-resolver.mjs), and set here for the reason the tracker override
 // is cleared here: the runner and every child it spawns inherit it, and a suite
 // run on its own is covered as well. A test that needs a particular root pins
 // its own, in its child's env or around its own import.
 //
 // One directory per run, not per process. The process that creates it exports
-// it as CAREER_OPS_TEST_DATA_ROOT; a child that loads these helpers finds that
+// it as PROJECT_X_TEST_DATA_ROOT; a child that loads these helpers finds that
 // and joins the run's root rather than making another, and only the creator
 // removes it.
-const SANDBOX_ENV = 'CAREER_OPS_TEST_DATA_ROOT';
-const SANDBOX_PREFIX = 'career-ops-test-data-';
+const SANDBOX_ENV = 'PROJECT_X_TEST_DATA_ROOT';
+const SANDBOX_PREFIX = 'project-x-test-data-';
 
 // The variable is inherited, so it is only as trustworthy as the shell it came
 // from: a stale export naming a real directory would make this process a
@@ -95,7 +95,7 @@ const ownsSandbox = !(inheritedSandbox && isRunSandbox(inheritedSandbox));
  * overridden below. Null in a child of the run: the process that owns the
  * sandbox is the one that answers for the real root.
  */
-export const REAL_DATA_ROOT = ownsSandbox ? getCareerOpsRoot() : null;
+export const REAL_DATA_ROOT = ownsSandbox ? getProjectXRoot() : null;
 const realRootBefore = ownsSandbox ? snapshotDataRoot(REAL_DATA_ROOT, ROOT) : null;
 
 /** The scratch data root every script resolves to while the suite runs. */
@@ -107,7 +107,7 @@ export const SANDBOX_DATA_ROOT = ownsSandbox
  * Point the data root back at the suite's sandbox.
  *
  * Called when these helpers load, and again by any test that had to move or
- * unset the variable in-process: `delete process.env.CAREER_OPS_ROOT` in a
+ * unset the variable in-process: `delete process.env.PROJECT_X_ROOT` in a
  * `finally` does not restore anything, it hands every later suite in the same
  * process the developer's real root.
  *
@@ -115,9 +115,9 @@ export const SANDBOX_DATA_ROOT = ownsSandbox
  */
 export function pinSandboxDataRoot() {
   process.env[SANDBOX_ENV] = SANDBOX_DATA_ROOT;
-  process.env.CAREER_OPS_ROOT = SANDBOX_DATA_ROOT;
-  // Blanked, not deleted, for the same reasons as CAREER_OPS_TRACKER above.
-  process.env.CAREER_OPS_DATA_DIR = '';
+  process.env.PROJECT_X_ROOT = SANDBOX_DATA_ROOT;
+  // Blanked, not deleted, for the same reasons as PROJECT_X_TRACKER above.
+  process.env.PROJECT_X_DATA_DIR = '';
 }
 pinSandboxDataRoot();
 
@@ -127,14 +127,14 @@ pinSandboxDataRoot();
  * Many fixtures copy a script and path-resolver.mjs into a temp directory and
  * expect the copy to treat that directory as its data root, which is what the
  * resolver does when nothing overrides it. Something does now — the pin above —
- * and a developer's exported CAREER_OPS_ROOT always did, so the expectation is
+ * and a developer's exported PROJECT_X_ROOT always did, so the expectation is
  * stated in the child's env instead of assumed from the shell's.
  *
  * @param {Record<string, string>} [extra] - Further variables for the child.
  * @returns {NodeJS.ProcessEnv}
  */
 export function ownRootEnv(extra = {}) {
-  return { ...process.env, CAREER_OPS_ROOT: '', CAREER_OPS_DATA_DIR: '', CAREER_OPS_PDF_SHARED: '', ...extra };
+  return { ...process.env, PROJECT_X_ROOT: '', PROJECT_X_DATA_DIR: '', PROJECT_X_PDF_SHARED: '', ...extra };
 }
 
 let realRootChecked = false;
@@ -237,7 +237,7 @@ let warnings = 0;
  * Record and print one passing test assertion.
  *
  * The suite uses these small counters instead of a framework so it can run in
- * any freshly cloned career-ops checkout with only Node.js available.
+ * any freshly cloned project-x checkout with only Node.js available.
  *
  * @param {string} msg - Human-readable success message for the terminal log.
  * @returns {void}
@@ -662,8 +662,8 @@ export function run(cmd, args = [], opts = {}) {
   lastFailure = null;
   const exe = resolveAllowedExecutable(cmd);
   const env = opts.env ?? process.env;
-  const isolatedOpts = args.includes('merge-tracker.mjs') && env.CAREER_OPS_ADDITIONS
-    ? { ...opts, env: { ...env, CAREER_OPS_BATCH_STATE: isolatedBatchStatePath(env.CAREER_OPS_ADDITIONS) } }
+  const isolatedOpts = args.includes('merge-tracker.mjs') && env.PROJECT_X_ADDITIONS
+    ? { ...opts, env: { ...env, PROJECT_X_BATCH_STATE: isolatedBatchStatePath(env.PROJECT_X_ADDITIONS) } }
     : opts;
   opts = isolatedOpts;
   try {
@@ -701,7 +701,7 @@ let lastFailure = null;
 // describeSpawn lives in helpers/describe-spawn.mjs and is re-exported here so
 // the 410 tests that already import from this file can reach it. It is a
 // SEPARATE module because importing this one is not free: the lines above set
-// process.env.CAREER_OPS_TRACKER, call pinSandboxDataRoot() and register an
+// process.env.PROJECT_X_TRACKER, call pinSandboxDataRoot() and register an
 // 'exit' hook. A test that does not already depend on that must be able to
 // describe a failed child without inheriting it.
 export { describeSpawn } from './helpers/describe-spawn.mjs';
@@ -896,7 +896,7 @@ export function formatRunFailure(maxChars = 2000) {
 /**
  * Check whether a repo-relative file exists.
  *
- * @param {string} path - Path relative to the career-ops repository root.
+ * @param {string} path - Path relative to the project-x repository root.
  * @returns {boolean} True when the file exists.
  */
 export function fileExists(path) { return existsSync(join(ROOT, path)); }
@@ -1664,7 +1664,7 @@ export async function captureConsoleErrors(fn) {
  *   temp dir names the suite that made it.
  * @param {boolean} [options.includeRoot=false] - Add `root` to the returned ctx.
  *   `addPaths` resolves paths against it to decide what is a directory; without
- *   it the guard would lstat the real career-ops checkout instead of the
+ *   it the guard would lstat the real project-x checkout instead of the
  *   fixture. `isTracked` never reads it.
  * @returns {{dir: string, g: Function, ctx: {git: Function, root?: string}}}
  */

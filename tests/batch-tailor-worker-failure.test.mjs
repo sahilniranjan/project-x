@@ -38,7 +38,7 @@ require('node:module').syncBuiltinESMExports();
         cwd: new URL('..', import.meta.url), encoding: 'utf8',
         // PATH is the empty sandbox: the stub above stands in for spawnSync, so
         // a real claude on this machine must not be found and resolved instead.
-        env: envWithPathOnly(root, { CAREER_OPS_ROOT: root, CAREER_OPS_BATCH_STATE: state }),
+        env: envWithPathOnly(root, { PROJECT_X_ROOT: root, PROJECT_X_BATCH_STATE: state }),
       });
       assert.equal(result.error, undefined);
       assert.equal(readFileSync(calls, 'utf8').trim().split('\n').length, 3);

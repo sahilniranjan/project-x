@@ -280,7 +280,7 @@ test('callOpenRouter immediately halts when free-models-per-day quota is hit', a
   let modelAttempts = 0;
 
   try {
-    process.env.CAREER_OPS_ROOT = dataRoot;
+    process.env.PROJECT_X_ROOT = dataRoot;
     process.env.OPENROUTER_API_KEY = 'test-key';
 
     globalThis.fetch = async (url) => {
@@ -325,7 +325,7 @@ test('callOpenRouter immediately halts when free-models-per-day quota is hit', a
     globalThis.fetch = realFetch;
     if (realKey === undefined) delete process.env.OPENROUTER_API_KEY;
     else process.env.OPENROUTER_API_KEY = realKey;
-    delete process.env.CAREER_OPS_ROOT;
+    delete process.env.PROJECT_X_ROOT;
     rmSync(dataRoot, { recursive: true, force: true });
   }
 });
@@ -336,13 +336,13 @@ test('callOpenRouter does not disk-blacklist models on timeout', async () => {
   const dataRoot = mkdtempSync(join(tmpdir(), 'cops-timeout-test-'));
   const realFetch = globalThis.fetch;
   const realKey = process.env.OPENROUTER_API_KEY;
-  const origModel = process.env.CAREER_OPS_MODEL;
+  const origModel = process.env.PROJECT_X_MODEL;
 
   try {
-    process.env.CAREER_OPS_ROOT = dataRoot;
+    process.env.PROJECT_X_ROOT = dataRoot;
     process.env.OPENROUTER_API_KEY = 'test-key';
-    process.env.CAREER_OPS_TIMEOUT_MS = '100'; // short timeout for testing
-    delete process.env.CAREER_OPS_MODEL; // ensure dynamic model rotation path is exercised
+    process.env.PROJECT_X_TIMEOUT_MS = '100'; // short timeout for testing
+    delete process.env.PROJECT_X_MODEL; // ensure dynamic model rotation path is exercised
 
     globalThis.fetch = async (url, init = {}) => {
       const u = String(url);
@@ -390,10 +390,10 @@ test('callOpenRouter does not disk-blacklist models on timeout', async () => {
     globalThis.fetch = realFetch;
     if (realKey === undefined) delete process.env.OPENROUTER_API_KEY;
     else process.env.OPENROUTER_API_KEY = realKey;
-    if (origModel === undefined) delete process.env.CAREER_OPS_MODEL;
-    else process.env.CAREER_OPS_MODEL = origModel;
-    delete process.env.CAREER_OPS_ROOT;
-    delete process.env.CAREER_OPS_TIMEOUT_MS;
+    if (origModel === undefined) delete process.env.PROJECT_X_MODEL;
+    else process.env.PROJECT_X_MODEL = origModel;
+    delete process.env.PROJECT_X_ROOT;
+    delete process.env.PROJECT_X_TIMEOUT_MS;
     rmSync(dataRoot, { recursive: true, force: true });
   }
 });
@@ -406,9 +406,9 @@ test('cmdPipeline with { one: true } processes exactly one job without running s
   const realKey = process.env.OPENROUTER_API_KEY;
 
   try {
-    process.env.CAREER_OPS_ROOT = dataRoot;
+    process.env.PROJECT_X_ROOT = dataRoot;
     process.env.OPENROUTER_API_KEY = 'test-key';
-    process.env.CAREER_OPS_NO_PLAYWRIGHT = '1';
+    process.env.PROJECT_X_NO_PLAYWRIGHT = '1';
 
     // Set up dummy pipeline.md with 3 pending items
     const dataDir = join(dataRoot, 'data');
@@ -498,8 +498,8 @@ test('cmdPipeline with { one: true } processes exactly one job without running s
     globalThis.fetch = realFetch;
     if (realKey === undefined) delete process.env.OPENROUTER_API_KEY;
     else process.env.OPENROUTER_API_KEY = realKey;
-    delete process.env.CAREER_OPS_ROOT;
-    delete process.env.CAREER_OPS_NO_PLAYWRIGHT;
+    delete process.env.PROJECT_X_ROOT;
+    delete process.env.PROJECT_X_NO_PLAYWRIGHT;
     rmSync(dataRoot, { recursive: true, force: true });
   }
 });
@@ -507,7 +507,7 @@ test('cmdPipeline with { one: true } processes exactly one job without running s
 // ── 8. Upstream Compatibility & Timeout Defaults ──────────────────────────
 
 function withTimeoutEnv(env, fn) {
-  const keys = ['CAREER_OPS_TIMEOUT_MS', 'OPENROUTER_TIMEOUT_MS'];
+  const keys = ['PROJECT_X_TIMEOUT_MS', 'OPENROUTER_TIMEOUT_MS'];
   const saved = Object.fromEntries(keys.map((k) => [k, process.env[k]]));
   try {
     for (const k of keys) {
@@ -529,8 +529,8 @@ test('getModelTimeoutMs defaults to 120000ms when no env override is set', () =>
   });
 });
 
-test('getModelTimeoutMs honors CAREER_OPS_TIMEOUT_MS environment override', () => {
-  withTimeoutEnv({ CAREER_OPS_TIMEOUT_MS: '60000' }, () => {
+test('getModelTimeoutMs honors PROJECT_X_TIMEOUT_MS environment override', () => {
+  withTimeoutEnv({ PROJECT_X_TIMEOUT_MS: '60000' }, () => {
     assert.equal(getModelTimeoutMs(), 60000);
   });
 });
@@ -546,7 +546,7 @@ test('getModelTimeoutMs reads the env at call time, so a later .env override app
     // Module is already imported at this point; the override is set afterwards,
     // the way loadEnvFile() does in the CLI entry point.
     assert.equal(getModelTimeoutMs(), 120000);
-    process.env.CAREER_OPS_TIMEOUT_MS = '45000';
+    process.env.PROJECT_X_TIMEOUT_MS = '45000';
     assert.equal(getModelTimeoutMs(), 45000);
   });
 });
@@ -554,28 +554,28 @@ test('getModelTimeoutMs reads the env at call time, so a later .env override app
 test('getModelTimeoutMs falls back to 120000ms on invalid or non-positive environment overrides', () => {
   const invalidValues = ['abc', '-500', '0', 'NaN', 'Infinity', '1e3', '10.5', '120abc'];
   for (const val of invalidValues) {
-    withTimeoutEnv({ CAREER_OPS_TIMEOUT_MS: val }, () => {
+    withTimeoutEnv({ PROJECT_X_TIMEOUT_MS: val }, () => {
       assert.equal(getModelTimeoutMs(), 120000, `Expected 120000 fallback for value: "${val}"`);
     });
   }
 
-  // Invalid CAREER_OPS_TIMEOUT_MS falls back to valid OPENROUTER_TIMEOUT_MS
-  withTimeoutEnv({ CAREER_OPS_TIMEOUT_MS: 'not-a-number', OPENROUTER_TIMEOUT_MS: '85000' }, () => {
+  // Invalid PROJECT_X_TIMEOUT_MS falls back to valid OPENROUTER_TIMEOUT_MS
+  withTimeoutEnv({ PROJECT_X_TIMEOUT_MS: 'not-a-number', OPENROUTER_TIMEOUT_MS: '85000' }, () => {
     assert.equal(getModelTimeoutMs(), 85000);
   });
 });
 
 test('getModelTimeoutMs rejects values above the setTimeout limit (2147483647ms)', () => {
-  withTimeoutEnv({ CAREER_OPS_TIMEOUT_MS: '2147483647' }, () => {
+  withTimeoutEnv({ PROJECT_X_TIMEOUT_MS: '2147483647' }, () => {
     assert.equal(getModelTimeoutMs(), 2147483647, 'The limit itself is still accepted');
   });
   for (const val of ['2147483648', '99999999999', '9007199254740993']) {
-    withTimeoutEnv({ CAREER_OPS_TIMEOUT_MS: val }, () => {
+    withTimeoutEnv({ PROJECT_X_TIMEOUT_MS: val }, () => {
       assert.equal(getModelTimeoutMs(), 120000, `Expected 120000 fallback for value: "${val}"`);
     });
   }
-  // An over-limit CAREER_OPS_TIMEOUT_MS falls through to a valid OPENROUTER_TIMEOUT_MS
-  withTimeoutEnv({ CAREER_OPS_TIMEOUT_MS: '2147483648', OPENROUTER_TIMEOUT_MS: '90000' }, () => {
+  // An over-limit PROJECT_X_TIMEOUT_MS falls through to a valid OPENROUTER_TIMEOUT_MS
+  withTimeoutEnv({ PROJECT_X_TIMEOUT_MS: '2147483648', OPENROUTER_TIMEOUT_MS: '90000' }, () => {
     assert.equal(getModelTimeoutMs(), 90000);
   });
 });

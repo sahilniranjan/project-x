@@ -1,12 +1,12 @@
 # Mode: pipeline -- URL-innboks (Second Brain)
 
-Behandler URL-er til stillingsannonser som ligger i innboksen, som standard `data/pipeline.md`. Kandidaten legger til URL-er når det passer, og kjører deretter `/career-ops pipeline` for å behandle alle på én gang.
+Behandler URL-er til stillingsannonser som ligger i innboksen, som standard `data/pipeline.md`. Kandidaten legger til URL-er når det passer, og kjører deretter `/project-x pipeline` for å behandle alle på én gang.
 
 ## Hvilken innboks
 
 Finn innboksfilen én gang, før liveness-sjekken, og bruk den til hvert søk og hver endring i denne moden. I denne filen betyr `{INBOX}` den filen.
 
-1. En fil brukeren navngir i forespørselen (`/career-ops pipeline data/pipeline.bridge.md`, "kjør pipeline-moden for data/pipeline.bridge.md"), er innboksen.
+1. En fil brukeren navngir i forespørselen (`/project-x pipeline data/pipeline.bridge.md`, "kjør pipeline-moden for data/pipeline.bridge.md"), er innboksen.
 2. Ellers er innboksen filen `scan.mjs` skriver til. Spør den, slik at moden og scanneren finner stien på samme måte:
 
    ```bash
@@ -15,7 +15,7 @@ Finn innboksfilen én gang, før liveness-sjekken, og bruk den til hvert søk og
 
    Kjør den fra `PROJECT_ROOT`, som alle andre scripts: `./scan.mjs` løses opp fra arbeidsmappen, og en sesjon startet utenfor checkouten (en plugin-installasjon) har en annen. Feiler kommandoen, si det og stopp; gjett aldri innboksen.
 
-   Den skriver ut `CAREER_OPS_PIPELINE` når den er satt, i shellet eller i datarotens `.env` (det parallelle søkesporet, #2271), og ellers datarotens `data/pipeline.md`. Les ikke variabelen bare fra shellet: `scan.mjs` laster også datarotens `.env`, så et spor som bare er satt der, ville blitt oversett, og sporets annonser ville blitt stående som `- [ ]`.
+   Den skriver ut `PROJECT_X_PIPELINE` når den er satt, i shellet eller i datarotens `.env` (det parallelle søkesporet, #2271), og ellers datarotens `data/pipeline.md`. Les ikke variabelen bare fra shellet: `scan.mjs` laster også datarotens `.env`, så et spor som bare er satt der, ville blitt oversett, og sporets annonser ville blitt stående som `- [ ]`.
 
 Navngi innboksen i første linje av output (`Innboks: data/pipeline.bridge.md`) når den ikke er `data/pipeline.md`, så brukeren ser hvilket spor som behandles. Finnes filen ikke, si det og stopp. Fall ikke tilbake til `data/pipeline.md`: det er det andre sporets innboks.
 
@@ -60,9 +60,9 @@ Les `spend_tier` fra `config/profile.yml` (se `modes/nb/_shared.md` -- Spend tie
 
    **Valg av CV-format:** Dette steget er `modes/auto-pipeline.md` → Step 3, ikke en ny regel. Les `config/profile.yml` → `cv.output_format` og velg etter den: `"latex"` → `modes/latex.md`, `"text"` → `modes/text.md`, ellers (standard) → `modes/pdf.md`. `latex`- og `text`-veiene lager aldri HTML eller PDF, uansett score -- merk PDF ❌ i trackeren og i sammendraget. PDF-gaten nedenfor gjelder bare standardveien; den overstyrer ikke formatet kandidaten har valgt.
 
-   **Om PDF-gaten (kan konfigureres, bare standardveien):** Les `config/profile.yml` → `auto_pdf_score_threshold`. Mangler nøkkelen, bruk `3.0`. Er scoren under terskelen, hopp over PDF-en: skriv reporten som vanlig, vis `**PDF:** not generated — run /career-ops pdf {company-slug} to create on demand` i headeren, og merk PDF ❌ i trackeren. Er scoren ≥ terskelen, lag PDF-en som vanlig.
+   **Om PDF-gaten (kan konfigureres, bare standardveien):** Les `config/profile.yml` → `auto_pdf_score_threshold`. Mangler nøkkelen, bruk `3.0`. Er scoren under terskelen, hopp over PDF-en: skriv reporten som vanlig, vis `**PDF:** not generated — run /project-x pdf {company-slug} to create on demand` i headeren, og merk PDF ❌ i trackeren. Er scoren ≥ terskelen, lag PDF-en som vanlig.
 
-   **Justering:** En tilpasset PDF tar ~30-60 s per oppføring og gir ofte filer som aldri brukes. Hev `auto_pdf_score_threshold` (f.eks. `4.0`) for bare å skrive reporten for marginale stillinger, og lag PDF-en ved behov med `/career-ops pdf {slug}`; sett `0` for å lage en for hver stilling. Begge veiene (`/career-ops pipeline` og `batch/batch-runner.sh`) leser samme nøkkel.
+   **Justering:** En tilpasset PDF tar ~30-60 s per oppføring og gir ofte filer som aldri brukes. Hev `auto_pdf_score_threshold` (f.eks. `4.0`) for bare å skrive reporten for marginale stillinger, og lag PDF-en ved behov med `/project-x pdf {slug}`; sett `0` for å lage en for hver stilling. Begge veiene (`/project-x pipeline` og `batch/batch-runner.sh`) leser samme nøkkel.
 3. **Samtidighet avhenger av uthentingsverktøyet.** Bruker de gjenværende URL-ene nettleserbasert Playwright/MCP (`browser_navigate` + `browser_snapshot`), behandle dem **én om gangen**: flere workers må aldri dele én nettlesersesjon, fordi navigasjon og snapshots kan blandes og evaluere feil annonse. Bruker hver worker den isolerte CLI-uttrekkeren eller en reserve uten nettleser, **og** orkestratoren kan garantere uavhengig prosess- og sesjonstilstand, kan 3+ URL-er bruke `run_in_background`, høyst én URL per worker. Hver worker er en **worker med én gjennomgang**: den evaluerer sin ene URL og må **ikke** starte nye subagenter eller kalle andre skills; research om virksomhet og lønn forblir direkte og avgrenset (se `modes/nb/_shared.md` → Delegering til subagenter). Er du i tvil, bruk den sekvensielle veien.
 4. **Til slutt**, vis en oppsummerende tabell:
 
@@ -76,7 +76,7 @@ List `unreadable`-elementer for seg også, med URL og en grunnkode, når annonse
 
 ## Format for pipeline.md
 
-Hver innboksfil, `data/pipeline.md` eller et spors `CAREER_OPS_PIPELINE`-fil, bruker dette formatet.
+Hver innboksfil, `data/pipeline.md` eller et spors `PROJECT_X_PIPELINE`-fil, bruker dette formatet.
 
 ```markdown
 ## Venter

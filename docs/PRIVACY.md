@@ -1,6 +1,6 @@
 # Privacy guard — protecting what leaves your machine
 
-career-ops sends your CV, profile and job descriptions to external LLM providers.
+project-x sends your CV, profile and job descriptions to external LLM providers.
 This page explains what the **privacy guard** does about that: what it blocks,
 what it deliberately allows, where it is enforced, and — importantly — the limits
 of what it can promise.
@@ -172,7 +172,7 @@ export PRIVACY_BYPASS_TOKEN=i-understand-the-risk   # any non-empty value
 With only `PRIVACY_GUARD=off` set, the guard **stays on** and warns. The second
 factor exists so a typo, a copied `.env` line or an inherited shell variable can
 never silently disable protection in production. Neither variable is set by
-career-ops itself.
+project-x itself.
 
 ### Redact mode (opt-in, not the default)
 
@@ -189,7 +189,7 @@ or narrowing your config.
 
 ## Working with a CLI agent (Claude Code, OpenCode, Codex, …)
 
-The guard protects requests **career-ops itself makes**. It cannot see a CLI
+The guard protects requests **project-x itself makes**. It cannot see a CLI
 agent reading `cv.md` and `config/profile.yml` from disk with its own file tools.
 If you use an interactive coding CLI, ensure you do not ask it to send files
 containing personal data you want kept off external servers.
@@ -242,4 +242,4 @@ Design reference: the `PIIGuard` class in the
 normalization and length floors, the "check the serialized request before the
 client call" placement, and the "errors name the category, never the value"
 discipline are adapted from it. Pattern detection, the fail-closed config
-handling and the ambient fetch layer are career-ops' own additions.
+handling and the ambient fetch layer are project-x' own additions.

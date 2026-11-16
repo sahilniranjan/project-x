@@ -79,7 +79,7 @@ Para cada pregunta, construir la respuesta según este esquema:
 2. **Bloque H / `## Application Answers` previos**: Si existe un borrador o una respuesta final, tomarlo como base y refinarlo
 3. **Tono "Te elijo a ti"**: mismo framework que en el auto-pipeline — confiado, no suplicante
 4. **Especificidad**: citar algo concreto de la oferta visible en pantalla
-5. **career-ops proof point**: incluir en "Información adicional" si existe ese campo
+5. **project-x proof point**: incluir en "Información adicional" si existe ese campo
 
 **Campos específicos en formularios hispanohablantes habituales:**
 - **Pretensiones salariales (bruto anual)** -> Horquilla desde `profile.yml`, en EUR (o divisa local), con la indicación "negociable según el paquete global"
@@ -120,7 +120,7 @@ Antes de guardar nada, y otra vez justo antes de cada escritura de abajo (estado
 Si el candidato confirma que la candidatura ha sido enviada:
 1. Actualizar el estado a "Applied" con el CLI canónico: `node set-status.mjs --report <report#> Applied` (no editar la tabla de `applications.md` a mano)
 2. Guardar las respuestas finales en la sección `## Application Answers` del report, con `**State:** submitted`: `node application-answers.mjs --report reports/NNN-company-role-date.md --input answers.json --state submitted` (`node application-answers.mjs --help` lista los campos del JSON). No tocar el Bloque G (Legitimidad de la publicación) ni el Bloque H (los borradores de la evaluación).
-3. Sugerir el siguiente paso: `/career-ops contacto` para LinkedIn outreach hacia el hiring manager
+3. Sugerir el siguiente paso: `/project-x contacto` para LinkedIn outreach hacia el hiring manager
 
 ## Gestión del desplazamiento
 

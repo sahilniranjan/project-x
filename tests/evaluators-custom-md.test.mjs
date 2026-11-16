@@ -86,7 +86,7 @@ test('_custom.md is never removed by compression under a tight budget', () => {
 // reports the assembled prompt's token budget.
 // ---------------------------------------------------------------------------
 function geminiContextOnly(customMd) {
-  const tmp = mkdtempSync(join(tmpdir(), 'career-ops-custom-md-'));
+  const tmp = mkdtempSync(join(tmpdir(), 'project-x-custom-md-'));
   try {
     mkdirSync(join(tmp, 'config'), { recursive: true });
     mkdirSync(join(tmp, 'modes'), { recursive: true });
@@ -97,7 +97,7 @@ function geminiContextOnly(customMd) {
     writeFileSync(join(tmp, 'jd.txt'), 'Job description text', 'utf-8');
     const r = spawnSync(process.execPath, [join(ROOT, 'gemini-eval.mjs'), '--file', join(tmp, 'jd.txt'), '--no-save', '--context-only'], {
       cwd: tmp,
-      env: { ...process.env, GEMINI_API_KEY: 'mock-api-key-12345', CAREER_OPS_ROOT: tmp },
+      env: { ...process.env, GEMINI_API_KEY: 'mock-api-key-12345', PROJECT_X_ROOT: tmp },
       encoding: 'utf-8',
       timeout: 30000,
     });

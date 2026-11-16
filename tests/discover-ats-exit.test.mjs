@@ -28,11 +28,11 @@ let requests = 0;
 globalThis.fetch = async () => { requests++; return new Response('', { status: 404 }); };
 process.on('exit', () => { if (requests === 0) writeSync(2, 'no board request was made\\n'); });
 ${preloadBody}`);
-    const env = { ...process.env, CAREER_OPS_ROOT: dir, CAREER_OPS_DATA_DIR: dir };
-    delete env.CAREER_OPS_PORTALS;
-    delete env.CAREER_OPS_BLACKLIST;
+    const env = { ...process.env, PROJECT_X_ROOT: dir, PROJECT_X_DATA_DIR: dir };
+    delete env.PROJECT_X_PORTALS;
+    delete env.PROJECT_X_BLACKLIST;
     // With trusted proxy egress, the request would go through undici, past the stub.
-    delete env.CAREER_OPS_TRUST_PROXY_EGRESS;
+    delete env.PROJECT_X_TRUST_PROXY_EGRESS;
     return spawnSync(process.execPath, ['--import', pathToFileURL(preload).href, join(ROOT, 'discover-ats.mjs'),
       'Fictional Employer', '--vendors', 'gh'], { cwd: ROOT, encoding: 'utf8', timeout: 20000, env });
   } finally { rmSync(dir, { recursive: true, force: true }); }

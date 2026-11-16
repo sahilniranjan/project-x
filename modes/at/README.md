@@ -1,4 +1,4 @@
-# career-ops -- Austria market mode (`modes/at/`)
+# project-x -- Austria market mode (`modes/at/`)
 
 English-language modes with Austrian market rules for candidates applying to
 employers in Austria, whether the posting is written in German or English.

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * keyword-match.mjs — ATS keyword coverage check for career-ops
+ * keyword-match.mjs — ATS keyword coverage check for project-x
  *
  * Closes the evaluation loop: given a report's keyword section (`## Keywords
  * extracted`, or the translated heading a localized evaluation mode writes) and
@@ -29,7 +29,7 @@
 import { readFileSync, existsSync, statSync  } from 'fs';
 import { join, isAbsolute, basename } from 'path';
 import { isMainModule } from './lib/is-main-module.mjs';
-import { getCareerOpsRoot } from './path-resolver.mjs';
+import { getProjectXRoot } from './path-resolver.mjs';
 import { extractSkills } from './skill-extract.mjs';
 import { collapseMarkdownLinks } from './verify-cv-facts.mjs';
 
@@ -725,7 +725,7 @@ function refuseNoSkills(sourceLabel) {
  * A relative report, CV or JD-text path, resolved the way the modes write it.
  * The modes pass `reports/{###}-….md` and `jds/{slug}.md` relative to the data
  * root, which is not the process's working directory when the user layer lives
- * elsewhere (a `.career-ops-data` marker or CAREER_OPS_ROOT).
+ * elsewhere (a `.project-x-data` marker or PROJECT_X_ROOT).
  *
  * A bare relative path therefore always means the data root, whether or not
  * the file is there. Falling back to the working directory when the data root
@@ -796,7 +796,7 @@ export async function resolveKeywords(input, root) {
     if (!isAbsolute(reportArg) && !/^\.\.?(?:[\\/]|$)/.test(reportArg)) {
       console.error(`A relative path is read from the data root. For a file in the current directory, pass ./${reportArg}.`);
     }
-    console.error(`Example: node keyword-match.mjs ${shellExampleArg(join(getCareerOpsRoot(), 'reports', '001-role.md'))}`);
+    console.error(`Example: node keyword-match.mjs ${shellExampleArg(join(getProjectXRoot(), 'reports', '001-role.md'))}`);
     process.exit(1);
   }
 
@@ -915,13 +915,13 @@ async function runKeywordMatch(args) {
     process.exit(1);
   }
 
-  const resolved = await resolveKeywords(args.input, getCareerOpsRoot());
+  const resolved = await resolveKeywords(args.input, getProjectXRoot());
   const { keywords, keywordSource, keywordNote, sourceUrl } = resolved;
 
   const cvArg = args.cvPath;
   const cvPath = cvArg
-    ? resolveUserPath(cvArg, getCareerOpsRoot())
-    : join(getCareerOpsRoot(), 'cv.md');
+    ? resolveUserPath(cvArg, getProjectXRoot())
+    : join(getProjectXRoot(), 'cv.md');
 
   if (!existsSync(cvPath) || !statSync(cvPath).isFile()) {
     console.error(`CV not found: ${cvPath}. Pass --cv <path> to point at your CV.`);

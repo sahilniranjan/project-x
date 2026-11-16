@@ -258,7 +258,7 @@ test('soft verbs: every occurrence counts, supplied /g and /y patterns are not m
   assert.equal(y.lastIndex, 0);
 });
 
-test('CLI: a relative posting path resolves under CAREER_OPS_ROOT, not the working directory', () => {
+test('CLI: a relative posting path resolves under PROJECT_X_ROOT, not the working directory', () => {
   const root = mkdtempSync(join(tmpdir(), 'co-role-clarity-root-'));
   const elsewhere = mkdtempSync(join(tmpdir(), 'co-role-clarity-cwd-'));
   try {
@@ -267,7 +267,7 @@ test('CLI: a relative posting path resolves under CAREER_OPS_ROOT, not the worki
     // A decoy with the same relative name in the working directory.
     mkdirSync(join(elsewhere, 'jds'));
     writeFileSync(join(elsewhere, 'jds', 'x.md'), CLEAR);
-    const env = { ...process.env, CAREER_OPS_ROOT: root, CAREER_OPS_DATA_DIR: '' };
+    const env = { ...process.env, PROJECT_X_ROOT: root, PROJECT_X_DATA_DIR: '' };
     const run = (...a) => spawnSync(process.execPath, [join(ROOT, 'role-clarity.mjs'), ...a], { encoding: 'utf-8', cwd: elsewhere, env });
 
     const ok = run('jds/x.md');

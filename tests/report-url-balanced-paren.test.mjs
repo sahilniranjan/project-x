@@ -63,12 +63,12 @@ for (const [input, expected] of cases) {
     writeFileSync(join(work, 'reports/002-acme-2026-10-02.md'), `# Acme — Engineer\n\n**Score:** 4.2/5 | **URL:** ${PAREN}\n`);
     const env = {
       ...process.env,
-      CAREER_OPS_TRACKER: apps,
-      CAREER_OPS_ADDITIONS: join(work, 'adds'),
-      CAREER_OPS_DATA_DIR: work,
-      CAREER_OPS_ROOT: work,
-      CAREER_OPS_BATCH_STATE: isolatedBatchStatePath(join(work, 'adds')),
-      CAREER_OPS_PDF_INDEX: join(work, 'data/pdf-index.tsv'),
+      PROJECT_X_TRACKER: apps,
+      PROJECT_X_ADDITIONS: join(work, 'adds'),
+      PROJECT_X_DATA_DIR: work,
+      PROJECT_X_ROOT: work,
+      PROJECT_X_BATCH_STATE: isolatedBatchStatePath(join(work, 'adds')),
+      PROJECT_X_PDF_INDEX: join(work, 'data/pdf-index.tsv'),
     };
     const merge = () => execFileSync(NODE, [join(ROOT, 'merge-tracker.mjs'), '--allow-headerless'], { cwd: ROOT, encoding: 'utf8', env, timeout: 30000 });
 

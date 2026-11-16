@@ -33,12 +33,12 @@ import { tmpdir } from 'os';
 import { createHash } from 'crypto';
 import { isMainModule } from './lib/is-main-module.mjs';
 import { flagValue, hasFlag, validateFlags } from './lib/cli-flags.mjs';
-import { getCareerOpsRoot } from './path-resolver.mjs';
+import { getProjectXRoot } from './path-resolver.mjs';
 import { sectionKind } from './lib/pipeline-sections.mjs';
 import { acquirePipelineLock } from './pipeline-lock.mjs';
 import { releaseOrWarn } from './lib/dir-lock.mjs';
 
-const CAREER_OPS = getCareerOpsRoot();
+const PROJECT_X = getProjectXRoot();
 const CHECKOUT_ROOT = dirname(fileURLToPath(import.meta.url));
 
 /** Batch source label written into the source column. */
@@ -54,7 +54,7 @@ function canonicalInputPath(inputPath) {
 // OS temp directory, with the same identity for direct paths and symlink aliases.
 export function batchInputLockTarget(inputPath) {
   const identity = createHash('sha256').update(canonicalInputPath(resolve(inputPath))).digest('hex');
-  return join(realpathSync(tmpdir()), 'career-ops-batch-input-locks', identity);
+  return join(realpathSync(tmpdir()), 'project-x-batch-input-locks', identity);
 }
 
 const SECTION_RE = /^##\s+/;
@@ -333,21 +333,21 @@ if (isMainModule(import.meta.url)) {
     return value;
   }
 
-  function resolveInsideRepo(inputPath, fallbackPath, flag, root = CAREER_OPS) {
+  function resolveInsideRepo(inputPath, fallbackPath, flag, root = PROJECT_X) {
     // Explicit user-passed paths are trusted as-is; only defaults are checked.
     if (inputPath) return resolve(inputPath);
     const abs = resolve(fallbackPath);
     const rel = relative(root, abs);
     if (rel.startsWith('..') || isAbsolute(rel)) {
-      console.error(`Invalid ${flag}: path must stay inside the career-ops root (${abs})`);
+      console.error(`Invalid ${flag}: path must stay inside the project-x root (${abs})`);
       process.exit(1);
     }
     return abs;
   }
 
-  const defaultPipeline = existsSync(join(CAREER_OPS, 'data/pipeline.md'))
-    ? join(CAREER_OPS, 'data/pipeline.md')
-    : join(CAREER_OPS, 'pipeline.md');
+  const defaultPipeline = existsSync(join(PROJECT_X, 'data/pipeline.md'))
+    ? join(PROJECT_X, 'data/pipeline.md')
+    : join(PROJECT_X, 'pipeline.md');
   const PIPELINE_FILE = resolveInsideRepo(argValue('--pipeline'), defaultPipeline, '--pipeline');
   const inputPath = resolveInsideRepo(argValue('--input'), join(CHECKOUT_ROOT, 'batch', 'batch-input.tsv'), '--input', CHECKOUT_ROOT);
   const INPUT_FILE = canonicalInputPath(inputPath);

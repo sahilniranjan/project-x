@@ -38,7 +38,7 @@ const daysAgo = (n) => {
   return d.toISOString().slice(0, 10);
 };
 
-const root = mkdtempSync(join(tmpdir(), 'career-ops-recheck-siblings-'));
+const root = mkdtempSync(join(tmpdir(), 'project-x-recheck-siblings-'));
 mkdirSync(join(root, 'data'), { recursive: true });
 const HEADER = 'url\tfirst_seen\tportal\ttitle\tcompany\tstatus';
 const OLD = 'https://boards.greenhouse.io/acme/jobs/1001';
@@ -54,16 +54,16 @@ writeFileSync(join(root, 'data', 'scan-history.tsv'), [
 ].join('\n'));
 
 // The fixture above is the child's whole data root. An override inherited from
-// the parent would send it to other files instead: with CAREER_OPS_SCAN_HISTORY
+// the parent would send it to other files instead: with PROJECT_X_SCAN_HISTORY
 // exported, every verdict below would come from that file and not these rows.
 const SCANNER_PATH_VARS = [
-  'CAREER_OPS_DATA_DIR',
-  'CAREER_OPS_PORTALS',
-  'CAREER_OPS_PROFILE',
-  'CAREER_OPS_PIPELINE',
-  'CAREER_OPS_SCAN_HISTORY',
-  'CAREER_OPS_TRACKER',
-  'CAREER_OPS_AGGREGATOR_DOMAINS',
+  'PROJECT_X_DATA_DIR',
+  'PROJECT_X_PORTALS',
+  'PROJECT_X_PROFILE',
+  'PROJECT_X_PIPELINE',
+  'PROJECT_X_SCAN_HISTORY',
+  'PROJECT_X_TRACKER',
+  'PROJECT_X_AGGREGATOR_DOMAINS',
 ];
 
 // The configs and URLs come from a JSON file read at run time, never spliced
@@ -93,7 +93,7 @@ try {
     configs: { recheck30: { scan_history: { recheck_after_days: 30 } }, none: {} },
     urls: [OLD, FRESH, REPEATED],
   }));
-  const env = { ...process.env, CAREER_OPS_ROOT: root };
+  const env = { ...process.env, PROJECT_X_ROOT: root };
   for (const name of SCANNER_PATH_VARS) delete env[name];
   const out = JSON.parse(execFileSync(NODE, [
     '--input-type=module', '-e', probeSource,

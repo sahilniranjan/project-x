@@ -1,4 +1,4 @@
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/wordmark-dark.svg"><img src="docs/wordmark-light.svg" alt="career-ops" width="250" height="56"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/wordmark-dark.svg"><img src="docs/wordmark-light.svg" alt="project-x" width="250" height="56"></picture></p>
 
 <p align="center">オープンソースの AI 求職エージェント。</p>
 
@@ -26,7 +26,7 @@
 
 <!-- The non-breaking spaces (&nbsp;) and word joiners (&#8288;) below decide where each line wraps on a phone. Keep them when editing. -->
 
-<p align="center"><a href="https://github.com/santifer"><img src="docs/avatar-santifer.png" width="48" height="48" align="middle" alt="Santiago Fernández de Valderrama Aparicio"></a>&nbsp;&nbsp;作成者: <a href="https://github.com/santifer"><strong>@santifer</strong></a>、&nbsp;&nbsp;<a href="https://github.com/career-ops-hq/career-ops/blob/main/README.ja.md#builders"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/builders-stack-dark.svg"><img src="docs/builders-stack-light.svg" alt="" height="32" align="middle"></picture></a>&nbsp;&nbsp;<a href="https://github.com/career-ops-hq/career-ops/blob/main/README.ja.md#builders">800+ のコントリビューター</a>と共に</p>
+<p align="center"><a href="https://github.com/santifer"><img src="docs/avatar-santifer.png" width="48" height="48" align="middle" alt="Santiago Fernández de Valderrama Aparicio"></a>&nbsp;&nbsp;作成者: <a href="https://github.com/santifer"><strong>@santifer</strong></a>、&nbsp;&nbsp;<a href="https://github.com/project-x-hq/project-x/blob/main/README.ja.md#builders"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/builders-stack-dark.svg"><img src="docs/builders-stack-light.svg" alt="" height="32" align="middle"></picture></a>&nbsp;&nbsp;<a href="https://github.com/project-x-hq/project-x/blob/main/README.ja.md#builders">800+ のコントリビューター</a>と共に</p>
 
 <p align="center">
 <strong>何か月も履歴書を送り続けて、返&#8288;事&#8288;は&#8288;沈&#8288;黙。</strong><br>
@@ -44,7 +44,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/demo.gif" alt="career-ops のダッシュボードで見る著者自身の求職活動：スコア付きの求人一覧、「応募しない」と印が付いた求人の赤い件数、そして評価レポートの全文" width="800">
+  <img src="docs/demo.gif" alt="project-x のダッシュボードで見る著者自身の求職活動：スコア付きの求人一覧、「応募しない」と印が付いた求人の赤い件数、そして評価レポートの全文" width="800">
 </p>
 
 <p align="center"><sub>私自身の求職活動、その途中経過。UI&nbsp;は&#8288;ス&#8288;ペ&#8288;イ&#8288;ン&#8288;語。</sub></p>
@@ -56,15 +56,15 @@
 
 <p align="center">
   半年後、<strong>私はその仕事を辞めた。</strong><br>
-  今、私たちは career-ops を&#8288;作&#8288;っ&#8288;て&#8288;い&#8288;る。あ&#8288;な&#8288;た&#8288;が&#8288;自&#8288;分&#8288;の&#8288;仕&#8288;事&#8288;を&#8288;つ&#8288;か&#8288;め&#8288;る&#8288;よ&#8288;う&#8288;に。
+  今、私たちは project-x を&#8288;作&#8288;っ&#8288;て&#8288;い&#8288;る。あ&#8288;な&#8288;た&#8288;が&#8288;自&#8288;分&#8288;の&#8288;仕&#8288;事&#8288;を&#8288;つ&#8288;か&#8288;め&#8288;る&#8288;よ&#8288;う&#8288;に。
 </p>
 
-<p align="center"><a href="#あなたの番">求人ひとつで試す&nbsp;↓</a> · <a href="https://santifer.io/career-ops-system">ス&#8288;ト&#8288;ー&#8288;リ&#8288;ー&#8288;の&#8288;全&#8288;文&#8288;を&#8288;読&#8288;む&nbsp;→</a></p>
-<p align="center"><sub>ターミナルは使いたくないですか？ <a href="https://career-ops.org/waitlist?ref=readme-ja">Web版のウェイトリストに登録する&nbsp;→</a></sub></p>
+<p align="center"><a href="#あなたの番">求人ひとつで試す&nbsp;↓</a> · <a href="https://santifer.io/project-x-system">ス&#8288;ト&#8288;ー&#8288;リ&#8288;ー&#8288;の&#8288;全&#8288;文&#8288;を&#8288;読&#8288;む&nbsp;→</a></p>
+<p align="center"><sub>ターミナルは使いたくないですか？ <a href="https://project-x.org/waitlist?ref=readme-ja">Web版のウェイトリストに登録する&nbsp;→</a></sub></p>
 
 <br>
 
-<p align="center"><a href="HIRED.md"><img src="docs/hired-badge.svg" alt="Hired with career-ops: public stories on the record"></a></p>
+<p align="center"><a href="HIRED.md"><img src="docs/hired-badge.svg" alt="Hired with project-x: public stories on the record"></a></p>
 
 <p align="center">私の後に来た人たちが、どうやって採用されたかを書き残してくれた。</p>
 
@@ -72,9 +72,9 @@
   <a href="HIRED.md"><img src="docs/hired-wall.svg" alt="開いて読める採用ストーリー" width="800"></a>
 </p>
 
-<p align="center"><sub>どのカードも、開いて読める公開 Issue。あなたも決まった？ <a href="https://github.com/career-ops-hq/career-ops/issues/new?template=i-got-hired.yml">カードを残す →</a></sub></p>
+<p align="center"><sub>どのカードも、開いて読める公開 Issue。あなたも決まった？ <a href="https://github.com/project-x-hq/project-x/issues/new?template=i-got-hired.yml">カードを残す →</a></sub></p>
 
-<p align="center">⭐ <strong>career-ops&nbsp;が役に立ったなら、ス&#8288;タ&#8288;ー&#8288;ひ&#8288;と&#8288;つ&#8288;で、次&#8288;の&#8288;人&#8288;が&#8288;見&#8288;つ&#8288;け&#8288;や&#8288;す&#8288;く&#8288;な&#8288;る。</strong></p>
+<p align="center">⭐ <strong>project-x&nbsp;が役に立ったなら、ス&#8288;タ&#8288;ー&#8288;ひ&#8288;と&#8288;つ&#8288;で、次&#8288;の&#8288;人&#8288;が&#8288;見&#8288;つ&#8288;け&#8288;や&#8288;す&#8288;く&#8288;な&#8288;る。</strong></p>
 
 <br>
 
@@ -99,7 +99,7 @@
 今夜応募しようとしていた求人をひとつ貼り付けてみてほしい。<em>応募しない</em>と返ってきたら、その夜を取り戻したということ。プランと一緒に返ってきたら、次にやることは分かっている。
 
 ```bash
-npx @santifer/career-ops init
+npx @santifer/project-x init
 ```
 
 <p align="center"><sub>オープンソース。ローカル実行。すでに使っている AI CLI の中で。<a href="docs/RUNNING_ON_A_BUDGET.md">無料モデルとローカルモデルにも対応。</a></sub></p>
@@ -111,15 +111,15 @@ npx @santifer/career-ops init
 
 > より少なく、より良く応募する。量より信号。キーワードより根拠。決めるのは人間。ローカルファースト。テーブルの両側に尊厳を。
 
-<p align="center"><a href="https://career-ops.org/manifesto?utm_source=readme"><img src="https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcareer-ops-hq%2Fcareer-ops%2Fmain%2FSIGNATURES.md&search=n%3A(%5Cd%2B)%5Cs*%24&replace=%241%20signatories&label=THE%20CAREEROPS%20MANIFESTO&color=DD7627&style=for-the-badge&labelColor=2b3137" alt="CareerOps マニフェスト：署名者数（ライブ）"></a></p>
+<p align="center"><a href="https://project-x.org/manifesto?utm_source=readme"><img src="https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fproject-x-hq%2Fproject-x%2Fmain%2FSIGNATURES.md&search=n%3A(%5Cd%2B)%5Cs*%24&replace=%241%20signatories&label=THE%20PROJECTX%20MANIFESTO&color=DD7627&style=for-the-badge&labelColor=2b3137" alt="ProjectX マニフェスト：署名者数（ライブ）"></a></p>
 
 <p align="center">その中の何人かの、自身の言葉。</p>
 
 <p align="center">
-  <a href="https://career-ops.org/manifesto?utm_source=readme"><img src="docs/manifesto-wall.svg" alt="CareerOps マニフェストへの三つの署名、それぞれの言葉で" width="800"></a>
+  <a href="https://project-x.org/manifesto?utm_source=readme"><img src="docs/manifesto-wall.svg" alt="ProjectX マニフェストへの三つの署名、それぞれの言葉で" width="800"></a>
 </p>
 
-<p align="center"><sub>すべての署名は、監査できるコミット。<a href="https://career-ops.org/manifesto?utm_source=readme">全部読むか、あなたの署名を加える →</a></sub></p>
+<p align="center"><sub>すべての署名は、監査できるコミット。<a href="https://project-x.org/manifesto?utm_source=readme">全部読むか、あなたの署名を加える →</a></sub></p>
 
 <br>
 
@@ -131,21 +131,21 @@ npx @santifer/career-ops init
 
 [修正はここで書かれる](CONTRIBUTING.md)。クラブではなく、部屋。**一緒に作ろう。**
 
-<p align="center"><a href="https://discord.gg/8pRpHETxa4"><img src="docs/discord-badge.svg" alt="Discord：career-ops サーバーのメンバー数（ライブ）"></a></p>
+<p align="center"><a href="https://discord.gg/8pRpHETxa4"><img src="docs/discord-badge.svg" alt="Discord：project-x サーバーのメンバー数（ライブ）"></a></p>
 
 ## スポンサー
 
-career-ops は求職者にとって永久に無料。以下の企業がこのプロジェクトをスポンサーしている：
+project-x は求職者にとって永久に無料。以下の企業がこのプロジェクトをスポンサーしている：
 
 <p align="center">
-  <a href="https://serpapi.com/career-ops-org" title="SerpApi"><img src="docs/sponsors/serpapi.svg" alt="SerpApi" height="48"></a>
+  <a href="https://serpapi.com/project-x-org" title="SerpApi"><img src="docs/sponsors/serpapi.svg" alt="SerpApi" height="48"></a>
 </p>
 
 <p align="center"><strong>SerpApi</strong> · Build a portfolio project with live search data. SerpApi gives developers structured JSON/Markdown from Google Search, Maps, Shopping, and other engines through a simple API call.</p>
 
 > スポンサーシップが買うのは明確に表示された露出であって、影響力ではない。どんな金額もロードマップを変えず、プロダクトの中に何も置かない。スポンサーが評価、順位付け、推薦に現れることは決してない。
 
-## career-ops があなたにしてくれること
+## project-x があなたにしてくれること
 
 求人を貼り付ける。その夜を使う価値があるかを教えてくれる。
 
@@ -160,7 +160,7 @@ career-ops は求職者にとって永久に無料。以下の企業がこのプ
 
 初回起動時に、それらすべてをチャットで尋ねる。手で設定するものは何もない。
 
-## career-ops がやらないこと
+## project-x がやらないこと
 
 - **応募を自動で送信すること。** すべての項目の回答の下書きは作る。確認して送信ボタンを押すのはあなた。スクリプトは決して POST しない（`prepare-application.mjs`）。
 - **メールを送る。** 下書きのみ。このコードベースにメール送信の仕組みはどこにもありません。
@@ -176,7 +176,7 @@ career-ops は求職者にとって永久に無料。以下の企業がこのプ
 | **A-H 評価**             | 職務サマリー、CV との適合（この求人で各要件がどれだけ重要か、その重みが求人票の文言・構造・推定のどれに由来するかを要件ごとにラベル付け。推定は決して最上位帯にならない）、レベル戦略、報酬リサーチ、パーソナライズ、面接準備（STAR+R）、さらにブロック G の求人の正当性チェック（まだ募集中か、再掲載か：判定ではなく観察）と、ビザスポンサーなしを明記した求人票を絶対的なブロッカーとして示す就労許可シグナル |
 | **Human-in-the-Loop**    | AI が評価して推薦し、あなたが決めて行動する。システムが応募を送信することは決してありません。最終判断は常にあなたのものです <!-- hitl: absolute guarantee. Do not add "automatically", "by itself", "without your permission" or any other hedge when translating this row. -->               |
 | **ATS 向け PDF 生成**    | あなた自身の経験をもとに求人票ごとに調整した、ATS が読み取れる CV（Space Grotesk + DM Sans のデザイン）                                     |
-| **カバーレター生成**     | リサーチに基づくカバーレター。キーワードの反映、4 つの対話式の切り口（理由／課題／アプローチ／トーン）、チャット内での下書き承認、CV と同じ HTML + Playwright パイプラインによる A4 PDF。評価のたびに自動で下書きし、`/career-ops cover` で必要なときに仕上げて生成 |
+| **カバーレター生成**     | リサーチに基づくカバーレター。キーワードの反映、4 つの対話式の切り口（理由／課題／アプローチ／トーン）、チャット内での下書き承認、CV と同じ HTML + Playwright パイプラインによる A4 PDF。評価のたびに自動で下書きし、`/project-x cover` で必要なときに仕上げて生成 |
 | **CV の先へ**            | 企業調査（[`deep`](modes/deep.md)）は AI 戦略、最近の動き、エンジニアリング文化、あなたのプロフィールが取るべき角度を明らかにします。連絡先の発見（[`contacto`](modes/contacto.md)）は、連絡する価値のある採用責任者・リクルーター・チームメンバーを特定し、相手のタイプに合わせた 300 文字以内の LinkedIn メッセージを下書きします。正式な応募メールの下書き（[`email`](modes/email.md)）は、評価済みレポートや貼り付けた求人票を件名・本文・添付チェックリストに変えます。何も送信・提出・クリックしません。応募はあなたを列に並ばせる。調査は会話を生む。 |
 | **パターン分析**         | 不採用パターンと ATS チャネル別の通過率（`analyze-patterns.mjs`）、求職全体のファネル統計（`stats.mjs`）、ゴーストジョブの兆候かもしれない再掲載の検出（`detect-reposts.mjs`） |
 
@@ -188,7 +188,7 @@ career-ops は求職者にとって永久に無料。以下の企業がこのプ
 | **自動パイプライン**     | URL を貼るだけで、完全な評価 + PDF + トラッカー登録                                                                                       |
 | **面接ストーリーバンク** | 評価をまたいで STAR+Reflection のストーリーを蓄積：実際に受ける行動面接の質問に合わせて調整できる 5〜10 本のマスターストーリー                            |
 | **交渉スクリプト**       | 給与交渉のフレームワーク、地域差による減額への反論、競合オファーの活用                                                                     |
-| **応募メールの下書き**   | レポートまたは貼り付けた求人票から、リクルーター向け・紹介向け・コールド応募向けの正式なメールを作成。件名、添付チェックリスト、根拠付きの適合ポイント、プロフィール由来の連絡先ブロック付き。下書きのみ：career-ops は決して送信・提出・クリックしません。 |
+| **応募メールの下書き**   | レポートまたは貼り付けた求人票から、リクルーター向け・紹介向け・コールド応募向けの正式なメールを作成。件名、添付チェックリスト、根拠付きの適合ポイント、プロフィール由来の連絡先ブロック付き。下書きのみ：project-x は決して送信・提出・クリックしません。 |
 | **ポータルスキャナー**   | 100 社以上を事前設定（Anthropic、OpenAI、ElevenLabs、Retool、n8n…）+ Ashby、Greenhouse、Lever、Wellfound を横断するカスタム Web 検索クエリ |
 | **資金調達企業の発見**   | レビュー優先の `company:funded` コマンドが、構造化された公開フィードから最近資金調達した企業とソース診断を表示。あなたのデータは編集しません |
 | **バッチ処理**           | ヘッドレス CLI ワーカー（`claude -p` / `opencode run`）による並列評価                                                                     |
@@ -210,28 +210,28 @@ career-ops は求職者にとって永久に無料。以下の企業がこのプ
 **いちばん速い方法、コマンド 1 つで：**
 
 ```bash
-npx @santifer/career-ops init
+npx @santifer/project-x init
 ```
 
 > 💡 `npx` は [Node.js](https://nodejs.org) に同梱されています：グローバルに何もインストールせず、
 > インストーラーを 1 回だけ実行します。Node がまだ？ 先にインストールしてください。
 > （すでに Claude Code / Codex の CLI を使っている？ ならもう入っています。）
 
-これで最新リリースが `./career-ops` にクローンされ、依存関係がインストールされます。次に：
+これで最新リリースが `./project-x` にクローンされ、依存関係がインストールされます。次に：
 
 ```bash
-cd career-ops
+cd project-x
 claude   # or codex / qwen / opencode / agy / grok — open your AI CLI here
 ```
 
-**初回起動時、career-ops は会話だけでセットアップ（CV、プロフィール、目標とする職種）を案内します。手で編集するものはありません。**
+**初回起動時、project-x は会話だけでセットアップ（CV、プロフィール、目標とする職種）を案内します。手で編集するものはありません。**
 
 <details>
 <summary><b>手動でセットアップしたい？（git clone）</b></summary>
 
 ```bash
-git clone https://github.com/career-ops-hq/career-ops.git
-cd career-ops && npm install
+git clone https://github.com/project-x-hq/project-x.git
+cd project-x && npm install
 npx playwright install chromium   # only needed for PDF generation
 # On a non-Debian/Ubuntu Linux distro (Fedora, Arch, ...), Chromium's system
 # libraries aren't installed by the line above — install them yourself with
@@ -258,14 +258,14 @@ claude   # or codex / opencode / qwen / agy / grok
 ### グローバルインストール
 
 ```bash
-npm i -g @santifer/career-ops
+npm i -g @santifer/project-x
 ```
 
-これで `career-ops` バイナリがグローバルにインストールされ、`npx` なしで `career-ops init [folder]` を実行できます。`init` が唯一のコマンドです。ワークスペースを用意するだけで、その後の作業はすべてこのバイナリではなく AI コーディング CLI の中で行います（下の「使い方」を参照）。
+これで `project-x` バイナリがグローバルにインストールされ、`npx` なしで `project-x init [folder]` を実行できます。`init` が唯一のコマンドです。ワークスペースを用意するだけで、その後の作業はすべてこのバイナリではなく AI コーディング CLI の中で行います（下の「使い方」を参照）。
 
 **どちらを使うべき？**
-- `npx @santifer/career-ops init`：初回利用に最適。専用のプロジェクトフォルダを作ります。
-- `npm i -g @santifer/career-ops`：`npx` 形式より `career-ops init` と打ちたい場合に。ほかのコマンドは増えません。
+- `npx @santifer/project-x init`：初回利用に最適。専用のプロジェクトフォルダを作ります。
+- `npm i -g @santifer/project-x`：`npx` 形式より `project-x init` と打ちたい場合に。ほかのコマンドは増えません。
 
 ### そのほかの実行方法
 
@@ -274,23 +274,23 @@ npm i -g @santifer/career-ops
 
 > **このシステムは、あなたの AI コーディング CLI 自身がカスタマイズするように設計されています。** モード、アーキタイプ、スコアの重み、交渉スクリプト：変えてほしいと頼むだけです。CLI は自分が使っているファイルをそのまま読むので、何を編集すべきか正確に分かっています。
 
-完全なセットアップガイドは [docs/SETUP.md](docs/SETUP.md)、カスタムモデルやローカルモデルで career-ops を安く動かす方法は [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md)（Antigravity CLI の無料枠でコストゼロで動かす方法は [docs/FREE_TIER.md](docs/FREE_TIER.md)）、定期スキャンのスケジュールとトークンを使わない選別からショートリストまでのレシピは [docs/AUTOMATION.md](docs/AUTOMATION.md)、ATS 自動入力フローの詳細は [docs/APPLY_AUTOFILL.md](docs/APPLY_AUTOFILL.md)、LinkedIn のつながりエクスポートをファネル内の企業と突き合わせる方法は [docs/LINKEDIN_JOIN.md](docs/LINKEDIN_JOIN.md)、よくあるセットアップの質問への回答は [docs/FAQ.md](docs/FAQ.md) を参照してください（[ストーリーの出所管理がでっち上げの数字を防ぐ仕組み](docs/FAQ.md#why-does-career-ops-refuse-to-use-a-number-from-my-story-bank)も含みます）。設計原則は [ARCHITECTURE.md](ARCHITECTURE.md) に、実行時のフローは [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) にあります。
+完全なセットアップガイドは [docs/SETUP.md](docs/SETUP.md)、カスタムモデルやローカルモデルで project-x を安く動かす方法は [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md)（Antigravity CLI の無料枠でコストゼロで動かす方法は [docs/FREE_TIER.md](docs/FREE_TIER.md)）、定期スキャンのスケジュールとトークンを使わない選別からショートリストまでのレシピは [docs/AUTOMATION.md](docs/AUTOMATION.md)、ATS 自動入力フローの詳細は [docs/APPLY_AUTOFILL.md](docs/APPLY_AUTOFILL.md)、LinkedIn のつながりエクスポートをファネル内の企業と突き合わせる方法は [docs/LINKEDIN_JOIN.md](docs/LINKEDIN_JOIN.md)、よくあるセットアップの質問への回答は [docs/FAQ.md](docs/FAQ.md) を参照してください（[ストーリーの出所管理がでっち上げの数字を防ぐ仕組み](docs/FAQ.md#why-does-project-x-refuse-to-use-a-number-from-my-story-bank)も含みます）。設計原則は [ARCHITECTURE.md](ARCHITECTURE.md) に、実行時のフローは [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) にあります。
 
 ## 使い方
 
-求人の URL または説明文を AI CLI に貼り付けます。career-ops は、リンク付きの求人がまだ掲載中かを確認し（貼り付けたテキストには確認できるリンクがありません）、あなたの CV に照らしてスコアを付け、レポートを書き、CV を調整して（既定では PDF）、トラッカーに 1 行追加します。ほとんどの日はこれで足ります。それ以外はすべて、名前を指定して呼び出すモードです。求人を読み取れない場合、パイプラインは止まってテキストの貼り付けを求めます。
+求人の URL または説明文を AI CLI に貼り付けます。project-x は、リンク付きの求人がまだ掲載中かを確認し（貼り付けたテキストには確認できるリンクがありません）、あなたの CV に照らしてスコアを付け、レポートを書き、CV を調整して（既定では PDF）、トラッカーに 1 行追加します。ほとんどの日はこれで足ります。それ以外はすべて、名前を指定して呼び出すモードです。求人を読み取れない場合、パイプラインは止まってテキストの貼り付けを求めます。
 
 ### モードの呼び出し方
 
 | CLI | `scan` の呼び出し方 |
 | --- | --- |
-| Claude Code, OpenCode, Antigravity CLI (`agy`), Grok Build CLI | `/career-ops scan` |
-| Pi | `/skill:career-ops scan` |
-| Codex、Qwen、Cursor、その他の対応 CLI | 普通の言葉で：「Run the career-ops scan mode」 |
+| Claude Code, OpenCode, Antigravity CLI (`agy`), Grok Build CLI | `/project-x scan` |
+| Pi | `/skill:project-x scan` |
+| Codex、Qwen、Cursor、その他の対応 CLI | 普通の言葉で：「Run the project-x scan mode」 |
 
-`/career-ops` だけを入力するとコマンドメニューが表示されます（これを使う CLI の場合）。普通の言葉は対応するどの CLI でも使えます。Claude Code のプラグインとして使う場合、コマンドは `/career-ops:career-ops` です。
+`/project-x` だけを入力するとコマンドメニューが表示されます（これを使う CLI の場合）。普通の言葉は対応するどの CLI でも使えます。Claude Code のプラグインとして使う場合、コマンドは `/project-x:project-x` です。
 
-どの CLI も 1 つのルーター `.agents/skills/career-ops/SKILL.md` と同じ `modes/*.md` ファイルを共有しているため、どの CLI でもリクエストは同じように振り分けられます（ブラウザを多用するモードには Playwright ツールも必要です）。Codex ではスラッシュコマンドは保証されません。普通の言葉で頼むか、`codex exec "Evaluate this JD with career-ops auto-pipeline: https://company.com/jobs/123"` でプロンプトを 1 つヘッドレス実行してください（[docs/CODEX.md](docs/CODEX.md)）。対応する各 CLI での実行方法、ヘッドレスコマンドがある CLI のそのコマンド、CLI ごとのセットアップ上の注意は [docs/SUPPORTED_CLIS.md](docs/SUPPORTED_CLIS.md) にあります。
+どの CLI も 1 つのルーター `.agents/skills/project-x/SKILL.md` と同じ `modes/*.md` ファイルを共有しているため、どの CLI でもリクエストは同じように振り分けられます（ブラウザを多用するモードには Playwright ツールも必要です）。Codex ではスラッシュコマンドは保証されません。普通の言葉で頼むか、`codex exec "Evaluate this JD with project-x auto-pipeline: https://company.com/jobs/123"` でプロンプトを 1 つヘッドレス実行してください（[docs/CODEX.md](docs/CODEX.md)）。対応する各 CLI での実行方法、ヘッドレスコマンドがある CLI のそのコマンド、CLI ごとのセットアップ上の注意は [docs/SUPPORTED_CLIS.md](docs/SUPPORTED_CLIS.md) にあります。
 
 ### 日常的に使うコマンド
 
@@ -389,7 +389,7 @@ npm i -g @santifer/career-ops
 | コマンド | できること |
 | --- | --- |
 | [`agent-inbox`](modes/agent-inbox.md) | 次のセッションへの依頼をキューに入れ、そのときに処理する（`data/agent-inbox.md`）。`inbox` でも動作 |
-| [`update`](modes/update.md) | career-ops のシステムファイルを更新（差分プレビューと互換性チェック付き） |
+| [`update`](modes/update.md) | project-x のシステムファイルを更新（差分プレビューと互換性チェック付き） |
 
 </details>
 
@@ -432,7 +432,7 @@ npm run build:dashboard   # optional: build the standalone binary
 ## プロジェクト構成
 
 ```
-career-ops/
+project-x/
 ├── AGENTS.md                    # Canonical agent instructions (all CLIs)
 ├── CLAUDE.md                    # Claude Code wrapper (imports AGENTS.md)
 ├── CODEX.md                     # Codex wrapper (imports AGENTS.md)
@@ -473,20 +473,20 @@ career-ops/
 
 個人データをコードから分離するには（ブランチの切り替え、更新の取り込み、複数プロフィールのテストが楽になります）、次の優先順位で外部データディレクトリを設定できます：
 
-1. **環境変数：** `CAREER_OPS_ROOT` または `CAREER_OPS_DATA_DIR` を設定します：
+1. **環境変数：** `PROJECT_X_ROOT` または `PROJECT_X_DATA_DIR` を設定します：
    ```bash
-   export CAREER_OPS_ROOT=~/my-career-data
+   export PROJECT_X_ROOT=~/my-career-data
    ```
-2. **マーカーファイル：** リポジトリのルートに、データディレクトリのパスを書いた `.career-ops-data` ファイルを作ります。
+2. **マーカーファイル：** リポジトリのルートに、データディレクトリのパスを書いた `.project-x-data` ファイルを作ります。
 3. **デフォルト：** リポジトリのルートになります。
 
 解決されると、すべてのユーザーファイルはそのフォルダを基準に解決・書き込みされ、プロンプトファイルとスクリプトは引き続きリポジトリを基準に解決されます。
 
-- **トラッカーの上書き：** `CAREER_OPS_TRACKER` を設定して、応募トラッカーファイルのパスを直接上書きすることもできます。
+- **トラッカーの上書き：** `PROJECT_X_TRACKER` を設定して、応募トラッカーファイルのパスを直接上書きすることもできます。
 - **書き込み：** すべての書き込み操作（マージなど）は正規に `{DATA_ROOT}/data/applications.md` を対象とします。
 - **スキャナーの設定：** `portals.yml` は `{DATA_ROOT}/portals.yml` で読み込まれ検証されるので、`node validate-portals.mjs` は `scan.mjs` が読むのと同じファイルをチェックします。
-- **生成されるドキュメント：** 調整済みの CV とカバーレターは `{DATA_ROOT}/output/` の下に書き込まれ、それらをレポートに結び付ける PDF マニフェストは `{DATA_ROOT}/data/pdf-index.tsv` にあります。`CAREER_OPS_TRACKER` が未設定の間は、これらの書き込み先を限定するトラッカーのワークスペースはデータルートであり、チェックアウトではありません。
-- **トラッカー上書き時の PDF：** `generate-pdf.mjs` はワークスペースを決める前に `CAREER_OPS_TRACKER` を解決します。そのため上書きが設定されていると、ワークスペースはそのトラッカーを含むフォルダ（トラッカーが `data/` フォルダにある場合はその一つ上のフォルダ）になります。このとき CV の HTML とすべての PDF はそのワークスペース内に置く必要があり、マニフェストはその `data/pdf-index.tsv` に移ります。カバーレターは引き続き `{DATA_ROOT}/output/` を対象とするため、そのフォルダがトラッカーのワークスペースの外にある場合は拒否されます。
+- **生成されるドキュメント：** 調整済みの CV とカバーレターは `{DATA_ROOT}/output/` の下に書き込まれ、それらをレポートに結び付ける PDF マニフェストは `{DATA_ROOT}/data/pdf-index.tsv` にあります。`PROJECT_X_TRACKER` が未設定の間は、これらの書き込み先を限定するトラッカーのワークスペースはデータルートであり、チェックアウトではありません。
+- **トラッカー上書き時の PDF：** `generate-pdf.mjs` はワークスペースを決める前に `PROJECT_X_TRACKER` を解決します。そのため上書きが設定されていると、ワークスペースはそのトラッカーを含むフォルダ（トラッカーが `data/` フォルダにある場合はその一つ上のフォルダ）になります。このとき CV の HTML とすべての PDF はそのワークスペース内に置く必要があり、マニフェストはその `data/pdf-index.tsv` に移ります。カバーレターは引き続き `{DATA_ROOT}/output/` を対象とするため、そのフォルダがトラッカーのワークスペースの外にある場合は拒否されます。
 - **コード層は動かない：** `node_modules/`、`providers/`、`modes/`、そしてスクリプト自体は常にリポジトリを基準に解決され、データルートを基準にすることはありません。
 
 Go のダッシュボード TUI、Node.js スクリプト、AI エージェントモードのすべてが、この解決の階層を自動的に尊重します。
@@ -508,7 +508,7 @@ Go のダッシュボード TUI、Node.js スクリプト、AI エージェン�
 - **データ**：Markdown テーブル + YAML 設定 + TSV バッチファイル
 
 <p align="center">
-  <a href="https://github.com/career-ops-hq/career-ops/releases/latest"><img src="docs/npm-badge.svg" alt="Latest release"></a>
+  <a href="https://github.com/project-x-hq/project-x/releases/latest"><img src="docs/npm-badge.svg" alt="Latest release"></a>
 </p>
 
 <p align="center">
@@ -541,43 +541,43 @@ Go のダッシュボード TUI、Node.js スクリプト、AI エージェン�
 
 ## FAQ
 
-**career-ops とは何ですか？**
-career-ops（[career-ops.org](https://career-ops.org)、別名 **careerops**） は、あなたの AI コーディング CLI（Claude Code、Codex、OpenCode など）の中でローカルで動くオープンソースの AI 求職ツールで、すべての判断をあなたに委ねます。求人を CV と照らして評価し、ATS 向けに調整した PDF を生成し、連絡すべき相手を見つけ、すべてを一か所で追跡します：最終判断は常にあなたのものです。[CareerOps マニフェスト](https://career-ops.org/manifesto)の最初のリファレンス実装です。
+**project-x とは何ですか？**
+project-x（[project-x.org](https://project-x.org)、別名 **projectx**） は、あなたの AI コーディング CLI（Claude Code、Codex、OpenCode など）の中でローカルで動くオープンソースの AI 求職ツールで、すべての判断をあなたに委ねます。求人を CV と照らして評価し、ATS 向けに調整した PDF を生成し、連絡すべき相手を見つけ、すべてを一か所で追跡します：最終判断は常にあなたのものです。[ProjectX マニフェスト](https://project-x.org/manifesto)の最初のリファレンス実装です。
 
 **カスタマイズされた履歴書が事実をでっち上げることはありますか？**
-あってはならず、プロンプトにもそう書いてあります：言い換えはしても、でっち上げはしない。`generate-pdf` は、あなたの情報源にない数字や事実を含む CV をブロックします（`--skip-fact-check` を渡した場合を除く）。`pdf` モードは `cv-title-check.mjs` も実行します。これはカスタマイズした CV の各職名を、cv.md に書かれた同じ職歴（会社と期間で照合）の職名と比べ、違いがあれば残すか元に戻すかをあなたに確認します。職名の言い回しを変えるのはあなたの判断であることもあるため、警告するだけでブロックはしません。言い換えの判断はまだ何もしません：[#1411](https://github.com/career-ops-hq/career-ops/issues/1411)（不一致なら止める忠実性チェック）がそれを追跡しています。それまでは、送る前にすべての履歴書を読んでください。[免責事項](LEGAL_DISCLAIMER.md) にも同じことがより長く書いてあります。
+あってはならず、プロンプトにもそう書いてあります：言い換えはしても、でっち上げはしない。`generate-pdf` は、あなたの情報源にない数字や事実を含む CV をブロックします（`--skip-fact-check` を渡した場合を除く）。`pdf` モードは `cv-title-check.mjs` も実行します。これはカスタマイズした CV の各職名を、cv.md に書かれた同じ職歴（会社と期間で照合）の職名と比べ、違いがあれば残すか元に戻すかをあなたに確認します。職名の言い回しを変えるのはあなたの判断であることもあるため、警告するだけでブロックはしません。言い換えの判断はまだ何もしません：[#1411](https://github.com/project-x-hq/project-x/issues/1411)（不一致なら止める忠実性チェック）がそれを追跡しています。それまでは、送る前にすべての履歴書を読んでください。[免責事項](LEGAL_DISCLAIMER.md) にも同じことがより長く書いてあります。
 
-**career-ops を無料で、あるいはより安価なモデルやローカルモデルで動かせますか？**
-はい。career-ops は CLI に依存せず、無料モデルやローカルモデル（OpenRouter の無料モデル、Ollama、または OpenAI 互換のエンドポイント）で動くので、有料サブスクリプションに縛られません。完全なセットアップは [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md) を参照してください。
+**project-x を無料で、あるいはより安価なモデルやローカルモデルで動かせますか？**
+はい。project-x は CLI に依存せず、無料モデルやローカルモデル（OpenRouter の無料モデル、Ollama、または OpenAI 互換のエンドポイント）で動くので、有料サブスクリプションに縛られません。完全なセットアップは [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md) を参照してください。
 
-**Claude Pro/Max に課金しているのに、career-ops が API クレジットを消費しています。なぜ？**
+**Claude Pro/Max に課金しているのに、project-x が API クレジットを消費しています。なぜ？**
 環境変数の `ANTHROPIC_API_KEY` がログイン済みのサブスクリプションより優先されるからです：CLI はそのキーを使い、トークン単位で課金されます。`echo $ANTHROPIC_API_KEY` を実行して何か表示されたら、シェルのプロファイルから削除し、ターミナルを再起動して `/login` を実行してください。バッチモードは例外で、`claude -p` のワーカーは対話型ログインを使いません：`claude setup-token` を 1 回実行し、その結果を `CLAUDE_CODE_OAUTH_TOKEN` としてエクスポートしてください。完全な手順は [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md#2b-already-paying-for-a-subscription-make-sure-you-are-using-it) にあります。
 
-**career-ops はどの AI CLI で動きますか？**
-career-ops はオープンな Agent Skill Standard を通じて、主要な AI コーディング CLI（Claude Code、Codex、Gemini / Antigravity、OpenCode、Grok、Qwen など）のどれでも動くので、特定のベンダーにロックされることはありません。すでに持っている CLI を使ってください。
+**project-x はどの AI CLI で動きますか？**
+project-x はオープンな Agent Skill Standard を通じて、主要な AI コーディング CLI（Claude Code、Codex、Gemini / Antigravity、OpenCode、Grok、Qwen など）のどれでも動くので、特定のベンダーにロックされることはありません。すでに持っている CLI を使ってください。
 
 **Windows にはどうインストールしますか？**
-career-ops は Windows で動きます。プラットフォーム固有のセットアップと既知の落とし穴（Git Bash の検出、改行コード、タスクスケジューラ）は [docs/WINDOWS.md](docs/WINDOWS.md) にあります。インストール中にシンボリックリンクのエラーでスキルが読み込めない場合、対処法は [docs/FAQ.md](docs/FAQ.md) にあります。完全な手順は [docs/SETUP.md](docs/SETUP.md) を参照してください。
+project-x は Windows で動きます。プラットフォーム固有のセットアップと既知の落とし穴（Git Bash の検出、改行コード、タスクスケジューラ）は [docs/WINDOWS.md](docs/WINDOWS.md) にあります。インストール中にシンボリックリンクのエラーでスキルが読み込めない場合、対処法は [docs/FAQ.md](docs/FAQ.md) にあります。完全な手順は [docs/SETUP.md](docs/SETUP.md) を参照してください。
 
-**career-ops は私の代わりに自動で応募しますか？**
-いいえ。career-ops はフィルターであって、数を撃つ自動応募ツールではありません。AI が評価し、順位を付け、下書きを作り、あなたが確認して決めます。下書きも入力もしますが、送信は決してしません。送信ボタンを押すのはあなたです。この Human-in-the-Loop の設計こそが核心です。
+**project-x は私の代わりに自動で応募しますか？**
+いいえ。project-x はフィルターであって、数を撃つ自動応募ツールではありません。AI が評価し、順位を付け、下書きを作り、あなたが確認して決めます。下書きも入力もしますが、送信は決してしません。送信ボタンを押すのはあなたです。この Human-in-the-Loop の設計こそが核心です。
 
-**career-ops は無料でオープンソースですか？**
-はい。career-ops は無料でオープンソースであり、候補者にとってはこれからもずっとそうです。これは [CareerOps マニフェスト](https://career-ops.org/manifesto)の最初のリファレンス実装です。読んで、あなたの信じることが書いてあるなら、署名してください。
+**project-x は無料でオープンソースですか？**
+はい。project-x は無料でオープンソースであり、候補者にとってはこれからもずっとそうです。これは [ProjectX マニフェスト](https://project-x.org/manifesto)の最初のリファレンス実装です。読んで、あなたの信じることが書いてあるなら、署名してください。
 
 ## 作者について
 
-[Santiago Fernández de Valderrama Aparicio](https://santifer.io/about)（santifer）です。元創業者で、事業を立ち上げて売却しました。その事業は今も私の名前を冠して稼働しています。career-ops は自分自身の求職活動を管理するために作ったもので、実際に機能しました：Head of Applied AI のポジションを得たのです。その半年後、career-ops の開発にフルタイムで専念するため、そのポジションを離れました。
+[Santiago Fernández de Valderrama Aparicio](https://santifer.io/about)（santifer）です。元創業者で、事業を立ち上げて売却しました。その事業は今も私の名前を冠して稼働しています。project-x は自分自身の求職活動を管理するために作ったもので、実際に機能しました：Head of Applied AI のポジションを得たのです。その半年後、project-x の開発にフルタイムで専念するため、そのポジションを離れました。
 
-この規模のリポジトリが、AI エージェントの一団と、すべてのマージを決める一人の人間によってどうメンテナンスされているか気になりますか？ [Agentic maintenance: how career-ops is run by a fleet of AI agents](https://santifer.io/ai-agent-fleet) を読んでください。
+この規模のリポジトリが、AI エージェントの一団と、すべてのマージを決める一人の人間によってどうメンテナンスされているか気になりますか？ [Agentic maintenance: how project-x is run by a fleet of AI agents](https://santifer.io/ai-agent-fleet) を読んでください。
 
 ポートフォリオと他のオープンソースプロジェクト → [santifer.io](https://santifer.io)
 
-Wikidata：[Santiago Fernández de Valderrama Aparicio](https://www.wikidata.org/wiki/Q138710224) · [career-ops](https://www.wikidata.org/wiki/Q139007988)。
+Wikidata：[Santiago Fernández de Valderrama Aparicio](https://www.wikidata.org/wiki/Q138710224) · [project-x](https://www.wikidata.org/wiki/Q139007988)。
 
 ## 免責事項
 
-**career-ops はローカルで動くオープンソースのツールであり、ホスティングサービスではありません。** このソフトウェアを使用することで、次の点に同意したものとみなされます：
+**project-x はローカルで動くオープンソースのツールであり、ホスティングサービスではありません。** このソフトウェアを使用することで、次の点に同意したものとみなされます：
 
 1. **データはあなたが管理します。** CV、連絡先、個人データはあなたのマシンに留まり、あなたが選んだ AI プロバイダー（Anthropic、OpenAI など）に直接送られます。私たちはあなたのデータを収集・保存・閲覧しません。
 2. **AI はあなたが管理します。** デフォルトのプロンプトは AI に応募を自動送信しないよう指示していますが、AI モデルは予測不能な振る舞いをすることがあります。プロンプトを変更したり別のモデルを使ったりする場合は自己責任です。**送信前に、AI が生成した内容の正確さを必ず確認してください。**
@@ -588,19 +588,19 @@ Wikidata：[Santiago Fernández de Valderrama Aparicio](https://www.wikidata.org
 
 ## コントリビューター
 
-<a href="https://github.com/career-ops-hq/career-ops/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=career-ops-hq/career-ops&v=2" />
+<a href="https://github.com/project-x-hq/project-x/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=project-x-hq/project-x&v=2" />
 </a>
 
 コード、ドキュメント、翻訳、テストを提供したすべての人は
 [CONTRIBUTORS.md](CONTRIBUTORS.md) に載っています。上のグラフには表示されない
 コード以外の貢献も含みます。
 
-career-ops で採用された？ [あなたのストーリーを共有してください！](https://github.com/career-ops-hq/career-ops/issues/new?template=i-got-hired.yml)
+project-x で採用された？ [あなたのストーリーを共有してください！](https://github.com/project-x-hq/project-x/issues/new?template=i-got-hired.yml)
 
 ## ライセンスと商標
 
-コードは [MIT](LICENSE) ライセンスです。「career-ops」の名称と
+コードは [MIT](LICENSE) ライセンスです。「project-x」の名称と
 ブランドは[商標ポリシー](TRADEMARK.md)に従います。コミュニティでの利用には
 寛容で、商用製品の命名と推奨には制限があります。
 
@@ -612,7 +612,7 @@ career-ops で採用された？ [あなたのストーリーを共有してく�
   <a href="https://warpchart.dev/hq">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://warpchart.dev/api/chart?theme=dark&v=3">
-      <img alt="Live star telemetry of career-ops-hq/career-ops" src="https://warpchart.dev/api/chart?theme=light&v=3" loading="lazy">
+      <img alt="Live star telemetry of project-x-hq/project-x" src="https://warpchart.dev/api/chart?theme=light&v=3" loading="lazy">
     </picture>
   </a>
 </p>

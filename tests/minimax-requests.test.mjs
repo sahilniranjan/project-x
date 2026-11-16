@@ -7,7 +7,7 @@ import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT, pass, fail } from './helpers.mjs';
 
-const work = mkdtempSync(join(tmpdir(), 'career-ops-minimax-'));
+const work = mkdtempSync(join(tmpdir(), 'project-x-minimax-'));
 const hook = join(work, 'fetch.mjs');
 const capture = join(work, 'request.json');
 writeFileSync(hook, `
@@ -42,7 +42,7 @@ try {
       ], {
         cwd: work, encoding: 'utf8', timeout: 15000,
         env: {
-          PATH: process.env.PATH, HOME: work, CAREER_OPS_ROOT: work,
+          PATH: process.env.PATH, HOME: work, PROJECT_X_ROOT: work,
           OPENAI_API_KEY: 'fixture-key', REQUEST_CAPTURE: capture, ...settings,
         },
       });
@@ -69,13 +69,13 @@ try {
     });
   }
 
-  const names = ['CAREER_OPS_ROOT', 'CAREER_OPS_MODEL', 'OPENROUTER_API_KEY'];
+  const names = ['PROJECT_X_ROOT', 'PROJECT_X_MODEL', 'OPENROUTER_API_KEY'];
   const previous = Object.fromEntries(names.map(name => [name, process.env[name]]));
   const originalFetch = globalThis.fetch;
   try {
-    process.env.CAREER_OPS_ROOT = work;
+    process.env.PROJECT_X_ROOT = work;
     process.env.OPENROUTER_API_KEY = 'fixture-key';
-    delete process.env.CAREER_OPS_MODEL;
+    delete process.env.PROJECT_X_MODEL;
     const requests = [];
     const flash = 'minimax/minimax-m3.1-flash:free';
     const m3 = 'minimax/minimax-m3';
@@ -117,7 +117,7 @@ try {
       assert.equal(requests.at(-1).model, 'unrelated/model:free');
     });
     for (const id of ['minimax/minimax-m2.7:free', m3, 'custom/private-model']) {
-      process.env.CAREER_OPS_MODEL = id;
+      process.env.PROJECT_X_MODEL = id;
       await paid.callOpenRouter('System fixture', [{ type: 'text', text: 'User fixture' }, { type: 'image_url', image_url: { url: 'https://example.test/image.png' } }]);
       check(`MiniMax gateway preserves explicit ${id} and message parts`, () => {
         assert.equal(requests.at(-1).model, id);

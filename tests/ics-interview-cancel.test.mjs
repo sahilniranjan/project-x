@@ -51,7 +51,7 @@ test('the CLI prints the cancellation instead of a row to paste', () => {
   try {
     const file = join(dir, 'cancel.ics');
     writeFileSync(file, calendar(['METHOD:CANCEL'], ['STATUS:CANCELLED']));
-    const env = { ...process.env, CAREER_OPS_ROOT: dir };
+    const env = { ...process.env, PROJECT_X_ROOT: dir };
     const json = JSON.parse(execFileSync(process.execPath, [SCRIPT, file, '--tz', 'UTC'], { encoding: 'utf-8', env }));
     assert.equal(json.row, null);
     const summary = execFileSync(process.execPath, [SCRIPT, file, '--tz', 'UTC', '--summary'], { encoding: 'utf-8', env });
