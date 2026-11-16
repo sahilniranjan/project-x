@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/cn";
-import { CoMark } from "@/components/co-mark";
+import { PxMark } from "@/components/px-mark";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { WorkerPills } from "@/components/jobs/worker-pills";
 import { UsageMeter } from "@/components/usage-meter";
@@ -106,7 +106,7 @@ export function MobileNav() {
 
       <header className="co-mnav flex items-center gap-2 border-b border-border px-4 pb-3 md:hidden">
         <Link href="/" className="flex min-h-[44px] items-center gap-2" aria-label="project-x home">
-          <CoMark size={26} />
+          <PxMark size={26} />
           <span className={`${instrumentSerif.className} relative -top-px text-xl text-landing`}>project-x</span>
         </Link>
         <div className="ml-auto flex items-center gap-0.5">

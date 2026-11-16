@@ -1,10 +1,8 @@
 import { instrumentSerif } from "@/lib/fonts";
 
-// Brand mark — lowercase "co" on brand orange in Instrument Serif. Matches the
-// favicon (src/app/icon.tsx) and the project-x-docs home one-for-one so the
-// app reads as a sibling. Dual meaning: "co" of project-x AND "co" of
-// companies — the word the manifesto inverts ("…AI to choose companies").
-export function CoMark({ size = 28 }: { size?: number }) {
+// Brand mark — lowercase "px" (project-x) on brand orange in Instrument Serif.
+// Matches the favicon (src/app/icon.svg) and the docs wordmark one-for-one.
+export function PxMark({ size = 28 }: { size?: number }) {
   return (
     <span
       aria-hidden="true"
@@ -18,7 +16,7 @@ export function CoMark({ size = 28 }: { size?: number }) {
         paddingBottom: Math.round(size * 0.08),
       }}
     >
-      co
+      px
     </span>
   );
 }
