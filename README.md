@@ -1,636 +1,98 @@
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/wordmark-dark.svg"><img src="docs/wordmark-light.svg" alt="project-x" width="231" height="56"></picture></p>
 
-<p align="center">The open-source AI job search agent.</p>
+<p align="center"><strong>My personal AI job-search system: find the right roles, judge the fit, apply with intent.</strong></p>
 
-<p align="center">
-  <a href="README.md">English</a> |
-  <a href="README.es.md">Español</a> |
-  <a href="README.de.md">Deutsch</a> |
-  <a href="README.fr.md">Français</a> |
-  <a href="README.pt-BR.md">Português (Brasil)</a> |
-  <a href="README.ko-KR.md">한국어</a> |
-  <a href="README.ja.md">日本語</a> |
-  <a href="README.cn.md">简体中文</a> |
-  <a href="README.zh-TW.md">繁體中文</a> |
-  <a href="README.ua.md">Українська</a> |
-  <a href="README.ru.md">Русский</a> |
-  <a href="README.pl.md">Polski</a> |
-  <a href="README.da.md">Dansk</a> |
-  <a href="README.ta.md">தமிழ்</a> |
-  <a href="README.ar.md">العربية</a> |
-  <a href="README.hi.md">हिन्दी</a> |
-  <a href="README.tr.md">Türkçe</a> |
-  <a href="README.vi.md">Tiếng Việt</a> |
-  <a href="README.id.md">Bahasa Indonesia</a>
-</p>
+---
 
-<!-- The non-breaking spaces (&nbsp;) and word joiners (&#8288;) below decide where each line wraps on a phone. Keep them when editing. -->
+## Why I built this
 
-<p align="center"><a href="https://github.com/santifer"><img src="docs/avatar-santifer.png" width="48" height="48" align="middle" alt="Santiago Fernández de Valderrama Aparicio"></a>&nbsp;&nbsp;Created by <a href="https://github.com/santifer"><strong>@santifer</strong></a>, with&nbsp;&nbsp;<a href="https://github.com/project-x-hq/project-x#builders"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/builders-stack-dark.svg"><img src="docs/builders-stack-light.svg" alt="" height="32" align="middle"></picture></a>&nbsp;&nbsp;<a href="https://github.com/project-x-hq/project-x#builders">800+ contributors</a></p>
+Job boards bury good roles under thousands of stale, mismatched or unsponsored listings, and applying blindly is slow and demoralizing. I wanted a system that runs on my own machine and does three things well:
 
-<p align="center">
-<strong>Months of sending CVs into&nbsp;silence.</strong><br>
-So I built the filter I&nbsp;needed.
-</p>
+1. **Finds** every relevant opening across the company job boards I care about, every night, without me lifting a finger.
+2. **Judges** each role honestly against my real CV, including work-authorization (H-1B) signals, so I spend my evenings only on roles worth it.
+3. **Prepares** a tailored CV and answers, while **I** stay the one who reviews and presses Submit.
 
-<p align="center">
-<strong>740&nbsp;listings&nbsp;evaluated. 68&nbsp;applied. 12&nbsp;interviews.&nbsp;1&nbsp;offer.</strong><br>
-I was its first user. I got the&nbsp;job. Then&nbsp;I&nbsp;open-&#8288;sourced&nbsp;it.
-</p>
+project-x is that system. It runs locally inside an AI coding CLI (I use Claude Code), keeps all my data on my laptop, and never applies to anything on its own.
 
-<p align="center">
-Paste a job. On your machine, it tells you if it's still&nbsp;open and if it&nbsp;fits.<br>
-It tailors your CV and drafts your&nbsp;answers. <strong>You&nbsp;press&nbsp;Submit.</strong>
-</p>
+## What it does
 
-<p align="center">
-  <img src="docs/demo.gif" alt="The author's own search in the project-x dashboard: scored listings, a red count of the ones marked do not apply, then a full evaluation report" width="800">
-</p>
+| Area | What happens |
+|---|---|
+| **Nightly discovery** | Scheduled sweeps of Greenhouse, Lever, Ashby and Workday boards (~15k+ companies). Every URL ever seen is recorded, so the morning inbox only holds roles that are genuinely new. |
+| **Company index** | Each board is profiled once: size, industry, regions, remote share, engineering share, funding, and H-1B sponsorship tier. Boards are ranked by a priority score so the most promising companies are scanned and shown first. |
+| **Explore panel** | A local web panel to browse the index and live jobs, filter by company attributes, and watch a scan trace board by board as it runs. |
+| **Fit evaluation** | Paste a job URL or description: it checks the posting is still live, scores it against my CV, flags hard blockers such as explicit no-sponsorship, and writes a structured report. |
+| **Tailored materials** | ATS-friendly CV PDFs and cover letters built from my own experience, with a fact check that blocks numbers or claims not found in my CV. |
+| **Tracking & follow-ups** | Every application lives in a local tracker, with status changes, follow-up reminders and pattern analysis across outcomes. |
 
-<p align="center"><sub>My own search, partway through, with&nbsp;the&nbsp;UI&nbsp;in&nbsp;Spanish.</sub></p>
+### Principles
 
-<p align="center">
-  Companies use AI to filter candidates.<br>
-  <strong>I just gave candidates AI&nbsp;to&nbsp;<em>choose</em>&nbsp;companies.</strong>
-</p>
+- **Human in the loop.** It drafts and fills forms, but never submits an application or sends a message.
+- **Local first.** CV, profile, tracker, reports and scan data stay on my machine and are excluded from git.
+- **Signal over volume.** Apply better to fewer roles.
+- **Reformulate, never fabricate.** Tailored CVs only reword what is actually true.
 
-<p align="center">
-  Six months later, <strong>I left that job.</strong><br>
-  Now we build project-x, so&nbsp;you&nbsp;can&nbsp;land&nbsp;yours.
-</p>
+## Running it
 
-<p align="center"><a href="#your-turn">Try it on one job&nbsp;↓</a> · <a href="https://santifer.io/project-x-system">Read the full&nbsp;story&nbsp;→</a></p>
-<p align="center"><sub>Prefer not to use a terminal? <a href="https://project-x.org/waitlist?ref=readme-en">Join the waitlist for a web version&nbsp;→</a></sub></p>
-
-<br>
-
-<p align="center"><a href="HIRED.md"><img src="docs/hired-badge.svg" alt="Hired with project-x: public stories on the record"></a></p>
-
-<p align="center">The people who came after me wrote down how they got hired.</p>
-
-<p align="center">
-  <a href="HIRED.md"><img src="docs/hired-wall.svg" alt="Hired stories you can open and read" width="800"></a>
-</p>
-
-<p align="center"><sub>Every card is a public issue you can open. Landed yours? <a href="https://github.com/project-x-hq/project-x/issues/new?template=i-got-hired.yml">Leave your card →</a></sub></p>
-
-<p align="center">⭐ <strong>If project-x helped you, a star helps the next person find&nbsp;it.</strong></p>
-
-<br>
-
-<p align="center">
-  <a href="https://wired.com.gr/article/to-ai-ergaleio-pou-fernei-epanastasi-ston-tropo-pou-psachnoume-douleia/" rel="noopener noreferrer nofollow"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/press/wired-dark.svg"><img src="docs/press/wired.svg" alt="WIRED" height="32"></picture></a>
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://www.businessinsider.com/how-i-built-tool-filter-job-listings-landed-head-ai-2026-4" rel="noopener noreferrer nofollow"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/press/business-insider-dark.svg"><img src="docs/press/business-insider.svg" alt="Business Insider" height="32"></picture></a>
-</p>
-
-<p align="center">
-  <a href="https://vercel.com/open-source-program"><img alt="Vercel OSS Program" src="https://vercel.com/oss/program-badge-2026.svg" height="32"></a>
-</p>
-
-<p align="center">
-  <a href="https://trendshift.io/repositories/25195" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/repositories/25195" alt="GitHub Trending: #1 repository of the day (Trendshift)" width="250" height="55"></a>
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://www.producthunt.com/products/santifer-io?utm_source=badge-featured&utm_medium=badge" rel="noopener noreferrer"><img src="docs/press/producthunt.svg" alt="Featured on Product Hunt" width="206" height="54"></a>
-</p>
-
-## Your turn
-
-Paste one job you were about to apply to tonight. If it comes back <em>do not apply</em>, you just got the night back. If it comes back with a plan, you know what to do next.
+**Requirements:** Node.js 20+, an AI coding CLI (Claude Code recommended), and Playwright for PDFs and liveness checks.
 
 ```bash
-npx @santifer/project-x init
+npm install
+npx playwright install chromium
+claude            # open the CLI in this folder; first launch walks through setup
 ```
 
-<p align="center"><sub>Open source. Local. In the AI CLI you already use. <a href="docs/RUNNING_ON_A_BUDGET.md">Free and local models included.</a></sub></p>
+### Everyday commands (inside the CLI)
 
+| Command | What it does |
+|---|---|
+| paste a URL or JD | Liveness check, evaluation, report, tailored CV, tracker row |
+| `/project-x scan` | Scan configured portals for new postings into `data/pipeline.md` |
+| `/project-x pipeline` | Work through the inbox of waiting URLs |
+| `/project-x apply` | Fill an application form with me, field by field. It stops before Submit |
+| `/project-x tracker` | Where every application stands |
+| `/project-x followup` | Which applications are due a follow-up, with drafts |
 
-## You don't have to search alone
-
-The silence after you hit send is not about you. Enough people saw the same thing to write the practice down, in six lines:
-
-> Apply better to fewer. Signal over volume. Evidence over keywords. A human decides. Local-first. Dignity on both sides of the table.
-
-<p align="center"><a href="https://project-x.org/manifesto?utm_source=readme"><img src="https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fproject-x-hq%2Fproject-x%2Fmain%2FSIGNATURES.md&search=n%3A(%5Cd%2B)%5Cs*%24&replace=%241%20signatories&label=THE%20PROJECTX%20MANIFESTO&color=DD7627&style=for-the-badge&labelColor=2b3137" alt="The ProjectX manifesto: live count of signatories"></a></p>
-
-<p align="center">A few of them, in their own words.</p>
-
-<p align="center">
-  <a href="https://project-x.org/manifesto?utm_source=readme"><img src="docs/manifesto-wall.svg" alt="Three signatures of the ProjectX manifesto, in their own words" width="800"></a>
-</p>
-
-<p align="center"><sub>Every signature is a commit you can audit. <a href="https://project-x.org/manifesto?utm_source=readme">Read them all, or add yours →</a> · <a href="https://project-x.org/manifesto?utm_source=readme#what-is-ai-job-search">What is AI job search?</a></sub></p>
-
-<br>
-
-Hiring will not fix itself. The people going through it can, and they are already in the room, comparing notes and fixing each other's setups.
-
-<a id="builders"></a>
-
-<p align="center"><a href="CONTRIBUTING.md"><img src="https://warpchart.dev/api/builders?lang=en" alt="Animated wall of contributors' GitHub avatars, filling in order of arrival since April 2026, with the next square left open." width="100%"></a></p>
-
-[This is where the fix gets written](CONTRIBUTING.md). A room, not a club. **Let's build together.**
-
-<p align="center"><a href="https://discord.gg/8pRpHETxa4"><img src="docs/discord-badge.svg" alt="Discord: live member count of the project-x server"></a></p>
-
-## Sponsors
-
-project-x is free for candidates, forever. These companies sponsor the project:
-
-<p align="center">
-  <a href="https://serpapi.com/project-x-org" title="SerpApi"><img src="docs/sponsors/serpapi.svg" alt="SerpApi" height="48"></a>
-</p>
-
-<p align="center"><strong>SerpApi</strong> · Build a portfolio project with live search data. SerpApi gives developers structured JSON/Markdown from Google Search, Maps, Shopping, and other engines through a simple API call.</p>
-
-> Sponsorship buys clearly labeled visibility, never influence: no amount of money changes the roadmap or places anything in the product. Sponsors never appear in evaluations, rankings or recommendations.
-
-## What project-x does for you
-
-Paste a job. It tells you whether that night is worth it.
-
-- **Still open?** It checks that the posting is still live before you write a word.
-- **Not you?** It scores the role against your real CV and tells you to skip a weak fit. You can override it.
-- **Worth it?** It drafts the CV, the cover letter and the answers. You read them. You send them.
-- **Who do I talk to?** It finds the person and drafts the note. It never sends it.
-- **Where does it all go?** Every application stays on your machine. Nothing is uploaded to us.
-- **What should I learn?** After a run of noes, it names the gap.
-
-The first runs are rough. It does not know you yet. Talk to it: your CV, what you want, what you refuse. Think of it as a recruiter's first week.
-
-On first launch it asks for all that in chat. Nothing to configure by hand.
-
-## What project-x will not do
-
-- **Auto-submit an application.** It drafts the answer to every field; you review and click Submit. The script never POSTs (`prepare-application.mjs`).
-- **Send an email.** Drafts only. There is no mail transport anywhere in this codebase.
-- **Phone home.** No telemetry, no backend of ours. Your CV goes from your machine to the AI provider you chose, and nowhere else. The only public ledger is this repo: `HIRED.md` and its issues.
-- **Push you to apply below 4.0/5.** It will tell you not to. You can override it, and it will say so.
-
-It reformulates your CV; it must never fabricate it. A check in code stops a PDF whose numbers or facts appear in neither your CV nor your article digest, but it cannot judge every rewording yet. Read every CV before you send it. Details in the [FAQ](#faq).
-
-## Features
-
-| Feature                  | Description                                                                                                                              |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| **A-H Evaluation**       | Role summary, CV match (with how much each requirement matters for this posting, and whether that weight came from the JD's own wording, its structure, or an estimate, labelled per requirement; an estimate can never be top-band), level strategy, comp research, personalization, interview prep (STAR+R) -- plus a Block G posting-legitimacy check (is it still open, is it a repost: observations, not verdicts), and a Work-Auth signal that flags an explicit no-sponsorship JD as a hard blocker |
-| **Human-in-the-Loop**    | AI evaluates and recommends, you decide and act. The system never submits an application -- you always have the final call <!-- hitl: absolute guarantee. Do not add "automatically", "by itself", "without your permission" or any other hedge when translating this row. -->               |
-| **ATS PDF Generation**   | ATS-readable CVs tailored to each JD from your own experience, in Space Grotesk + DM Sans design                                                                                 |
-| **Cover Letter Generator** | Research-backed cover letters with keyword mirroring, four interactive angle prompts (why/problems/approach/tone), draft-in-chat approval gate, and A4 PDF via the same HTML + Playwright pipeline as CVs. Auto-drafts on every evaluation; complete and generate on demand via `/project-x cover` |
-| **Beyond the CV**        | Company research ([`deep`](modes/deep.md)) surfaces AI strategy, recent moves, engineering culture, and the angle your profile should take. Contact discovery ([`contacto`](modes/contacto.md)) identifies the hiring manager, recruiter, or team peer worth reaching out to and drafts a ≤300-character LinkedIn message tuned to each contact type. Formal application email drafts ([`email`](modes/email.md)) turn an evaluated report or pasted JD into a subject line, body, and attachment checklist without sending, submitting, or clicking anything. Applications get you in the queue; research gets you a conversation. |
-| **Pattern Analysis**     | Rejection patterns and per-ATS-channel advance rates (`analyze-patterns.mjs`), lifetime funnel stats (`stats.mjs`), repost detection, a possible sign of a ghost job (`detect-reposts.mjs`) |
-
-<details>
-<summary><b>Everything else it does</b></summary>
-
-| Feature                  | Description                                                                                                                              |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| **Auto-Pipeline**        | Paste a URL, get a full evaluation + PDF + tracker entry                                                                                 |
-| **Interview Story Bank** | Accumulates STAR+Reflection stories across evaluations -- 5-10 master stories you can adapt to the behavioral questions you get                        |
-| **Negotiation Scripts**  | Salary negotiation frameworks, geographic discount pushback, competing offer leverage                                                    |
-| **Application Email Drafts** | Formal recruiter/referral/cold application emails from a report or pasted JD, with subject line, attachment checklist, source-backed fit points, and a profile-driven contact block. Draft-only -- project-x never sends, submits, or clicks anything. |
-| **Portal Scanner**       | 100+ companies pre-configured (Anthropic, OpenAI, ElevenLabs, Retool, n8n...) + custom web-search queries across Ashby, Greenhouse, Lever, Wellfound |
-| **Funded Company Discovery** | Review-first `npm run company:funded` script surfaces recently funded companies and source diagnostics from structured public feeds without editing your data |
-| **Batch Processing**     | Parallel evaluation with headless CLI workers (`claude -p` / `opencode run`)                                                             |
-| **Dashboard TUI**        | Terminal UI to browse, filter, and sort your pipeline                                                                                    |
-| **Pipeline Integrity**   | Automated merge, dedup, status normalization, health checks                                                                              |
-| **Interview Suite**      | Time-blocked prep plans, practice sessions with feedback, post-interview debriefs ([`interview/`](modes/interview/README.md)), and a company red-flag detector ([`interview-redflag`](modes/interview-redflag.md)) |
-| **Offer Stage**          | Contract reading companion -- clause walk plus a lawyer question list ([`offer-prep`](modes/offer-prep.md)) -- and a desired/advertised/actual salary-gap analyzer (`salary-gap.mjs`) |
-| **Follow-ups & Replies** | Follow-up cadence calculator and seeded reminders (`followup-cadence.mjs`, `followup-seed.mjs`); turn them off with `follow_ups.enabled: false` in `config/profile.yml`; employer reply classification into tracker updates ([`reply-watch`](modes/reply-watch.md)) |
-| **Plugin System**        | Opt-in integrations (Gmail, Notion, Apify + a community registry), disabled by default -- see [docs/PLUGINS.md](docs/PLUGINS.md)        |
-| **LinkedIn job alerts**  | Paste a LinkedIn alert email on the dashboard or with `node linkedin-import.mjs`. No Google account. See [docs/LINKEDIN_JOBS.md](docs/LINKEDIN_JOBS.md) |
-
-</details>
-
-## How It Works
-
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/how-it-works-dark.svg"><img src="docs/how-it-works-light.svg" alt="How it works: you paste a job URL or description. Archetype Detection classifies it as LLMOps, Agentic, PM, SA, FDE or Transformation. The A-H Evaluation reads cv.md and covers match, gaps, comp research, STAR stories and legitimacy. It produces a report (reports/*.md), the tailored CV in the format set by cv.output_format — a PDF by default — and a tracker entry (data/applications.md)." width="760"></picture></p>
-
-## Quick Start
-
-**Fastest way, one command:**
+### Local panel and scheduled jobs (macOS)
 
 ```bash
-npx @santifer/project-x init
+./ProjectX.command            # start the web panel (http://localhost:3000) and open it
+./ProjectX.command dev        # dev server with hot reload
+./ProjectX.command rebuild    # rebuild after changes under web/src
+
+./nightly-scan.sh fast        # Greenhouse + Lever + Ashby sweep
+./nightly-scan.sh workday     # Workday sweep (rate-limited, slower)
+
+node company-index.mjs build|enrich|stats|select   # build and query the company index
 ```
 
-> 💡 `npx` ships with [Node.js](https://nodejs.org): it runs the installer once,
-> without installing anything globally. No Node yet? Install it first.
-> (Already using a Claude Code / Codex CLI? Then you already have it.)
+The panel and nightly scans run as `launchd` agents (`io.project-x.panel`, `io.project-x.nightly`, `io.project-x.workday`). Logs go to `~/Library/Logs/project-x`.
 
-This clones the latest release into `./project-x` and installs dependencies. Then:
-
-```bash
-cd project-x
-claude   # or codex / qwen / opencode / agy / grok — open your AI CLI here
-```
-
-**On first launch, project-x walks you through setup (your CV, profile and target roles) just by chatting. Nothing to edit by hand.**
-
-<details>
-<summary><b>Prefer to set it up manually? (git clone)</b></summary>
-
-```bash
-git clone https://github.com/project-x-hq/project-x.git
-cd project-x && npm install
-npx playwright install chromium   # only needed for PDF generation
-# On a non-Debian/Ubuntu Linux distro (Fedora, Arch, ...), Chromium's system
-# libraries aren't installed by the line above — install them yourself with
-# your distro's package manager if PDF generation fails to launch the browser
-# (Playwright's own docs list the required libraries per platform).
-
-# 2. Open your AI CLI in this directory. On first launch it walks you
-#    through setup (your CV, profile and target roles) by chatting
-claude   # or codex / opencode / qwen / agy / grok
-
-# Then ask your CLI to adapt the system to you:
-# "Change the archetypes to backend engineering roles"
-# "Translate the modes to English"
-# "Add these 5 companies to portals.yml"
-# "Update my profile with this CV I'm pasting"
-
-# 3. Start using
-# Paste a job URL or JD text to trigger auto-pipeline.
-# Every other mode, and how to ask for it in your CLI: see Usage below.
-```
-
-LinkedIn job alerts: paste the email. No Google account. See [docs/LINKEDIN_JOBS.md](docs/LINKEDIN_JOBS.md).
-
-</details>
-
-### Global install
-
-```bash
-npm i -g @santifer/project-x
-```
-
-This installs the `project-x` binary globally, so you can run `project-x init [folder]` without `npx`. `init` is its only command: it sets up a workspace, and everything after that happens inside your AI coding CLI (see Usage below), not through this binary.
-
-**Which one should you use?**
-- `npx @santifer/project-x init`: best for first use; creates a dedicated project folder.
-- `npm i -g @santifer/project-x`: if you'd rather type `project-x init` than the `npx` form. It adds no other commands.
-
-### Other ways to run it
-
-- **From any folder, as a Claude Code plugin:** [docs/CLAUDE_PLUGIN.md](docs/CLAUDE_PLUGIN.md).
-- **Without an AI CLI:** standalone Gemini, Ollama and OpenAI-compatible scripts evaluate a JD on their own. See [docs/SCRIPTS.md](docs/SCRIPTS.md#geminieval--ollamaeval--openaieval).
-
-> **The system is designed to be customized by your AI coding CLI itself.** Modes, archetypes, scoring weights, negotiation scripts -- just ask it to change them. It reads the same files it uses, so it knows exactly what to edit.
-
-See [docs/SETUP.md](docs/SETUP.md) for the full setup guide (including [scanning through an outbound proxy](docs/SETUP.md#scanning-through-an-outbound-proxy)), [docs/SUPPORTED_CLIS.md](docs/SUPPORTED_CLIS.md) for how to run project-x in each supported CLI, and its headless command where it has one, [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md) for instructions on running project-x cheaply using custom or local models (and [docs/FREE_TIER.md](docs/FREE_TIER.md) for running it at zero cost on Antigravity CLI's free tier), [docs/AUTOMATION.md](docs/AUTOMATION.md) for scheduling recurring scans and a zero-token triage-to-shortlist recipe, [docs/KEEPING_PORTALS_LIVE.md](docs/KEEPING_PORTALS_LIVE.md) for keeping your company list current, [docs/BACKUP_STRATEGIES.md](docs/BACKUP_STRATEGIES.md) for backing up your CV, tracker and reports, [docs/APPLY_AUTOFILL.md](docs/APPLY_AUTOFILL.md) for details on the ATS auto-fill flow, [docs/LINKEDIN_JOIN.md](docs/LINKEDIN_JOIN.md) for cross-referencing a LinkedIn connections export against the companies in your funnel, [docs/LINKEDIN_ALERTS.md](docs/LINKEDIN_ALERTS.md) for adding LinkedIn job-alert emails on the scan schedule, and [docs/FAQ.md](docs/FAQ.md) for answers to common setup questions, including [how story provenance prevents invented numbers](docs/FAQ.md#why-does-project-x-refuse-to-use-a-number-from-my-story-bank). Design principles live in [ARCHITECTURE.md](ARCHITECTURE.md); runtime flows in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
-
-## Usage
-
-Paste a job URL or description into your AI CLI. project-x checks that a linked posting is still live (pasted text has no link to check), scores it against your CV, writes a report, tailors your CV (a PDF by default) and adds a row to your tracker. That covers most days. Everything else is a mode you ask for by name. If a posting can't be read, the pipeline stops and asks you to paste the text or share a screenshot.
-
-### Asking for a mode
-
-| CLI | How you ask for `scan` |
-| --- | --- |
-| Claude Code, OpenCode, Antigravity CLI (`agy`), Grok Build CLI | `/project-x scan` |
-| Pi | `/skill:project-x scan` |
-| Codex, Qwen, Cursor, or any other supported CLI | Plain language: "Run the project-x scan mode" |
-
-`/project-x` with nothing after it shows the command menu in the CLIs that use it. Plain language works in every supported CLI. As a Claude Code plugin, the command is `/project-x:project-x`.
-
-All of them share one router, `.agents/skills/project-x/SKILL.md`, and the same `modes/*.md` files, so every CLI routes a request the same way (browser-heavy modes also need Playwright tools). Slash commands are not guaranteed in Codex: ask in plain language, or run one prompt headless with `codex exec "Evaluate this JD with project-x auto-pipeline: https://company.com/jobs/123"` ([docs/CODEX.md](docs/CODEX.md)). How to run it in each supported CLI, headless commands where a CLI has one, and per-CLI setup notes are in [docs/SUPPORTED_CLIS.md](docs/SUPPORTED_CLIS.md).
-
-### The everyday commands
-
-| Command | What it does |
-| --- | --- |
-| *paste a URL or JD* | Full pipeline: liveness check (URLs only), A-G evaluation plus H at high scores, report, tailored CV (PDF by default), tracker row |
-| `scan` | Scan your portals for new postings and add them to the inbox (`data/pipeline.md`) |
-| `pipeline` | Work through the URLs waiting in the inbox (the standard and premium tiers may skip obvious mismatches) |
-| `apply` | Fill an application form with you, field by field. It stops before Submit |
-| `tracker` | Where every application stands |
-| `followup` | Which applications are due a follow-up, with drafts |
-
-<details>
-<summary><b>All commands, by stage of the search</b></summary>
-
-`oferta`, `ofertas` and `contacto` keep their original Spanish names: offer, offers, contact.
-
-**Find roles**
-
-| Command | What it does |
-| --- | --- |
-| [`scan`](modes/scan.md) | Scan portals and discover new offers |
-| [`discover`](modes/discover.md) | Resolve a list of company names to scannable ATS boards. Previews by default; adds them to `portals.yml` only with `--write` (zero-token) |
-| [`pipeline`](modes/pipeline.md) | Process pending URLs from the inbox (`data/pipeline.md`) |
-| [`triage`](modes/triage.md) | Fast first-pass go/no-go score from `modes/_brief.md`, before a full evaluation (writes no files) |
-| [`batch`](modes/batch.md) | Evaluate many postings with headless workers (parallel with Claude, one at a time with other CLIs) |
-| [`titles`](modes/titles.md) | Suggest adjacent job titles from your CV to broaden the search |
-
-**Evaluate a role**
-
-| Command | What it does |
-| --- | --- |
-| *paste a URL or JD* | [Auto-pipeline](modes/auto-pipeline.md): evaluation + report + tailored CV (PDF by default) + tracker entry |
-| [`oferta`](modes/oferta.md) | Evaluation only, Blocks A to G plus H at high scores (no PDF) |
-| [`ofertas`](modes/ofertas.md) | Compare and rank several offers |
-| [`deep`](modes/deep.md) | Deep research prompt about the company |
-| [`eu-swe`](modes/regional/eu-swe.md) | Calibrate a European software-engineering application before CV, apply or interview |
-
-**Apply**
-
-| Command | What it does |
-| --- | --- |
-| [`pdf`](modes/pdf.md) | ATS-optimized CV as a PDF |
-| [`ats`](modes/ats.md) | ATS-friendliness check of a generated CV: score and fixable issues |
-| [`text`](modes/text.md) | Tailored CV as markdown (mirrors `cv.md`, no PDF) |
-| [`latex`](modes/latex.md) | Export the CV as LaTeX/Overleaf `.tex` |
-| [`latex-tex`](modes/latex-tex.md) | Tailor your own `resume.tex` in place (opt-in; `cv.md` stays the default) |
-| [`cover`](modes/cover.md) | Cover letter, from a pasted JD or an evaluated report (`cover {slug}`) |
-| [`email`](modes/email.md) | Formal application email draft. Draft-only: never sends, submits or clicks |
-| [`contacto`](modes/contacto.md) | Find the hiring manager, recruiter or a peer, and draft a LinkedIn message |
-| [`apply`](modes/apply.md) | Live application assistant (Playwright from this checkout). Does not submit |
-
-**Interview**
-
-| Command | What it does |
-| --- | --- |
-| [`interview-prep`](modes/interview-prep.md) | Company-specific interview prep document |
-| [`interview/plan`](modes/interview/plan.md) | Time-blocked prep plan for an upcoming interview |
-| [`interview/practice`](modes/interview/practice.md) | Practice interview, one question at a time, with feedback |
-| [`interview/debrief`](modes/interview/debrief.md) | Post-interview debrief: close gaps, predict the next round |
-| [`interview-redflag`](modes/interview-redflag.md) | Analyze an employer's warning signs before you join |
-
-**After you apply**
-
-| Command | What it does |
-| --- | --- |
-| [`tracker`](modes/tracker.md) | Application status overview |
-| [`followup`](modes/followup.md) | Follow-up cadence: flag overdue applications, generate drafts |
-| [`reply-watch`](modes/reply-watch.md) | Classify employer replies and suggest tracker updates |
-| [`outcome`](modes/outcome.md) | Record an application's outcome and archive its artifacts |
-| [`offer-prep`](modes/offer-prep.md) | Read a received offer or contract with you: clause walk and questions for a lawyer (not legal advice) |
-
-**Your profile and CV**
-
-| Command | What it does |
-| --- | --- |
-| [`interview`](modes/interview.md) | Profile setup: an interactive interview about your experience that builds your CV and profile (not interview practice) |
-| [`intake`](modes/intake.md) | Build or enrich your profile from files in `documents/` (master CV, LinkedIn export). Nothing is written without your confirmation |
-| [`master-profile`](modes/master-profile.md) | Import, review and validate your Master Career Profile, and prepare selected facts as CV bullets |
-| [`add`](modes/add.md) | Add a project, paper or role to your CV (fetch, preview, confirm) |
-| [`expand`](modes/expand.md) | Discover competencies missing from your CV, from your profile links |
-| [`retro`](modes/retro.md) | Review this session and keep what you taught it as rules (writes only the ones you accept) |
-
-**Improve your targeting**
-
-| Command | What it does |
-| --- | --- |
-| [`patterns`](modes/patterns.md) | Analyze rejection patterns and improve targeting |
-| [`calibrate`](modes/calibrate.md) | Check whether your evaluation scores predict your real outcomes. Advisory: never changes scoring |
-| [`upskill`](modes/upskill.md) | Skill-gap analysis across your evaluated reports |
-| [`training`](modes/training.md) | Evaluate a course or certification against your North Star |
-| [`project`](modes/project.md) | Evaluate a portfolio project idea |
-
-**System**
-
-| Command | What it does |
-| --- | --- |
-| [`agent-inbox`](modes/agent-inbox.md) | Queue requests for the next session, and work through them then (`data/agent-inbox.md`). `inbox` works too |
-| [`update`](modes/update.md) | Update project-x system files, with a diff preview and compatibility check |
-
-</details>
-
-## Pre-configured Portals
-
-The scanner comes with **100+ companies** ready to scan and **35+ search queries** across major job boards. Copy `templates/portals.example.yml` to `portals.yml` and add your own:
-
-**AI Labs:** Anthropic, OpenAI, Mistral, Cohere, LangChain, Pinecone
-**Voice AI:** ElevenLabs, PolyAI, Parloa, Hume AI, Deepgram, Vapi, Bland AI
-**AI Platforms:** Retool, Airtable, Vercel, Temporal, Glean, Arize AI
-**Contact Center:** Ada, LivePerson, Sierra, Decagon, Talkdesk, Genesys
-**Enterprise:** Salesforce, Twilio, Gong, Dialpad
-**LLMOps:** Langfuse, Weights & Biases, Lindy, Cognigy, Speechmatics
-**Automation:** n8n, Zapier, Make.com
-**European:** Factorial, Attio, Tinybird, Clarity AI, Travelperk
-
-**Job boards searched:** 55+ provider modules cover ATS APIs, board-wide feeds, XML/RSS feeds, markdown feeds, and local parsers. See [Supported job boards](docs/SUPPORTED_JOB_BOARDS.md) for the full table.
-
-Keep the list current: `portals.yml` is designed to stay live, not be a one-time setup file. See [Keeping portals.yml live](docs/KEEPING_PORTALS_LIVE.md) for the house rule that adds new companies automatically and the commands to validate the file after every change.
-
-By default `node scan.mjs` (a.k.a. `npm run scan`) trusts what each ATS feed returns. Some companies leave stale postings in their public API even after the role is closed, so those expired entries can leak into `pipeline.md`. Pass `--verify` to launch Playwright after the API pass and drop expired postings before they hit the pipeline:
-
-```bash
-node scan.mjs --verify          # zero-token discovery + Playwright liveness check
-```
-
-The verification is sequential and only runs against new offers (after dedup), so the cost stays bounded.
-
-## Dashboard TUI
-
-The built-in terminal dashboard lets you browse your pipeline visually:
-
-```bash
-npm run serve:dashboard   # launch the TUI
-npm run build:dashboard   # optional: build the standalone binary
-```
-
-Features: 10 filter tabs, 8 sort modes, grouped/flat view, lazy-loaded previews, inline status changes.
-
-There is also an **experimental web UI** (alpha and opt-in: nothing runs unless you start it): see [`web/README.md`](web/README.md).
-
-## Project Structure
+## Project layout
 
 ```
 project-x/
-├── AGENTS.md                    # Canonical agent instructions (all CLIs)
-├── CLAUDE.md                    # Claude Code wrapper (imports AGENTS.md)
-├── CODEX.md                     # Codex wrapper (imports AGENTS.md)
-├── OPENCODE.md                  # OpenCode wrapper (imports AGENTS.md)
-├── GEMINI.md                    # Legacy no-op guard to avoid Antigravity duplicate context
-├── cv.md                        # Your CV (create this)
-├── article-digest.md            # Your proof points (optional)
-├── config/
-│   └── profile.example.yml      # Template for your profile
-├── modes/                       # Skill modes
-│   ├── _shared.md               # Shared context (system file; local edit kept unless apply --force)
-│   ├── _profile.md              # Your archetypes and framing (customize this)
-│   ├── oferta.md                # Single evaluation
-│   ├── pdf.md                   # PDF generation
-│   ├── cover.md                 # Cover letter generation
-│   ├── email.md                 # Formal application email drafts
-│   ├── scan.md                  # Portal scanner
-│   ├── batch.md                 # Batch processing
-│   └── ...
-├── templates/
-│   ├── cv-template.html         # ATS-optimized CV template
-│   ├── portals.example.yml      # Scanner config template
-│   └── states.yml               # Canonical statuses
-├── batch/
-│   ├── batch-prompt.md          # Self-contained worker prompt
-│   └── batch-runner.sh          # Orchestrator script
-├── dashboard/                   # Go TUI pipeline viewer
-├── data/                        # Your tracking data (gitignored)
-├── reports/                     # Evaluation reports (gitignored)
-├── output/                      # Generated PDFs (gitignored)
-├── fonts/                       # Space Grotesk + DM Sans
-├── docs/                        # Setup, customization, budget guide, architecture
-└── examples/                    # Sample CV, report, proof points
+├── AGENTS.md / CLAUDE.md      # agent instructions
+├── modes/                     # evaluation, scan, pdf, apply, followup ... modes
+├── providers/                 # ATS board integrations (Greenhouse, Lever, Ashby, Workday, ...)
+├── company-index.mjs          # company index builder
+├── lib/company-profile.mjs    # per-company profiling (size, funding, H-1B, ...)
+├── scan-ats-full.mjs          # full-network ATS sweep
+├── nightly-scan.sh            # scheduled sweep entry point
+├── ProjectX.command           # panel launcher
+├── web/                       # local Next.js panel
+├── templates/                 # CV template, portal config template, statuses
+├── dashboard/                 # terminal (Go) dashboard
+├── data/ reports/ output/     # my personal data (gitignored)
+└── cv.md, config/profile.yml  # my CV and profile (gitignored)
 ```
 
-## External Data Directory (Optional)
+## Privacy
 
-By default, user-layer data (such as `cv.md`, `portals.yml`, and `data/` / `reports/` / `output/` folders) lives inside the project root folder. 
+Personal files (`cv.md`, `config/profile.yml`, `data/`, `reports/`, `output/`, scan history, H-1B data) are listed in `.gitignore` and are never committed. The CV only travels from this machine to the AI provider used by the CLI.
 
-To separate your personal data from the code (making it easier to switch branches, pull updates, or test multiple profiles), you can configure an external data directory using the following precedence:
+## Credits & license
 
-1. **Environment Variables:** Set the `PROJECT_X_ROOT` or `PROJECT_X_DATA_DIR` environment variable:
-   ```bash
-   export PROJECT_X_ROOT=~/my-career-data
-   ```
-2. **Marker File:** Create a `.project-x-data` file in the repository root containing the path to your data directory.
-3. **Default:** Defaults to the repository root.
+project-x is my personal, heavily customized build of the open-source **[career-ops](https://github.com/career-ops-hq/career-ops)** project by Santiago Fernández de Valderrama. The original code is used under the MIT License, whose copyright notice and terms are kept in [`LICENSE`](LICENSE) as that license requires.
 
-Once resolved, all user files are resolved and written relative to that folder, while prompt files and scripts continue to resolve relative to the repository. 
-
-- **Tracker Override:** You can also set `PROJECT_X_TRACKER` to override the applications tracker file path directly.
-- **Writes:** All write operations (such as merges) canonically target `{DATA_ROOT}/data/applications.md`.
-- **Scanner config:** `portals.yml` is read and validated at `{DATA_ROOT}/portals.yml`, so `node validate-portals.mjs` checks the same file `scan.mjs` reads.
-- **Generated documents:** tailored CVs and cover letters are written under `{DATA_ROOT}/output/`, and the PDF manifest that links them to a report lives at `{DATA_ROOT}/data/pdf-index.tsv`. While `PROJECT_X_TRACKER` is unset, the tracker workspace that bounds those writes is the data root, not the checkout.
-- **PDFs under a tracker override:** `generate-pdf.mjs` resolves `PROJECT_X_TRACKER` before it derives the workspace, so with the override set the workspace is the folder that holds that tracker (or the folder above it, when the tracker sits in a `data/` folder). The CV's HTML and every PDF must then sit inside that workspace, and the manifest moves to its `data/pdf-index.tsv`. Cover letters still target `{DATA_ROOT}/output/`, so they are refused when that folder falls outside the tracker's workspace.
-- **Code layer stays put:** `node_modules/`, `providers/`, `modes/` and the scripts themselves always resolve against the repository, never the data root.
-
-The Go dashboard TUI, Node.js scripts, and AI agent modes all automatically respect this resolution hierarchy.
-
-
-## Tech Stack
-
-![Claude Code](https://img.shields.io/badge/Claude_Code-000?style=flat&logo=anthropic&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white)
-![Playwright](https://img.shields.io/badge/Playwright-2EAD33?style=flat&logo=playwright&logoColor=white)
-![Go](https://img.shields.io/badge/Go-00ADD8?style=flat&logo=go&logoColor=white)
-![Bubble Tea](https://img.shields.io/badge/Bubble_Tea-FF75B5?style=flat&logo=go&logoColor=white)
-
-- **Agent**: AI coding CLI with shared skills and modes (`AGENTS.md` + CLI wrapper)
-- **PDF**: Playwright + HTML template
-- **Cover letters**: HTML template + Playwright (A4 PDF, same pipeline as CVs)
-- **Scanner**: Playwright + Greenhouse API + WebSearch
-- **Dashboard**: Go + Bubble Tea + Lipgloss (Catppuccin Mocha theme)
-- **Data**: Markdown tables + YAML config + TSV batch files
-
-<p align="center">
-  <a href="https://github.com/project-x-hq/project-x/releases/latest"><img src="docs/npm-badge.svg" alt="Latest release"></a>
-</p>
-
-<p align="center">
-  <a href="https://claude.com/claude-code"><img src="https://img.shields.io/badge/Built_with-Claude_Code-000?style=for-the-badge&logo=anthropic&logoColor=white" alt="Built with Claude Code"></a>
-</p>
-
-<p align="center">
-  <sub>Also runs on any agent-skill-standard CLI. See <a href="docs/SUPPORTED_CLIS.md">Supported CLIs</a>.</sub><br>
-  <img src="https://img.shields.io/badge/Claude_Code-000?style=flat&logo=anthropic&logoColor=white" alt="Claude Code">
-  <img src="https://img.shields.io/badge/OpenCode-111827?style=flat&logo=terminal&logoColor=white" alt="OpenCode">
-  <img src="https://img.shields.io/badge/Antigravity_CLI-4285F4?style=flat&logo=google&logoColor=white" alt="Antigravity CLI">
-  <img src="https://img.shields.io/badge/Codex-412991?style=flat&logo=openai&logoColor=white" alt="Codex">
-  <img src="https://img.shields.io/badge/Qwen-615CED?style=flat" alt="Qwen">
-  <img src="https://img.shields.io/badge/Kimi-FF4B4B?style=flat" alt="Kimi">
-  <img src="https://img.shields.io/badge/GitHub_Copilot-000?style=flat&logo=githubcopilot&logoColor=white" alt="GitHub Copilot">
-  <img src="https://img.shields.io/badge/Grok_Build_CLI-000?style=flat&logo=x&logoColor=white" alt="Grok Build CLI">
-  <img src="https://img.shields.io/badge/Pi-4B3F72?style=flat" alt="Pi">
-  <img src="https://img.shields.io/badge/Oh_My_Pi-4B3F72?style=flat" alt="Oh My Pi">
-  <br>
-  <img src="https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white" alt="Node.js">
-  <img src="https://img.shields.io/badge/Go-00ADD8?style=flat&logo=go&logoColor=white" alt="Go">
-  <img src="https://img.shields.io/badge/Playwright-2EAD33?style=flat&logo=playwright&logoColor=white" alt="Playwright">
-  <img src="https://img.shields.io/badge/Bubble_Tea-FF75B5?style=flat&logo=go&logoColor=white" alt="Bubble Tea">
-  <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT">
-  <a href="TRADEMARK.md"><img src="https://img.shields.io/badge/Trademark-Policy-blue.svg" alt="Trademark Policy"></a>
-</p>
-
-## Also Open Source
-
-- **[cv-santiago](https://github.com/santifer/cv-santiago)** -- The portfolio website (santifer.io) with AI chatbot, LLMOps dashboard, and case studies. If you need a portfolio to showcase alongside your job search, fork it and make it yours.
-
-## FAQ
-
-**What is project-x?**
-project-x ([project-x.org](https://project-x.org), also known as **projectx**) is an open-source AI job search that runs locally in your AI coding CLI (Claude Code, Codex, OpenCode and others) and leaves every decision to you. It evaluates job offers against your CV, generates ATS-tailored PDFs, finds the right person to contact, and tracks everything in one place: you always have the final call. It is the first reference implementation of the [ProjectX Manifesto](https://project-x.org/manifesto).
-
-**Can the tailored CV invent things?**
-It must not, and the prompts say so: reformulate, never fabricate. `generate-pdf` blocks a CV whose numbers or facts are missing from your sources, unless you pass `--skip-fact-check`. The `pdf` mode also runs `cv-title-check.mjs`, which compares each job title in the tailored CV with the title cv.md gives the same job (matched by company and dates) and asks you to keep or revert any that differ. It warns rather than blocks, because reframing a title is sometimes your call. Nothing judges rewording yet: [#1411](https://github.com/project-x-hq/project-x/issues/1411) (fail-closed faithfulness check) tracks that. Until then, read every CV before you send it. The [Legal Disclaimer](LEGAL_DISCLAIMER.md) says the same in longer words.
-
-**Can I run project-x for free, or on a cheaper / local model?**
-Yes. project-x is CLI-agnostic and runs on free and local models (OpenRouter free models, Ollama or any OpenAI-compatible endpoint), so you are not tied to a paid subscription. See [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md) for the full setup.
-
-**I pay for Claude Pro/Max but project-x is burning API credits. Why?**
-Because an `ANTHROPIC_API_KEY` in your environment takes precedence over your logged-in subscription: the CLI uses the key and bills per token. Run `echo $ANTHROPIC_API_KEY`, and if it prints anything, remove it from your shell profile, restart the terminal and run `/login`. Batch mode is the exception, since `claude -p` workers do not use the interactive login: run `claude setup-token` once and export the result as `CLAUDE_CODE_OAUTH_TOKEN`. Full walkthrough in [docs/RUNNING_ON_A_BUDGET.md](docs/RUNNING_ON_A_BUDGET.md#2b-already-paying-for-a-subscription-make-sure-you-are-using-it).
-
-**Which AI CLIs does project-x work with?**
-project-x runs on any major AI coding CLI (Claude Code, Codex, Gemini / Antigravity, OpenCode, Grok, Qwen and more) through the open Agent Skill Standard, so it is never locked to a single vendor. Use the CLI you already have.
-
-**How do I install project-x on Windows?**
-project-x runs on Windows. Platform-specific setup and the known sharp edges (Git Bash discovery, line endings, Task Scheduler) are in [docs/WINDOWS.md](docs/WINDOWS.md). If skills fail to load with a symlink error during install, the fix is in [docs/FAQ.md](docs/FAQ.md). Full steps are in [docs/SETUP.md](docs/SETUP.md). On NixOS, use the flake dev shell instead of `npx playwright install`; see [docs/NIXOS.md](docs/NIXOS.md).
-
-**Does project-x auto-apply to jobs for me?**
-No. project-x is a filter, not a spray-and-pray auto-applier. The AI evaluates, ranks and drafts; you review and decide. It drafts and fills; it never submits. You press Submit. That human-in-the-loop design is the whole point.
-
-**Is project-x free and open source?**
-Yes. project-x is free and open source, and for the candidate it always will be. It is the first reference implementation of the [ProjectX Manifesto](https://project-x.org/manifesto). Read it, and if it says what you believe, sign it.
-
-## About the Author
-
-I'm [Santiago Fernández de Valderrama Aparicio](https://santifer.io/about) (santifer), a former founder: I built and sold a business that still runs with my name on it. I built project-x to manage my own job search, and it worked: it landed me a Head of Applied AI role. Six months later I left that role to focus on building project-x full time.
-
-Curious how a repo this size is maintained with a fleet of AI agents and a human deciding every merge? Read [Agentic maintenance: how project-x is run by a fleet of AI agents](https://santifer.io/ai-agent-fleet).
-
-My portfolio and other open source projects → [santifer.io](https://santifer.io)
-
-Wikidata: [Santiago Fernández de Valderrama Aparicio](https://www.wikidata.org/wiki/Q138710224) · [project-x](https://www.wikidata.org/wiki/Q139007988).
-
-## Disclaimer
-
-**project-x is a local, open-source tool, NOT a hosted service.** By using this software, you acknowledge:
-
-1. **You control your data.** Your CV, contact info, and personal data stay on your machine and are sent directly to the AI provider you choose (Anthropic, OpenAI, etc.). We do not collect, store, or have access to any of your data.
-2. **You control the AI.** The default prompts instruct the AI not to auto-submit applications, but AI models can behave unpredictably. If you modify the prompts or use different models, you do so at your own risk. **Always review AI-generated content for accuracy before submitting.**
-3. **You comply with third-party ToS.** You must use this tool in accordance with the Terms of Service of the career portals you interact with (Greenhouse, Lever, Workday, LinkedIn, etc.). Do not use this tool to spam employers or overwhelm ATS systems.
-4. **No guarantees.** Evaluations are recommendations, not truth. AI models may hallucinate skills or experience. The authors are not liable for employment outcomes, rejected applications, account restrictions, or any other consequences.
-
-See [LEGAL_DISCLAIMER.md](LEGAL_DISCLAIMER.md) for full details. This software is provided under the [MIT License](LICENSE) "as is", without warranty of any kind.
-
-## Contributors
-
-<a href="https://github.com/project-x-hq/project-x/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=project-x-hq/project-x&v=2" />
-</a>
-
-Every person who has shipped code, docs, translations or tests is listed in
-[CONTRIBUTORS.md](CONTRIBUTORS.md), including non-code contributions, which
-the graph above cannot show.
-
-Got hired using project-x? [Share your story!](https://github.com/project-x-hq/project-x/issues/new?template=i-got-hired.yml)
-
-## License & Trademark
-
-The code is licensed under [MIT](LICENSE). The "project-x" name and
-brand are governed by the [Trademark Policy](TRADEMARK.md), permissive
-for community use, reserved for commercial product naming and
-endorsement.
-
-Code is MIT; data in [`employers/`](employers/) is [CC BY 4.0](employers/LICENSE).
-
-## Star history
-
-<p align="center">
-  <a href="https://warpchart.dev/hq">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://warpchart.dev/api/chart?theme=dark&v=3">
-      <img alt="Live star telemetry of project-x-hq/project-x" src="https://warpchart.dev/api/chart?theme=light&v=3" loading="lazy">
-    </picture>
-  </a>
-</p>
-
-<p align="center"><sub>Created and maintained by <a href="https://santifer.io">Santiago Fernández de Valderrama Aparicio</a> (<a href="https://github.com/santifer">@santifer</a>)</sub></p>
-
-## Let's Connect
-
-[![Website](https://img.shields.io/badge/santifer.io-000?style=for-the-badge&logo=safari&logoColor=white)](https://santifer.io)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/santifer)
-[![X](https://img.shields.io/badge/X-000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/santifer)
-[![Discord](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/8pRpHETxa4)
-[![Email](https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:hi@santifer.io)
+My own additions (the company index and profiling, the Explore panel, scan tracing, nightly scheduling, launchers and the project-x branding) are © 2026 Sahil Niranjan. All rights reserved.
